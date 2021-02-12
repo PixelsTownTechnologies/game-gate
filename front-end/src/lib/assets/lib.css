@@ -1,0 +1,138 @@
+/* Flex Box Classes */
+.px-lib.flex {
+    display: flex;
+}
+
+.px-lib.justify-space-between {
+    justify-content: space-between;
+}
+
+.px-lib.justify-start {
+    justify-content: flex-start;
+}
+
+.px-lib.justify-end {
+    justify-content: flex-end;
+}
+
+.px-lib.justify-center {
+    justify-content: center;
+}
+
+
+.px-lib.flex-direction-column {
+    flex-direction: column;
+}
+
+.px-lib.flex-direction-row {
+    flex-direction: row;
+}
+
+.px-lib.align-items-center {
+    align-items: center;
+}
+
+.px-lib.flex-warp {
+    flex-wrap: wrap;
+}
+
+/* Button Classes */
+.px-lib.ui.button {
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.23), 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 1px 5px 0 rgba(0, 0, 0, 0.14);
+    transition: 450ms transform;
+}
+
+.px-lib.ui.button:hover {
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.23), 0 4px 5px 0 rgba(0, 0, 0, 0.17), 0 1px 10px 0 rgba(0, 0, 0, 0.15);
+    transform: translateY(-0.09rem) scale(1.005, 1.005);
+}
+
+.px-lib.ui.button:active {
+    animation: 250ms click-animation;
+}
+
+.px-center-text {
+    text-align: center !important;
+}
+
+@keyframes click-animation {
+    0% {
+        transform: scale(1, 1);
+    }
+    100% {
+        transform: scale(0.95, 0.95);
+    }
+}
+
+.px-non-padding {
+    padding: 0 !important;
+}
+
+.px-non-margin {
+    margin: 0 !important;
+}
+
+.px-slp-10 {
+    padding-left: 10px !important;
+}
+
+.px-slp-25 {
+    padding-left: 25px !important;
+}
+
+.px-srp-10 {
+    padding-right: 10px !important;
+}
+
+.px-srp-25 {
+    padding-right: 25px !important;
+}
+
+.px-stp-10 {
+    padding-top: 10px !important;
+}
+
+.px-stp-25 {
+    padding-top: 25px !important;
+}
+
+.auto {
+    text-align: match-parent !important;
+}
+
+.ltr {
+    text-align: left !important;
+}
+
+.rtl {
+    text-align: right !important;
+}
+
+.i-validate-msg {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+}
+
+.custom-file-input::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+.file-input {
+    display: none;
+}
+
+.ui.modal {
+    animation: 600ms viewModalAnimationPX !important;
+    animation-direction: alternate;
+    animation-timing-function: ease-out;
+}
+
+@keyframes viewModalAnimationPX {
+    from {
+        transform: translateY(-800px);
+    }
+    to {
+        transform: translateY(0);
+    }
+}

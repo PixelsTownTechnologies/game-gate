@@ -1,0 +1,10 @@
+/front-end/node_modules/
+/front-end/.idea/
+/back-end/.idea/
+/front-end/build/
+/back-end/.gitignore
+/front-end/.gitignore
+/back-end/.git/
+/front-end/.git/
+/.idea/
+__pycache__/

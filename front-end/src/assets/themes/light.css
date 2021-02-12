@@ -1,0 +1,35 @@
+body {
+    background: linear-gradient(40deg, #085078, #85D8CE);
+}
+
+.ui.button {
+    --bgColor1: #d7217e;
+    --bgClor2: #ec459e;
+    --bgColorHover: #f13093;
+    --bgColorDiable: #7d1449;
+    --textColor: #fbfbfb;
+    background: linear-gradient(90deg, var(--bgColor1), var(--bgClor2)) !important;
+    color: var(--textColor) !important;
+}
+
+
+.ui.button.disabled {
+    background: var(--bgColorDiable) !important;
+}
+
+.ui.button:hover {
+    background: var(--bgColorHover) !important;
+}
+
+
+.ui.grey.button {
+    --bgColor1: #939393;
+    --bgClor2: #a0a0a0;
+    --textColor: #ffffff;
+    --bgColorHover: #a8a8a8;
+    --bgColorDiable: #393939;
+}
+
+.px-div {
+    background: #65028e;
+}

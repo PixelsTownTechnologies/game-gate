@@ -1,0 +1,2309 @@
+[
+
+  {
+    "model": "app.country",
+    "pk": 2,
+    "fields": {
+      "name": "Albania",
+      "flag": "al",
+      "zip_code": "355",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 3,
+    "fields": {
+      "name": "Algeria",
+      "flag": "dz",
+      "zip_code": "213",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 4,
+    "fields": {
+      "name": "American Samoa",
+      "flag": "as",
+      "zip_code": "+1-684",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 5,
+    "fields": {
+      "name": "AndorrA",
+      "flag": "ad",
+      "zip_code": "376",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 6,
+    "fields": {
+      "name": "Angola",
+      "flag": "ao",
+      "zip_code": "244",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 7,
+    "fields": {
+      "name": "Anguilla",
+      "flag": "ai",
+      "zip_code": "+1-264",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 8,
+    "fields": {
+      "name": "Antigua and Barbuda",
+      "flag": "ag",
+      "zip_code": "+1-268",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 9,
+    "fields": {
+      "name": "Argentina",
+      "flag": "ar",
+      "zip_code": "54",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 10,
+    "fields": {
+      "name": "Armenia",
+      "flag": "am",
+      "zip_code": "374",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 11,
+    "fields": {
+      "name": "Aruba",
+      "flag": "aw",
+      "zip_code": "297",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 12,
+    "fields": {
+      "name": "Australia",
+      "flag": "au",
+      "zip_code": "61",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 13,
+    "fields": {
+      "name": "Austria",
+      "flag": "at",
+      "zip_code": "43",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 14,
+    "fields": {
+      "name": "Azerbaijan",
+      "flag": "az",
+      "zip_code": "994",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 15,
+    "fields": {
+      "name": "Bahamas",
+      "flag": "bs",
+      "zip_code": "+1-242",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 16,
+    "fields": {
+      "name": "Bahrain",
+      "flag": "bh",
+      "zip_code": "973",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 17,
+    "fields": {
+      "name": "Bangladesh",
+      "flag": "bd",
+      "zip_code": "880",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 18,
+    "fields": {
+      "name": "Barbados",
+      "flag": "bb",
+      "zip_code": "+1-246",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 19,
+    "fields": {
+      "name": "Belarus",
+      "flag": "by",
+      "zip_code": "375",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 20,
+    "fields": {
+      "name": "Belgium",
+      "flag": "be",
+      "zip_code": "32",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 21,
+    "fields": {
+      "name": "Belize",
+      "flag": "bz",
+      "zip_code": "501",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 22,
+    "fields": {
+      "name": "Benin",
+      "flag": "bj",
+      "zip_code": "229",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 23,
+    "fields": {
+      "name": "Bermuda",
+      "flag": "bm",
+      "zip_code": "+1-441",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 24,
+    "fields": {
+      "name": "Bhutan",
+      "flag": "bt",
+      "zip_code": "975",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 25,
+    "fields": {
+      "name": "Bolivia",
+      "flag": "bo",
+      "zip_code": "591",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 26,
+    "fields": {
+      "name": "Bosnia and Herzegovina",
+      "flag": "ba",
+      "zip_code": "387",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 27,
+    "fields": {
+      "name": "Botswana",
+      "flag": "bw",
+      "zip_code": "267",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 28,
+    "fields": {
+      "name": "Bouvet Island",
+      "flag": "bv",
+      "zip_code": "",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 29,
+    "fields": {
+      "name": "Brazil",
+      "flag": "br",
+      "zip_code": "55",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 30,
+    "fields": {
+      "name": "British Indian Ocean Territory",
+      "flag": "io",
+      "zip_code": "246",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 31,
+    "fields": {
+      "name": "Brunei Darussalam",
+      "flag": "bn",
+      "zip_code": "673",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 32,
+    "fields": {
+      "name": "Bulgaria",
+      "flag": "bg",
+      "zip_code": "359",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 33,
+    "fields": {
+      "name": "Burkina Faso",
+      "flag": "bf",
+      "zip_code": "226",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 34,
+    "fields": {
+      "name": "Burundi",
+      "flag": "bi",
+      "zip_code": "257",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 35,
+    "fields": {
+      "name": "Cambodia",
+      "flag": "kh",
+      "zip_code": "855",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 36,
+    "fields": {
+      "name": "Cameroon",
+      "flag": "cm",
+      "zip_code": "237",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 37,
+    "fields": {
+      "name": "Canada",
+      "flag": "ca",
+      "zip_code": "1",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 38,
+    "fields": {
+      "name": "Cape Verde",
+      "flag": "cv",
+      "zip_code": "238",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 39,
+    "fields": {
+      "name": "Cayman Islands",
+      "flag": "ky",
+      "zip_code": "+1-345",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 40,
+    "fields": {
+      "name": "Central African Republic",
+      "flag": "cf",
+      "zip_code": "236",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 41,
+    "fields": {
+      "name": "Chad",
+      "flag": "td",
+      "zip_code": "235",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 42,
+    "fields": {
+      "name": "Chile",
+      "flag": "cl",
+      "zip_code": "56",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 43,
+    "fields": {
+      "name": "China",
+      "flag": "cn",
+      "zip_code": "86",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 44,
+    "fields": {
+      "name": "Christmas Island",
+      "flag": "cx",
+      "zip_code": "61",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 45,
+    "fields": {
+      "name": "Cocos (Keeling) Islands",
+      "flag": "cc",
+      "zip_code": "61",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 46,
+    "fields": {
+      "name": "Colombia",
+      "flag": "co",
+      "zip_code": "57",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 47,
+    "fields": {
+      "name": "Comoros",
+      "flag": "km",
+      "zip_code": "269",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 48,
+    "fields": {
+      "name": "Congo",
+      "flag": "cg",
+      "zip_code": "242",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 49,
+    "fields": {
+      "name": "Congo, The Democratic Republic of the",
+      "flag": "cd",
+      "zip_code": "243",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 50,
+    "fields": {
+      "name": "Cook Islands",
+      "flag": "ck",
+      "zip_code": "682",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 51,
+    "fields": {
+      "name": "Costa Rica",
+      "flag": "cr",
+      "zip_code": "506",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 52,
+    "fields": {
+      "name": "Croatia",
+      "flag": "hr",
+      "zip_code": "385",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 53,
+    "fields": {
+      "name": "Cuba",
+      "flag": "cu",
+      "zip_code": "53",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 54,
+    "fields": {
+      "name": "Cyprus",
+      "flag": "cy",
+      "zip_code": "357",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 55,
+    "fields": {
+      "name": "Czech Republic",
+      "flag": "cz",
+      "zip_code": "420",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 56,
+    "fields": {
+      "name": "Denmark",
+      "flag": "dk",
+      "zip_code": "45",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 57,
+    "fields": {
+      "name": "Djibouti",
+      "flag": "dj",
+      "zip_code": "253",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 58,
+    "fields": {
+      "name": "Dominica",
+      "flag": "dm",
+      "zip_code": "+1-767",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 59,
+    "fields": {
+      "name": "Dominican Republic",
+      "flag": "do",
+      "zip_code": "+1-809 and 1-829",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 60,
+    "fields": {
+      "name": "Ecuador",
+      "flag": "ec",
+      "zip_code": "593",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 61,
+    "fields": {
+      "name": "Egypt",
+      "flag": "eg",
+      "zip_code": "20",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 62,
+    "fields": {
+      "name": "El Salvador",
+      "flag": "sv",
+      "zip_code": "503",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 63,
+    "fields": {
+      "name": "Equatorial Guinea",
+      "flag": "gq",
+      "zip_code": "240",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 64,
+    "fields": {
+      "name": "Eritrea",
+      "flag": "er",
+      "zip_code": "291",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 65,
+    "fields": {
+      "name": "Estonia",
+      "flag": "ee",
+      "zip_code": "372",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 66,
+    "fields": {
+      "name": "Ethiopia",
+      "flag": "et",
+      "zip_code": "251",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 67,
+    "fields": {
+      "name": "Falkland Islands (Malvinas)",
+      "flag": "fk",
+      "zip_code": "500",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 68,
+    "fields": {
+      "name": "Faroe Islands",
+      "flag": "fo",
+      "zip_code": "298",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 69,
+    "fields": {
+      "name": "Fiji",
+      "flag": "fj",
+      "zip_code": "679",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 70,
+    "fields": {
+      "name": "Finland",
+      "flag": "fi",
+      "zip_code": "358",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 71,
+    "fields": {
+      "name": "France",
+      "flag": "fr",
+      "zip_code": "33",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 72,
+    "fields": {
+      "name": "French Guiana",
+      "flag": "gf",
+      "zip_code": "594",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 73,
+    "fields": {
+      "name": "French Polynesia",
+      "flag": "pf",
+      "zip_code": "689",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 74,
+    "fields": {
+      "name": "French Southern Territories",
+      "flag": "tf",
+      "zip_code": "",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 75,
+    "fields": {
+      "name": "Gabon",
+      "flag": "ga",
+      "zip_code": "241",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 76,
+    "fields": {
+      "name": "Gambia",
+      "flag": "gm",
+      "zip_code": "220",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 77,
+    "fields": {
+      "name": "Georgia",
+      "flag": "ge",
+      "zip_code": "995",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 78,
+    "fields": {
+      "name": "Germany",
+      "flag": "de",
+      "zip_code": "49",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 79,
+    "fields": {
+      "name": "Ghana",
+      "flag": "gh",
+      "zip_code": "233",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 80,
+    "fields": {
+      "name": "Gibraltar",
+      "flag": "gi",
+      "zip_code": "350",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 81,
+    "fields": {
+      "name": "Greece",
+      "flag": "gr",
+      "zip_code": "30",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 82,
+    "fields": {
+      "name": "Greenland",
+      "flag": "gl",
+      "zip_code": "299",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 83,
+    "fields": {
+      "name": "Grenada",
+      "flag": "gd",
+      "zip_code": "+1-473",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 84,
+    "fields": {
+      "name": "Guadeloupe",
+      "flag": "gp",
+      "zip_code": "590",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 85,
+    "fields": {
+      "name": "Guam",
+      "flag": "gu",
+      "zip_code": "+1-671",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 86,
+    "fields": {
+      "name": "Guatemala",
+      "flag": "gt",
+      "zip_code": "502",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 87,
+    "fields": {
+      "name": "Guinea",
+      "flag": "gn",
+      "zip_code": "224",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 88,
+    "fields": {
+      "name": "Guinea-Bissau",
+      "flag": "gw",
+      "zip_code": "245",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 89,
+    "fields": {
+      "name": "Guyana",
+      "flag": "gy",
+      "zip_code": "592",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 90,
+    "fields": {
+      "name": "Haiti",
+      "flag": "ht",
+      "zip_code": "509",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 91,
+    "fields": {
+      "name": "Holy See (Vatican City State)",
+      "flag": "va",
+      "zip_code": "379",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 92,
+    "fields": {
+      "name": "Honduras",
+      "flag": "hn",
+      "zip_code": "504",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 93,
+    "fields": {
+      "name": "Hong Kong",
+      "flag": "hk",
+      "zip_code": "852",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 94,
+    "fields": {
+      "name": "Hungary",
+      "flag": "hu",
+      "zip_code": "36",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 95,
+    "fields": {
+      "name": "Iceland",
+      "flag": "is",
+      "zip_code": "354",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 96,
+    "fields": {
+      "name": "India",
+      "flag": "in",
+      "zip_code": "91",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 97,
+    "fields": {
+      "name": "Indonesia",
+      "flag": "id",
+      "zip_code": "62",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 98,
+    "fields": {
+      "name": "Iran, Islamic Republic Of",
+      "flag": "ir",
+      "zip_code": "98",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 99,
+    "fields": {
+      "name": "Iraq",
+      "flag": "iq",
+      "zip_code": "964",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 100,
+    "fields": {
+      "name": "Ireland",
+      "flag": "ie",
+      "zip_code": "353",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 101,
+    "fields": {
+      "name": "Israel",
+      "flag": "il",
+      "zip_code": "972",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 102,
+    "fields": {
+      "name": "Italy",
+      "flag": "it",
+      "zip_code": "39",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 103,
+    "fields": {
+      "name": "Jamaica",
+      "flag": "jm",
+      "zip_code": "+1-876",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 104,
+    "fields": {
+      "name": "Japan",
+      "flag": "jp",
+      "zip_code": "81",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 105,
+    "fields": {
+      "name": "Jordan",
+      "flag": "jo",
+      "zip_code": "962",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 106,
+    "fields": {
+      "name": "Kazakhstan",
+      "flag": "kz",
+      "zip_code": "7",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 107,
+    "fields": {
+      "name": "Kenya",
+      "flag": "ke",
+      "zip_code": "254",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 108,
+    "fields": {
+      "name": "Kiribati",
+      "flag": "ki",
+      "zip_code": "686",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 109,
+    "fields": {
+      "name": "Korea",
+      "flag": "kp",
+      "zip_code": "850",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 110,
+    "fields": {
+      "name": "Korea, Republic of",
+      "flag": "kr",
+      "zip_code": "82",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 111,
+    "fields": {
+      "name": "Kuwait",
+      "flag": "kw",
+      "zip_code": "965",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 112,
+    "fields": {
+      "name": "Kyrgyzstan",
+      "flag": "kg",
+      "zip_code": "996",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 113,
+    "fields": {
+      "name": "Latvia",
+      "flag": "lv",
+      "zip_code": "371",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 114,
+    "fields": {
+      "name": "Lebanon",
+      "flag": "lb",
+      "zip_code": "961",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 115,
+    "fields": {
+      "name": "Lesotho",
+      "flag": "ls",
+      "zip_code": "266",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 116,
+    "fields": {
+      "name": "Liberia",
+      "flag": "lr",
+      "zip_code": "231",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 117,
+    "fields": {
+      "name": "Libyan Arab Jamahiriya",
+      "flag": "ly",
+      "zip_code": "218",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 118,
+    "fields": {
+      "name": "Liechtenstein",
+      "flag": "li",
+      "zip_code": "423",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 119,
+    "fields": {
+      "name": "Lithuania",
+      "flag": "lt",
+      "zip_code": "370",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 120,
+    "fields": {
+      "name": "Luxembourg",
+      "flag": "lu",
+      "zip_code": "352",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 121,
+    "fields": {
+      "name": "Macao",
+      "flag": "mo",
+      "zip_code": "853",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 122,
+    "fields": {
+      "name": "Madagascar",
+      "flag": "mg",
+      "zip_code": "261",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 123,
+    "fields": {
+      "name": "Malawi",
+      "flag": "mw",
+      "zip_code": "265",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 124,
+    "fields": {
+      "name": "Malaysia",
+      "flag": "my",
+      "zip_code": "60",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 125,
+    "fields": {
+      "name": "Maldives",
+      "flag": "mv",
+      "zip_code": "960",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 126,
+    "fields": {
+      "name": "Mali",
+      "flag": "ml",
+      "zip_code": "223",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 127,
+    "fields": {
+      "name": "Malta",
+      "flag": "mt",
+      "zip_code": "356",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 128,
+    "fields": {
+      "name": "Marshall Islands",
+      "flag": "mh",
+      "zip_code": "692",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 129,
+    "fields": {
+      "name": "Martinique",
+      "flag": "mq",
+      "zip_code": "596",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 130,
+    "fields": {
+      "name": "Mauritania",
+      "flag": "mr",
+      "zip_code": "222",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 131,
+    "fields": {
+      "name": "Mauritius",
+      "flag": "mu",
+      "zip_code": "230",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 132,
+    "fields": {
+      "name": "Mayotte",
+      "flag": "yt",
+      "zip_code": "262",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 133,
+    "fields": {
+      "name": "Mexico",
+      "flag": "mx",
+      "zip_code": "52",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 134,
+    "fields": {
+      "name": "Moldova, Republic of",
+      "flag": "md",
+      "zip_code": "373",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 135,
+    "fields": {
+      "name": "Monaco",
+      "flag": "mc",
+      "zip_code": "377",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 136,
+    "fields": {
+      "name": "Mongolia",
+      "flag": "mn",
+      "zip_code": "976",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 137,
+    "fields": {
+      "name": "Montserrat",
+      "flag": "ms",
+      "zip_code": "+1-664",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 138,
+    "fields": {
+      "name": "Morocco",
+      "flag": "ma",
+      "zip_code": "212",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 139,
+    "fields": {
+      "name": "Mozambique",
+      "flag": "mz",
+      "zip_code": "258",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 140,
+    "fields": {
+      "name": "Myanmar",
+      "flag": "mm",
+      "zip_code": "95",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 141,
+    "fields": {
+      "name": "Namibia",
+      "flag": "na",
+      "zip_code": "264",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 142,
+    "fields": {
+      "name": "Nauru",
+      "flag": "nr",
+      "zip_code": "674",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 143,
+    "fields": {
+      "name": "Nepal",
+      "flag": "np",
+      "zip_code": "977",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 144,
+    "fields": {
+      "name": "Netherlands",
+      "flag": "nl",
+      "zip_code": "31",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 145,
+    "fields": {
+      "name": "Netherlands Antilles",
+      "flag": "an",
+      "zip_code": "",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 146,
+    "fields": {
+      "name": "New Caledonia",
+      "flag": "nc",
+      "zip_code": "687",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 147,
+    "fields": {
+      "name": "New Zealand",
+      "flag": "nz",
+      "zip_code": "64",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 148,
+    "fields": {
+      "name": "Nicaragua",
+      "flag": "ni",
+      "zip_code": "505",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 149,
+    "fields": {
+      "name": "Niger",
+      "flag": "ne",
+      "zip_code": "227",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 150,
+    "fields": {
+      "name": "Nigeria",
+      "flag": "ng",
+      "zip_code": "234",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 151,
+    "fields": {
+      "name": "Niue",
+      "flag": "nu",
+      "zip_code": "683",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 152,
+    "fields": {
+      "name": "Norfolk Island",
+      "flag": "nf",
+      "zip_code": "672",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 153,
+    "fields": {
+      "name": "Northern Mariana Islands",
+      "flag": "mp",
+      "zip_code": "+1-670",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 154,
+    "fields": {
+      "name": "Norway",
+      "flag": "no",
+      "zip_code": "47",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 155,
+    "fields": {
+      "name": "Oman",
+      "flag": "om",
+      "zip_code": "968",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 156,
+    "fields": {
+      "name": "Pakistan",
+      "flag": "pk",
+      "zip_code": "92",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 157,
+    "fields": {
+      "name": "Palau",
+      "flag": "pw",
+      "zip_code": "680",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 158,
+    "fields": {
+      "name": "Palestinian Territory, Occupied",
+      "flag": "ps",
+      "zip_code": "970",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 159,
+    "fields": {
+      "name": "Panama",
+      "flag": "pa",
+      "zip_code": "507",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 160,
+    "fields": {
+      "name": "Papua New Guinea",
+      "flag": "pg",
+      "zip_code": "675",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 161,
+    "fields": {
+      "name": "Paraguay",
+      "flag": "py",
+      "zip_code": "595",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 162,
+    "fields": {
+      "name": "Peru",
+      "flag": "pe",
+      "zip_code": "51",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 163,
+    "fields": {
+      "name": "Philippines",
+      "flag": "ph",
+      "zip_code": "63",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 164,
+    "fields": {
+      "name": "Pitcairn",
+      "flag": "pn",
+      "zip_code": "870",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 165,
+    "fields": {
+      "name": "Poland",
+      "flag": "pl",
+      "zip_code": "48",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 166,
+    "fields": {
+      "name": "Portugal",
+      "flag": "pt",
+      "zip_code": "351",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 167,
+    "fields": {
+      "name": "Puerto Rico",
+      "flag": "pr",
+      "zip_code": "+1-787 and 1-939",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 168,
+    "fields": {
+      "name": "Qatar",
+      "flag": "qa",
+      "zip_code": "974",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 169,
+    "fields": {
+      "name": "Reunion",
+      "flag": "re",
+      "zip_code": "262",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 170,
+    "fields": {
+      "name": "Romania",
+      "flag": "ro",
+      "zip_code": "40",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 171,
+    "fields": {
+      "name": "Russian Federation",
+      "flag": "ru",
+      "zip_code": "7",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 172,
+    "fields": {
+      "name": "RWANDA",
+      "flag": "rw",
+      "zip_code": "250",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 173,
+    "fields": {
+      "name": "Saint Helena",
+      "flag": "sh",
+      "zip_code": "290",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 174,
+    "fields": {
+      "name": "Saint Kitts and Nevis",
+      "flag": "kn",
+      "zip_code": "+1-869",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 175,
+    "fields": {
+      "name": "Saint Lucia",
+      "flag": "lc",
+      "zip_code": "+1-758",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 176,
+    "fields": {
+      "name": "Saint Pierre and Miquelon",
+      "flag": "pm",
+      "zip_code": "508",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 177,
+    "fields": {
+      "name": "Samoa",
+      "flag": "ws",
+      "zip_code": "685",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 178,
+    "fields": {
+      "name": "San Marino",
+      "flag": "sm",
+      "zip_code": "378",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 179,
+    "fields": {
+      "name": "Sao Tome and Principe",
+      "flag": "st",
+      "zip_code": "239",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 180,
+    "fields": {
+      "name": "Saudi Arabia",
+      "flag": "sa",
+      "zip_code": "966",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 181,
+    "fields": {
+      "name": "Senegal",
+      "flag": "sn",
+      "zip_code": "221",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 182,
+    "fields": {
+      "name": "Serbia and Montenegro",
+      "flag": "cs",
+      "zip_code": "",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 183,
+    "fields": {
+      "name": "Seychelles",
+      "flag": "sc",
+      "zip_code": "248",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 184,
+    "fields": {
+      "name": "Sierra Leone",
+      "flag": "sl",
+      "zip_code": "232",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 185,
+    "fields": {
+      "name": "Singapore",
+      "flag": "sg",
+      "zip_code": "65",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 186,
+    "fields": {
+      "name": "Slovakia",
+      "flag": "sk",
+      "zip_code": "421",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 187,
+    "fields": {
+      "name": "Slovenia",
+      "flag": "si",
+      "zip_code": "386",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 188,
+    "fields": {
+      "name": "Solomon Islands",
+      "flag": "sb",
+      "zip_code": "677",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 189,
+    "fields": {
+      "name": "Somalia",
+      "flag": "so",
+      "zip_code": "252",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 190,
+    "fields": {
+      "name": "South Africa",
+      "flag": "za",
+      "zip_code": "27",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 191,
+    "fields": {
+      "name": "Spain",
+      "flag": "es",
+      "zip_code": "34",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 192,
+    "fields": {
+      "name": "Sri Lanka",
+      "flag": "lk",
+      "zip_code": "94",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 193,
+    "fields": {
+      "name": "Sudan",
+      "flag": "sd",
+      "zip_code": "249",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 194,
+    "fields": {
+      "name": "Suritext",
+      "flag": "sr",
+      "zip_code": "597",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 195,
+    "fields": {
+      "name": "Svalbard and Jan Mayen",
+      "flag": "sj",
+      "zip_code": "47",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 196,
+    "fields": {
+      "name": "Swaziland",
+      "flag": "sz",
+      "zip_code": "268",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 197,
+    "fields": {
+      "name": "Sweden",
+      "flag": "se",
+      "zip_code": "46",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 198,
+    "fields": {
+      "name": "Switzerland",
+      "flag": "ch",
+      "zip_code": "41",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 199,
+    "fields": {
+      "name": "Syrian Arab Republic",
+      "flag": "sy",
+      "zip_code": "963",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 200,
+    "fields": {
+      "name": "Taiwan, Province of China",
+      "flag": "tw",
+      "zip_code": "886",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 201,
+    "fields": {
+      "name": "Tajikistan",
+      "flag": "tj",
+      "zip_code": "992",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 202,
+    "fields": {
+      "name": "Tanzania, United Republic of",
+      "flag": "tz",
+      "zip_code": "255",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 203,
+    "fields": {
+      "name": "Thailand",
+      "flag": "th",
+      "zip_code": "66",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 204,
+    "fields": {
+      "name": "Togo",
+      "flag": "tg",
+      "zip_code": "228",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 205,
+    "fields": {
+      "name": "Tokelau",
+      "flag": "tk",
+      "zip_code": "690",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 206,
+    "fields": {
+      "name": "Tonga",
+      "flag": "to",
+      "zip_code": "676",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 207,
+    "fields": {
+      "name": "Trinidad and Tobago",
+      "flag": "tt",
+      "zip_code": "+1-868",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 208,
+    "fields": {
+      "name": "Tunisia",
+      "flag": "tn",
+      "zip_code": "216",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 209,
+    "fields": {
+      "name": "Turkey",
+      "flag": "tr",
+      "zip_code": "90",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 210,
+    "fields": {
+      "name": "Turkmenistan",
+      "flag": "tm",
+      "zip_code": "993",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 211,
+    "fields": {
+      "name": "Turks and Caicos Islands",
+      "flag": "tc",
+      "zip_code": "+1-649",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 212,
+    "fields": {
+      "name": "Tuvalu",
+      "flag": "tv",
+      "zip_code": "688",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 213,
+    "fields": {
+      "name": "Uganda",
+      "flag": "ug",
+      "zip_code": "256",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 214,
+    "fields": {
+      "name": "Ukraine",
+      "flag": "ua",
+      "zip_code": "380",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 215,
+    "fields": {
+      "name": "United Arab Emirates",
+      "flag": "ae",
+      "zip_code": "971",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 216,
+    "fields": {
+      "name": "United Kingdom",
+      "flag": "gb",
+      "zip_code": "44",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 217,
+    "fields": {
+      "name": "United States",
+      "flag": "us",
+      "zip_code": "1",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 218,
+    "fields": {
+      "name": "Uruguay",
+      "flag": "uy",
+      "zip_code": "598",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 219,
+    "fields": {
+      "name": "Uzbekistan",
+      "flag": "uz",
+      "zip_code": "998",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 220,
+    "fields": {
+      "name": "Vanuatu",
+      "flag": "vu",
+      "zip_code": "678",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 221,
+    "fields": {
+      "name": "Venezuela",
+      "flag": "ve",
+      "zip_code": "58",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 222,
+    "fields": {
+      "name": "Viet Nam",
+      "flag": "vn",
+      "zip_code": "84",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 223,
+    "fields": {
+      "name": "Virgin Islands, British",
+      "flag": "vg",
+      "zip_code": "+1-284",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 224,
+    "fields": {
+      "name": "Virgin Islands, U.S.",
+      "flag": "vi",
+      "zip_code": "+1-340",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 225,
+    "fields": {
+      "name": "Wallis and Futuna",
+      "flag": "wf",
+      "zip_code": "681",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 226,
+    "fields": {
+      "name": "Western Sahara",
+      "flag": "eh",
+      "zip_code": "212",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 227,
+    "fields": {
+      "name": "Yemen",
+      "flag": "ye",
+      "zip_code": "967",
+      "is_band": false
+    }
+  },
+  {
+    "model": "app.country",
+    "pk": 228,
+    "fields": {
+      "name": "Zambia",
+      "flag": "zm",
+      "zip_code": "260",
+      "is_band": false
+    }
+  },
+   {
+      "model":"app.user",
+      "pk":1,
+      "fields":{
+         "password":"pbkdf2_sha256$150000$5FQdCf3Xlwbp$zMYLqaFreo/aOg1nAQDLTwG+8fxewGfenCCi9m9dgmc=",
+         "last_login":"2020-11-09T19:44:42.878Z",
+         "is_superuser":true,
+         "uuid":"88f9f802-f861-43a7-93a7-4362e5202975",
+         "email":"admin@admin.com",
+         "username":"",
+         "first_name":null,
+         "last_name":null,
+         "date_joined":"2020-11-09T19:44:30.224Z",
+         "is_active":true,
+         "is_staff":true,
+         "phone":null,
+         "country":null,
+         "register_date":"2020-11-09",
+         "city":null,
+         "address_one":null,
+         "address_two":null,
+         "state":null,
+         "zip_code":null,
+         "avatar":"",
+         "verified":false,
+         "closed":false,
+         "balance":0.0,
+         "verify_file":"",
+         "groups":[
+
+         ],
+         "user_permissions":[
+
+         ]
+      }
+   }
+]
