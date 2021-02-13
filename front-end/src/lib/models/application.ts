@@ -54,12 +54,15 @@ export interface ApplicationConfig {
     localBackEndURL: string;
     localStoreConfig?: LocalStoreConfig;
     enableDevelopmentMode?: boolean;
-    applicationLogger?: {
-        log?: boolean;
-        error?: boolean;
-        info?: boolean;
-        warring?: boolean;
-    }
+    applicationLogger?: ApplicationLoggerConfig;
+}
+
+export interface ApplicationLoggerConfig{
+    enableConfig?: boolean;
+    log?: boolean;
+    error?: boolean;
+    info?: boolean;
+    warring?: boolean;
 }
 
 export interface StoreConfig {

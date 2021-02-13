@@ -41,40 +41,41 @@ class Application<P extends ApplicationBaseProps, S extends ApplicationBaseState
 
     constructor(props: P) {
         super(props);
-        var console = ( function (oldCons) {
-            return {
-                log: function (...text: any) {
-                    if (props.config.applicationLogger?.log && isTrue(props.config.enableDevelopmentMode)) {
-                        for (const msg of text) {
-                            oldCons.log(msg);
+        if(props.config.applicationLogger && props.config.applicationLogger.enableConfig) {
+            const console = ( function (oldCons) {
+                return {
+                    log: function (...text: any) {
+                        if (props.config.applicationLogger?.log && isTrue(props.config.enableDevelopmentMode)) {
+                            for (const msg of text) {
+                                oldCons.log(msg);
+                            }
+                        }
+                    },
+                    info: function (...text: any) {
+                        if (props.config.applicationLogger?.info && isTrue(props.config.enableDevelopmentMode)) {
+                            for (const msg of text) {
+                                oldCons.info(msg);
+                            }
+                        }
+                    },
+                    warn: function (...text: any) {
+                        if (props.config.applicationLogger?.warring) {
+                            for (const msg of text) {
+                                oldCons.warn(msg);
+                            }
+                        }
+                    },
+                    error: function (...text: any) {
+                        if (props.config.applicationLogger?.error) {
+                            for (const msg of text) {
+                                oldCons.error(msg);
+                            }
                         }
                     }
-                },
-                info: function (...text: any) {
-                    if (props.config.applicationLogger?.info && isTrue(props.config.enableDevelopmentMode)) {
-                        for (const msg of text) {
-                            oldCons.info(msg);
-                        }
-                    }
-                },
-                warn: function (...text: any) {
-                    if (props.config.applicationLogger?.warring) {
-                        for (const msg of text) {
-                            oldCons.warn(msg);
-                        }
-                    }
-                },
-                error: function (...text: any) {
-                    if (props.config.applicationLogger?.error) {
-                        for (const msg of text) {
-                            oldCons.error(msg);
-                        }
-                    }
-                }
-            };
-        }(window.console) );
-
-        window.console = console as any;
+                };
+            }(window.console) );
+            window.console = console as any;
+        }
         if (isTrue(props.config.enableDevelopmentMode)) {
             console.info('Start Application, Loading config...', props.config);
         }

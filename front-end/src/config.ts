@@ -23,7 +23,7 @@ export default {
         ENABLE_THUNK: true,
         ENABLE_LOGGER: true
     },
-    ENABLE_LOCAL_LOGGER: false,
+    ENABLE_LOCAL_LOGGER: true,
     LANGUAGES_SETTINGS: {
         LANGUAGES,
         DEFAULT_LANGUAGE: LANGUAGES.ENGLISH
@@ -33,6 +33,7 @@ export default {
     PERMISSIONS,
     CONSTANTS,
     APPLICATION_LOGGER: {
+        enableConfig: false,
         log: true,
         error: true,
         info: true,

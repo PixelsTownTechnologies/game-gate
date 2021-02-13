@@ -155,7 +155,7 @@ class LanguageServiceClass {
         this.callBacks.set(newId, callBack);
         setTimeout(() => {
             callBack(this.getLanguageSettings());
-        }, 100);
+        }, 20);
         return newId;
     }
 

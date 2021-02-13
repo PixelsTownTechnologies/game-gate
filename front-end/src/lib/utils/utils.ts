@@ -156,6 +156,10 @@ export function pxIf<T>(flag: any, value: T, defaultValue?: any): T | undefined 
     return value;
 }
 
+export function pxIfSelf<T>(value: T, defaultValue?: any): T | undefined {
+    return pxIf(value, value, defaultValue);
+}
+
 export function getListOptions(list: any[], textFiledName?: string, valueFiledName?: string): ListOption[] {
     if (list && list.length > 0) {
         if (typeof ( list[0] ) === 'object') {

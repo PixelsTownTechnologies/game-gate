@@ -1,5 +1,6 @@
 import {
     ApplicationConfig,
+    ApplicationLoggerConfig,
     onCheckAuthenticateCallback,
     onCheckPermissionCallback,
     onEventCallback,
@@ -82,12 +83,7 @@ export class ApplicationWidget {
         this.config.localStoreConfig = config;
     }
 
-    setApplicationLogger = (config: {
-        log?: boolean;
-        error?: boolean;
-        info?: boolean;
-        warring?: boolean;
-    }) => {
+    setApplicationLogger = (config: ApplicationLoggerConfig) => {
         this.config.applicationLogger = config;
     }
 
