@@ -17,6 +17,7 @@ export default {
     DEV_BACKEND_POINT: 'http://192.168.1.194:8000/',
     LOCAL_BACKEND_POINT: 'http://192.168.1.194:8000/',
     DEFAULT_THEME: 'dark',
+    SKIP_AUTHENTICATION: false,
     ENABLE_DEVELOPMENT: true,
     STORE_CONFIG: {
         ENABLE_THUNK: true,
@@ -31,4 +32,10 @@ export default {
     ROUTES: routes,
     PERMISSIONS,
     CONSTANTS,
+    APPLICATION_LOGGER: {
+        log: true,
+        error: true,
+        info: true,
+        warring: true,
+    }
 } as const;

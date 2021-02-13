@@ -36,11 +36,11 @@ const onStartCallback = (config: ApplicationConfig) => {
 };
 
 const onCheckAuthenticateCaller = (user: UserBaseDTO) => {
-    return true
+    return false;
 };
 
 const onCheckPermissionCaller = (permission: string, user: UserBaseDTO) => {
-    return true;
+    return false;
 }
 
 
@@ -58,14 +58,17 @@ application.setStoreConfig(storeConfig);
 application.setNotFoundComponent(config.NOT_FOUND_COMPONENT);
 application.setDefaultTheme(ThemeService.getLoadedTheme());
 
-application.setBackendURL(config.ENABLE_DEVELOPMENT
-    ? config.LOCAL_BACKEND_POINT : config.DEV_BACKEND_POINT);
+application.setLocalBackendURL(config.LOCAL_BACKEND_POINT);
+application.setDevBackendURL(config.DEV_BACKEND_POINT);
 
-application.skipUser(config.ENABLE_DEVELOPMENT);
+application.enableDevelopmentMode(config.ENABLE_DEVELOPMENT);
+
+application.skipUser(config.SKIP_AUTHENTICATION);
 application.setLocalStoreConfig({
     enableLogger: config.ENABLE_LOCAL_LOGGER && config.ENABLE_DEVELOPMENT
 });
 
+application.setApplicationLogger(config.APPLICATION_LOGGER);
 
 // Start Application
 application.start();

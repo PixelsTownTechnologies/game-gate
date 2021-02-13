@@ -15,6 +15,7 @@ import { Loader } from "../components/basic";
 import TokenService from "../services/token-service";
 import { BaseHTTPService } from "../services/http-services/base-http-service";
 import StorageService from "../services/storage-service";
+import { isTrue } from "../utils/utils";
 
 const ThemeSelector = ({children, theme}: { children: any, theme: any }) => {
     const Theme = theme;
@@ -28,6 +29,7 @@ const ThemeSelector = ({children, theme}: { children: any, theme: any }) => {
     )
 }
 
+
 class Application<P extends ApplicationBaseProps, S extends ApplicationBaseState> extends React.Component<P, S> {
 
     public static checkPermissions: (permission: string) => boolean;
@@ -39,21 +41,61 @@ class Application<P extends ApplicationBaseProps, S extends ApplicationBaseState
 
     constructor(props: P) {
         super(props);
+        var console = ( function (oldCons) {
+            return {
+                log: function (...text: any) {
+                    if (props.config.applicationLogger?.log && isTrue(props.config.enableDevelopmentMode)) {
+                        for (const msg of text) {
+                            oldCons.log(msg);
+                        }
+                    }
+                },
+                info: function (...text: any) {
+                    if (props.config.applicationLogger?.info && isTrue(props.config.enableDevelopmentMode)) {
+                        for (const msg of text) {
+                            oldCons.info(msg);
+                        }
+                    }
+                },
+                warn: function (...text: any) {
+                    if (props.config.applicationLogger?.warring) {
+                        for (const msg of text) {
+                            oldCons.warn(msg);
+                        }
+                    }
+                },
+                error: function (...text: any) {
+                    if (props.config.applicationLogger?.error) {
+                        for (const msg of text) {
+                            oldCons.error(msg);
+                        }
+                    }
+                }
+            };
+        }(window.console) );
+
+        window.console = console as any;
+        if (isTrue(props.config.enableDevelopmentMode)) {
+            console.info('Start Application, Loading config...', props.config);
+        }
         if (props.config.localStoreConfig) {
-            StorageService.enableLocalStoreLogger(!!props.config.localStoreConfig.enableLogger);
+            StorageService.enableLocalStoreLogger(
+                !!props.config.localStoreConfig.enableLogger
+                && isTrue(props.config.enableDevelopmentMode)
+            );
             if (props.config.localStoreConfig.key) {
                 StorageService.setStorageKey(props.config.localStoreConfig.key);
             }
         }
         Application.setTheme = this.setTheme;
         Application.checkPermissions = (permission: string): boolean => {
-            if (props.config.skipUser) {
+            if (props.config.skipUser && isTrue(props.config.enableDevelopmentMode)) {
                 return true;
             }
             return props.config.checkPermissions ? props.config.checkPermissions(permission, this.state.user) : false;
         };
         Application.checkAuthenticate = (): boolean => {
-            if (props.config.skipUser) {
+            if (props.config.skipUser && isTrue(props.config.enableDevelopmentMode)) {
                 return true;
             }
             return props.config.checkAuthenticate ? props.config.checkAuthenticate(this.state.user) : false;
@@ -61,8 +103,8 @@ class Application<P extends ApplicationBaseProps, S extends ApplicationBaseState
         Application.routerConfig = props.config.routerConfig;
         const storeConfig = props.config.storeConfig;
         const middleware = [
-            storeConfig.middleware && storeConfig.middleware.thunk ? applyMiddleware(thunk) : null,
-            storeConfig.middleware && storeConfig.middleware.logger ? applyMiddleware(logger) : null,
+            storeConfig.middleware && storeConfig.middleware.thunk && isTrue(props.config.enableDevelopmentMode) ? applyMiddleware(thunk) : null,
+            storeConfig.middleware && storeConfig.middleware.logger && isTrue(props.config.enableDevelopmentMode) ? applyMiddleware(logger) : null,
         ].filter(m => !!m) as any;
         Application.store = createStore(combineReducers(
             {
@@ -88,7 +130,8 @@ class Application<P extends ApplicationBaseProps, S extends ApplicationBaseState
             loader: false,
             theme: props.config.defaultTheme
         } as any;
-        BaseHTTPService.initialize(props.config.backEndURL, TokenService.getToken);
+        BaseHTTPService.initialize(isTrue(props.config.enableDevelopmentMode)
+            ? props.config.localBackEndURL : props.config.devBackEndURL, TokenService.getToken);
     }
 
     public setTheme = (themeComponent: any) => {
@@ -131,36 +174,36 @@ class Application<P extends ApplicationBaseProps, S extends ApplicationBaseState
             });
         }
         return (
-            <div  dir={ 'auto' } >
-            <Provider store={ Application.store }>
-                <ThemeSelector theme={ this.state.theme }>
-                    { this.showLoader() }
-                    <BrowserRouter>
-                        <Switch>
-                            {
-                                renderRoutes.length > 0 ? renderRoutes : null
-                            }
-                            {
-                                this.props.config.notFoundPage ?
-                                    ( <Route component={ this.props.config.notFoundPage }/> ) : null
-                            }
-                        </Switch>
-                    </BrowserRouter>
-                </ThemeSelector>
-            </Provider>
+            <div dir={ 'auto' }>
+                <Provider store={ Application.store }>
+                    <ThemeSelector theme={ this.state.theme }>
+                        { this.showLoader() }
+                        <BrowserRouter>
+                            <Switch>
+                                {
+                                    renderRoutes.length > 0 ? renderRoutes : null
+                                }
+                                {
+                                    this.props.config.notFoundPage ?
+                                        ( <Route component={ this.props.config.notFoundPage }/> ) : null
+                                }
+                            </Switch>
+                        </BrowserRouter>
+                    </ThemeSelector>
+                </Provider>
             </div>
         );
     }
 
     private isAuthenticate(): boolean {
-        if (this.props.config.skipUser) {
+        if (this.props.config.skipUser && isTrue(this.props.config.enableDevelopmentMode)) {
             return true;
         }
         return this.props.config.checkAuthenticate ? this.props.config.checkAuthenticate(this.state.user) : false;
     }
 
     private checkPermissions = (permission: string): boolean => {
-        if (this.props.config.skipUser) {
+        if (this.props.config.skipUser && isTrue(this.props.config.enableDevelopmentMode)) {
             return true;
         }
         return this.props.config.checkPermissions ? this.props.config.checkPermissions(permission, this.state.user) : false;

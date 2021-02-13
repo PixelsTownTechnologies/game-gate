@@ -66,11 +66,29 @@ export class ApplicationWidget {
         this.config.defaultTheme = theme;
     }
 
-    setBackendURL = (url: string) => {
-        this.config.backEndURL = url;
+    setDevBackendURL = (url: string) => {
+        this.config.devBackEndURL = url;
     }
 
-    setLocalStoreConfig = (config: LocalStoreConfig) =>{
+    setLocalBackendURL = (url: string) => {
+        this.config.localBackEndURL = url;
+    }
+
+    enableDevelopmentMode = (val: boolean) => {
+        this.config.enableDevelopmentMode = val;
+    }
+
+    setLocalStoreConfig = (config: LocalStoreConfig) => {
         this.config.localStoreConfig = config;
     }
+
+    setApplicationLogger = (config: {
+        log?: boolean;
+        error?: boolean;
+        info?: boolean;
+        warring?: boolean;
+    }) => {
+        this.config.applicationLogger = config;
+    }
+
 }

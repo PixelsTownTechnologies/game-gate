@@ -1,21 +1,36 @@
 import React from "react";
-import {RouteComponentProps} from "react-router";
-import {UserBaseDTO} from "./user";
-import {ErrorDTO} from "./error";
+import { RouteComponentProps } from "react-router";
+import { UserBaseDTO } from "./user";
+import { ErrorDTO } from "./error";
 import { LocalStoreConfig } from "../services/storage-service";
 
 export interface MenuSetting {
     icon?: string;
     link?: string;
     text?: string;
+    isButton?: boolean;
+    direction?: 'left' | 'right';
+    onClick?: () => void;
 }
 
 export interface RouteConfig {
-    component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
+    component?: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
     path: string;
     permission?: string;
+    /**
+     * If authenticate is
+     * <h2>undefined -> both</h2>
+     * <h2>false -> un-Authenticate</h2>
+     * <h2>true -> Authenticate</h2>
+     */
     authenticate?: boolean;
     subRoutes?: RouteConfig[];
+    /**
+     * This used to don't load item in Routes
+     * So only for menu
+     * <h2>false -> will not render in route, will render only for menu</h2>
+     * <h2>true | undefined -> will render in route</h2>
+     */
     isRoute?: boolean;
     menuSetting?: MenuSetting;
 }
@@ -30,14 +45,21 @@ export interface ApplicationConfig {
     routerConfig: RouteConfig[];
     storeConfig: StoreConfig;
     notFoundPage: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
-    env?: any;
     onStart: onEventCallback;
     onEnd: onEventCallback;
     loaderComponent?: any;
     skipUser?: boolean;
     defaultTheme: JSX.Element;
-    backEndURL: string;
+    devBackEndURL: string;
+    localBackEndURL: string;
     localStoreConfig?: LocalStoreConfig;
+    enableDevelopmentMode?: boolean;
+    applicationLogger?: {
+        log?: boolean;
+        error?: boolean;
+        info?: boolean;
+        warring?: boolean;
+    }
 }
 
 export interface StoreConfig {
