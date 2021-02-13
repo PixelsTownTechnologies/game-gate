@@ -2,6 +2,7 @@ import { LanguageSetting, LEFT, RIGHT } from "./lib/services/language-service";
 import ARABIC_LANGUAGE from "./utils/languages/arabic-language";
 import ENGLISH_LANGUAGE from "./utils/languages/english-language";
 import routes from "./routes";
+import NotFound404Page from "./components/errors/not-found-404";
 
 export const PERMISSIONS = {};
 
@@ -13,8 +14,10 @@ export const LANGUAGES = {
 };
 
 export default {
-    BACK_END_END_POINT: 'http://192.168.1.194:8000/',
+    DEV_BACKEND_POINT: 'http://192.168.1.194:8000/',
+    LOCAL_BACKEND_POINT: 'http://192.168.1.194:8000/',
     DEFAULT_THEME: 'dark',
+    ENABLE_DEVELOPMENT: true,
     STORE_CONFIG: {
         ENABLE_THUNK: true,
         ENABLE_LOGGER: true
@@ -24,7 +27,8 @@ export default {
         LANGUAGES,
         DEFAULT_LANGUAGE: LANGUAGES.ENGLISH
     },
+    NOT_FOUND_COMPONENT: NotFound404Page,
     ROUTES: routes,
     PERMISSIONS,
-    CONSTANTS
+    CONSTANTS,
 } as const;

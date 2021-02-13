@@ -5,7 +5,6 @@ import { UserBaseDTO } from "./lib/models/user";
 import React from "react";
 import ThemeService from "./lib/services/theme-service";
 import LanguageService from "./lib/services/language-service";
-import { LocalStoreConfig } from "./lib/services/storage-service";
 import config from './config';
 
 const themes = {
@@ -22,8 +21,8 @@ LanguageService.loadSettings(Object.values(config.LANGUAGES_SETTINGS.LANGUAGES))
 
 const storeConfig = {
     middleware: {
-        thunk: config.STORE_CONFIG.ENABLE_THUNK,
-        logger: config.STORE_CONFIG.ENABLE_LOGGER
+        thunk: config.STORE_CONFIG.ENABLE_THUNK && config.ENABLE_DEVELOPMENT,
+        logger: config.STORE_CONFIG.ENABLE_LOGGER && config.ENABLE_DEVELOPMENT
     },
     reducer: {}
 };
@@ -46,19 +45,27 @@ const onCheckPermissionCaller = (permission: string, user: UserBaseDTO) => {
 
 
 const application = new ApplicationWidget();
+
 // Setting up application config
 application.onEndCallback(onEndCallback);
 application.onStartCallback(onStartCallback);
 application.onCheckAuthenticateCaller(onCheckAuthenticateCaller);
 application.onCheckPermissionCaller(onCheckPermissionCaller);
+
 application.setRouterConfig(config.ROUTES);
-application.skipUser(true);
 application.setStoreConfig(storeConfig);
-application.setNotFoundComponent(null);
+
+application.setNotFoundComponent(config.NOT_FOUND_COMPONENT);
 application.setDefaultTheme(ThemeService.getLoadedTheme());
-application.setBackendURL(config.BACK_END_END_POINT);
+
+application.setBackendURL(config.ENABLE_DEVELOPMENT
+    ? config.LOCAL_BACKEND_POINT : config.DEV_BACKEND_POINT);
+
+application.skipUser(config.ENABLE_DEVELOPMENT);
 application.setLocalStoreConfig({
-    enableLogger: config.ENABLE_LOCAL_LOGGER
-} as LocalStoreConfig);
+    enableLogger: config.ENABLE_LOCAL_LOGGER && config.ENABLE_DEVELOPMENT
+});
+
+
 // Start Application
 application.start();
