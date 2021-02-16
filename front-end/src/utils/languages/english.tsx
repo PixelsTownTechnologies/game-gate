@@ -1,6 +1,7 @@
 import { LanguageBaseWords } from "../../lib/services/language-service";
 
 const ENGLISH_LANGUAGE: LanguageBaseWords = {
+    appName: 'GAMERS-DZ',
     basic: {
         yes: 'yes',
         no: 'no',
@@ -50,6 +51,12 @@ const ENGLISH_LANGUAGE: LanguageBaseWords = {
         log: 'Login',
         forgetPassword: 'Forget Password',
         reset: 'Re-set',
+        signInTo: 'Sign-in to',
+        signIn: 'Sign-in',
+    },
+    validatorMessages: {
+        required: 'This field required, Please enter it.',
+        email: 'This filed not valid, Should be email.'
     }
 } as LanguageBaseWords;
 

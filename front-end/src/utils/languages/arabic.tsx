@@ -1,6 +1,7 @@
 import { LanguageBaseWords } from "../../lib/services/language-service";
 
 const ARABIC_LANGUAGE: LanguageBaseWords = {
+    appName: 'GAMERS-DZ',
     basic: {
         yes: 'نعم',
         no: 'لا',
@@ -50,6 +51,12 @@ const ARABIC_LANGUAGE: LanguageBaseWords = {
         log: 'تسجيل',
         forgetPassword: 'أسترجاع كلمة المرور',
         reset: 'أعادة تعين',
+        signInTo: 'تسجيل الدخول إلى',
+        signIn: 'تسجيل الدخول',
+    },
+    validatorMessages: {
+        required: 'هذا الحقل مطلوب من فضلك قم بادخاله.',
+        email: 'هذا الحقل مدخل بشكل خطاء يجب ان يحتوي على بريد الكتروني'
     }
 } as LanguageBaseWords;
 

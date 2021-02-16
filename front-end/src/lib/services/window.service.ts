@@ -75,6 +75,15 @@ class WindowServiceClass {
         });
     }
 
+    getSetting = (): SizeChangeResult => {
+        const screenType = window.innerWidth < 650 ? 'Mobile' : ( window.innerWidth < 950 ? 'Tablet' : 'Computer' );
+        return {
+            width: window.innerWidth,
+            height: window.innerHeight,
+            type: screenType
+        };
+    }
+
 }
 
 const WindowService = new WindowServiceClass();

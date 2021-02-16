@@ -31,6 +31,10 @@ export default [
     },
     {
         component: ComponentPPXPage,
+        path: ROUTES_URL.HOME
+    },
+    {
+        component: ComponentPPXPage,
         path: ROUTES_URL.TEST
     }
 ] as RouteConfig[];

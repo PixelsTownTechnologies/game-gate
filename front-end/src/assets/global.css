@@ -1,0 +1,7 @@
+.ui.input {
+    border-radius: unset !important;
+}
+
+.ui.input > input {
+    border-radius: unset !important;
+}

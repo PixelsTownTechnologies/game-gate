@@ -6,7 +6,7 @@ import { Checkbox, Dropdown, Form as SForm } from "semantic-ui-react";
 import { ValidateResult, VALIDATOR_CODES, ValidatorResult } from "../../models/validators";
 import { DIR } from "../../utils/constant";
 import { FlexBox, Map } from "../containers";
-import { classNameHelper, isEmpty, isEqual, isUndefined, pxIf } from "../../utils/utils";
+import { buildCN, isEmpty, isEqual, isUndefined, pxIf } from "../../utils/utils";
 import Icon from "semantic-ui-react/dist/commonjs/elements/Icon";
 
 interface FormState extends BaseComponentState {
@@ -320,7 +320,7 @@ class Form<FormEntityDTO> extends BaseComponent<FormDTO<FormEntityDTO>, FormStat
                                             }
                                         }
                                         return (
-                                            <SForm.Field className={ classNameHelper(
+                                            <SForm.Field className={ buildCN(
                                                 pxIf(state.direction, state.direction, DIR.AUTO)) }
                                                          disabled={ row1.disabled } key={ key1 }>
                                                 <label dir={ pxIf(state.direction, state.direction, DIR.AUTO) }
@@ -339,7 +339,7 @@ class Form<FormEntityDTO> extends BaseComponent<FormDTO<FormEntityDTO>, FormStat
                                                         }, ( form as any )[row1.fieldName], this.state.direction)
                                                     }
                                                     { validateMessage ?
-                                                        <h6 className={ classNameHelper('px-non-margin ui header red',
+                                                        <h6 className={ buildCN('px-non-margin ui header red',
                                                             pxIf(state.direction, state.direction, DIR.AUTO)) }
                                                             dir={ pxIf(state.direction, state.direction, DIR.AUTO) }>
                                                             { validateMessage }

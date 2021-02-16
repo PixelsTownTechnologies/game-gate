@@ -11,6 +11,7 @@ export type LEFT_DIR = 'ltr';
 export type RIGHT_DIR = 'rtl';
 
 export interface LanguageBaseWords {
+    appName: string;
     basic: {
         yes: string;
         no: string;
@@ -60,6 +61,12 @@ export interface LanguageBaseWords {
         log: string;
         forgetPassword: string;
         reset: string;
+        signInTo: string;
+        signIn: string;
+    },
+    validatorMessages: {
+        required: string;
+        email: string;
     }
 }
 
@@ -128,7 +135,6 @@ class LanguageServiceClass {
             } ));
             return (
                 <Dropdown
-                    className='px-language-db'
                     options={ options }
                     placeholder='Choose Language'
                     selection

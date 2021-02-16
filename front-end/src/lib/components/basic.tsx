@@ -1,7 +1,8 @@
 import React from "react";
 import { Button as SButton, Dimmer, Icon, Loader as SLoader, SemanticCOLORS } from "semantic-ui-react";
-import { classNameHelper } from "../utils/utils";
+import { buildCN } from "../utils/utils";
 import { SemanticSIZES } from "semantic-ui-react/dist/commonjs/generic";
+import {Link as DLink} from 'react-router-dom';
 
 
 export function Loader(props: { show: boolean }) {
@@ -9,8 +10,8 @@ export function Loader(props: { show: boolean }) {
         return null;
     }
     return (
-        <Dimmer inverted active>
-            <SLoader inverted/>
+        <Dimmer active>
+            <SLoader />
         </Dimmer>
     );
 }
@@ -71,7 +72,7 @@ export function Button(props: ButtonSetting) {
             inverted={ props.inverted }
             circular={ props.circular }
             labelPosition={ props.iconSetting && props.iconSetting.labelPosition ? props.iconSetting.labelPosition : undefined }
-            className={ classNameHelper(props.disablePXButton ? '' : 'px-lib', props.className ? props.className : '') }
+            className={ buildCN(props.disablePXButton ? '' : 'px-lib', props.className ? props.className : '') }
             icon={ props.iconSetting && props.iconSetting.attachToButton }
         >
             {
@@ -90,6 +91,15 @@ export function LinkButton(props: LinkButton) {
         </a>
     ) as any;
 }
+
+export function RouteButton(props: LinkButton) {
+    return (
+        <Link to={ props.url }>
+            <Button { ...props.buttonSetting } />
+        </Link>
+    ) as any;
+}
+
 
 interface IconButton extends BaseButton {
     name: string;
@@ -115,4 +125,28 @@ export function IconTextButton(props: IconTextButton) {
         },
         text: props.text ? props.text : ( props.children ? props.children : '' )
     } }/>
+}
+
+
+export interface LinkProps {
+    to: string;
+    children: any;
+    disabled?: boolean;
+    className?: string;
+}
+
+export function Link(props: LinkProps) {
+    return (
+        <DLink
+            className={buildCN('px-lib link', props.className ? props.className : '')}
+            onClick={(e) => {
+                if (props.disabled) {
+                    e.preventDefault();
+                }
+            }}
+            to={props.to}
+        >
+            {props.children}
+        </DLink>
+    )
 }

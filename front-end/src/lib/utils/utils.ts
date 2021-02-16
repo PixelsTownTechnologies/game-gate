@@ -1,6 +1,8 @@
 //import CryptoJS, {AES} from 'crypto-js';
 
 import { ListOption } from "../components/form/models";
+import { VALIDATOR_CODES } from "../models/validators";
+import { LanguageBaseWords } from "../services/language-service";
 
 export function encrypt(data: any, key: string): string {
     return data;//AES.encrypt(data, key) + '';
@@ -131,7 +133,7 @@ export const sortDate = (list: any[], fieldName: string) => {
     )
 }
 
-export function classNameHelper(...values: any[]): string {
+export function buildCN(...values: any[]): string {
     return values.filter(val => !!val).join(' ');
 }
 
@@ -141,7 +143,7 @@ export function classNameHelper(...values: any[]): string {
  * @param value
  * @param defaultValue: default is undefined
  */
-export function pxIf<T>(flag: any, value: T, defaultValue?: any): T | undefined {
+export function pxIf<T>(flag: any, value: T, defaultValue?: any): T {
     if (!flag) {
         return defaultValue;
     }
@@ -156,7 +158,7 @@ export function pxIf<T>(flag: any, value: T, defaultValue?: any): T | undefined 
     return value;
 }
 
-export function pxIfSelf<T>(value: T, defaultValue?: any): T | undefined {
+export function pxIfSelf<T>(value: T, defaultValue?: any): T {
     return pxIf(value, value, defaultValue);
 }
 
@@ -243,4 +245,15 @@ export const getFieldValueFromRow = (object: any, field: string) => {
         value = value ? value[key] : value;
     });
     return value;
+}
+
+export function clamp(min: number, value: number, max: number) {
+    return value > min ? value > max ? max : value : min;
+}
+
+export function getDefaultValidMsg(words: LanguageBaseWords) {
+    return [
+        {code: VALIDATOR_CODES.REQUIRED_FIELD, msg: words.validatorMessages.required},
+        {code: VALIDATOR_CODES.EMAIL, msg: words.validatorMessages.email}
+    ];
 }

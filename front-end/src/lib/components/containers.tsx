@@ -1,5 +1,5 @@
 import React from "react";
-import { classNameHelper, isEmpty, isFalse } from "../utils/utils";
+import { buildCN, isEmpty, isFalse, pxIfSelf } from "../utils/utils";
 import { DIR } from "../utils/constant";
 import { BaseComponentProps } from "./components";
 
@@ -40,7 +40,7 @@ export const FlexBox = (props: BaseFlexBox) => {
     }
     return (
         <div dir={ props.dir ? props.dir : DIR.AUTO }
-             className={ classNameHelper(props.className ? props.className : '',
+             className={ buildCN(props.className ? props.className : '',
                  'px-lib', 'flex',
                  props.justifyContent ? `justify-${ props.justifyContent }` : '',
                  props.alignItems ? `align-items-${ props.alignItems }` : '',
@@ -117,4 +117,10 @@ export const Map = (props: { list?: any[] | null, keyField?: string, mapper: (ro
 
 export const If = (props: { children?: JSX.Element | null, flag: any }): JSX.Element | null => {
     return isEmpty(props.flag) || !props.children ? null : props.children;
+}
+
+export function Divider(props: { color?: string }) {
+    return (
+        <div className={ buildCN('px-divider', pxIfSelf(props.color, '')) }/>
+    )
 }

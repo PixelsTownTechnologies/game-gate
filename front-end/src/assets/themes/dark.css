@@ -1,6 +1,7 @@
 body {
     background: linear-gradient(40deg, #0f2027, #203A43, #2C5364);
 }
+
 .ui.button {
     --bgColor1: #004263;
     --bgClor2: #0c5579;
@@ -31,4 +32,15 @@ body {
 
 .px-div {
     background: #237835;
+}
+
+.px-divider {
+    background: white;
+}
+
+.ui.header {
+    color: white;
+}
+.seg-header{
+    color: #000 !important;
 }

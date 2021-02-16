@@ -4,7 +4,7 @@ import { BaseComponent, BaseComponentMethods, BaseComponentProps, BaseComponentS
 import { FlexBox, FlexSpace, If } from "./containers";
 import { Button, IconButton, LinkButton } from "./basic";
 import { Dropdown, Icon, Label, Pagination, Rating, SemanticCOLORS, Table } from "semantic-ui-react";
-import { classNameHelper, costFormat, getFieldValueFromRow } from "../utils/utils";
+import { buildCN, costFormat, getFieldValueFromRow } from "../utils/utils";
 import { TABLE_OPTIONS } from "../utils/constant";
 import { BaseEntity } from "../models/base";
 
@@ -75,7 +75,7 @@ export class PTTable<EntityDTO extends BaseEntity> extends BaseComponent<TableDT
 
     show(props: TableDTO<EntityDTO>, state: TableState): JSX.Element | null {
         return (
-            <div className={ 'px-table' }>
+            <div className={ 'px-t-table' }>
                 <FlexSpace className={ 't-header' } pxIf={ props.showContainer } dir={ state.direction }>
                     <If flag={ props.onRefresh }>
                         <div dir={ state.direction }>
@@ -96,15 +96,15 @@ export class PTTable<EntityDTO extends BaseEntity> extends BaseComponent<TableDT
                     </If>
                     { this.props.children }
                 </FlexSpace>
-                <div className={ 'px-table-container' }>
+                <div className={ 'px-t-table-container' }>
                     <Table inverted={ props.inverted } selectable={ props.selectable } striped
                            color={ props.color ? props.color as any : 'grey' }
-                           className={ classNameHelper('px-non-margin') }>
+                           className={ buildCN('px-t-non-margin') }>
                         { this.renderTableHeader() }
                     </Table>
                     <Table inverted={ props.inverted } selectable={ props.selectable } striped
                            color={ props.color ? props.color as any : 'grey' }
-                           className={ classNameHelper(props.unStackable ? 'un-stackable' : '', 'px-non-margin') }>
+                           className={ buildCN(props.unStackable ? 'un-stackable' : '', 'px-t-non-margin') }>
                         <Table.Body>
                             { this.renderTableData() }
                         </Table.Body>
@@ -125,7 +125,7 @@ export class PTTable<EntityDTO extends BaseEntity> extends BaseComponent<TableDT
                                 }) }
                                 options={ TABLE_OPTIONS }/>
                             <div key={ 2 }
-                                 className='px-header'>:{ state.word.basic.pageSize }</div>
+                                 className='px-t-header'>:{ state.word.basic.pageSize }</div>
 
                         </div>
                         <If flag={ Math.floor(( this.props.data.length / Number(this.state.selectedPageSize) + 0.5 )) > 0 }>
@@ -134,7 +134,7 @@ export class PTTable<EntityDTO extends BaseEntity> extends BaseComponent<TableDT
                                     (e, {activePage}) =>
                                         this.setState({pageNumber: Number(activePage)})
                                 }
-                                className='px-pagination'
+                                className='px-t-pagination'
                                 activePage={ this.state.pageNumber }
                                 firstItem={ null }
                                 lastItem={ null }
@@ -189,10 +189,10 @@ export class PTTable<EntityDTO extends BaseEntity> extends BaseComponent<TableDT
 
     renderHeaderRow = (data: TableSetting, index: number) => {
         return (
-            <th key={ index } className='px-table-header' style={ {width: `${ data.width }px !important`} }>
+            <th key={ index } className='px-t-table-header' style={ {width: `${ data.width }px !important`} }>
                 <FlexBox width={ data.width } alignItems={ 'center' }
                          justifyContent={ this.props.centerData ? "center" : 'space-between' }>
-                    <h5 className={ 'px-non-margin px-srp-10' }>{ data.title }</h5>
+                    <h5 className={ 'px-t-non-margin px-t-srp-10' }>{ data.title }</h5>
                     { this.renderFilter(data) }
                 </FlexBox>
             </th>
@@ -202,7 +202,7 @@ export class PTTable<EntityDTO extends BaseEntity> extends BaseComponent<TableDT
     renderCellRow = (cellData: EntityDTO, index: number) => {
         return (
             <Table.Row
-                className='px-pointer'
+                className='px-t-pointer'
                 key={ cellData.id }
                 active={ `${ this.state.selectedRowKey }` === `${ cellData.id }` }
                 onClick={ () => {
@@ -332,7 +332,7 @@ export class PTTable<EntityDTO extends BaseEntity> extends BaseComponent<TableDT
                         }
                         return (
                             <Table.Cell key={ `id__${ cellData.id }_${ index2 }` }
-                                        className={ classNameHelper(this.props.centerData ? 'px-center-text' : '') }>
+                                        className={ buildCN(this.props.centerData ? 'px-t-center-text' : '') }>
                                 <div style={ {width: setting.width} }>
                                     { displayValue }
                                 </div>

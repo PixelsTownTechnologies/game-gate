@@ -13,6 +13,7 @@ import { ValidateResult, VALIDATOR_CODES } from "./lib/models/validators";
 import DialogForm, { DialogFormActionResult } from "./lib/components/form/dialog-form";
 import { BaseEntity } from "./lib/models/base";
 import { PTTable, TableDTO } from "./lib/components/tabels";
+import { Wrapper } from "./components/shared/wrapper";
 
 interface ComponentPPXProps {
     user: UserBaseDTO;
@@ -167,7 +168,7 @@ function ComponentPPXPage(props: ComponentPPXProps) {
     };
 
     return (
-        <div style={ {} as React.CSSProperties }>
+        <Wrapper>
             <PaddingBox size={ 20 }>
                 <IconButton name={ 'moon' } onClick={ () => ThemeService.loadTheme('dark') }/>
                 <IconButton name={ 'sun' } circular onClick={ () => ThemeService.loadTheme('light') }/>
@@ -229,7 +230,7 @@ function ComponentPPXPage(props: ComponentPPXProps) {
             <FlexSpace>
                 <PTTable { ...tableSetting } />
             </FlexSpace>
-        </div>
+        </Wrapper>
     );
 }
 

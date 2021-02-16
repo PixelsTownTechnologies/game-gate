@@ -1,5 +1,5 @@
 import React from 'react';
-import { classNameHelper, pxIf } from "../../utils/utils";
+import { buildCN, pxIf } from "../../utils/utils";
 import { isValidValue, NumberValidator, StringValidator, ValidatorResult } from "../../models/validators";
 import { NumberPipe, RangePipe } from "../../models/pipes";
 import { FlexBox } from "../containers";
@@ -46,7 +46,7 @@ export function TextField(props: TextFieldSetting<any>) {
     }
     return (
         <FlexBox flexDirection={ 'column' }
-                 className={ classNameHelper(pxIf(error, 'ui error input', 'ui input')) }>
+                 className={ buildCN(pxIf(error, 'ui error input', 'ui input')) }>
             <input
                 className={ pxIf(props.dir, props.dir, DIR.AUTO) }
                 dir={ pxIf(props.dir, props.dir, DIR.AUTO) } type='text'
@@ -82,7 +82,7 @@ export function TextField(props: TextFieldSetting<any>) {
             />
             {
                 validationResult.filter(v => !v.valid).length > 0 && props.errorCodeMap ? (
-                    <h6 className={ classNameHelper('px-non-margin ui header red', pxIf(props.dir, props.dir, DIR.AUTO), 'i-validate-msg') }
+                    <h6 className={ buildCN('px-non-margin ui header red', pxIf(props.dir, props.dir, DIR.AUTO), 'i-validate-msg') }
                         dir={ pxIf(props.dir, props.dir, DIR.AUTO) }>
                         { validationResult.filter(v => !v.valid)[0] ?
                             ( props.errorCodeMap as any )[validationResult.filter(v => !v.valid)[0].errorCode as any] : '' }

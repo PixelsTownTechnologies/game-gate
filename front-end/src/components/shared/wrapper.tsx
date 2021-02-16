@@ -1,13 +1,27 @@
 import React from 'react';
-import WidgetWrapper, { BasePageWrapperProps } from "../../lib/components/page-wrapper/page-wrapper";
-import { Loader } from "semantic-ui-react";
+import WidgetWrapper, { BaseWrapperProps } from "../../lib/components/wrapper/wrapper";
+import { ROUTES_URL } from "../../routes";
+import { IconButton, Loader, RouteButton } from "../../lib/components/basic";
+import ThemeService from "../../lib/services/theme-service";
+import LanguageService from "../../lib/services/language-service";
 
-export function Wrapper(props: BasePageWrapperProps) {
+export function Wrapper(props: BaseWrapperProps) {
     return <WidgetWrapper { ...props } widgets={
         {
-            footer: null,
             loader: Loader,
-            menu: null
+            menu: (
+                <div>
+                    <RouteButton buttonSetting={ {
+                        text: 'Go To Test'
+                    } } url={ ROUTES_URL.TEST }/>
+                    <RouteButton buttonSetting={ {
+                        text: 'Go To Login'
+                    } } url={ ROUTES_URL.USER.AUTH.LOGIN }/>
+                    <IconButton name={ 'moon' } onClick={ () => ThemeService.loadTheme('dark') }/>
+                    <IconButton name={ 'sun' } circular onClick={ () => ThemeService.loadTheme('light') }/>
+                    { LanguageService.getComponent() }
+                </div>
+            )
         }
     }/>
 }

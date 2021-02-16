@@ -1,18 +1,13 @@
 import 'semantic-ui-css/semantic.min.css';
+import './assets/global.css';
 import { ApplicationWidget } from "./lib/widgets/application";
 import { ApplicationConfig } from "./lib/models/application";
 import { UserBaseDTO } from "./lib/models/user";
-import React from "react";
 import ThemeService from "./lib/services/theme-service";
 import LanguageService from "./lib/services/language-service";
 import config from './config';
 
-const themes = {
-    dark: React.lazy(() => import('./utils/themes-warpper/dark-theme')),
-    light: React.lazy(() => import('./utils/themes-warpper/light-theme'))
-}
-
-ThemeService.loadThemes({...themes as any});
+ThemeService.loadThemes({...config.THEMES as any});
 ThemeService.loadDefaultTheme(config.DEFAULT_THEME);
 
 LanguageService.setDefaultSettings(config.LANGUAGES_SETTINGS.DEFAULT_LANGUAGE);
