@@ -10,7 +10,6 @@ import TokenService from "./lib/services/token-service";
 import UserFacadeService from "./lib/services/facade-service/user-facade-service";
 import { activeLoader, flushLoader } from "./lib/store/actions/loader";
 import { Loader } from "./components/shared/base";
-import React from 'react';
 
 ThemeService.loadThemes({...config.THEMES as any});
 ThemeService.loadDefaultTheme(config.DEFAULT_THEME);

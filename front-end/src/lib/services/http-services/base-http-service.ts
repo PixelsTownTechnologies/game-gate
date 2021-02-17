@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { BaseEntity } from "../../models/base";
 import { ServicesHTTPMethods } from "../facade-service/base-facade-service";
-import { isNull } from "../../utils/utils";
 
 export class BaseHTTPService {
 

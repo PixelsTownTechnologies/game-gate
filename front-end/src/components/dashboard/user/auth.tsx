@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { Wrapper } from "../../shared/wrapper";
-import { Divider, Header, Segment } from "semantic-ui-react";
+import { Divider } from "semantic-ui-react";
 import { Logo } from "../../shared/base";
-import { FlexBox, FlexCenter, FlexSpace, If } from "../../../lib/components/containers";
-import { BaseComponentProps } from "../../../lib/components/components";
-import { buildCN, clamp, getDefaultValidMsg, isFalse, isTrue, pxIf, pxIfSelf } from "../../../lib/utils/utils";
-import { DIR } from "../../../lib/utils/constant";
+import { FlexBox, FlexCenter, FlexSpace, SegmentBox } from "../../../lib/components/containers";
+import { clamp, getDefaultValidMsg, isFalse, isTrue } from "../../../lib/utils/utils";
 import { useLanguage } from "../../../lib/hooks/languageHook";
 import Form from "../../../lib/components/form/form";
 import { useWindow } from "../../../lib/hooks/screen-change";
@@ -17,45 +15,6 @@ import TokenService from "../../../lib/services/token-service";
 import { registerUser } from "../../../lib/store/actions/user";
 import { activeLoader, flushLoader } from "../../../lib/store/actions/loader";
 import { useLoader } from "../../../lib/hooks/generic";
-
-export interface SegmentDTO extends BaseComponentProps {
-    dir?: string;
-    className?: string;
-    raised?: boolean;
-    stacked?: boolean;
-    nonBoard?: boolean;
-    header?: string;
-    minWidth?: number;
-}
-
-export function SegmentBox(props: SegmentDTO) {
-    if (isFalse(props.pxIf)) {
-        return null;
-    }
-    return (
-        <div style={ props.minWidth ? {minWidth: props.minWidth} : {} }>
-            <If flag={ props.header }>
-
-                <Header className={ 'seg-header' } as='h4' dir={ pxIf(props.dir, props.dir, DIR.AUTO) } attached>
-                    <FlexCenter>
-                        { props.header }
-                    </FlexCenter>
-                </Header>
-            </If>
-            <Segment style={ props.minWidth ? {
-                paddingLeft: Math.floor(0.2 * props.minWidth)
-                , paddingRight: Math.floor(0.2 * props.minWidth),
-                paddingTop: Math.floor(0.08 * props.minWidth),
-                paddingBottom: Math.floor(0.08 * props.minWidth)
-            } : {} }
-                     attached={ !!props.header } className={ buildCN('px-lib', pxIfSelf(props.className, ''),
-                pxIf(props.nonBoard, 'non-boarder', '')) }
-                     raised={ props.raised } stacked={ props.stacked }>
-                { props.children }
-            </Segment>
-        </div>
-    );
-}
 
 export function LoginWidget() {
     const {words, dir} = useLanguage();
@@ -318,7 +277,7 @@ export function ForgetWidget() {
             } else if (state === 2) {
                 UserFacadeService.resetPasswordChangePassword(form.email, form.password, form.code).then(data => {
                     if (data.completed) {
-                        setTimeout(() =>{
+                        setTimeout(() => {
                             setRedirect(true);
                         }, 200);
                     } else {
@@ -425,4 +384,3 @@ export function ForgetPage() {
         </Wrapper>
     );
 }
-

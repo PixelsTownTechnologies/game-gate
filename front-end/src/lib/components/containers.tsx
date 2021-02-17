@@ -1,7 +1,8 @@
 import React from "react";
-import { buildCN, isEmpty, isFalse, pxIfSelf } from "../utils/utils";
+import { buildCN, isEmpty, isFalse, pxIf, pxIfSelf } from "../utils/utils";
 import { DIR } from "../utils/constant";
 import { BaseComponentProps } from "./components";
+import { Header, Segment } from "semantic-ui-react";
 
 interface FlexBoxProps extends BaseComponentProps {
     className?: string;
@@ -123,4 +124,43 @@ export function Divider(props: { color?: string }) {
     return (
         <div className={ buildCN('px-divider', pxIfSelf(props.color, '')) }/>
     )
+}
+
+export interface SegmentDTO extends BaseComponentProps {
+    dir?: string;
+    className?: string;
+    raised?: boolean;
+    stacked?: boolean;
+    nonBoard?: boolean;
+    header?: string;
+    minWidth?: number;
+}
+
+export function SegmentBox(props: SegmentDTO) {
+    if (isFalse(props.pxIf)) {
+        return null;
+    }
+    return (
+        <div style={ props.minWidth ? {minWidth: props.minWidth} : {} }>
+            <If flag={ props.header }>
+
+                <Header className={ 'seg-header' } as='h4' dir={ pxIf(props.dir, props.dir, DIR.AUTO) } attached>
+                    <FlexCenter>
+                        { props.header }
+                    </FlexCenter>
+                </Header>
+            </If>
+            <Segment style={ props.minWidth ? {
+                paddingLeft: Math.floor(0.2 * props.minWidth)
+                , paddingRight: Math.floor(0.2 * props.minWidth),
+                paddingTop: Math.floor(0.08 * props.minWidth),
+                paddingBottom: Math.floor(0.08 * props.minWidth)
+            } : {} }
+                     attached={ !!props.header } className={ buildCN('px-lib', pxIfSelf(props.className, ''),
+                pxIf(props.nonBoard, 'non-boarder', '')) }
+                     raised={ props.raised } stacked={ props.stacked }>
+                { props.children }
+            </Segment>
+        </div>
+    );
 }
