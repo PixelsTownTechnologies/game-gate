@@ -1,9 +1,8 @@
 import React from "react";
-import { Button as SButton, Dimmer, Icon, Loader as SLoader, SemanticCOLORS } from "semantic-ui-react";
+import { Button as SButton, Dimmer, Icon, Loader as SLoader, Message, Modal, SemanticCOLORS } from "semantic-ui-react";
 import { buildCN } from "../utils/utils";
 import { SemanticSIZES } from "semantic-ui-react/dist/commonjs/generic";
-import {Link as DLink} from 'react-router-dom';
-
+import { Link as DLink, Redirect as DRedirect } from 'react-router-dom';
 
 export function Loader(props: { show: boolean }) {
     if (!props.show) {
@@ -11,7 +10,7 @@ export function Loader(props: { show: boolean }) {
     }
     return (
         <Dimmer active>
-            <SLoader />
+            <SLoader/>
         </Dimmer>
     );
 }
@@ -58,7 +57,7 @@ export function Button(props: ButtonSetting) {
     return (
         <SButton
             size={ props.size ? props.size : undefined }
-            disabled={ props.disabled }
+            disabled={ props.disabled || props.loading }
             loading={ props.loading }
             positive={ props.positive }
             negative={ props.negative }
@@ -138,15 +137,73 @@ export interface LinkProps {
 export function Link(props: LinkProps) {
     return (
         <DLink
-            className={buildCN('px-lib link', props.className ? props.className : '')}
-            onClick={(e) => {
+            className={ buildCN('px-lib link', props.className ? props.className : '') }
+            onClick={ (e) => {
                 if (props.disabled) {
                     e.preventDefault();
                 }
-            }}
-            to={props.to}
+            } }
+            to={ props.to }
         >
-            {props.children}
+            { props.children }
         </DLink>
     )
+}
+
+export function Redirect(props: { flag: boolean, url: string }) {
+    if (!props.flag) {
+        return null;
+    }
+    return <DRedirect to={ props.url }/>
+}
+
+
+export const MessageErrors = (props: {
+    show: boolean,
+    errorHeaderMsg?: string,
+    errors?: string[],
+    subErrorMsg?: string,
+    modal?: boolean,
+    onCloseModal?: () => void
+}) => {
+    if (!props.show) {
+        return null;
+    }
+    if (( !props.errors || props.errors.length < 1 ) && !props.subErrorMsg) {
+        return null;
+    }
+    if (props.modal) {
+        return <Modal size={ 'tiny' } open={ true } onClose={ () => {
+            if (props.onCloseModal) {
+                props.onCloseModal();
+            }
+        } }>
+            {
+                props.subErrorMsg ?
+                    <Message
+                        floating
+                        error
+                    >{ props.subErrorMsg }</Message>
+                    :
+                    <Message
+                        floating
+                        error
+                        header={ props.errorHeaderMsg }
+                        list={ props.errors }
+                    />
+            }
+        </Modal>
+    }
+    if (props.subErrorMsg) {
+        return <Message
+            floating
+            error
+        >{ props.subErrorMsg }</Message>;
+    }
+    return <Message
+        floating
+        error
+        header={ props.errorHeaderMsg }
+        list={ props.errors }
+    />;
 }

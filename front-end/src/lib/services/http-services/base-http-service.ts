@@ -50,7 +50,7 @@ export class BaseHTTPService {
     }
 
     getRequestURL(id?: any): string {
-        return `${ this.baseURL }${ this.endPoint }${ !isNull(id) ? `/${ id }` : '' }`;
+        return `${ this.baseURL }${ this.endPoint }${ !!id ? `/${ id }` : '' }`;
     }
 
     public postAuth(data: any, url?: string, config?: AxiosRequestConfig) {

@@ -53,10 +53,26 @@ const ENGLISH_LANGUAGE: LanguageBaseWords = {
         reset: 'Re-set',
         signInTo: 'Sign-in to',
         signIn: 'Sign-in',
+        registerNow: 'New Member? Sign Up Now',
+        haveAccountLogin: 'Already have an account? Sign-In',
+        sendResetCode: 'Send Reset Password Email',
+        verify: 'Verify Code',
+        changePassword: 'Change Password',
+        resetPassword: 'Reset Password',
+        verifyCode: 'Verify Code'
     },
     validatorMessages: {
         required: 'This field required, Please enter it.',
         email: 'This filed not valid, Should be email.'
+    },
+    errors: {
+        verifyCodeLength: 'Verify code should be 8 characters',
+        emailOrPasswordNotCorrect: 'Email or password not correct, Please try again',
+        emailAlreadyUsed: 'This Email already used!',
+        emailNotUsed: 'This email not used',
+        verifyCodeNotCorrect: 'Verify code not correct',
+        passwordAndConfirmPassword: 'Password and confirm password Should be same, Please try again',
+        resetPasswordFailedPleaseTryAgain: 'Change password failed, Please try again later'
     }
 } as LanguageBaseWords;
 

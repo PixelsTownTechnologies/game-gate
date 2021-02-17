@@ -17,12 +17,14 @@ class UserFacadeServiceClass extends BaseFacadeServices {
         this.setLoader(USER_ACTIONS.AUTH_USER, flag);
     }
 
-    public async login(form: UserLoginDTO): Promise<UserLoginResponse | undefined> {
+    public async login(form: UserLoginDTO, skipSave?: boolean): Promise<UserLoginResponse | undefined> {
         this.setLoading(true);
         try {
             const response: AxiosResponse<UserLoginResponse> = await UserHTTPService.login(form);
-            TokenService.saveToken(response.data.token);
-            registerUser(response.data.user);
+            if(!skipSave) {
+                TokenService.saveToken(response.data.token);
+                registerUser(response.data.user);
+            }
             return response && response.data ? response.data : undefined;
         } catch (error) {
             this.throwError(USER_ACTIONS.AUTH_USER, error
@@ -90,6 +92,7 @@ class UserFacadeServiceClass extends BaseFacadeServices {
         } finally {
             this.setLoader(USER_ACTIONS.CHECK_TOKEN, false);
         }
+        return undefined;
     }
 
 

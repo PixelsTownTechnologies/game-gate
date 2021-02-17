@@ -6,6 +6,11 @@ import { UserBaseDTO } from "./lib/models/user";
 import ThemeService from "./lib/services/theme-service";
 import LanguageService from "./lib/services/language-service";
 import config from './config';
+import TokenService from "./lib/services/token-service";
+import UserFacadeService from "./lib/services/facade-service/user-facade-service";
+import { activeLoader, flushLoader } from "./lib/store/actions/loader";
+import { Loader } from "./components/shared/base";
+import React from 'react';
 
 ThemeService.loadThemes({...config.THEMES as any});
 ThemeService.loadDefaultTheme(config.DEFAULT_THEME);
@@ -27,15 +32,30 @@ const onEndCallback = (config: ApplicationConfig) => {
 };
 
 const onStartCallback = (config: ApplicationConfig) => {
-    console.log('Start');
+    console.log('Application Start');
+    TokenService.clearToken();
+    const token = TokenService.getToken();
+    if (token) {
+        activeLoader();
+        UserFacadeService.checkToken(token).then(d =>{
+            flushLoader();
+        });
+    }
 };
 
 const onCheckAuthenticateCaller = (user: UserBaseDTO) => {
-    return false;
+    return !!user && !!user.id;
 };
 
 const onCheckPermissionCaller = (permission: string, user: UserBaseDTO) => {
-    return false;
+    if (!(!!user && !!user.id)) {
+        return false;
+    }
+    let userPermissions: string[] = [];
+    user.groups?.forEach(group => {
+        userPermissions = [...userPermissions, ...group.permissions.map(p => p.codename)];
+    })
+    return userPermissions.filter(p => p === permission).length > 0;
 }
 
 
@@ -64,6 +84,8 @@ application.setLocalStoreConfig({
 });
 
 application.setApplicationLogger(config.APPLICATION_LOGGER);
+
+application.setLoaderComponent(Loader);
 
 // Start Application
 application.start();

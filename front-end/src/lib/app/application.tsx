@@ -16,6 +16,7 @@ import TokenService from "../services/token-service";
 import { BaseHTTPService } from "../services/http-services/base-http-service";
 import StorageService from "../services/storage-service";
 import { isTrue } from "../utils/utils";
+import { If } from "../components/containers";
 
 const ThemeSelector = ({children, theme}: { children: any, theme: any }) => {
     const Theme = theme;
@@ -41,7 +42,7 @@ class Application<P extends ApplicationBaseProps, S extends ApplicationBaseState
 
     constructor(props: P) {
         super(props);
-        if(props.config.applicationLogger && props.config.applicationLogger.enableConfig) {
+        if (props.config.applicationLogger && props.config.applicationLogger.enableConfig) {
             const console = ( function (oldCons) {
                 return {
                     log: function (...text: any) {
@@ -143,6 +144,7 @@ class Application<P extends ApplicationBaseProps, S extends ApplicationBaseState
         if (this.props.config.onStart) {
             this.props.config.onStart(this.props.config);
         }
+        this.setState({initialized: true});
     }
 
     public componentWillUnmount = () => {
@@ -179,17 +181,19 @@ class Application<P extends ApplicationBaseProps, S extends ApplicationBaseState
                 <Provider store={ Application.store }>
                     <ThemeSelector theme={ this.state.theme }>
                         { this.showLoader() }
-                        <BrowserRouter>
-                            <Switch>
-                                {
-                                    renderRoutes.length > 0 ? renderRoutes : null
-                                }
-                                {
-                                    this.props.config.notFoundPage ?
-                                        ( <Route component={ this.props.config.notFoundPage }/> ) : null
-                                }
-                            </Switch>
-                        </BrowserRouter>
+                        <If flag={ !this.state.loader && this.state.initialized }>
+                            <BrowserRouter>
+                                <Switch>
+                                    {
+                                        renderRoutes.length > 0 ? renderRoutes : null
+                                    }
+                                    {
+                                        this.props.config.notFoundPage ?
+                                            ( <Route component={ this.props.config.notFoundPage }/> ) : null
+                                    }
+                                </Switch>
+                            </BrowserRouter>
+                        </If>
                     </ThemeSelector>
                 </Provider>
             </div>
@@ -240,7 +244,8 @@ class Application<P extends ApplicationBaseProps, S extends ApplicationBaseState
 
     private showLoader = () => {
         if (this.props.config.loaderComponent) {
-            return this.props.config.loaderComponent;
+            const LoaderComponent = this.props.config.loaderComponent;
+            return <LoaderComponent show={ this.state.loader }/>;
         }
         return <Loader show={ this.state.loader }/>;
     }

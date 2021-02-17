@@ -19,8 +19,8 @@ export interface UserRegisterDTO {
     email: string;
     password: string;
     confirmPassword: string;
-    first_name: string;
-    last_name: string;
+    first_name?: string;
+    last_name?: string;
 }
 
 export interface UserBaseDTO extends BaseEntity {

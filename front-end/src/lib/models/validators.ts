@@ -3,6 +3,7 @@ export const VALIDATOR_CODES = {
     NUMBER: 'NUMBER',
     STRING: 'STRING',
     EMAIL: 'EMAIL',
+    LENGTH: 'LENGTH',
     RANGE_NUMBER: 'RANGE_NUMBER',
     REQUIRED_FIELD: 'REQUIRED_FIELD',
     NOT_EQUAL_TO: 'NOT_EQUAL_TO'
@@ -44,6 +45,11 @@ export const RangeValidator: ValidatorFunction<number> = (value1: number, subInp
 
 export const StringValidator: ValidatorFunction<string> = (value: string | undefined, subInput: any): ValidatorResult => {
     return {errorCode: VALIDATOR_CODES.STRING, valid: value ? /^[a-zA-Z]+$/.test(value) : true}
+}
+
+export const LengthValidator: ValidatorFunction<string> = (value: string | undefined, subInput: {length: number}): ValidatorResult => {
+    console.log(value, value?.length,  subInput.length, value?.length === subInput.length )
+    return {errorCode: VALIDATOR_CODES.LENGTH, valid: value ? value.length === subInput.length : true}
 }
 
 export const EmailValidator: ValidatorFunction<string> = (value: string | undefined, subInput: any): ValidatorResult => {

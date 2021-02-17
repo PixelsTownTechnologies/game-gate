@@ -1,4 +1,4 @@
-from django.utils import timezone
+from rest_framework import generics
 from rest_framework import generics
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
@@ -6,13 +6,11 @@ from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from app.constants import (ENUMS_SHARED_CODE_SELECTOR, ENUMS_NAME)
-from app.models import (Country, Order, Invoice, User, Enum)
+from app.models import (Country, Invoice, User, Enum)
 from app.models import (Platform)
-from app.resources import (create_notification, send_phone_message, readable_id, send_order_email)
+from app.resources import (create_notification)
 from app.serializers.general import (CountrySerializer)
-from app.serializers.general import (PlatformSerializer, OrderSerializer,
-                                     InvoiceSerializer, EnumSerializer, ReviewSerializer)
+from app.serializers.general import (PlatformSerializer, InvoiceSerializer, EnumSerializer)
 
 
 class CountryListView(generics.ListAPIView):
@@ -44,6 +42,7 @@ class PlatformUpdate(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PlatformSerializer
 
 
+"""
 class OrderUserUpdate(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -173,6 +172,8 @@ class OrderAdminUpdate(generics.RetrieveUpdateDestroyAPIView):
         order.save()
         return Response(OrderSerializer(order).data)
 
+"""
+
 
 class InvoiceUserFetchCreate(generics.ListAPIView):
     authentication_classes = [TokenAuthentication]
@@ -219,9 +220,4 @@ class EnumUpdate(generics.UpdateAPIView):
 @api_view(['GET'])
 def home(request):
     return Response(status=status.HTTP_200_OK,
-                    data={'reviews': ReviewSerializer(Order.objects.filter(status='D', rate__in=[1, 2, 3, 4, 5]),
-                                                      many=True).data,
-                          'orders_number': Order.objects.filter(status='D').count(),
-                          'reviews_number': Order.objects.filter(status='D', rate__in=[1, 2, 3, 4, 5]).count(),
-                          'enums': EnumSerializer(Enum.objects.filter(global_enum=True), many=True).data
-                          })
+                    data={'enums': EnumSerializer(Enum.objects.filter(global_enum=True), many=True).data})

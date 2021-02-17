@@ -5,10 +5,10 @@ from app.models import (User, Country)
 from app.serializers.general import (PermissionSerializer, GroupSerializer, CountrySerializer, NotificationSerializer)
 
 GENERAL_USER_FIELDS = ['id', 'avatar', 'verified', 'full_name',
-                       'first_name', 'last_name', 'zip_code', 'share_code_offer']
+                       'first_name', 'last_name', 'zip_code']
 
 CONTACT_INFO_USER_FIELDS = ['city', 'address_one', 'phone',
-                            'address_two', 'state', 'zip_code', 'email', 'verify_file', 'share_code']
+                            'address_two', 'state', 'zip_code', 'email', 'verify_file']
 
 PRIVATE_USER_FIELDS = ['uuid', 'is_active', 'balance',
                        'groups', 'permissions', 'username', 'register_date', 'notifications']

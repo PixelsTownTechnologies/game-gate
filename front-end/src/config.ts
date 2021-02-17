@@ -28,7 +28,7 @@ export default {
     ENABLE_DEVELOPMENT: true,
     STORE_CONFIG: {
         ENABLE_THUNK: true,
-        ENABLE_LOGGER: true
+        ENABLE_LOGGER: false
     },
     ENABLE_LOCAL_LOGGER: false,
     LANGUAGES_SETTINGS: {

@@ -5,3 +5,8 @@
 .ui.input > input {
     border-radius: unset !important;
 }
+
+.ui.error.message{
+    border-radius: unset !important;
+}
+

@@ -1,6 +1,6 @@
 import { RouteConfig } from "./lib/models/application";
 import ComponentPPXPage from "./testPage";
-import LoginPage from "./components/dashboard/user/login";
+import { ForgetPage, LoginPage, RegisterPage } from "./components/dashboard/user/auth";
 
 export const ROUTES_URL = {
     HOME: '/',
@@ -9,7 +9,7 @@ export const ROUTES_URL = {
         AUTH: {
             LOGIN: '/user/sing-in',
             REGISTER: '/user/sing-up',
-            RESET_PASSWORD: '/user/reset-password'
+            FORGET_PASSWORD: '/user/forget-password'
         },
         GENERAL: {
             PROFILE: '/user/profile'
@@ -25,6 +25,16 @@ export default [
             {
                 component: LoginPage,
                 path: ROUTES_URL.USER.AUTH.LOGIN,
+                authenticate: false
+            },
+            {
+                component: RegisterPage,
+                path: ROUTES_URL.USER.AUTH.REGISTER,
+                authenticate: false
+            },
+            {
+                component: ForgetPage,
+                path: ROUTES_URL.USER.AUTH.FORGET_PASSWORD,
                 authenticate: false
             }
         ]

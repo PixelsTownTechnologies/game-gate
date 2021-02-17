@@ -54,14 +54,14 @@ class EnumSerializer(serializers.ModelSerializer):
         model = Enum
         fields = SERIALIZER_ALL_FIELDS
 
-
+"""
 class OrderSerializer(serializers.ModelSerializer):
     owner = UserAdminGeneralSerializer(read_only=True)
 
     class Meta:
         model = Order
         fields = SERIALIZER_ALL_FIELDS
-
+"""
 
 class InvoiceSerializer(serializers.ModelSerializer):
     user = UserAdminGeneralSerializer(read_only=True)
@@ -78,7 +78,7 @@ class ReviewOwnerSerializer(serializers.ModelSerializer):
         model = User
         fields = ['country', 'full_name']
 
-
+"""
 class ReviewSerializer(serializers.ModelSerializer):
     owner = ReviewOwnerSerializer(read_only=True)
 
@@ -91,3 +91,4 @@ class SheetSettingSerializer(serializers.ModelSerializer):
     class Meta:
         model = SheetSetting
         fields = SERIALIZER_ALL_FIELDS
+"""

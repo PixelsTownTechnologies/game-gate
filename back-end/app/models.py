@@ -5,7 +5,6 @@ from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from app.resources import get_random_string
 from .managers import UserManager
 
 
@@ -111,32 +110,6 @@ class Platform(models.Model):
     email = models.BooleanField(default=False, blank=True, null=True)
 
 
-class Order(models.Model):
-    STATUS_CHOICES = (
-        ('D', 'Delivery'),
-        ('I', 'In Progress'),
-        ('C', 'Canceled'),
-        ('F', 'Failed'),
-        ('W', 'Warning'),
-    )
-    platform = models.CharField(max_length=64, null=True, blank=True)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
-    quantity = models.IntegerField(default=0, null=True, blank=True)
-    status = models.CharField(max_length=1, default='I', choices=STATUS_CHOICES, null=True, blank=True)
-    price = models.FloatField(default=0, null=True, blank=True)
-    backup_code = models.CharField(max_length=255, null=True, blank=True)
-    email = models.EmailField(default='', null=True, blank=True)
-    password = models.CharField(max_length=255, default='', null=True, blank=True)
-    link = models.URLField(max_length=700, null=True, blank=True)
-    warning_msg = models.CharField(max_length=255, default='', null=True, blank=True)
-    create_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now=True, blank=True, null=True)
-
-    rate = models.IntegerField(default=0, null=True, blank=True)
-    text = models.TextField(null=True, blank=True)
-    review_date = models.DateTimeField(null=True, blank=True)
-
-
 class Invoice(models.Model):
     ACTIONS_CHOICES = (
         ('A', 'Add Balance'),
@@ -148,11 +121,3 @@ class Invoice(models.Model):
     details = models.CharField(max_length=254, default='', null=True, blank=True)
     user = models.ForeignKey(User, related_name='invoices', on_delete=models.CASCADE)
     create_at = models.DateTimeField(auto_now_add=True)
-
-
-class SheetSetting(models.Model):
-    name = models.CharField(max_length=128, blank=True, null=True)
-    fields_setting = models.TextField(blank=True, null=True)
-    status_setting = models.TextField(blank=True, null=True)
-    active = models.BooleanField(default=False, blank=True, null=True)
-    increment = models.IntegerField(default=0, blank=True, null=True)

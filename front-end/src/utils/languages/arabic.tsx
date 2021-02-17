@@ -53,10 +53,26 @@ const ARABIC_LANGUAGE: LanguageBaseWords = {
         reset: 'أعادة تعين',
         signInTo: 'تسجيل الدخول إلى',
         signIn: 'تسجيل الدخول',
+        registerNow: 'مستخدم جديد؟ تسجيل الان',
+        haveAccountLogin: 'هل لديك حساب؟ تسجيل دخول',
+        sendResetCode: 'إعادة تعيين كلمة المرور',
+        verify: 'التحقق من كود',
+        changePassword: 'تغيير كلمة المرور',
+        resetPassword: 'أعادة تعين كلمة المرور',
+        verifyCode: 'رمز أعادة تعين'
     },
     validatorMessages: {
         required: 'هذا الحقل مطلوب من فضلك قم بادخاله.',
         email: 'هذا الحقل مدخل بشكل خطاء يجب ان يحتوي على بريد الكتروني'
+    },
+    errors: {
+        verifyCodeLength: 'رمز أعادة تعين يتكون من 8 حروف',
+        emailOrPasswordNotCorrect: 'كلمة المرور او أسم المستخدم غير صحيح',
+        emailAlreadyUsed: 'البريد الالكتروني مستخدم فالفعل',
+        emailNotUsed: 'البريد الالكتروني غير مستخدم',
+        verifyCodeNotCorrect: 'رمز الاستعادة غير صحيح',
+        passwordAndConfirmPassword: 'تاكيد كلمة المرور غير متطابق مع كلمة المرور',
+        resetPasswordFailedPleaseTryAgain: 'عملية تغير كلمة المرور فشلت قم باعدة المحاولة لاحقا'
     }
 } as LanguageBaseWords;
 

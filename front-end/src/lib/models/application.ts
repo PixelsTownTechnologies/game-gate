@@ -47,7 +47,7 @@ export interface ApplicationConfig {
     notFoundPage: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
     onStart: onEventCallback;
     onEnd: onEventCallback;
-    loaderComponent?: any;
+    loaderComponent?: React.ComponentType<{show: boolean}>;
     skipUser?: boolean;
     defaultTheme: JSX.Element;
     devBackEndURL: string;
@@ -75,6 +75,7 @@ export interface ApplicationBaseState {
     loader: boolean;
     theme: JSX.Element;
     flag: boolean;
+    initialized: boolean;
 }
 
 export interface ApplicationBaseProps {

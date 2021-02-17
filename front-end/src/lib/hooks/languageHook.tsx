@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
-import LanguageService, { LanguageBaseWords, LanguageSetting } from "../services/language-service";
+import LanguageService, { LanguageSetting } from "../services/language-service";
+import { LanguageSystemWords } from "../../models/language";
 
-export const useLanguage = (): { language: LanguageSetting, words: LanguageBaseWords, dir: string } => {
+export const useLanguage = (): { language: LanguageSetting, words: LanguageSystemWords, dir: string } => {
     const [ language, setLanguage ] = React.useState<any>(LanguageService.getLanguageSettings());
     const [ callBackID, setCallBackID ] = React.useState<number | null>(null);
     useEffect(() => {

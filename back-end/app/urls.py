@@ -23,12 +23,12 @@ urlpatterns_users = [
 
 
 urlpatterns_orders = [
-    path('user/orders', OrderUserFetchCreate.as_view()),
-    path('user/order/<pk>', OrderUserUpdate.as_view()),
+    #path('user/orders', OrderUserFetchCreate.as_view()),
+    #path('user/order/<pk>', OrderUserUpdate.as_view()),
 
-    path('user/order/review/<pk>', OrderUserReview.as_view()),
-    path('user/admin/orders', OrderAdminFetchCreate.as_view()),
-    path('user/admin/orders/<pk>', OrderAdminUpdate.as_view()),
+    #path('user/order/review/<pk>', OrderUserReview.as_view()),
+    #path('user/admin/orders', OrderAdminFetchCreate.as_view()),
+    #path('user/admin/orders/<pk>', OrderAdminUpdate.as_view()),
 ]
 
 urlpatterns_invoice = [

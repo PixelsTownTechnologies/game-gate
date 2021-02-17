@@ -191,6 +191,7 @@ def reset_code_view(request):
     user.save()
     Notification.objects.create(user=user,
                                 title='Password reset code was send to your email').save()
+    print(reset_code)
     return Response(status=200, data={'send': True})
 
 
@@ -204,8 +205,8 @@ def check_reset_code(request):
     if len(user_list) < 1:
         return Response(status=status.HTTP_401_UNAUTHORIZED)
     if len(user_list.filter(code=reset_code)) < 1:
-        user_list[0].code = get_random_string(100)
-        user_list[0].is_reset_code = False
+        #user_list[0].code = get_random_string(100)
+        #user_list[0].is_reset_code = False
         user_list[0].save()
         return Response(status=status.HTTP_401_UNAUTHORIZED)
     return Response(status=200, data={'valid': True})

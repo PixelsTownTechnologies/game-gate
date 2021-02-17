@@ -61,8 +61,15 @@ export interface LanguageBaseWords {
         log: string;
         forgetPassword: string;
         reset: string;
-        signInTo: string;
         signIn: string;
+        signInTo: string;
+        registerNow: string;
+        haveAccountLogin: string;
+        sendResetCode: string;
+        verify: string;
+        changePassword: string;
+        resetPassword: string;
+        verifyCode: string;
     },
     validatorMessages: {
         required: string;

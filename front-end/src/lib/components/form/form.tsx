@@ -206,7 +206,7 @@ class Form<FormEntityDTO> extends BaseComponent<FormDTO<FormEntityDTO>, FormStat
         Object.keys(form).forEach((fieldName: string) => {
             const fieldValue: any = form[fieldName];
             const fieldSettings: DFormField = fields.filter(f => f.fieldName === fieldName)[0];
-            if (fieldSettings.validator) {
+            if (fieldSettings && fieldSettings.validator) {
                 if (fieldSettings.validator.required && isEmpty(fieldValue)) {
                     const validationResult = {
                         valid: false,
