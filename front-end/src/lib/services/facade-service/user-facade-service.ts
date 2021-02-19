@@ -8,7 +8,7 @@ import { BaseFacadeServices } from "./base-facade-service";
 import { GroupBaseDTO, UserBaseDTO, UserLoginDTO, UserRegisterDTO } from "../../models/user";
 import { USER_ACTIONS } from "../models/actions";
 import { CountryDTO } from "../../models/country";
-import { flushUser, registerUser, updateUser } from "../../store/actions/user";
+import { flushUser, getUser, registerUser, updateUser } from "../../store/actions/user";
 import TokenService from "../token-service";
 
 class UserFacadeServiceClass extends BaseFacadeServices {
@@ -21,7 +21,7 @@ class UserFacadeServiceClass extends BaseFacadeServices {
         this.setLoading(true);
         try {
             const response: AxiosResponse<UserLoginResponse> = await UserHTTPService.login(form);
-            if(!skipSave) {
+            if (!skipSave) {
                 TokenService.saveToken(response.data.token);
                 registerUser(response.data.user);
             }
@@ -179,13 +179,8 @@ class UserFacadeServiceClass extends BaseFacadeServices {
             });
             if (response.data) {
                 updateUser({
-                    first_name: response.data.first_name,
-                    last_name: response.data.last_name,
-                    address_one: response.data.address_one,
-                    address_two: response.data.address_two,
-                    phone: response.data.phone,
-                    city: response.data.city,
-                    email: response.data.email,
+                    ...getUser(),
+                    ...response.data
                 } as UserBaseDTO);
             }
             return response.data;

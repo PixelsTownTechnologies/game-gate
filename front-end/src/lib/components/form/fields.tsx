@@ -1,5 +1,5 @@
 import React from 'react';
-import { buildCN, pxIf } from "../../utils/utils";
+import { buildCN, isTrue, pxIf } from "../../utils/utils";
 import { isValidValue, NumberValidator, StringValidator, ValidatorResult } from "../../models/validators";
 import { NumberPipe, RangePipe } from "../../models/pipes";
 import { FlexBox } from "../containers";
@@ -185,15 +185,16 @@ export class EmailInput extends React.Component<EmailInputProps, EmailInputState
         return (
             <div className={ `ui icon input ${ this.props.className ? this.props.className : '' }` }>
                 <Input { ...this.props }
+                       disabled={ isTrue(this.props.disabled) }
                        error={ this.props.error }
                        type='text'
                        name='email'
                        autoComplete='on'
                        placeholder={ this.props.placeholder ? this.props.placeholder : 'Email' }
                        style={ this.renderStyleInput() }
-                       onChange={(e)=>{
+                       onChange={ (e) => {
                            this.props.onChange(e.target.value);
-                       }}
+                       } }
                 />
                 <i className='user circle icon'/>
             </div>
@@ -223,7 +224,8 @@ export function ImageField(props: ImageDTO) {
     let inputRef: any;
     return (
         <div>
-            <Button iconSetting={ {name: 'camera'} } text={ pxIf(props.text, props.text, 'Upload') } onClick={ () => {
+            <Button { ...( props.buttonSetting ? props.buttonSetting : {} ) } iconSetting={ {name: 'camera'} }
+                    text={ pxIf(props.text, ' ' + props.text + ' ', 'Upload') } onClick={ () => {
                 if (!!inputRef) {
                     inputRef.click();
                 }

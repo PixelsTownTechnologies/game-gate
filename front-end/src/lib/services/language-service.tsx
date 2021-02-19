@@ -26,6 +26,8 @@ export interface LanguageBaseWords {
         refresh: string;
         pageSize: string;
         link: string;
+        upload: string;
+        language: string;
     },
     fields: {
         id: string;

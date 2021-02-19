@@ -1,6 +1,6 @@
 import React from "react";
 import { Button as SButton, Dimmer, Icon, Loader as SLoader, Message, Modal, SemanticCOLORS } from "semantic-ui-react";
-import { buildCN } from "../utils/utils";
+import { buildCN, pxIf, pxIfSelf } from "../utils/utils";
 import { SemanticSIZES } from "semantic-ui-react/dist/commonjs/generic";
 import { Link as DLink, Redirect as DRedirect } from 'react-router-dom';
 
@@ -157,6 +157,29 @@ export function Redirect(props: { flag: boolean, url: string }) {
     return <DRedirect to={ props.url }/>
 }
 
+interface ImageProps {
+    src: any;
+    border?: boolean;
+    center?: boolean;
+    width?: number;
+    color?: string;
+}
+
+export function Image(props: ImageProps) {
+    return (
+        <div style={ {'--imageWidth': `${props.width}px`} as any }
+             className={ buildCN('px-lib image',
+                 pxIf(props.border, 'image-boarder', ''),
+                 pxIfSelf(props.color, ''),
+                 pxIf(props.center, 'center', '')
+             ) }
+        >
+            <img alt={ '' }
+                 src={ props.src }
+            />
+        </div>
+    );
+}
 
 export const MessageErrors = (props: {
     show: boolean,

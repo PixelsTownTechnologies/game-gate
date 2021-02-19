@@ -31,6 +31,7 @@ export interface EmailInputProps {
     className?: string;
     error?: boolean;
     dir?: string;
+    disabled?: boolean;
 }
 
 export interface EmailInputState {
@@ -89,6 +90,7 @@ export interface ImageDTO {
     onError?: () => void;
     className?: string;
     text?: string;
+    buttonSetting?: ButtonSetting;
 }
 
 export interface DialogDTO {
@@ -139,6 +141,7 @@ export interface DFormField {
     validator?: { required?: boolean, equalToField?: string, validators?: ValidatorFunction<any>[], validatorInput?: any }
     defaultValue?: any;
     showErrorOnField?: boolean;
+    hideRequiredMark?: boolean;
 }
 
 type FormAction = 'add' | 'edit' | 'delete';
@@ -149,5 +152,6 @@ export interface FormDTO<FormEntity> extends BaseComponentProps {
     form: FormEntity;
     action?: string;
     onValidate: (validationResult: ValidateResult) => void;
-    messages?: { code: string, msg: string }[]
+    messages?: { code: string, msg: string }[];
+    className?: string;
 }

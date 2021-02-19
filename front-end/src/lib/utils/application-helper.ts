@@ -26,7 +26,7 @@ export const listenStateStore = (setStateCallback: (state: any) => void, entityN
     Application.store.subscribe(() => {
         const storeValue = getStoreState() as any;
         if (storeValue && storeValue[entityName]) {
-            setStateCallback({[entityName]: storeValue});
+            setStateCallback({[entityName]: storeValue[entityName]});
         }
     })
 }

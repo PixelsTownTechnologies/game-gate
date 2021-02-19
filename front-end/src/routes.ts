@@ -1,18 +1,17 @@
 import { RouteConfig } from "./lib/models/application";
 import ComponentPPXPage from "./testPage";
 import { ForgetPage, LoginPage, RegisterPage } from "./components/dashboard/user/auth";
+import { Profile } from "./components/dashboard/user/profile";
 
 export const ROUTES_URL = {
     HOME: '/',
-    TEST: '/test',
+    TEST: '/',
     USER: {
+        PROFILE: '/user/profile',
         AUTH: {
             LOGIN: '/user/sing-in',
             REGISTER: '/user/sing-up',
             FORGET_PASSWORD: '/user/forget-password'
-        },
-        GENERAL: {
-            PROFILE: '/user/profile'
         },
         ADMIN: {}
     }
@@ -38,6 +37,15 @@ export default [
                 authenticate: false
             }
         ]
+    },
+    {
+      subRoutes: [
+          {
+              component: Profile,
+              path: ROUTES_URL.USER.PROFILE,
+              authenticate: true
+          }
+      ]
     },
     {
         component: ComponentPPXPage,

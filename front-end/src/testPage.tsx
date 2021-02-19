@@ -8,7 +8,6 @@ import LanguageService, { LanguageBaseWords } from "./lib/services/language-serv
 import { ImageField, StringField } from "./lib/components/form/fields";
 import { Image } from "semantic-ui-react";
 import { FormDTO } from "./lib/components/form/models";
-// @ts-ignore
 import { ValidateResult, VALIDATOR_CODES } from "./lib/models/validators";
 import DialogForm, { DialogFormActionResult } from "./lib/components/form/dialog-form";
 import { BaseEntity } from "./lib/models/base";

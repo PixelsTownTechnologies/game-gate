@@ -69,7 +69,8 @@ export function LoginWidget() {
                                 type: 'email',
                                 fieldTitle: words.userFields.email,
                                 validator: {required: true, validators: [ EmailValidator ]},
-                                showErrorOnField: isSignInPress
+                                showErrorOnField: isSignInPress,
+                                hideRequiredMark: true
                             }
                         ]
                         ,
@@ -79,7 +80,8 @@ export function LoginWidget() {
                                 type: 'password',
                                 fieldTitle: words.userFields.password,
                                 validator: {required: true},
-                                showErrorOnField: isSignInPress
+                                showErrorOnField: isSignInPress,
+                                hideRequiredMark: true
                             }
                         ]
                     ]
@@ -183,7 +185,8 @@ export function RegisterWidget() {
                                 type: 'email',
                                 fieldTitle: words.userFields.email,
                                 validator: {required: true, validators: [ EmailValidator ]},
-                                showErrorOnField: isSubmitPress
+                                showErrorOnField: isSubmitPress,
+                                hideRequiredMark: true
                             }
                         ]
                         ,
@@ -193,7 +196,8 @@ export function RegisterWidget() {
                                 type: 'password',
                                 fieldTitle: words.userFields.password,
                                 validator: {required: true, equalToField: 'confirmPassword'},
-                                showErrorOnField: isSubmitPress
+                                showErrorOnField: isSubmitPress,
+                                hideRequiredMark: true
                             }
                         ],
                         [
@@ -202,7 +206,8 @@ export function RegisterWidget() {
                                 type: 'password',
                                 fieldTitle: words.userFields.confirmPassword,
                                 validator: {required: true},
-                                showErrorOnField: isSubmitPress
+                                showErrorOnField: isSubmitPress,
+                                hideRequiredMark: true
                             }
                         ]
                     ]

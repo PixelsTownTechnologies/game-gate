@@ -288,12 +288,12 @@ class Form<FormEntityDTO> extends BaseComponent<FormDTO<FormEntityDTO>, FormStat
         this.props.onValidate(this.validateForm(form));
     }
 
-    show({form}: FormDTO<FormEntityDTO>, state: FormState): JSX.Element | null {
+    show({form, className}: FormDTO<FormEntityDTO>, state: FormState): JSX.Element | null {
         if (!state.initializeForm) {
             return null;
         }
         return (
-            <SForm>
+            <SForm className={className ? className : ''}>
                 <Map
                     list={ this.getFilterFields() }
                     mapper={ (row: DFormField[][], key) => {
@@ -326,7 +326,7 @@ class Form<FormEntityDTO> extends BaseComponent<FormDTO<FormEntityDTO>, FormStat
                                                 <label dir={ pxIf(state.direction, state.direction, DIR.AUTO) }
                                                        style={ {display: 'flex'} }>{ row1.fieldTitle }
                                                     {
-                                                        row1.validator && row1.validator.required ? (
+                                                        row1.validator && row1.validator.required && !row1.hideRequiredMark ? (
                                                             <Icon size={ 'tiny' } name={ 'asterisk' } color={ 'red' }/>
                                                         ) : null
                                                     }

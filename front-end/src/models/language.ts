@@ -9,5 +9,17 @@ export interface LanguageSystemWords extends LanguageBaseWords {
         verifyCodeNotCorrect: string;
         passwordAndConfirmPassword: string;
         resetPasswordFailedPleaseTryAgain: string;
+        currentPasswordError: string;
+    },
+    messages: {
+        profile: {
+            changePassword: string;
+            changePasswordDescription: string;
+            generalSetting: string;
+            generalSettingDescription: string;
+            userNameSetting: string;
+            userNameSettingDescription: string;
+            passwordChangeSuccess: string;
+        }
     }
 }

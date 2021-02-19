@@ -1,6 +1,6 @@
-import { LanguageBaseWords } from "../../lib/services/language-service";
+import { LanguageSystemWords } from "../../models/language";
 
-const ENGLISH_LANGUAGE: LanguageBaseWords = {
+const ENGLISH_LANGUAGE: LanguageSystemWords = {
     appName: 'GAMERS-DZ',
     basic: {
         yes: 'yes',
@@ -15,7 +15,9 @@ const ENGLISH_LANGUAGE: LanguageBaseWords = {
         noDataToView: 'No Content To View',
         refresh: 'Refresh',
         pageSize: 'Page Size',
-        link: 'Link'
+        link: 'Link',
+        upload: 'Upload',
+        language: 'Language'
     },
     fields: {
         id: 'id',
@@ -72,8 +74,20 @@ const ENGLISH_LANGUAGE: LanguageBaseWords = {
         emailNotUsed: 'This email not used',
         verifyCodeNotCorrect: 'Verify code not correct',
         passwordAndConfirmPassword: 'Password and confirm password Should be same, Please try again',
-        resetPasswordFailedPleaseTryAgain: 'Change password failed, Please try again later'
+        resetPasswordFailedPleaseTryAgain: 'Change password failed, Please try again later',
+        currentPasswordError: 'Your current password not correct'
+    },
+    messages: {
+        profile: {
+            changePassword: 'Change Your Password',
+            changePasswordDescription: 'choose complex password contains unique and special characters and numbers ex: f%D21v1#*!a',
+            generalSetting: 'General Setting',
+            generalSettingDescription: 'You can change language and enable dark mode!',
+            userNameSetting: 'User Settings',
+            userNameSettingDescription: 'You can modify your user data, Make sure to put your real data!',
+            passwordChangeSuccess: 'Your Password Has been Changed Successfully'
+        }
     }
-} as LanguageBaseWords;
+} as LanguageSystemWords;
 
 export default ENGLISH_LANGUAGE;

@@ -1,3 +1,4 @@
+import random
 import uuid
 
 from django.contrib.auth.base_user import AbstractBaseUser
@@ -18,10 +19,14 @@ class Country(models.Model):
         return self.name if self.name is not None else 'Name Not Set'
 
 
+def generate_user_name():
+    return 'User {}'.format(random.randint(111111, 999999))
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     email = models.EmailField(_('email address'), unique=True, blank=True, null=True)
-    username = models.CharField(max_length=64, editable=False, blank=True)
+    username = models.CharField(max_length=64, blank=True, default=generate_user_name)
     first_name = models.CharField(_('first name'), max_length=64, blank=True, null=True)
     last_name = models.CharField(_('last name'), max_length=64, blank=True, null=True)
     date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)

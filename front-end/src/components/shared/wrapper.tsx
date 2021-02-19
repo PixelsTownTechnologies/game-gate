@@ -10,16 +10,18 @@ export function Wrapper(props: BaseWrapperProps) {
         {
             loader: Loader,
             menu: (
-                <div>
+                <div style={{background: '#555555'}}>
                     <RouteButton buttonSetting={ {
-                        text: 'Go To Test'
+                        text: 'Profile'
+                    } } url={ ROUTES_URL.USER.PROFILE }/>
+                    <RouteButton buttonSetting={ {
+                        text: 'test'
                     } } url={ ROUTES_URL.TEST }/>
                     <RouteButton buttonSetting={ {
-                        text: 'Go To Login'
+                        text: 'Login'
                     } } url={ ROUTES_URL.USER.AUTH.LOGIN }/>
                     <IconButton name={ 'moon' } onClick={ () => ThemeService.loadTheme('dark') }/>
                     <IconButton name={ 'sun' } circular onClick={ () => ThemeService.loadTheme('light') }/>
-                    { LanguageService.getComponent() }
                 </div>
             )
         }

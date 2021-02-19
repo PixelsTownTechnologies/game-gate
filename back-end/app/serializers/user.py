@@ -58,6 +58,7 @@ class UserSerializer(serializers.ModelSerializer):
         if country is not None and Country.objects.filter(id=country['id']) is not None and len(
                 Country.objects.filter(id=country['id'])) > 0:
             instance.country_id = country['id']
+        instance.username = validated_data.get('username', instance.username)
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
         instance.email = validated_data.get('email', instance.email)
@@ -66,7 +67,6 @@ class UserSerializer(serializers.ModelSerializer):
         instance.address_two = validated_data.get('address_two', instance.address_two)
         instance.city = validated_data.get('city', instance.city)
         instance.phone = validated_data.get('phone', instance.phone)
-        instance.share_code_offer = validated_data.get('share_code_offer', instance.share_code_offer)
         instance.save()
         return instance
 

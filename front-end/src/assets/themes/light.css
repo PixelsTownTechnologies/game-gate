@@ -1,11 +1,11 @@
 body {
-    background: #f0f0f0;
+    background: repeating-linear-gradient( #d3cce373 50%, #E9E4F0, #E9E4F0, #d3cce38c 50% );
 }
 
 .ui.button {
-    --bgColor1: #d7217e;
-    --bgClor2: #ec459e;
-    --bgColorHover: #f13093;
+    --bgColor1: #cf0e70;
+    --bgClor2: #e53995;
+    --bgColorHover: #e31f84;
     --bgColorDiable: #7d1449;
     --textColor: #fbfbfb;
     background: linear-gradient(90deg, var(--bgColor1), var(--bgClor2)) !important;
@@ -32,4 +32,9 @@ body {
 
 .px-div {
     background: #65028e;
+}
+
+.px-profile .image-section {
+    background: linear-gradient(45deg, #11998e, #38ef7d) !important;
+    box-shadow: inset -1px -6px 20px 3px rgba(149, 149, 149, 0.5);
 }

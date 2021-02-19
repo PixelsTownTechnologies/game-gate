@@ -5,6 +5,7 @@ import { BaseComponentProps } from "./components";
 import { Header, Segment } from "semantic-ui-react";
 
 interface FlexBoxProps extends BaseComponentProps {
+    flexDirection?: 'column' | 'row';
     className?: string;
     dir?: string;
     padding?: number;
@@ -13,7 +14,6 @@ interface FlexBoxProps extends BaseComponentProps {
 }
 
 interface BaseFlexBox extends FlexBoxProps {
-    flexDirection?: 'column' | 'row';
     justifyContent?: 'flex-start' | 'flex-end' | 'space-between' | 'center';
     alignItems?: 'center';
     warp?: boolean;
@@ -21,6 +21,7 @@ interface BaseFlexBox extends FlexBoxProps {
 
 interface PaddingBoxProps extends BaseComponentProps {
     size: number;
+    className?: string;
 }
 
 interface MarginBoxProps extends BaseComponentProps {
@@ -66,7 +67,7 @@ export const FlexSpace = (props: FlexBoxProps) => {
 export const FlexCenter = (props: FlexBoxProps) => {
     return (
         <FlexBox pxIf={ props.pxIf } padding={ props.padding } className={ props.className } warp dir={ props.dir }
-                 justifyContent={ 'center' }
+                 justifyContent={ 'center' } flexDirection={ props.flexDirection }
                  alignItems={ 'center' }>
             { props.children }
         </FlexBox>
@@ -75,7 +76,7 @@ export const FlexCenter = (props: FlexBoxProps) => {
 
 export const PaddingBox = (props: PaddingBoxProps) => {
     return (
-        <div style={ {padding: props.size} }>
+        <div style={ {padding: props.size} } className={ props.className ? props.className : '' }>
             { props.children }
         </div>
     );

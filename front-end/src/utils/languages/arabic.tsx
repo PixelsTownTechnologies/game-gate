@@ -1,6 +1,6 @@
-import { LanguageBaseWords } from "../../lib/services/language-service";
+import { LanguageSystemWords } from "../../models/language";
 
-const ARABIC_LANGUAGE: LanguageBaseWords = {
+const ARABIC_LANGUAGE: LanguageSystemWords = {
     appName: 'GAMERS-DZ',
     basic: {
         yes: 'نعم',
@@ -15,7 +15,9 @@ const ARABIC_LANGUAGE: LanguageBaseWords = {
         noDataToView: 'لا يوجد اي معلومات',
         refresh: 'تحديث',
         pageSize: 'حجم صفحة',
-        link: 'رابط'
+        link: 'رابط',
+        upload: 'تحميل',
+        language: 'ألغة'
     },
     fields: {
         id: 'الرقم التسلسلي',
@@ -72,8 +74,20 @@ const ARABIC_LANGUAGE: LanguageBaseWords = {
         emailNotUsed: 'البريد الالكتروني غير مستخدم',
         verifyCodeNotCorrect: 'رمز الاستعادة غير صحيح',
         passwordAndConfirmPassword: 'تاكيد كلمة المرور غير متطابق مع كلمة المرور',
-        resetPasswordFailedPleaseTryAgain: 'عملية تغير كلمة المرور فشلت قم باعدة المحاولة لاحقا'
+        resetPasswordFailedPleaseTryAgain: 'عملية تغير كلمة المرور فشلت قم باعدة المحاولة لاحقا',
+        currentPasswordError: 'هناك خطا في ادخال كلمة المرور الحاليه!'
+    },
+    messages: {
+        profile: {
+            changePassword: 'أعادة تعين كلمة المرور',
+            changePasswordDescription: 'قم بتعين كلمة مرور تحتوي على رموز خاصه من دون تكرار مثل f%D21v1#*!a',
+            generalSetting: 'ألعدادات العامة',
+            generalSettingDescription: 'يمكنك تغير الغة و تفعيل الوضع اليلي!',
+            userNameSetting: 'أعدادات المستخدم',
+            userNameSettingDescription: 'قم بتغير معلوماتك الشخصيه ولكن استعمل معلوماتك الحقيقيه',
+            passwordChangeSuccess: 'تم تغير كلمة المرور بنجاح'
+        }
     }
-} as LanguageBaseWords;
+} as LanguageSystemWords;
 
 export default ARABIC_LANGUAGE;

@@ -32,7 +32,7 @@ const onEndCallback = (config: ApplicationConfig) => {
 
 const onStartCallback = (config: ApplicationConfig) => {
     console.log('Application Start');
-    TokenService.clearToken();
+    //TokenService.clearToken();
     const token = TokenService.getToken();
     if (token) {
         activeLoader();
@@ -47,6 +47,8 @@ const onCheckAuthenticateCaller = (user: UserBaseDTO) => {
 };
 
 const onCheckPermissionCaller = (permission: string, user: UserBaseDTO) => {
+    return true;
+    /*
     if (!(!!user && !!user.id)) {
         return false;
     }
@@ -54,7 +56,7 @@ const onCheckPermissionCaller = (permission: string, user: UserBaseDTO) => {
     user.groups?.forEach(group => {
         userPermissions = [...userPermissions, ...group.permissions.map(p => p.codename)];
     })
-    return userPermissions.filter(p => p === permission).length > 0;
+    return userPermissions.filter(p => p === permission).length > 0;*/
 }
 
 
