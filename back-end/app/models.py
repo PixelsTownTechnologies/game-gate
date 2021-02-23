@@ -58,6 +58,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = _('users')
 
     @property
+    def is_deletable(self):
+        return False
+
+    @property
+    def is_editable(self):
+        return True
+
+    @property
     def full_name(self):
         full_name = '%s %s' % (self.first_name if self.first_name is not None else '',
                                self.last_name if self.last_name is not None else '')
@@ -73,6 +81,14 @@ class Notification(models.Model):
     title = models.CharField(max_length=128)
     user = models.ForeignKey(User, related_name='notifications', on_delete=models.CASCADE)
 
+    @property
+    def is_deletable(self):
+        return False
+
+    @property
+    def is_editable(self):
+        return False
+
     def __str__(self):
         return self.title if self.title is not None else 'Title Not Set'
 
@@ -85,6 +101,14 @@ class Log(models.Model):
     data = models.TextField(null=True, blank=True)
     user = models.ForeignKey(User, related_name='logs', on_delete=models.CASCADE)
 
+    @property
+    def is_deletable(self):
+        return False
+
+    @property
+    def is_editable(self):
+        return False
+
     def __str__(self):
         return self.action if self.action is not None else 'Action Not Set'
 
@@ -92,16 +116,31 @@ class Log(models.Model):
 class Enum(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True, blank=True, null=True)
-    name = models.CharField(max_length=32)
+    name = models.CharField(max_length=32, blank=True)
     data = models.TextField(null=True, blank=True)
     values = models.TextField(null=True, blank=True)
     max_value = models.IntegerField(default=100, null=True, blank=True)
     type = models.CharField(max_length=32, default='text')
     global_enum = models.BooleanField(default=False, null=True, blank=True)
 
+    @property
+    def is_deletable(self):
+        return False
+
+    @property
+    def is_editable(self):
+        return True
+
     def __str__(self):
         return self.name if self.name is not None else 'Name Not Set'
 
+    @property
+    def is_deletable(self):
+        return False
+
+    @property
+    def is_editable(self):
+        return True
 
 class Platform(models.Model):
     create_at = models.DateTimeField(auto_now_add=True)
@@ -119,6 +158,7 @@ class Invoice(models.Model):
     ACTIONS_CHOICES = (
         ('A', 'Add Balance'),
         ('R', 'Remove Balance'),
+        ('S', 'Set Balance'),
         ('P', 'Pay'),
     )
     action = models.CharField(max_length=1, default='A', choices=ACTIONS_CHOICES, null=True, blank=True)
@@ -126,3 +166,11 @@ class Invoice(models.Model):
     details = models.CharField(max_length=254, default='', null=True, blank=True)
     user = models.ForeignKey(User, related_name='invoices', on_delete=models.CASCADE)
     create_at = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def is_deletable(self):
+        return False
+
+    @property
+    def is_editable(self):
+        return False

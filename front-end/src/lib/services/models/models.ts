@@ -7,6 +7,15 @@ export interface APIActionConfig {
     type: 'FIND_BY_ID' | 'FIND' | 'DELETE' | 'CREATE' | 'UPDATE';
     url?: string;
     authenticate?: boolean;
+    formFields?: string[];
+}
+
+export const ACTIONS = {
+    FIND: 'FIND',
+    FIND_BY_ID: 'FIND_BY_ID',
+    DELETE: 'DELETE',
+    CREATE: 'CREATE',
+    UPDATE: 'UPDATE'
 }
 
 
@@ -17,7 +26,7 @@ export interface APIActionConfig {
  */
 export interface EntityServiceConfig {
     name: string;
-    storeName?: string;
+    storeName: string;
     loadToStore?: boolean;
     baseURL: string;
     dataType: 'array' | 'object';

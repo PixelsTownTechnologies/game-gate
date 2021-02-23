@@ -10,7 +10,8 @@ export interface LanguageSystemWords extends LanguageBaseWords {
         passwordAndConfirmPassword: string;
         resetPasswordFailedPleaseTryAgain: string;
         currentPasswordError: string;
-    },
+    };
+
     messages: {
         profile: {
             changePassword: string;
@@ -20,6 +21,46 @@ export interface LanguageSystemWords extends LanguageBaseWords {
             userNameSetting: string;
             userNameSettingDescription: string;
             passwordChangeSuccess: string;
-        }
-    }
+        };
+        menu: {
+            lookingHelp: string;
+        };
+    };
+
+    title: {
+        manageUsers: string;
+        manageEnums: string;
+        manageInvoice: string;
+        dashboard: string;
+        actions: {
+            editUser: string;
+            addUser: string;
+            setBalance: string;
+            addBalance: string;
+            removeBalance: string;
+            permissions: string;
+            editEnums: string;
+            changePermissions: string;
+        };
+    };
+
+    invoice: {
+        action: string;
+        amount: string;
+        details: string;
+        userName: string;
+        action_date: string;
+        action_time: string;
+        userId: string;
+        actionTypes: {
+            A: string;
+            R: string;
+            S: string;
+            P: string;
+        };
+    };
+
+    menu: {
+        profile: string;
+    };
 }

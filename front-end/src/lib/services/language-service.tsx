@@ -28,10 +28,14 @@ export interface LanguageBaseWords {
         link: string;
         upload: string;
         language: string;
+        search: string;
+        edit: string;
+        add: string;
     },
     fields: {
         id: string;
         name: string;
+        value: string;
     },
     userFields: {
         email: string;
@@ -56,11 +60,13 @@ export interface LanguageBaseWords {
         confirmPassword: string;
         currentPassword: string;
         newPassword: string;
+        balance: string;
     },
     authPages: {
         register: string;
         login: string;
         log: string;
+        logout: string;
         forgetPassword: string;
         reset: string;
         signIn: string;
@@ -72,10 +78,16 @@ export interface LanguageBaseWords {
         changePassword: string;
         resetPassword: string;
         verifyCode: string;
+        signUp: string;
+        welcomeMsg: string;
     },
     validatorMessages: {
         required: string;
         email: string;
+    },
+    serviceErrors: {
+        invalidId: string;
+        generalFailed: string;
     }
 }
 

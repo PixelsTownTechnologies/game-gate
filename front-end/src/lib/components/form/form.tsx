@@ -1,6 +1,6 @@
 import React from 'react';
 import { DFormField, FormDTO } from "./models";
-import { BaseComponent, BaseComponentMethods, BaseComponentState } from "../components";
+import { BaseComponent, BaseComponentState } from "../components";
 import { EmailInput, ImageField, NumberField, PasswordInput, TextArea, TextField } from "./fields";
 import { Checkbox, Dropdown, Form as SForm } from "semantic-ui-react";
 import { ValidateResult, VALIDATOR_CODES, ValidatorResult } from "../../models/validators";
@@ -114,7 +114,7 @@ export function getDynamicField(config: DFormField, onChange: (value: any) => vo
                 placeholder={ config.placeholder ? config.placeholder : '' }
                 value={ value }
                 onChange={ (e, data) => {
-                    onChange(data);
+                    onChange(data.value);
                 } }
             />
         );
@@ -127,12 +127,13 @@ export function getDynamicField(config: DFormField, onChange: (value: any) => vo
                 multiple
                 direction={ dir === DIR.RTL ? 'right' : 'left' }
                 selection
-                options={ config.subInputOptions ? config.subInputOptions.listOptions : [] }
+                options={ config.subInputOptions && config.subInputOptions.listOptions
+                    ? config.subInputOptions.listOptions.filter(o => !!o.key && !!o.text) : [] }
                 className={ config.className ? config.className : '' }
                 placeholder={ config.placeholder ? config.placeholder : '' }
                 value={ value }
                 onChange={ (e, data) => {
-                    onChange(data);
+                    onChange(data.value);
                 } }
             />
         );
@@ -151,7 +152,7 @@ export function getDynamicField(config: DFormField, onChange: (value: any) => vo
     return null;
 }
 
-class Form<FormEntityDTO> extends BaseComponent<FormDTO<FormEntityDTO>, FormState> implements BaseComponentMethods<FormDTO<FormEntityDTO>, FormState> {
+class Form<FormEntityDTO> extends BaseComponent<FormDTO<FormEntityDTO>, FormState> {
 
     constructor(props: FormDTO<FormEntityDTO>) {
         super(props);
@@ -293,7 +294,7 @@ class Form<FormEntityDTO> extends BaseComponent<FormDTO<FormEntityDTO>, FormStat
             return null;
         }
         return (
-            <SForm className={className ? className : ''}>
+            <SForm className={ className ? className : '' }>
                 <Map
                     list={ this.getFilterFields() }
                     mapper={ (row: DFormField[][], key) => {

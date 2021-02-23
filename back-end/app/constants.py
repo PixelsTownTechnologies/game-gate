@@ -12,3 +12,8 @@ ENUMS_SHARED_CODE_SELECTOR = {
     'PERCENTAGE': 'Percentage',
     'FIXED_COST': 'Fixed Price',
 }
+
+GENERAL_SERIALIZER_FIELDS = [
+    'is_editable',
+    'is_deletable'
+]

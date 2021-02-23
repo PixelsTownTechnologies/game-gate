@@ -42,6 +42,7 @@ export interface UserBaseDTO extends BaseEntity {
     verified: boolean;
     country: any;
     groups: GroupBaseDTO[];
+    balance: number;
 }
 
 
@@ -68,8 +69,9 @@ class User extends BaseModel<UserBaseDTO> implements BaseModelMethods<UserBaseDT
             uuid: '',
             date_joined: undefined,
             verified: false,
-            isEditable: false,
-            isDeletable: false
+            is_deletable: false,
+            is_editable: false,
+            balance: 0
         }
     }
 

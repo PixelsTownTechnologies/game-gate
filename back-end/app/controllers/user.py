@@ -118,7 +118,7 @@ class AdminChangeGroups(generics.UpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         user_id = kwargs.get('pk', None)
-        group_list = request.data.get('group', None)
+        group_list = request.data.get('groups', None)
         if user_id is None or group_list is None:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         user = User.objects.filter(pk=user_id).first()
@@ -126,7 +126,7 @@ class AdminChangeGroups(generics.UpdateAPIView):
         user.groups.set(groups)
         user.save()
         create_notification(user, 'Your Permissions Was Changed')
-        return Response(status=status.HTTP_200_OK, data={})
+        return Response(status=status.HTTP_200_OK, data=UserAdminSerializer(user).data)
 
 
 class ChangePasswordUser(mixins.RetrieveModelMixin, generics.GenericAPIView):

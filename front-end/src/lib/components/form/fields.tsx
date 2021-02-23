@@ -104,7 +104,7 @@ export function NumberField(props: NumberFieldSetting<number>) {
         livePipe: props.min && props.max ? NumberPipe : undefined,
         validatorInput: {min: props.min, max: props.max},
         onChange: (value) => {
-            props.onChange(value > MAX_VALUE ? MAX_VALUE : Number(value));
+            props.onChange(value > MAX_VALUE ? MAX_VALUE : value as number);
         }
     } }/>
 }

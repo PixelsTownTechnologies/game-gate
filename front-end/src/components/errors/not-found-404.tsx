@@ -15,7 +15,7 @@ class NotFound404Page extends React.Component<NotFound404Props, NotFound404State
 
     render() {
         return (
-            <Wrapper hideTitle hideContainer className={'red'} containerCName={'px-non-padding'}>
+            <Wrapper hideTitle fitContainer className={'red'} containerCName={'px-non-padding'}>
                 <FlexCenter  flexDirection={'column'} className={'px-f-height'}>
                     <h1 style={{fontSize: '3rem'}}>Not Found 404</h1>
                     <RouteButton url={ROUTES_URL.HOME} buttonSetting={{

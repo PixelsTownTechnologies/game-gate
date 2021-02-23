@@ -1,6 +1,7 @@
 from django.contrib.auth.models import (Group)
 from rest_framework import serializers
 
+from app.constants import GENERAL_SERIALIZER_FIELDS
 from app.models import (User, Country)
 from app.serializers.general import (PermissionSerializer, GroupSerializer, CountrySerializer, NotificationSerializer)
 
@@ -34,7 +35,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = [*GENERAL_USER_FIELDS, *CONTACT_INFO_USER_FIELDS,
+        fields = [*GENERAL_SERIALIZER_FIELDS, *GENERAL_USER_FIELDS, *CONTACT_INFO_USER_FIELDS,
                   *PRIVATE_USER_FIELDS, 'password', 'country']
         extra_kwargs = {
             'password': {'write_only': True, 'required': False},
@@ -77,7 +78,8 @@ class UserAdminSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = [*GENERAL_USER_FIELDS, *CONTACT_INFO_USER_FIELDS, 'username', 'groups', 'balance', 'country']
+        fields = [*GENERAL_SERIALIZER_FIELDS, *GENERAL_USER_FIELDS,
+                  *CONTACT_INFO_USER_FIELDS, 'username', 'groups', 'balance', 'country']
         extra_kwargs = {
             'email': {'required': False},
         }
@@ -99,6 +101,7 @@ class UserAdminSerializer(serializers.ModelSerializer):
         if country is not None and Country.objects.filter(name=country['name']) is not None and len(
                 Country.objects.filter(name=country['name'])) > 0:
             instance.country_id = Country.objects.filter(name=country['name']).first().id
+        instance.username = validated_data.get('username', instance.username)
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
         instance.zip_code = validated_data.get('zip_code', instance.zip_code)
@@ -106,6 +109,5 @@ class UserAdminSerializer(serializers.ModelSerializer):
         instance.address_two = validated_data.get('address_two', instance.address_two)
         instance.city = validated_data.get('city', instance.city)
         instance.phone = validated_data.get('phone', instance.phone)
-        instance.share_code_offer = validated_data.get('share_code_offer', instance.share_code_offer)
         instance.save()
         return instance

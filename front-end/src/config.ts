@@ -1,11 +1,10 @@
 import { LanguageSetting, LEFT, RIGHT } from "./lib/services/language-service";
 import ARABIC_LANGUAGE from "./utils/languages/arabic";
 import ENGLISH_LANGUAGE from "./utils/languages/english";
+import PERMISSIONS from './permissions';
 import routes from "./routes";
 import NotFound404Page from "./components/errors/not-found-404";
 import React from "react";
-
-export const PERMISSIONS = {};
 
 export const CONSTANTS = {};
 

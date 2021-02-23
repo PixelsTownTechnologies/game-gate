@@ -56,7 +56,7 @@ class Dialog extends React.Component<DialogDTO, DialogState> {
                     { children }
                 </Modal.Content>
                 <Modal.Actions>
-                    <FlexSpace>
+                    <FlexSpace padding={10}>
                         <div>
                             <Button { ...deleteButtonSetting }/>
                         </div>

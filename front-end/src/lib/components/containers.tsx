@@ -117,13 +117,13 @@ export const Map = (props: { list?: any[] | null, keyField?: string, mapper: (ro
     }) as any;
 }
 
-export const If = (props: { children?: JSX.Element | null, flag: any }): JSX.Element | null => {
+export const If = (props: { children?: any, flag: any }): JSX.Element | null => {
     return isEmpty(props.flag) || !props.children ? null : props.children;
 }
 
-export function Divider(props: { color?: string }) {
+export function Divider(props: { color?: string, className?: string }) {
     return (
-        <div className={ buildCN('px-divider', pxIfSelf(props.color, '')) }/>
+        <div className={ buildCN('px-divider', pxIfSelf(props.color, ''), pxIfSelf(props.className, '')) }/>
     )
 }
 

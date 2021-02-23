@@ -1,8 +1,9 @@
 //import CryptoJS, {AES} from 'crypto-js';
 
-import { ListOption } from "../components/form/models";
+import { DFormField, ListOption } from "../components/form/models";
 import { VALIDATOR_CODES } from "../models/validators";
 import { LanguageBaseWords } from "../services/language-service";
+import { EnumDTO } from "../models/enum";
 
 export function encrypt(data: any, key: string): string {
     return data;//AES.encrypt(data, key) + '';
@@ -181,7 +182,6 @@ export function getListOptions(list: any[], textFiledName?: string, valueFiledNa
     return [] as ListOption[];
 }
 
-
 export const isEmpty = (value: any): boolean => {
     if (!value) {
         return true;
@@ -256,4 +256,34 @@ export function getDefaultValidMsg(words: LanguageBaseWords) {
         {code: VALIDATOR_CODES.REQUIRED_FIELD, msg: words.validatorMessages.required},
         {code: VALIDATOR_CODES.EMAIL, msg: words.validatorMessages.email}
     ];
+}
+
+export function getEmptyForm(action: string, formSetting: DFormField[][]) {
+    const showField = (config: DFormField) => {
+        return !( ( action && config.hideOnAction && config.hideOnAction.includes(action) )
+            || ( !config.type || !config.fieldName || !config.fieldTitle ) );
+    }
+    const map = {} as any;
+    formSetting.forEach(list => {
+        list.forEach(settingField => {
+            if (showField(settingField)) {
+                map[settingField.fieldName] = settingField.defaultValue ? settingField.defaultValue : (
+                    [ 'multiSelect' ].includes(settingField.type) ? [] : (
+                        [ 'boolean' ].includes(settingField.type) ? false : (
+                            [ 'range', 'number' ].includes(settingField.type) ? 0 : ''
+                        )
+                    )
+                );
+            }
+        });
+    });
+    map.is_editable = true;
+    map.is_deletable = true;
+    return map;
+}
+
+
+export const getEnumFromList = (enumList: EnumDTO[], enumName: string): EnumDTO | null => {
+    const enumFilter = enumList ? enumList.filter(e => e.name === enumName) : [];
+    return enumFilter && enumFilter.length > 0 ? enumFilter[0] : null;
 }

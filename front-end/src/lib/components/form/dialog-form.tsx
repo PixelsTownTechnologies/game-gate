@@ -1,5 +1,5 @@
 import React from 'react';
-import { BaseComponent, BaseComponentMethods, BaseComponentProps, BaseComponentState } from "../components";
+import { BaseComponent, BaseComponentProps, BaseComponentState } from "../components";
 import { DFormField } from "./models";
 import { BaseEntity } from "../../models/base";
 import Dialog from "./dialog";
@@ -36,8 +36,7 @@ interface DialogFormState<FormType extends BaseEntity> extends BaseComponentStat
     loadingDelete: boolean;
 }
 
-class DialogForm<FormType extends BaseEntity> extends BaseComponent<DialogFormProps<FormType>, DialogFormState<FormType>>
-    implements BaseComponentMethods<DialogFormProps<FormType>, DialogFormState<FormType>> {
+class DialogForm<FormType extends BaseEntity> extends BaseComponent<DialogFormProps<FormType>, DialogFormState<FormType>> {
 
     constructor(props: DialogFormProps<FormType>) {
         super(props);
@@ -80,7 +79,8 @@ class DialogForm<FormType extends BaseEntity> extends BaseComponent<DialogFormPr
                         negative: true,
                         show: true,
                         iconSetting: {name: 'cancel'},
-                        onClick: props.onClose
+                        onClick: props.onClose,
+                        disabled: state.loadingSave || state.loadingDelete
                     }
                 }
                 saveButtonSetting={
@@ -88,7 +88,9 @@ class DialogForm<FormType extends BaseEntity> extends BaseComponent<DialogFormPr
                         text: state.word.basic.save,
                         positive: true,
                         show: true,
-                        disabled: !props.formSetting.form.isEditable || ( !state.validationResult || !state.validationResult.valid ) || state.loadingSave,
+                        disabled: !props.formSetting.form.is_editable
+                            || ( !state.validationResult
+                                || !state.validationResult.valid ) || state.loadingSave,
                         loading: state.loadingSave,
                         onClick: () => {
                             this.setState({loadingSave: true});
@@ -113,7 +115,7 @@ class DialogForm<FormType extends BaseEntity> extends BaseComponent<DialogFormPr
                         inverted: true,
                         basic: true,
                         negative: true,
-                        disabled: !props.formSetting.form.isDeletable || state.loadingDelete,
+                        disabled: !props.formSetting.form.is_deletable || state.loadingDelete,
                         loading: state.loadingDelete,
                         onClick: () => {
                             if (state.form && ( props.formSetting.form.id || props.formSetting.form.id === 0 ) && !state.loadingDelete) {
@@ -138,7 +140,7 @@ class DialogForm<FormType extends BaseEntity> extends BaseComponent<DialogFormPr
                         ...this.props.formSetting,
                         form: state.form,
                         onChange: this.onFormChange,
-                        onValidate: this.onFormValidate
+                        onValidate: this.onFormValidate,
                     } }
                 />
             </Dialog>

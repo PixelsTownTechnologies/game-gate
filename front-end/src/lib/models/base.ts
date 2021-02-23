@@ -1,7 +1,7 @@
 export interface BaseEntity {
     id: number;
-    isDeletable: boolean;
-    isEditable: boolean;
+    is_deletable: boolean;
+    is_editable: boolean;
 }
 
 export interface BaseModelMethods<EntityInterface> {

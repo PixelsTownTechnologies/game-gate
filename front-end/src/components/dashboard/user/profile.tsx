@@ -7,30 +7,31 @@ import { Divider, FlexBox, FlexCenter, FlexSpace, If, PaddingBox } from "../../.
 import { Checkbox, Divider as SDivider, Form as SForm, Header } from "semantic-ui-react";
 import { UserBaseDTO } from "../../../lib/models/user";
 import { clamp, getDefaultValidMsg, pxIfSelf } from "../../../lib/utils/utils";
-import { Button, Image, MessageErrors } from "../../../lib/components/basic";
+import { Button, IconButton, Image, Link, MessageErrors } from "../../../lib/components/basic";
 import ProfileIcon from '../../../assets/icons/profile.png';
 import { useStore } from "../../../lib/store/util";
-import { EmailInput, ImageField, TextField } from "../../../lib/components/form/fields";
+import { EmailInput, TextField } from "../../../lib/components/form/fields";
 import Form from "../../../lib/components/form/form";
 import UserFacadeService from "../../../lib/services/facade-service/user-facade-service";
 import { VALIDATOR_CODES } from "../../../lib/models/validators";
 import LanguageService from "../../../lib/services/language-service";
 import ThemeService from "../../../lib/services/theme-service";
+import { ROUTES_URL } from "../../../routes";
 
 interface ProfileProps {
     user: UserBaseDTO;
 }
 
-
 export const Profile = (props: ProfileProps) => {
     const {words, dir} = useLanguage();
     const loader = useLoader();
     const userLoader = useLoader();
-    const {width, type} = useWindow();
+    const {width} = useWindow();
     const [ error, setError ] = React.useState(false);
     const [ passwordChangeSuccess, setPasswordChangeSuccess ] = React.useState(false);
     const [ isSubmit, setIsSubmit ] = React.useState(false);
-    const [ selectedAvatar, setAvatar ] = useState(ProfileIcon);
+    const [ toggleDark, setToggleDark ] = React.useState(ThemeService.getLoadedThemeName() === 'dark');
+    const [ selectedAvatar ] = useState(ProfileIcon);
     const user = useStore<UserBaseDTO>('user');
     const {form, onChange, onValidate, isValid, setForm} = useForm({
         currentPassword: '',
@@ -80,11 +81,20 @@ export const Profile = (props: ProfileProps) => {
                             as={ 'h1' }>{ pxIfSelf(user.username, 'User 999999') }</Header>
                     <div>{ user.email }</div>
                 </FlexCenter>
-                <FlexBox className={ 'px-stp-25' }>
-                    <ImageField text={ words.basic.upload } onChange={ (imagePath, image) => {
-                        setAvatar(image);
-                    } }/>
-                </FlexBox>
+                <FlexCenter padding={20}>
+                    <Link className={ 'px-slm-5 px-srm-5' } to={ ROUTES_URL.HOME }>
+                        <IconButton size={ 'large' } name={ 'clone' } circular color={ 'blue' }/>
+                    </Link>
+                    <Link className={ 'px-slm-5 px-srm-5' } to={ ROUTES_URL.HOME }>
+                        <IconButton size={ 'large' } name={ 'chart bar' } circular color={ 'blue' }/>
+                    </Link>
+                    <Link className={ 'px-slm-5 px-srm-5' } to={ ROUTES_URL.HOME }>
+                        <IconButton size={ 'large' } name={ 'shopping cart' } circular color={ 'blue' }/>
+                    </Link>
+                    <Link className={ 'px-slm-5 px-srm-5' } to={ ROUTES_URL.HOME }>
+                        <IconButton size={ 'large' } name={ 'bookmark' } circular color={ 'blue' }/>
+                    </Link>
+                </FlexCenter>
             </PaddingBox>
             <PaddingBox size={ clamp(20, width * 0.20, 60) }>
                 <FlexBox dir={ dir } justifyContent={ 'space-between' } warp>
@@ -111,13 +121,19 @@ export const Profile = (props: ProfileProps) => {
                                   onClick={ () => {
                                       setTimeout(() => {
                                           if (ThemeService.getLoadedThemeName() !== 'dark') {
-                                              ThemeService.loadTheme('dark');
+                                              setTimeout(()=>{
+                                                  ThemeService.loadTheme('dark');
+                                              }, 2000);
+                                              setToggleDark(true);
                                           } else {
-                                              ThemeService.loadTheme('light')
+                                              setTimeout(()=>{
+                                                  ThemeService.loadTheme('light');
+                                              }, 2000);
+                                              setToggleDark(false);
                                           }
-                                      }, 2000);
+                                      }, 100);
                                   } }
-                                  checked={ ThemeService.getLoadedThemeName() === 'dark' }
+                                  checked={ toggleDark }
                         />
                     </div>
                 </FlexBox>
@@ -171,8 +187,8 @@ export const Profile = (props: ProfileProps) => {
                             <p>
                                 { words.messages.profile.changePasswordDescription }
                             </p>
-                            <If flag={passwordChangeSuccess}>
-                                <h5 style={{color: 'green'}}>{ words.messages.profile.passwordChangeSuccess }</h5>
+                            <If flag={ passwordChangeSuccess }>
+                                <h5 style={ {color: 'green'} }>{ words.messages.profile.passwordChangeSuccess }</h5>
                             </If>
                             <SDivider hidden/>
                         </FlexBox>

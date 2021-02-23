@@ -1,8 +1,9 @@
 import React from "react";
 import { Button as SButton, Dimmer, Icon, Loader as SLoader, Message, Modal, SemanticCOLORS } from "semantic-ui-react";
-import { buildCN, pxIf, pxIfSelf } from "../utils/utils";
+import { buildCN, isFalse, pxIf, pxIfSelf } from "../utils/utils";
 import { SemanticSIZES } from "semantic-ui-react/dist/commonjs/generic";
 import { Link as DLink, Redirect as DRedirect } from 'react-router-dom';
+import { BaseComponentProps } from "./components";
 
 export function Loader(props: { show: boolean }) {
     if (!props.show) {
@@ -15,7 +16,7 @@ export function Loader(props: { show: boolean }) {
     );
 }
 
-export interface BaseButton {
+export interface BaseButton extends BaseComponentProps {
     size?: SemanticSIZES;
     loading?: boolean;
     disabled?: boolean;
@@ -51,7 +52,7 @@ export interface LinkButton {
 }
 
 export function Button(props: ButtonSetting) {
-    if (props.show === false) {
+    if (isFalse(props.show) || isFalse(props.pxIf)) {
         return null;
     }
     return (
@@ -163,16 +164,19 @@ interface ImageProps {
     center?: boolean;
     width?: number;
     color?: string;
+    className?: string;
 }
 
 export function Image(props: ImageProps) {
     return (
-        <div style={ {'--imageWidth': `${props.width}px`} as any }
-             className={ buildCN('px-lib image',
-                 pxIf(props.border, 'image-boarder', ''),
-                 pxIfSelf(props.color, ''),
-                 pxIf(props.center, 'center', '')
-             ) }
+        <div
+            style={ {'--imageWidth': `${ props.width }px`} as any }
+            className={ buildCN('px-lib image',
+                pxIf(props.border, 'image-boarder', ''),
+                pxIfSelf(props.color, ''),
+                pxIf(props.center, 'center', ''),
+                pxIf(props.className, props.className, '')
+            ) }
         >
             <img alt={ '' }
                  src={ props.src }

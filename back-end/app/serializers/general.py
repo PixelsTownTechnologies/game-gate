@@ -1,14 +1,14 @@
 from django.contrib.auth.models import (Group, Permission)
 from rest_framework import (serializers)
 
-from app.constants import SERIALIZER_ALL_FIELDS
+from app.constants import SERIALIZER_ALL_FIELDS, GENERAL_SERIALIZER_FIELDS
 from app.models import *
 
 
 class UserAdminGeneralSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'full_name']
+        fields = ['id', 'email', 'username']
 
 
 class PermissionSerializer(serializers.ModelSerializer):
@@ -31,12 +31,6 @@ class CountrySerializer(serializers.ModelSerializer):
         model = Country
 
 
-class PlatformSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Platform
-        fields = SERIALIZER_ALL_FIELDS
-
-
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
@@ -52,7 +46,8 @@ class LogSerializer(serializers.ModelSerializer):
 class EnumSerializer(serializers.ModelSerializer):
     class Meta:
         model = Enum
-        fields = SERIALIZER_ALL_FIELDS
+        fields = [*GENERAL_SERIALIZER_FIELDS, 'id', 'name', 'data', 'type', 'values', 'max_value']
+
 
 """
 class OrderSerializer(serializers.ModelSerializer):
@@ -63,12 +58,13 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = SERIALIZER_ALL_FIELDS
 """
 
+
 class InvoiceSerializer(serializers.ModelSerializer):
     user = UserAdminGeneralSerializer(read_only=True)
 
     class Meta:
         model = Invoice
-        fields = SERIALIZER_ALL_FIELDS
+        fields = [*GENERAL_SERIALIZER_FIELDS, 'id', 'action', 'amount', 'details', 'user', 'create_at']
 
 
 class ReviewOwnerSerializer(serializers.ModelSerializer):
@@ -77,6 +73,7 @@ class ReviewOwnerSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['country', 'full_name']
+
 
 """
 class ReviewSerializer(serializers.ModelSerializer):

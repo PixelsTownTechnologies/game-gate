@@ -1,5 +1,5 @@
 body {
-    background: repeating-linear-gradient( #d3cce373 50%, #E9E4F0, #E9E4F0, #d3cce38c 50% );
+    background: repeating-linear-gradient(#d3cce373 50%, #E9E4F0, #E9E4F0, #d3cce38c 50%);
 }
 
 .ui.button {
@@ -21,13 +21,44 @@ body {
     background: var(--bgColorHover) !important;
 }
 
+.ui.button.black {
+    --bgColor1: rgb(50, 50, 50);
+    --bgClor2: rgb(70, 70, 70);
+    --bgColorHover: rgb(66, 66, 66);
+    --bgColorDiable: rgb(57, 57, 57);
+    --textColor: #fbfbfb;
+}
+
+.ui.button.grey {
+    --bgColor1: rgb(80, 80, 80);
+    --bgClor2: rgb(100, 100, 100);
+    --bgColorHover: rgb(120, 120, 120);
+    --bgColorDiable: rgb(50, 50, 50);
+    --textColor: #fbfbfb;
+}
+
+.ui.button.blue {
+    --bgColor1: rgba(240, 240, 240, 0.4);
+    --bgClor2: rgba(254, 254, 254, 0.4);
+    --bgColorHover: rgba(255, 255, 255, 0.6);
+    --bgColorDiable: rgb(50, 50, 50);
+    --textColor: #2d2d2d;
+}
 
 .ui.grey.button {
     --bgColor1: #939393;
     --bgClor2: #a0a0a0;
     --textColor: #ffffff;
     --bgColorHover: #a8a8a8;
-    --bgColorDiable: #393939;
+    --bgColorDiable: #282828;
+}
+
+.ui.button.brown {
+    --bgColor1: rgba(240, 240, 240, 0);
+    --bgClor2: rgba(240, 240, 240, 0);
+    --bgColorHover: rgba(255, 255, 255, 0.6);
+    --bgColorDiable: rgb(50, 50, 50);
+    --textColor: #2d2d2d;
 }
 
 .px-div {
@@ -37,4 +68,12 @@ body {
 .px-profile .image-section {
     background: linear-gradient(45deg, #11998e, #38ef7d) !important;
     box-shadow: inset -1px -6px 20px 3px rgba(149, 149, 149, 0.5);
+}
+
+.ui.header {
+    color: black !important;
+}
+
+.ui.header.white {
+    color: white !important;
 }

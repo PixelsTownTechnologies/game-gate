@@ -1,0 +1,279 @@
+.px.menu {
+    --menuHeight: 65px;
+    --mS1C: linear-gradient(30deg, #11998e, #38ef7d) !important;
+    --mS1H1C: #38ef7d80;
+    --mS1H2C: #38ef7d50;
+    --mS1H3C: #38ef7d20;
+
+    --mS2C: #ebebeb;
+
+    --mS3C: #ffffff;
+    --mS3H1C: #f0f0f0dd;
+    --mS3H2C: #e6e6e6aa;
+
+    --mS2LBC: #1781e9;
+    --mS2LBHC: #3996f1;
+    --mS2RBC: #91c920;
+    --mS2RBHC: #a4da37;
+
+    --mTextC: #242424;
+    --mTextHoverC: #0bb5a7;
+    --mHoverC: #ffffff;
+    --mSubmC: #f5f5f5fa;
+
+    height: var(--menuHeight);
+    box-shadow: 0 2px 20px 5px rgba(50, 50, 50, 0.4);
+    z-index: 10000;
+    position: relative;
+}
+
+.px.menu .menu-item {
+    font-weight: 600 !important;
+}
+
+.px.menu > div.section2 > div > div > div.menu-item:hover {
+    color: var(--mTextHoverC) !important;
+}
+
+.px.menu > div.section3 > div > .ui.item.simple.dropdown > div > div {
+    cursor: default !important;
+}
+
+.px.menu > div.section3 > div > .ui.item.simple.dropdown > div > div:hover {
+    background: var(--mSubmC) !important;
+    box-shadow: none !important;
+}
+
+
+.menu.transition .menu-item .menu-header:hover {
+    background: var(--mSubmC) !important;
+}
+
+.icon-button {
+    --bgColor1: #ffffff00;
+    border: 0.5rem solid #3d3e3f;
+}
+
+.ui.item.simple.dropdown .menu.transition > .ui.item.simple.dropdown {
+    padding: 0 !important;
+}
+
+.mobile-button {
+    padding: 6px !important;
+    border-radius: 5px !important;
+}
+
+.ui.item.simple.dropdown .menu.transition > .ui.item.simple.dropdown .menu-item {
+    font-family: 'Maven Pro', sans-serif !important;
+    font-size: 1.15rem !important;
+    color: var(--mTextC) !important;
+    height: fit-content !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    align-items: center !important;
+    padding: 10px !important;
+}
+
+.ui.item.simple.dropdown .menu.transition .menu-item {
+    font-family: 'Maven Pro', sans-serif !important;
+    font-size: 1.15rem !important;
+    color: var(--mTextC) !important;
+    height: fit-content !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    align-items: center !important;
+    padding: 10px !important;
+}
+
+.px.menu .menu.transition {
+    z-index: 1000000 !important;
+}
+
+.px.menu .menu.transition div[role='option'] {
+    border-top: 1px solid #3d3e3f55;
+    border-bottom: 1px solid #3d3e3f55;
+}
+
+.px.menu .menu.transition div[role='option']:hover {
+    box-shadow: 0 0 20px 0 #3d3e3f33;
+    background: white;
+}
+
+.px.menu .menu.transition.right .menu-header {
+    width: 100% !important;
+    padding: 20px !important;
+    height: 170px;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-direction: column !important;
+}
+
+.px.menu .menu.transition.right .menu-header > img {
+    width: 50px !important;
+    height: 50px !important;
+    max-height: 50px !important;
+    margin: 0 !important;
+}
+
+.px.menu .menu.transition.right .menu-header:hover {
+    background: var(--mS3C) !important;
+}
+
+.px.menu .menu.transition.right {
+    left: calc(-100% - 150px) !important;
+    background: var(--mSubmC) !important;
+}
+
+.px.menu .ui.item.simple.dropdown > .menu.transition {
+    right: 0;
+    border-radius: 0;
+    background: var(--mSubmC);
+}
+
+.px.menu .ui.item.simple.dropdown > i {
+    display: none;
+}
+
+.px.menu .dropdown .menu-item {
+    font-family: 'Maven Pro', sans-serif !important;
+    font-size: 1.15rem;
+    color: var(--mTextC) !important;
+    height: var(--menuHeight) !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.px.menu .section1 {
+    padding-left: clamp(10px, 10%, 30px);
+    height: var(--menuHeight);
+}
+
+.px.menu .section1 {
+    background: var(--mS1C);
+    padding-left: clamp(15px, 12%, 35px);
+    padding-right: clamp(15px, 12%, 35px);
+    height: var(--menuHeight);
+    transform: skewX(10deg);
+    margin-left: -15px;
+    box-shadow: 5px 0 0 0 var(--mS1H1C), 10px 0 0 0 var(--mS1H2C), 15px 0 0 0 var(--mS1H3C);
+    transition: 800ms;
+    flex: 1;
+}
+
+.px.menu .section1:hover {
+    transform: skewX(10deg) translateX(5px);
+    box-shadow: 5px 0 0 0 var(--mS1C), 10px 0 0 0 var(--mS1C), 15px 0 0 0 var(--mS1H1C), 20px 0 20px 8px rgba(109, 109, 109, 0.25);
+}
+
+.px.menu .section1:hover img {
+    transform: skewX(-10deg) translateX(15px);
+}
+
+.px.menu a {
+    cursor: pointer;
+}
+
+.px.menu .section1 img {
+    transition: 800ms;
+    width: 50px !important;
+    min-width: 40px !important;
+    max-width: 60px !important;
+    transform: skewX(-10deg);
+}
+
+.px.menu .section2 {
+    padding-left: 40px;
+    flex: 15;
+    background: var(--mS2C);
+    height: 100%;
+}
+
+.px.menu .section3 {
+    flex: 4;
+    background: var(--mS3C);
+    padding-left: clamp(15px, 12%, 35px);
+    padding-right: clamp(15px, 12%, 35px);
+    height: var(--menuHeight);
+    transform: skewX(10deg);
+    margin-right: -15px;
+    box-shadow: -5px 0 0 0 var(--mS3H1C), -10px 0 0 0 var(--mS3H2C);
+    transition: 800ms;
+}
+
+.px.menu .section3 > div {
+    transform: skewX(-10deg);
+}
+
+.px.menu .section3 .search-input > input {
+    border-radius: 25px !important;
+    height: 35px !important;
+}
+
+.px.menu .section3 .search-input > i {
+    font-size: 1.2rem;
+    color: #171717 !important;
+}
+
+.px.menu .section3 .search-icon {
+    font-size: 1.35rem !important;
+    color: #171717 !important;
+    cursor: pointer !important;
+}
+
+.px.menu .section3 .profile-icon {
+    cursor: pointer;
+    width: 30px !important;
+    max-width: 30px !important;
+    margin: 0 5px !important;
+    padding: 15px 0 !important;
+
+}
+
+.px.menu .section3 .buttons {
+    border-radius: 25px !important;
+    overflow: hidden !important;
+}
+
+.px.menu .section3 .buttons > a > button {
+    font-family: 'Maven Pro', sans-serif !important;
+    border-radius: 0 !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    min-width: 50px !important;
+    text-align: center !important;
+    font-size: 0.8rem;
+}
+
+/* Register Button */
+.px.menu .section3 .buttons > a:nth-child(1) > button {
+    background: var(--mS2RBC) !important;
+}
+
+.px.menu .section3 .buttons > a:nth-child(1) > button:hover {
+    background: var(--mS2RBHC) !important;
+}
+
+/* Login Button */
+.px.menu .section3 .buttons > a:nth-child(2) > button {
+    background: var(--mS2LBC) !important;
+}
+
+.px.menu .section3 .buttons > a:nth-child(2) > button:hover {
+    background: var(--mS2LBHC) !important;
+}
+
+
+.auth-r-menu {
+
+}
+
+.auth-r-menu .ui.header {
+    font-family: 'Maven Pro', sans-serif !important;
+    color: #3d3e3f !important;
+}

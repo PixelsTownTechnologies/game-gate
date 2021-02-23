@@ -17,11 +17,15 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
         pageSize: 'حجم صفحة',
         link: 'رابط',
         upload: 'تحميل',
-        language: 'ألغة'
+        language: 'ألغة',
+        search: 'بحث',
+        edit: 'تعديل',
+        add: 'أضافة'
     },
     fields: {
         id: 'الرقم التسلسلي',
-        name: 'ألاسم'
+        name: 'ألاسم',
+        value: 'ألقيمة'
     },
     userFields: {
         email: 'ألبريد ألاكتروني',
@@ -45,7 +49,8 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
         password: 'كلمة المرور',
         confirmPassword: 'تأكيد كلمة المرور',
         currentPassword: 'كلمة المرور الحالية',
-        newPassword: 'كلمة المرور الجديدة'
+        newPassword: 'كلمة المرور الجديدة',
+        balance: 'الرصيد'
     },
     authPages: {
         register: 'تسجيل مستخدم',
@@ -61,11 +66,18 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
         verify: 'التحقق من كود',
         changePassword: 'تغيير كلمة المرور',
         resetPassword: 'أعادة تعين كلمة المرور',
-        verifyCode: 'رمز أعادة تعين'
+        verifyCode: 'رمز أعادة تعين',
+        logout: 'تسجيل خروج',
+        signUp: 'أنشاء مستخدم',
+        welcomeMsg: 'مرحبا بك في',
     },
     validatorMessages: {
         required: 'هذا الحقل مطلوب من فضلك قم بادخاله.',
         email: 'هذا الحقل مدخل بشكل خطاء يجب ان يحتوي على بريد الكتروني'
+    },
+    serviceErrors: {
+        invalidId: 'خطاء في الرقم التسلسلي',
+        generalFailed: 'حدث خطاء اثناء الرسال, حاول مره اخرى فيما بعد.'
     },
     errors: {
         verifyCodeLength: 'رمز أعادة تعين يتكون من 8 حروف',
@@ -86,7 +98,44 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
             userNameSetting: 'أعدادات المستخدم',
             userNameSettingDescription: 'قم بتغير معلوماتك الشخصيه ولكن استعمل معلوماتك الحقيقيه',
             passwordChangeSuccess: 'تم تغير كلمة المرور بنجاح'
+        },
+        menu: {
+            lookingHelp: 'هل تريد اي نساعدة'
         }
+    },
+    title: {
+        manageUsers: 'أدارة المستخدمين',
+        manageEnums: 'أدارت متغيرات النظام',
+        manageInvoice: 'أدارة الفواتير',
+        dashboard: 'لوحة التحكم',
+        actions: {
+            editUser: 'تعديل معلومات المستخدم',
+            addUser: 'تعديل معلومات المستخدم',
+            editEnums: 'تعديل متغيرات النظام',
+            setBalance: 'تعديل الرصيد',
+            addBalance: 'أضافة الرصيد',
+            removeBalance: 'سحب الرصيد',
+            permissions: 'الصلاحيات',
+            changePermissions: 'تعديل صلاحيات المستخدم'
+        }
+    },
+    invoice: {
+        action: 'العملية',
+        amount: 'ألكمية',
+        details: 'تفاصيل',
+        userName: 'أسم المستخدم',
+        userId: 'رقم المستخدم',
+        action_date: 'تاريخ العملية',
+        action_time: 'توقيت العملية',
+        actionTypes: {
+            A: 'أضافة رصيد',
+            R: 'سحب رصيد',
+            S: 'تعديل رصيد',
+            P: 'شراء'
+        }
+    },
+    menu: {
+        profile: 'الملف الشخصي'
     }
 } as LanguageSystemWords;
 

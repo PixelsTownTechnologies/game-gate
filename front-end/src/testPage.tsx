@@ -11,7 +11,7 @@ import { FormDTO } from "./lib/components/form/models";
 import { ValidateResult, VALIDATOR_CODES } from "./lib/models/validators";
 import DialogForm, { DialogFormActionResult } from "./lib/components/form/dialog-form";
 import { BaseEntity } from "./lib/models/base";
-import { PTTable, TableDTO } from "./lib/components/tabels";
+import { Table, TableDTO } from "./lib/components/tabels";
 import { Wrapper } from "./components/shared/wrapper";
 
 interface ComponentPPXProps {
@@ -36,8 +36,8 @@ function ComponentPPXPage(props: ComponentPPXProps) {
         , text2: 'Text text'
         , text3: 'Init data'
         , id: 5
-        , isEditable: true
-        , isDeletable: true
+        , is_editable: true
+        , is_deletable: true
     } as TestType);
     const [ image, setImage ] = useState('');
     if (!languageWords) {
@@ -227,7 +227,7 @@ function ComponentPPXPage(props: ComponentPPXProps) {
                 ) : null
             }
             <FlexSpace>
-                <PTTable { ...tableSetting } />
+                <Table { ...tableSetting } />
             </FlexSpace>
         </Wrapper>
     );

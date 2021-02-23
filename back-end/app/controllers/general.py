@@ -10,7 +10,7 @@ from app.models import (Country, Invoice, User, Enum)
 from app.models import (Platform)
 from app.resources import (create_notification)
 from app.serializers.general import (CountrySerializer)
-from app.serializers.general import (PlatformSerializer, InvoiceSerializer, EnumSerializer)
+from app.serializers.general import (InvoiceSerializer, EnumSerializer)
 
 
 class CountryListView(generics.ListAPIView):
@@ -28,18 +28,6 @@ class CreateCountryView(generics.CreateAPIView):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
-
-class PlatformList(generics.ListAPIView):
-    queryset = Platform.objects.all()
-    serializer_class = PlatformSerializer
-
-
-class PlatformUpdate(generics.RetrieveUpdateDestroyAPIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-    queryset = Platform.objects.all()
-    serializer_class = PlatformSerializer
 
 
 """
@@ -193,14 +181,18 @@ class InvoiceAdminFetchCreate(generics.ListCreateAPIView):
 
     def create(self, request, *args, **kwargs):
         user = User.objects.filter(pk=int(request.data['user'])).first()
-        invoice = Invoice.objects.create(amount=request.data['amount'], user=user,
+        amount = float(request.data['amount'])
+        invoice = Invoice.objects.create(amount=amount, user=user,
                                          action=request.data['action'], details=request.data.get('details', ''))
         if request.data['action'] == 'A':
-            user.balance += request.data['amount']
-            create_notification(user, 'New Balance Has Been Added')
+            user.balance += amount
+            create_notification(user, 'New Balance +{} Has Been Added'.format(amount))
         if request.data['action'] == 'R':
-            user.balance -= request.data['amount']
-            create_notification(user, 'New Balance Has Been Removed')
+            user.balance -= amount
+            create_notification(user, 'New Balance -{} Has Been Removed'.format(amount))
+        if request.data['action'] == 'S':
+            user.balance = amount
+            create_notification(user, 'Your Balance Has Been Set to {}'.format(amount))
         user.save()
         return Response(InvoiceSerializer(invoice).data, status=status.HTTP_201_CREATED)
 

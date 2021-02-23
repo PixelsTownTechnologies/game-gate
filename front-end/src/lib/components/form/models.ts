@@ -4,6 +4,7 @@ import { PipeFunction } from "../../models/pipes";
 import { BaseComponentProps } from "../components";
 
 export interface ListOption {
+    key: string;
     text: string;
     value: string;
 }
@@ -73,7 +74,8 @@ export interface TextFieldSetting<ValueType> {
     pipe?: PipeFunction<ValueType>;
     errorCodeMap?: {
         [code: string]: string
-    }
+    };
+    icon?: string;
 }
 
 export interface TextAreaDTO {

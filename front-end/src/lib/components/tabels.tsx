@@ -1,11 +1,11 @@
 import '../assets/custome/table.css';
 import React from 'react';
-import { BaseComponent, BaseComponentMethods, BaseComponentProps, BaseComponentState } from "./components";
-import { FlexBox, FlexSpace, If } from "./containers";
+import { BaseComponent, BaseComponentProps, BaseComponentState } from "./components";
+import { FlexBox, FlexSpace, If, PaddingBox } from "./containers";
 import { Button, IconButton, LinkButton } from "./basic";
-import { Dropdown, Icon, Label, Pagination, Rating, SemanticCOLORS, Table } from "semantic-ui-react";
-import { buildCN, costFormat, getFieldValueFromRow } from "../utils/utils";
-import { TABLE_OPTIONS } from "../utils/constant";
+import { Dropdown, Header, Icon, Label, Pagination, Rating, SemanticCOLORS, Table as STable } from "semantic-ui-react";
+import { buildCN, costFormat, getFieldValueFromRow, isEmpty, pxIf } from "../utils/utils";
+import { generateTableOptions } from "../utils/constant";
 import { BaseEntity } from "../models/base";
 
 
@@ -15,7 +15,7 @@ export interface TableSetting {
     fieldName: string;
     disableFilter?: boolean;
     type: 'text' | 'formattedNumber' | 'number' | 'float' | 'date' | 'time'
-        | 'dateTime' | 'boolean' | 'link' | 'button' | 'rating' | 'valueMap'
+        | 'dateTime' | 'boolean' | 'link' | 'button' | 'rating' | 'valueMap' | 'balance'
         | 'buttonLink' | 'label' | 'iconButton' | 'editButton' | 'deleteButton';
     valueMap?: any;
     displayValue?: (value: any) => JSX.Element | null;
@@ -23,7 +23,8 @@ export interface TableSetting {
     subSetting?: {
         buttonText?: string;
         buttonIcon?: string;
-    }
+    },
+    center?: boolean;
 }
 
 export interface TableDTO<EntityDTO extends BaseEntity> extends BaseComponentProps {
@@ -55,31 +56,38 @@ export interface TableState extends BaseComponentState {
     loadingRefresh?: boolean;
 }
 
-export class PTTable<EntityDTO extends BaseEntity> extends BaseComponent<TableDTO<EntityDTO>, TableState> implements BaseComponentMethods<TableDTO<EntityDTO>, TableState> {
+export class Table<EntityDTO extends BaseEntity> extends BaseComponent<TableDTO<EntityDTO>, TableState> {
+
+    tableOptions: any[];
 
     constructor(props: TableDTO<EntityDTO>) {
         super(props);
         this.state = {
             ...this.state,
-            selectedPageSize: 25,
+            selectedPageSize: 5,
             pageNumber: 1,
             filters: []
         }
+        this.tableOptions = [];
     }
 
     destroy(): void {
     }
 
     initialize(): void {
+        this.tableOptions = generateTableOptions();
     }
 
     show(props: TableDTO<EntityDTO>, state: TableState): JSX.Element | null {
+        const tableRows = this.renderTableData();
         return (
             <div className={ 'px-t-table' }>
-                <FlexSpace className={ 't-header' } pxIf={ props.showContainer } dir={ state.direction }>
+                <FlexSpace padding={ 10 } className={ 't-header' } pxIf={ props.showContainer } dir={ state.direction }>
                     <If flag={ props.onRefresh }>
                         <div dir={ state.direction }>
                             <IconButton
+                                color={'black'}
+                                size={ 'mini' }
                                 name={ 'refresh' }
                                 loading={ state.loadingRefresh }
                                 disabled={ state.loadingRefresh }
@@ -96,56 +104,56 @@ export class PTTable<EntityDTO extends BaseEntity> extends BaseComponent<TableDT
                     </If>
                     { this.props.children }
                 </FlexSpace>
-                <div className={ 'px-t-table-container' }>
-                    <Table inverted={ props.inverted } selectable={ props.selectable } striped
+                <div className={ 'px-t-table-container t-container' }>
+                    <STable inverted={ props.inverted } selectable={ props.selectable } striped
                            color={ props.color ? props.color as any : 'grey' }
-                           className={ buildCN('px-t-non-margin') }>
+                           className={ buildCN(props.unStackable ? 'unstackable' : '', 'px-t-non-margin') }>
                         { this.renderTableHeader() }
-                    </Table>
-                    <Table inverted={ props.inverted } selectable={ props.selectable } striped
-                           color={ props.color ? props.color as any : 'grey' }
-                           className={ buildCN(props.unStackable ? 'un-stackable' : '', 'px-t-non-margin') }>
-                        <Table.Body>
-                            { this.renderTableData() }
-                        </Table.Body>
-                    </Table>
-                </div>
-                <FlexSpace pxIf={ props.showContainer } className={ 't-bottom' }>
-                    <div/>
-                    <div>
-                        <div dir={ state.direction }>
-                            <Dropdown
-                                key={ 1 }
-                                value={ state.selectedPageSize }
-                                compact
-                                selection
-                                onChange={ (e, {name, value}) => this.setState({
-                                    selectedPageSize: Number(value),
-                                    pageNumber: 1
-                                }) }
-                                options={ TABLE_OPTIONS }/>
-                            <div key={ 2 }
-                                 className='px-t-header'>:{ state.word.basic.pageSize }</div>
-
-                        </div>
-                        <If flag={ Math.floor(( this.props.data.length / Number(this.state.selectedPageSize) + 0.5 )) > 0 }>
-                            <Pagination
-                                onPageChange={
-                                    (e, {activePage}) =>
-                                        this.setState({pageNumber: Number(activePage)})
-                                }
-                                className='px-t-pagination'
-                                activePage={ this.state.pageNumber }
-                                firstItem={ null }
-                                lastItem={ null }
-                                pointing
-                                secondary
-                                boundaryRange={ 0 }
-                                siblingRange={ 0 }
-                                totalPages={ Math.floor(( this.props.data.length / Number(this.state.selectedPageSize) + 0.5 )) }
-                            />
+                        <If flag={ !isEmpty(tableRows) }>
+                            <STable.Body>
+                                { tableRows }
+                            </STable.Body>
                         </If>
-                    </div>
+                    </STable>
+                    <If flag={ isEmpty(tableRows) }>
+                        <PaddingBox size={ 10 }>
+                            <Header as={ 'h3' }
+                                    className={ 'px-non-margin center-text' }>{ this.word().basic.noDataToView }</Header>
+                        </PaddingBox>
+                    </If>
+                </div>
+                <FlexSpace padding={ 10 } pxIf={ props.showContainer } className={ 't-bottom' }>
+                    <FlexBox alignItems={ 'center' } justifyContent={ 'center' } dir={ state.direction }>
+                        <div key={ 2 }
+                             className='px-t-header'>{ state.word.basic.pageSize }</div>
+                        <Dropdown
+                            key={ 1 }
+                            value={ state.selectedPageSize }
+                            compact
+                            selection
+                            onChange={ (e, {name, value}) => this.setState({
+                                selectedPageSize: Number(value),
+                                pageNumber: 1
+                            }) }
+                            options={ this.tableOptions }/>
+                    </FlexBox>
+                    <If flag={ Math.floor(( this.props.data.length / Number(this.state.selectedPageSize) + 0.5 )) > 0 }>
+                        <Pagination
+                            onPageChange={
+                                (e, {activePage}) =>
+                                    this.setState({pageNumber: Number(activePage)})
+                            }
+                            className='px-t-pagination'
+                            activePage={ this.state.pageNumber }
+                            firstItem={ null }
+                            lastItem={ null }
+                            pointing
+                            secondary
+                            boundaryRange={ 0 }
+                            siblingRange={ 0 }
+                            totalPages={ Math.floor(( this.props.data.length / Number(this.state.selectedPageSize) + 0.5 )) }
+                        />
+                    </If>
                 </FlexSpace>
             </div>
         );
@@ -175,25 +183,26 @@ export class PTTable<EntityDTO extends BaseEntity> extends BaseComponent<TableDT
 
     renderTableHeader = () => {
         return (
-            <Table.Header>
-                <Table.Row>
+            <STable.Header>
+                <STable.Row>
                     {
                         this.props.settings
                             ? this.props.settings.map((s, index) =>
                                 this.renderHeaderRow(s, index)) : null
                     }
-                </Table.Row>
-            </Table.Header>
+                </STable.Row>
+            </STable.Header>
         );
     }
 
-    renderHeaderRow = (data: TableSetting, index: number) => {
+    renderHeaderRow = (setting: TableSetting, index: number) => {
         return (
-            <th key={ index } className='px-t-table-header' style={ {width: `${ data.width }px !important`} }>
-                <FlexBox width={ data.width } alignItems={ 'center' }
-                         justifyContent={ this.props.centerData ? "center" : 'space-between' }>
-                    <h5 className={ 'px-t-non-margin px-t-srp-10' }>{ data.title }</h5>
-                    { this.renderFilter(data) }
+            <th key={ index } className='px-t-table-header'
+                style={ {width: setting.width, minWidth: setting.width} }>
+                <FlexBox alignItems={ 'center' }
+                         justifyContent={ setting.center ? "center" : 'space-between' }>
+                    <h4 className={ buildCN('px-t-non-margin', pxIf(setting.center, "center-text", '')) }>{ setting.title }</h4>
+                    {/* this.renderFilter(data)*/ }
                 </FlexBox>
             </th>
         );
@@ -201,7 +210,7 @@ export class PTTable<EntityDTO extends BaseEntity> extends BaseComponent<TableDT
 
     renderCellRow = (cellData: EntityDTO, index: number) => {
         return (
-            <Table.Row
+            <STable.Row
                 className='px-t-pointer'
                 key={ cellData.id }
                 active={ `${ this.state.selectedRowKey }` === `${ cellData.id }` }
@@ -228,7 +237,7 @@ export class PTTable<EntityDTO extends BaseEntity> extends BaseComponent<TableDT
                                     displayValue = !value ? '' : new Date(value).toLocaleDateString();
                                     break;
                                 case "time":
-                                    displayValue = !value ? '' : new Date(value).toTimeString();
+                                    displayValue = !value ? '' : new Date(value).toLocaleTimeString();
                                     break;
                                 case "valueMap":
                                     const map = setting.valueMap ? setting.valueMap : {};
@@ -239,6 +248,9 @@ export class PTTable<EntityDTO extends BaseEntity> extends BaseComponent<TableDT
                                     break;
                                 case "formattedNumber" || "float":
                                     displayValue = !value ? '' : `${ costFormat(value) }`;
+                                    break;
+                                case "balance":
+                                    displayValue = !value ? '' : `$${ costFormat(value) }`;
                                     break;
                                 case "dateTime":
                                     displayValue = !value ? '' : `${ new Date(value).toLocaleDateString() } - ${ new Date(value).toTimeString() }`;
@@ -331,16 +343,17 @@ export class PTTable<EntityDTO extends BaseEntity> extends BaseComponent<TableDT
                             }
                         }
                         return (
-                            <Table.Cell key={ `id__${ cellData.id }_${ index2 }` }
-                                        className={ buildCN(this.props.centerData ? 'px-t-center-text' : '') }>
-                                <div style={ {width: setting.width} }>
+                            <STable.Cell key={ `id__${ cellData.id }_${ index2 }` }
+                                        style={ {width: setting.width, minWidth: setting.width} }
+                                        className={ buildCN(setting.center ? 'center-text' : '') }>
+                                <div>
                                     { displayValue }
                                 </div>
-                            </Table.Cell>
+                            </STable.Cell>
                         );
                     }) : null
                 }
-            </Table.Row>
+            </STable.Row>
         );
     }
 
@@ -389,6 +402,7 @@ export class PTTable<EntityDTO extends BaseEntity> extends BaseComponent<TableDT
             </Dropdown>
         );
     }
+
 }
 
 

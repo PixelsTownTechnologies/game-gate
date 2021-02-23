@@ -22,7 +22,7 @@ export const useWindow = (mobileValue?: any, computerValue?: any, tabletValue?: 
                 setCallBackID(null);
             }
         }
-    }, [callBackID, sizeSetting.width, sizeSetting.height]);
+    }, [ callBackID, sizeSetting.width, sizeSetting.height ]);
     return {
         sizeSetting,
         width: sizeSetting.width,

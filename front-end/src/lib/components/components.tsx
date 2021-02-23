@@ -13,17 +13,11 @@ export interface BaseComponentState {
     word: LanguageBaseWords;
 }
 
-export interface BaseComponentMethods<Props, State> {
-    show: (props: Props, state: State) => JSX.Element | null;
-    initialize: () => void;
-    destroy: () => void;
-}
-
-export class BaseComponent<Props extends BaseComponentProps, State extends BaseComponentState> extends React.Component<Props, State> {
+export abstract class BaseComponent<Props extends BaseComponentProps, State extends BaseComponentState> extends React.Component<Props, State> {
 
     private languageServiceID?: number;
 
-    constructor(props: Props) {
+    protected constructor(props: Props) {
         super(props);
         this.state = {
             direction: DIR.AUTO,
@@ -45,25 +39,26 @@ export class BaseComponent<Props extends BaseComponentProps, State extends BaseC
                 this.setState({direction: setting.direction, word: setting.words});
             }
         });
-        if (( this as any ).initialize) {
-            ( this as any ).initialize();
-        }
+        this.initialize();
     }
 
     componentWillUnmount = () => {
         if (this.languageServiceID) {
             LanguageService.unsubscribe(this.languageServiceID);
         }
-        if (( this as any ).destroy) {
-            ( this as any ).destroy();
-        }
+        this.destroy()
     }
 
     render() {
-        return ( this as any ).show && isTrueOrUndefined(this.props.pxIf) && !isEmpty(this.state.word) ?
-            ( this as any ).show(this.props, this.state)
+        return isTrueOrUndefined(this.props.pxIf) && !isEmpty(this.state.word) ?
+            this.show(this.props, this.state)
             : null;
     }
 
-}
+    abstract show(props: Props, state: State): JSX.Element | null;
 
+    abstract initialize(): void;
+
+    abstract destroy(): void;
+
+}

@@ -17,11 +17,15 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
         pageSize: 'Page Size',
         link: 'Link',
         upload: 'Upload',
-        language: 'Language'
+        language: 'Language',
+        search: 'Search',
+        edit: 'Edit',
+        add: 'Add'
     },
     fields: {
         id: 'id',
-        name: 'name'
+        name: 'name',
+        value: 'Value'
     },
     userFields: {
         email: 'Email',
@@ -46,6 +50,7 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
         confirmPassword: 'Confirm Password',
         currentPassword: 'Current Password',
         newPassword: 'New Password',
+        balance: 'Balance'
     },
     authPages: {
         register: 'Register',
@@ -54,18 +59,25 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
         forgetPassword: 'Forget Password',
         reset: 'Re-set',
         signInTo: 'Sign-in to',
-        signIn: 'Sign-in',
+        signIn: 'Sign-In',
+        signUp: 'Sign-Up',
+        welcomeMsg: 'Welcome To',
         registerNow: 'New Member? Sign Up Now',
         haveAccountLogin: 'Already have an account? Sign-In',
         sendResetCode: 'Send Reset Password Email',
         verify: 'Verify Code',
         changePassword: 'Change Password',
         resetPassword: 'Reset Password',
-        verifyCode: 'Verify Code'
+        verifyCode: 'Verify Code',
+        logout: 'Logout'
     },
     validatorMessages: {
         required: 'This field required, Please enter it.',
         email: 'This filed not valid, Should be email.'
+    },
+    serviceErrors: {
+        invalidId: 'Invalid entity id provided',
+        generalFailed: 'Request failed, Try again later.'
     },
     errors: {
         verifyCodeLength: 'Verify code should be 8 characters',
@@ -86,7 +98,44 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
             userNameSetting: 'User Settings',
             userNameSettingDescription: 'You can modify your user data, Make sure to put your real data!',
             passwordChangeSuccess: 'Your Password Has been Changed Successfully'
+        },
+        menu: {
+            lookingHelp: 'Looking For Something?'
         }
+    },
+    title: {
+        manageUsers: 'Manage Users',
+        manageEnums: 'Manage Enums',
+        manageInvoice: 'Manage Invoice',
+        dashboard: 'Dashboard',
+        actions: {
+            editUser: 'Edit User',
+            addUser: 'Add User',
+            editEnums: 'Edit Enum Value',
+            permissions: 'Permissions',
+            setBalance: 'Set Balance',
+            addBalance: 'Add Balance',
+            removeBalance: 'Remove Balance',
+            changePermissions: 'Change User Permissions'
+        }
+    },
+    invoice: {
+        action: 'Action',
+        amount: 'Amount',
+        details: 'Details',
+        userName: 'User Name',
+        action_date: 'Action Date',
+        action_time: 'Action Time',
+        userId: 'User ID',
+        actionTypes: {
+            A: 'Add Balance',
+            R: 'Remove Balance',
+            S: 'Set Balance',
+            P: 'Pay Order'
+        }
+    },
+    menu: {
+        profile: 'Profile'
     }
 } as LanguageSystemWords;
 
