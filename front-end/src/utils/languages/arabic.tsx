@@ -20,7 +20,9 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
         language: 'ألغة',
         search: 'بحث',
         edit: 'تعديل',
-        add: 'أضافة'
+        add: 'أضافة',
+        goTo: 'انتقال',
+        view: 'أظهار'
     },
     fields: {
         id: 'الرقم التسلسلي',
@@ -107,6 +109,7 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
         manageUsers: 'أدارة المستخدمين',
         manageEnums: 'أدارت متغيرات النظام',
         manageInvoice: 'أدارة الفواتير',
+        manageGames: 'أدارة الالعاب',
         dashboard: 'لوحة التحكم',
         actions: {
             editUser: 'تعديل معلومات المستخدم',
@@ -136,6 +139,47 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
     },
     menu: {
         profile: 'الملف الشخصي'
+    },
+    entities: {
+        game: {
+            title: 'إدارة الألعاب',
+            fields: {
+                name: 'ألاسم',
+                game_type: 'النوع',
+                type: 'نوع العرض',
+                show: 'أظهار',
+                platform: 'المنصه',
+                notes: 'ملاحظات',
+                about: 'حول',
+                details: 'تفاصيل',
+                video: 'رابط الفيديو',
+                facebook: 'رابط الفيسبوك',
+                website: 'رابط موقع الكتروني',
+                youtube: 'رابط اليوتيوب',
+                bg_card: 'غلاف الكارد',
+                bg_cover: 'غلاف الداخلي',
+                logo: 'الشعار',
+            }
+        },
+        gameCard: {
+            title: 'إدارة بطاقة اللعبة',
+            fields: {
+                name: 'ألاسم',
+                sold_flag: 'تم البيع',
+                available: 'متوفر',
+                is_sold: 'تم البيع',
+                show: 'أظهار',
+                total_price: 'السعر الكلي',
+                price: 'السعر',
+                discount: 'الخصم',
+                max: 'الكمية القصوى',
+                min: 'الكمية الدنيا',
+                points: 'نقاط مكافأة',
+                available_keys: 'عدد المفاتيح المتوفرة',
+                order_min: 'الحد الأدنى من الطلبات',
+                order_max: 'الحد الاقصى من الطلبات',
+            }
+        }
     }
 } as LanguageSystemWords;
 

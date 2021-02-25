@@ -1,5 +1,4 @@
 import React from 'react';
-import { DIR } from "../utils/constant";
 import LanguageService, { LanguageBaseWords } from "../services/language-service";
 import { isEmpty, isTrueOrUndefined } from "../utils/utils";
 
@@ -20,8 +19,8 @@ export abstract class BaseComponent<Props extends BaseComponentProps, State exte
     protected constructor(props: Props) {
         super(props);
         this.state = {
-            direction: DIR.AUTO,
-            word: {} as any
+            direction: LanguageService.getLanguageSettings().direction,
+            word: LanguageService.getWords()
         } as State;
     }
 

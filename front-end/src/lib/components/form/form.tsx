@@ -96,7 +96,7 @@ export function getDynamicField(config: DFormField, onChange: (value: any) => vo
                 className={ config.className ? config.className : '' }
                 checked={ value }
                 label={ config.subInputOptions && config.subInputOptions.checkboxLabel ? config.subInputOptions.checkboxLabel : '' }
-                onChange={ (e) => {
+                onClick={ (e) => {
                     onChange(!value);
                 } }
             />

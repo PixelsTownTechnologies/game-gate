@@ -9,6 +9,10 @@ from django.utils.translation import ugettext_lazy as _
 from .managers import UserManager
 
 
+def generate_user_name():
+    return 'User {}'.format(random.randint(111111, 999999))
+
+
 class Country(models.Model):
     name = models.CharField(max_length=64)
     flag = models.CharField(max_length=5, blank=True, null=True)
@@ -17,10 +21,6 @@ class Country(models.Model):
 
     def __str__(self):
         return self.name if self.name is not None else 'Name Not Set'
-
-
-def generate_user_name():
-    return 'User {}'.format(random.randint(111111, 999999))
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -123,14 +123,6 @@ class Enum(models.Model):
     type = models.CharField(max_length=32, default='text')
     global_enum = models.BooleanField(default=False, null=True, blank=True)
 
-    @property
-    def is_deletable(self):
-        return False
-
-    @property
-    def is_editable(self):
-        return True
-
     def __str__(self):
         return self.name if self.name is not None else 'Name Not Set'
 
@@ -141,17 +133,6 @@ class Enum(models.Model):
     @property
     def is_editable(self):
         return True
-
-class Platform(models.Model):
-    create_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now=True, blank=True, null=True)
-    name = models.CharField(max_length=64, blank=True, null=True)
-    coins = models.IntegerField(default=0, blank=True, null=True)
-    price = models.FloatField(default=0.0, blank=True, null=True)
-    max_value = models.IntegerField(default=0, blank=True, null=True)
-    min_value = models.IntegerField(default=0, blank=True, null=True)
-    total_coins = models.BigIntegerField(default=0, blank=True, null=True)
-    email = models.BooleanField(default=False, blank=True, null=True)
 
 
 class Invoice(models.Model):
@@ -174,3 +155,93 @@ class Invoice(models.Model):
     @property
     def is_editable(self):
         return False
+
+
+class Game(models.Model):
+    TYPE_CHOICES = (
+        ('K', 'Keys'),
+        ('C', 'Charging'),
+    )
+    PLATFORM_CHOICES = (
+        ('C', 'Computer'),
+        ('M', 'Mobile'),
+        ('P', 'PlayStation'),
+        ('X', 'XBox'),
+    )
+    name = models.CharField(max_length=64, null=True, blank=True)
+    country = models.CharField(max_length=32, null=True, blank=True)
+    show = models.BooleanField(default=True, null=True, blank=True)
+    game_type = models.CharField(max_length=32, null=True, blank=True)
+    type = models.CharField(max_length=2, default='K', choices=TYPE_CHOICES, null=True, blank=True)
+    platform = models.CharField(max_length=2, default='C', choices=PLATFORM_CHOICES, null=True, blank=True)
+    # Layouts
+    notes = models.TextField(default='', null=True, blank=True)
+    about = models.TextField(default='', null=True, blank=True)
+    details = models.TextField(default='', null=True, blank=True)
+
+    video = models.CharField(max_length=255, default='', null=True, blank=True)
+
+    facebook = models.CharField(max_length=255, default='', null=True, blank=True)
+    website = models.CharField(max_length=255, default='', null=True, blank=True)
+    youtube = models.CharField(max_length=255, default='', null=True, blank=True)
+
+    # Media
+    logo = models.ImageField(upload_to='games/logo', blank=True, null=True)
+    bg_cover = models.ImageField(upload_to='games/bg_cover', blank=True, null=True)
+    bg_card = models.ImageField(upload_to='games/bg_card', blank=True, null=True)
+
+    @property
+    def is_deletable(self):
+        return (self.game_cards is None) or len(self.game_cards.all()) < 1
+
+    @property
+    def is_editable(self):
+        return True
+
+
+class GameCard(models.Model):
+    game = models.ForeignKey(Game, related_name='game_cards', on_delete=models.CASCADE)
+    name = models.CharField(max_length=64, null=True, blank=True)
+    price = models.FloatField(default=1, null=True, blank=True)
+    discount = models.FloatField(default=0.0, null=True, blank=True)
+    max = models.IntegerField(default=10, null=True, blank=True)
+    min = models.IntegerField(default=0, null=True, blank=True)
+    points = models.IntegerField(default=0, null=True, blank=True)
+    show = models.BooleanField(default=True, null=True, blank=True)
+    sold_flag = models.BooleanField(default=False, null=True, blank=True)
+
+    @property
+    def total_price(self):
+        discount = self.discount if self.discount is not None else 0
+        return self.price - (self.price * discount / 100)
+
+    @property
+    def available_keys(self):
+        # check available keys
+        return 10
+
+    @property
+    def available(self):
+        return self.game.type == 'C' or (self.available_keys > 0 and self.order_min <= self.available_keys)
+
+    @property
+    def order_min(self):
+        return self.min
+
+    @property
+    def order_max(self):
+        if self.available_keys < self.max:
+            return self.available_keys
+        return self.max
+
+    @property
+    def is_sold(self):
+        return self.available_keys < self.order_min
+
+    @property
+    def is_deletable(self):
+        return True
+
+    @property
+    def is_editable(self):
+        return True

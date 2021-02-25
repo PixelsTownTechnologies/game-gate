@@ -5,8 +5,66 @@ export const ENTITIES = {
     USER: 'USER',
     GROUPS: 'GROUPS',
     ENUMS: 'ENUMS',
-    INVOICE: 'INVOICE'
+    INVOICE: 'INVOICE',
+    GAME: 'GAME',
+    GAME_CARD: 'GAME_CARD'
 }
+
+export const gameService: EntityServiceConfig = {
+    storeName: 'games',
+    name: ENTITIES.GAME,
+    dataType: 'array',
+    baseURL: '',
+    loadToStore: true,
+    actions: [
+        {
+            type: 'FIND',
+            authenticate: true,
+            url: 'admin/fc/game'
+        }, {
+            type: 'CREATE',
+            authenticate: true,
+            url: 'admin/fc/game',
+            formData: true
+        }, {
+            type: 'UPDATE',
+            authenticate: true,
+            url: 'admin/game',
+            formData: true
+        }, {
+            type: 'DELETE',
+            authenticate: true,
+            url: 'admin/game'
+        }
+    ]
+};
+
+export const gameCardService: EntityServiceConfig = {
+    storeName: 'gameCards',
+    name: ENTITIES.GAME_CARD,
+    dataType: 'array',
+    baseURL: '',
+    loadToStore: false,
+    actions: [
+        {
+            type: 'FIND',
+            authenticate: true,
+            url: 'admin/fc/game-card'
+        }, {
+            type: 'CREATE',
+            authenticate: true,
+            url: 'admin/fc/game-card'
+        }, {
+            type: 'UPDATE',
+            authenticate: true,
+            url: 'admin/game-card'
+        }, {
+            type: 'DELETE',
+            authenticate: true,
+            url: 'admin/game-card'
+        }
+    ]
+};
 
 export const adminUserService: EntityServiceConfig = {
     name: ENTITIES.USER,

@@ -8,6 +8,7 @@ export interface APIActionConfig {
     url?: string;
     authenticate?: boolean;
     formFields?: string[];
+    formData?: boolean;
 }
 
 export const ACTIONS = {

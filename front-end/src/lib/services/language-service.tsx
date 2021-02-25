@@ -31,12 +31,14 @@ export interface LanguageBaseWords {
         search: string;
         edit: string;
         add: string;
-    },
+        goTo: string;
+        view: string;
+    };
     fields: {
         id: string;
         name: string;
         value: string;
-    },
+    };
     userFields: {
         email: string;
         firstName: string;
@@ -61,7 +63,7 @@ export interface LanguageBaseWords {
         currentPassword: string;
         newPassword: string;
         balance: string;
-    },
+    };
     authPages: {
         register: string;
         login: string;
@@ -80,15 +82,15 @@ export interface LanguageBaseWords {
         verifyCode: string;
         signUp: string;
         welcomeMsg: string;
-    },
+    };
     validatorMessages: {
         required: string;
         email: string;
-    },
+    };
     serviceErrors: {
         invalidId: string;
         generalFailed: string;
-    }
+    };
 }
 
 export interface LanguageSetting {

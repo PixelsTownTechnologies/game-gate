@@ -20,7 +20,9 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
         language: 'Language',
         search: 'Search',
         edit: 'Edit',
-        add: 'Add'
+        add: 'Add',
+        goTo: 'GoTO',
+        view: 'View'
     },
     fields: {
         id: 'id',
@@ -107,6 +109,7 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
         manageUsers: 'Manage Users',
         manageEnums: 'Manage Enums',
         manageInvoice: 'Manage Invoice',
+        manageGames: 'Manage Games',
         dashboard: 'Dashboard',
         actions: {
             editUser: 'Edit User',
@@ -136,6 +139,47 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
     },
     menu: {
         profile: 'Profile'
+    },
+    entities: {
+        game: {
+            title: 'Manage Games',
+            fields: {
+                name: 'Name',
+                game_type: 'Category',
+                type: 'Type',
+                platform: 'Platform',
+                notes: 'Notes',
+                show: 'Is Show',
+                about: 'About',
+                details: 'Details',
+                video: 'Video URL',
+                facebook: 'FaceBook URL',
+                website: 'Website URL',
+                youtube: 'Youtube URL',
+                bg_card: 'Card Background',
+                bg_cover: 'Cover Background',
+                logo: 'Logo',
+            }
+        },
+        gameCard: {
+            title: 'Manage Game Card',
+            fields: {
+                name: 'Name',
+                sold_flag: 'Is Sold',
+                available: 'Is Available',
+                is_sold: 'Is Sold',
+                show: 'Is Show',
+                total_price: 'Total Price',
+                price: 'Price',
+                discount: 'Discount',
+                max: 'Max Quantity',
+                min: 'Min Quantity',
+                points: 'Reward Points',
+                available_keys: 'Num Available Keys',
+                order_min: 'Min Quantity Order',
+                order_max: 'Max Quantity Order',
+            }
+        }
     }
 } as LanguageSystemWords;
 

@@ -25,3 +25,7 @@ export function loadEntity(name: string, data: any): any {
     const entityMap = getStoreState().entity;
     return appDispatch({type: ENTITY_BASE_ACTIONS.ENTITY_LOAD, payload: {...entityMap, [name]: data}});
 }
+
+export function flushEntities(): any {
+    return appDispatch({type: ENTITY_BASE_ACTIONS.ENTITY_LOAD, payload: {}});
+}

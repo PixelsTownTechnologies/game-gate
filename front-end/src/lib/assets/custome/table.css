@@ -36,13 +36,14 @@ thead {
 .px-t-table-container {
     overflow-x: auto !important;
     overflow-y: auto !important;
+    max-height: 50vh !important;
 }
 
 .px-t-table {
     background: rgb(255, 255, 255);
     height: calc(100% - 80px);
     min-height: fit-content;
-    overflow: hidden;
+    /*overflow: hidden;*/
     box-shadow: 1px 5px 20px 0 #606060aa;
 }
 

@@ -1,6 +1,9 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
+from app.controllers.games import *
 from app.controllers.general import *
 from app.controllers.user import *
 
@@ -21,14 +24,8 @@ urlpatterns_users = [
     path('user/reset-password/change/', change_password_view),
 ]
 
-
 urlpatterns_orders = [
-    #path('user/orders', OrderUserFetchCreate.as_view()),
-    #path('user/order/<pk>', OrderUserUpdate.as_view()),
 
-    #path('user/order/review/<pk>', OrderUserReview.as_view()),
-    #path('user/admin/orders', OrderAdminFetchCreate.as_view()),
-    #path('user/admin/orders/<pk>', OrderAdminUpdate.as_view()),
 ]
 
 urlpatterns_invoice = [
@@ -41,11 +38,21 @@ urlpatterns_enum = [
     path('enums/<pk>', EnumUpdate.as_view())
 ]
 
-urlpatterns = [
+urlpatterns_games = [
+    path('admin/fc/game', GameFetchCreate.as_view()),
+    path('admin/game/<pk>', GameUpdateDelete.as_view()),
+    path('admin/fc/game-card', GameCardFetchCreate.as_view()),
+    path('admin/game-card/<pk>', GameCardUpdateDelete.as_view())
+]
+
+routes = [
     path('home/', home),
     path('admin/', admin.site.urls),
     *urlpatterns_users,
     *urlpatterns_orders,
     *urlpatterns_invoice,
-    *urlpatterns_enum
+    *urlpatterns_enum,
+    *urlpatterns_games
 ]
+
+urlpatterns = [*routes] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -5,7 +5,7 @@ import { ACTIONS, EntityServiceConfig } from "../../services/models/models";
 import { DIR } from "../../utils/constant";
 import LanguageService from "../../services/language-service";
 import { getEmptyForm, isEmpty, isTrueOrUndefined } from "../../utils/utils";
-import { FlexSpace } from "../containers";
+import { FlexSpace, If } from "../containers";
 import { Divider, Input } from "semantic-ui-react";
 import { Button } from "../basic";
 import { Table, TableSetting } from "../tabels";
@@ -27,6 +27,7 @@ export interface EntityWrapperState<Entity extends BaseEntity> extends BaseCompo
 export interface EntityWrapperConfig {
     title: string;
     icon?: string;
+    showDelete?: boolean;
 }
 
 abstract class EntityWrapper<Entity extends BaseEntity,
@@ -48,6 +49,7 @@ abstract class EntityWrapper<Entity extends BaseEntity,
             action: ''
         } as EntityState;
         this.getData.bind(this);
+        this.onTableSelect.bind(this);
         this.handleSaveAction.bind(this);
     }
 
@@ -61,6 +63,16 @@ abstract class EntityWrapper<Entity extends BaseEntity,
 
     direction = () => {
         return this.state.direction;
+    }
+
+    reloadContent = async () => {
+        await this.service.reload();
+        if (this.state.selectedForm && this.state.selectedForm.id) {
+            const list = this.getData().filter(e => e.id === this.state.selectedForm?.id);
+            if(list && list.length > 0){
+                this.setState({selectedForm: list[0]});
+            }
+        }
     }
 
     componentDidMount = () => {
@@ -105,16 +117,17 @@ abstract class EntityWrapper<Entity extends BaseEntity,
         if (this.state.action && this.state.selectedForm) {
             const words = this.state.word;
             const actionTitle = this.getActionToTitleMap()[this.state.action];
+            const config = this.getConfig();
             return (
                 <DialogForm
                     show={ !!this.state.action }
                     title={ actionTitle }
-                    hideDeleteButton={ true }
+                    hideDeleteButton={ !config.showDelete }
                     formSetting={ {
                         action: this.state.action,
                         form: this.state.selectedForm as any,
                         fields: this.getFormFields(),
-                        messages: this.getMessagesErrorForm()
+                        messages: this.getMessagesErrorForm(),
                     } }
                     onClose={
                         () => {
@@ -124,6 +137,8 @@ abstract class EntityWrapper<Entity extends BaseEntity,
                     onDelete={ async (id: number) => {
                         if (id) {
                             await this.service.deleteEntity(id);
+                            this.setAction('');
+                            this.setState({selectedForm: undefined});
                         }
                         return {pass: false, errors: [ words.serviceErrors.invalidId ]};
                     } }
@@ -144,7 +159,7 @@ abstract class EntityWrapper<Entity extends BaseEntity,
         const Wrapper = this.getWrapper();
         const tableSettings = this.getTableSettings();
         return (
-            <Wrapper title={ config.title } icon={config.icon} loading={ state.actionLoading }>
+            <Wrapper title={ config.title } icon={ config.icon } loading={ state.actionLoading }>
                 <FlexSpace>
                     <div className={ 'px-stp-5' }>
                         <Input
@@ -160,15 +175,15 @@ abstract class EntityWrapper<Entity extends BaseEntity,
                     <div className={ 'px-stp-5' }>
                         { this.getSubButtons() }
                         <Button
-                            pxIf={this.showEditButton()}
+                            pxIf={ this.showEditButton() }
                             color={ 'grey' }
                             onClick={ () => this.setAction('edit') }
-                            disabled={ !state.selectedForm }
+                            disabled={ !state.selectedForm || state.action === 'add' }
                             text={ state.word.basic.edit }
                             iconSetting={ {name: 'edit', labelPosition: 'left', attachToButton: true} }
                         />
                         <Button
-                            pxIf={this.showAddButton()}
+                            pxIf={ this.showAddButton() }
                             onClick={ () => {
                                 this.setState({selectedForm: getEmptyForm('add', this.getFormFields())});
                                 this.setAction('add');
@@ -179,19 +194,24 @@ abstract class EntityWrapper<Entity extends BaseEntity,
                     </div>
                 </FlexSpace>
                 <Divider hidden/>
-                <Table onSelect={ (form: Entity) => {
-                    this.setState({selectedForm: form});
-                } } showContainer selectable unStackable onRefresh={ async () => {
+                <Table onSelect={ (form: Entity) => this.onTableSelect(form) } showContainer selectable unStackable onRefresh={ async () => {
                     this.setState({selectedForm: undefined});
-                    this.service.flushStore();
-                    await this.service.find();
+                    await this.reloadContent();
                 } } settings={ tableSettings } data={ this.getFilteredData() }/>
+                <If flag={ this.showExtraElement() }>
+                    <Divider hidden/>
+                    { this.showExtraElement() }
+                </If>
                 { this.showForm() }
             </Wrapper>
         );
     }
 
-    public async handleSaveAction (form: Entity): Promise<DialogFormActionResult>  {
+    public onTableSelect (form: Entity) {
+        this.setState({selectedForm: form});
+    }
+
+    public async handleSaveAction(form: Entity): Promise<DialogFormActionResult> {
         if (this.state.selectedForm) {
             if (this.state.action === 'edit') {
                 const response = await this.service.updateEntity(this.state.selectedForm.id, form);
@@ -222,7 +242,7 @@ abstract class EntityWrapper<Entity extends BaseEntity,
         }) ).sort((e1, e2) => e2.id - e1.id);
     }
 
-    public getData (): Entity[] {
+    public getData(): Entity[] {
         return ( this.props as any )[this.service.entityConfig.storeName]
             ? ( this.props as any )[this.service.entityConfig.storeName] as Entity[] : [];
     }
@@ -246,6 +266,10 @@ abstract class EntityWrapper<Entity extends BaseEntity,
     abstract showAddButton(): boolean;
 
     abstract showEditButton(): boolean;
+
+    public showExtraElement(): any {
+        return null;
+    }
 }
 
 export default EntityWrapper;

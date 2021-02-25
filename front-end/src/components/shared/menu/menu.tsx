@@ -166,10 +166,10 @@ class Menu extends BaseComponent<MenuProps, MenuState> {
                                 <If flag={ !isUserAuthenticate() }>
                                     <FlexCenter flexDirection={ 'column' } padding={ 20 } className={ 'auth-r-menu' }>
                                         <Logo size={ 'tiny' }/>
-                                        <Header as={ 'h4' }>Welcome to { this.word().appName }</Header>
+                                        <Header as={ 'h4' }>{ this.word().authPages.welcomeMsg } { this.word().appName }</Header>
                                         <Button.Group className={ 'buttons' }>
                                             <Link to={ ROUTES_URL.USER.AUTH.REGISTER }>
-                                                <Button content={ this.word().authPages.register }/>
+                                                <Button content={ this.word().authPages.signUp }/>
                                             </Link>
                                             <Link to={ ROUTES_URL.USER.AUTH.LOGIN }>
                                                 <Button content={ this.word().authPages.signIn }/>

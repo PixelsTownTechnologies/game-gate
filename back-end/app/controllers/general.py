@@ -7,7 +7,6 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from app.models import (Country, Invoice, User, Enum)
-from app.models import (Platform)
 from app.resources import (create_notification)
 from app.serializers.general import (CountrySerializer)
 from app.serializers.general import (InvoiceSerializer, EnumSerializer)

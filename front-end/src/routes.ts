@@ -8,6 +8,8 @@ import ManageEnums from "./components/dashboard/admin/manage-enums";
 import ManageInvoices from "./components/dashboard/admin/manage-invoice";
 import TokenService from "./lib/services/token-service";
 import { flushUser } from "./lib/store/actions/user";
+import ManageGames from "./components/dashboard/admin/manage-games";
+import { flushEntities } from "./lib/store/actions/entity";
 
 export const ROUTES_URL = {
     HOME: '/',
@@ -22,7 +24,8 @@ export const ROUTES_URL = {
         ADMIN: {
             MANAGE_USERS: '/admin/manage-users',
             MANAGE_ENUMS: '/admin/manage-enums',
-            MANAGE_INVOICE: '/admin/manage-invoice'
+            MANAGE_INVOICE: '/admin/manage-invoices',
+            MANAGE_GAMES: '/admin/manage-games'
         }
     }
 }
@@ -64,13 +67,13 @@ export default [
                 },
             },
             {
-                component: ManageEnums,
-                path: ROUTES_URL.USER.ADMIN.MANAGE_ENUMS,
+                component: ManageGames,
+                path: ROUTES_URL.USER.ADMIN.MANAGE_GAMES,
                 authenticate: true,
-                permission: PERMISSIONS.MANAGE_ENUMS,
+                permission: PERMISSIONS.MANAGE_GAMES,
                 menuSetting: {
-                    text: 'title.manageEnums',
-                    icon: 'list alternate'
+                    text: 'title.manageGames',
+                    icon: 'game'
                 },
             },
             {
@@ -81,6 +84,16 @@ export default [
                 menuSetting: {
                     text: 'title.manageInvoice',
                     icon: 'paste'
+                },
+            },
+            {
+                component: ManageEnums,
+                path: ROUTES_URL.USER.ADMIN.MANAGE_ENUMS,
+                authenticate: true,
+                permission: PERMISSIONS.MANAGE_ENUMS,
+                menuSetting: {
+                    text: 'title.manageEnums',
+                    icon: 'list alternate'
                 },
             }
         ]
@@ -106,8 +119,8 @@ export default [
                     text: 'authPages.logout',
                     icon: 'sign-out',
                     onClick: () => {
-                        console.log('sss')
                         TokenService.clearToken();
+                        flushEntities();
                         flushUser();
                     }
                 }

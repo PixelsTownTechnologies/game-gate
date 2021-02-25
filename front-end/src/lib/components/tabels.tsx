@@ -16,13 +16,14 @@ export interface TableSetting {
     disableFilter?: boolean;
     type: 'text' | 'formattedNumber' | 'number' | 'float' | 'date' | 'time'
         | 'dateTime' | 'boolean' | 'link' | 'button' | 'rating' | 'valueMap' | 'balance'
-        | 'buttonLink' | 'label' | 'iconButton' | 'editButton' | 'deleteButton';
+        | 'buttonLink' | 'label' | 'iconButton' | 'editButton' | 'deleteButton' | 'viewButton';
     valueMap?: any;
     displayValue?: (value: any) => JSX.Element | null;
     onClick?: (row: any) => void;
     subSetting?: {
         buttonText?: string;
         buttonIcon?: string;
+        linkText?: string;
     },
     center?: boolean;
 }
@@ -86,7 +87,7 @@ export class Table<EntityDTO extends BaseEntity> extends BaseComponent<TableDTO<
                     <If flag={ props.onRefresh }>
                         <div dir={ state.direction }>
                             <IconButton
-                                color={'black'}
+                                color={ 'black' }
                                 size={ 'mini' }
                                 name={ 'refresh' }
                                 loading={ state.loadingRefresh }
@@ -106,8 +107,8 @@ export class Table<EntityDTO extends BaseEntity> extends BaseComponent<TableDTO<
                 </FlexSpace>
                 <div className={ 'px-t-table-container t-container' }>
                     <STable inverted={ props.inverted } selectable={ props.selectable } striped
-                           color={ props.color ? props.color as any : 'grey' }
-                           className={ buildCN(props.unStackable ? 'unstackable' : '', 'px-t-non-margin') }>
+                            color={ props.color ? props.color as any : 'grey' }
+                            className={ buildCN(props.unStackable ? 'unstackable' : '', 'px-t-non-margin') }>
                         { this.renderTableHeader() }
                         <If flag={ !isEmpty(tableRows) }>
                             <STable.Body>
@@ -231,7 +232,7 @@ export class Table<EntityDTO extends BaseEntity> extends BaseComponent<TableDTO<
                         } else {
                             switch (fieldType) {
                                 case "boolean":
-                                    displayValue = value ? 'Yes' : 'No';
+                                    displayValue = value ? this.word().basic.yes : this.word().basic.no;
                                     break;
                                 case "date":
                                     displayValue = !value ? '' : new Date(value).toLocaleDateString();
@@ -276,15 +277,18 @@ export class Table<EntityDTO extends BaseEntity> extends BaseComponent<TableDTO<
                                     );
                                     break;
                                 case "button":
-                                    displayValue = (
-                                        <Button
-                                            onClick={ () => {
-                                                if (setting.onClick) {
-                                                    setting.onClick(cellData);
-                                                }
-                                            } }
-                                        />
-                                    );
+                                    if(value) {
+                                        displayValue = (
+                                            <Button
+                                                onClick={ () => {
+                                                    if (setting.onClick) {
+                                                        setting.onClick(cellData);
+                                                    }
+                                                } }
+                                                text={ setting.subSetting?.buttonText }
+                                            />
+                                        );
+                                    }
                                     break;
                                 case "iconButton":
                                     displayValue = (
@@ -324,28 +328,60 @@ export class Table<EntityDTO extends BaseEntity> extends BaseComponent<TableDTO<
                                         />
                                     );
                                     break;
-                                case "buttonLink":
+                                case "viewButton":
                                     displayValue = (
-                                        <LinkButton
-                                            url={ value }
-                                            buttonSetting={ {
-                                                onClick: () => {
-                                                    if (setting.onClick) {
-                                                        setting.onClick(cellData);
-                                                    }
-                                                }, text: setting.subSetting && setting.subSetting.buttonText
-                                                    ? setting.subSetting.buttonText
-                                                    : this.state.word.basic.link
+                                        <IconButton
+                                            name={ 'eye' }
+                                            size={'mini'}
+                                            color={'black'}
+                                            onClick={ () => {
+                                                if (setting.onClick) {
+                                                    setting.onClick(cellData);
+                                                }
                                             } }
                                         />
                                     );
+                                    break;
+                                case "link":
+                                    if (!value) {
+                                        displayValue = '';
+                                    } else {
+                                        displayValue = (
+                                            <a
+                                                target={'_blank' as any}
+                                                href={ value }
+                                            >
+                                                { setting.subSetting ? setting.subSetting.linkText : this.state.word.basic.show }
+                                            </a>
+                                        );
+                                    }
+                                    break;
+                                case "buttonLink":
+                                    if (!value) {
+                                        displayValue = '';
+                                    } else {
+                                        displayValue = (
+                                            <LinkButton
+                                                url={ value }
+                                                buttonSetting={ {
+                                                    onClick: () => {
+                                                        if (setting.onClick) {
+                                                            setting.onClick(cellData);
+                                                        }
+                                                    }, text: setting.subSetting && setting.subSetting.buttonText
+                                                        ? setting.subSetting.buttonText
+                                                        : this.state.word.basic.link
+                                                } }
+                                            />
+                                        );
+                                    }
                                     break;
                             }
                         }
                         return (
                             <STable.Cell key={ `id__${ cellData.id }_${ index2 }` }
-                                        style={ {width: setting.width, minWidth: setting.width} }
-                                        className={ buildCN(setting.center ? 'center-text' : '') }>
+                                         style={ {width: setting.width, minWidth: setting.width} }
+                                         className={ buildCN(setting.center ? 'center-text' : '') }>
                                 <div>
                                     { displayValue }
                                 </div>

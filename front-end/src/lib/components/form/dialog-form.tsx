@@ -70,6 +70,7 @@ class DialogForm<FormType extends BaseEntity> extends BaseComponent<DialogFormPr
         }
         return (
             <Dialog
+                scrollingContent
                 open={ props.show }
                 onClose={ props.onClose }
                 headerText={ props.title }

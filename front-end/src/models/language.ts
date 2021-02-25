@@ -11,7 +11,6 @@ export interface LanguageSystemWords extends LanguageBaseWords {
         resetPasswordFailedPleaseTryAgain: string;
         currentPasswordError: string;
     };
-
     messages: {
         profile: {
             changePassword: string;
@@ -26,11 +25,11 @@ export interface LanguageSystemWords extends LanguageBaseWords {
             lookingHelp: string;
         };
     };
-
     title: {
         manageUsers: string;
         manageEnums: string;
         manageInvoice: string;
+        manageGames: string;
         dashboard: string;
         actions: {
             editUser: string;
@@ -43,7 +42,6 @@ export interface LanguageSystemWords extends LanguageBaseWords {
             changePermissions: string;
         };
     };
-
     invoice: {
         action: string;
         amount: string;
@@ -59,8 +57,48 @@ export interface LanguageSystemWords extends LanguageBaseWords {
             P: string;
         };
     };
-
     menu: {
         profile: string;
     };
+    entities: {
+        game: {
+            title: string;
+            fields: {
+                name: string;
+                game_type: string;
+                type: string;
+                platform: string;
+                notes: string;
+                show: string;
+                about: string;
+                details: string;
+                video: string;
+                facebook: string;
+                website: string;
+                youtube: string;
+                bg_card: string;
+                bg_cover: string;
+                logo: string;
+            }
+        },
+        gameCard: {
+            title: string;
+            fields: {
+                name: string;
+                sold_flag: string;
+                available: string;
+                is_sold: string;
+                show: string;
+                total_price: string;
+                price: string;
+                discount: string;
+                max: string;
+                min: string;
+                points: string;
+                available_keys: string;
+                order_min: string;
+                order_max: string;
+            }
+        }
+    }
 }

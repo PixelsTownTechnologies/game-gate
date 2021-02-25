@@ -43,6 +43,7 @@ export class EntityService<Entity extends BaseEntity> extends BaseFacadeServices
             return Promise.resolve(undefined);
         }
         entity = this.getFormFields(entity, actionAPI);
+        entity = this.getDataForm(entity, actionAPI);
         this.setLoading(true, actionAPI);
         try {
             const response: AxiosResponse<Entity> = await this.getAxiosInstance(!!actionAPI.authenticate).post(this.getURL(actionAPI), entity);
@@ -178,6 +179,7 @@ export class EntityService<Entity extends BaseEntity> extends BaseFacadeServices
             return Promise.resolve(undefined);
         }
         form = this.getFormFields(form, actionAPI);
+        form = this.getDataForm(form, actionAPI);
         try {
             const response: AxiosResponse<Entity> = await this.getAxiosInstance(!!actionAPI.authenticate).put(this.getURL(actionAPI) + '/' + id, form);
             if (this.entityConfig.loadToStore) {
@@ -236,4 +238,16 @@ export class EntityService<Entity extends BaseEntity> extends BaseFacadeServices
         }
         return newForm;
     }
+
+    private getDataForm(entity: any, actionAPI: APIActionConfig) {
+        if (actionAPI.formData && entity) {
+            const form = new FormData();
+            Object.keys(entity).forEach(key => {
+                form.append(key, entity[key]);
+            });
+            return form;
+        }
+        return entity;
+    }
+
 }

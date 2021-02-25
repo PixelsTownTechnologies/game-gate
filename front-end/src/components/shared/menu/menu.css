@@ -1,15 +1,15 @@
 .px.menu {
-    --menuHeight: 65px;
+    --menuHeight: 70px;
     --mS1C: linear-gradient(30deg, #11998e, #38ef7d) !important;
     --mS1H1C: #38ef7d80;
     --mS1H2C: #38ef7d50;
     --mS1H3C: #38ef7d20;
 
-    --mS2C: #ebebeb;
+    --mS2C: #ffffff;
 
-    --mS3C: #ffffff;
-    --mS3H1C: #f0f0f0dd;
-    --mS3H2C: #e6e6e6aa;
+    --mS3C: #f2f2f2;
+    --mS3H1C: #ffffffdd;
+    --mS3H2C: #ffffff44;
 
     --mS2LBC: #1781e9;
     --mS2LBHC: #3996f1;
@@ -19,9 +19,10 @@
     --mTextC: #242424;
     --mTextHoverC: #0bb5a7;
     --mHoverC: #ffffff;
-    --mSubmC: #f5f5f5fa;
+    --mSubmC: #ffffff;
 
     height: var(--menuHeight);
+    background: var(--mS2C);
     box-shadow: 0 2px 20px 5px rgba(50, 50, 50, 0.4);
     z-index: 10000;
     position: relative;
@@ -76,9 +77,13 @@
     padding: 10px !important;
 }
 
+.ui.item.simple.dropdown .menu.transition .menu-item:hover {
+    color: var(--mTextHoverC) !important;
+}
+
 .ui.item.simple.dropdown .menu.transition .menu-item {
     font-family: 'Maven Pro', sans-serif !important;
-    font-size: 1.15rem !important;
+    font-size: 1rem !important;
     color: var(--mTextC) !important;
     height: fit-content !important;
     display: flex !important;
@@ -89,6 +94,10 @@
     padding: 10px !important;
 }
 
+.ui.item.simple.dropdown .menu.transition .menu-item i{
+    margin-top: -5px !important;
+}
+
 .px.menu .menu.transition {
     z-index: 1000000 !important;
 }
@@ -96,6 +105,10 @@
 .px.menu .menu.transition div[role='option'] {
     border-top: 1px solid #3d3e3f55;
     border-bottom: 1px solid #3d3e3f55;
+}
+
+.px.menu .menu.transition div[role='option']:nth-child(1) {
+    border-top: none !important;
 }
 
 .px.menu .menu.transition div[role='option']:hover {
@@ -124,9 +137,14 @@
     background: var(--mS3C) !important;
 }
 
+.px.menu .menu.transition {
+    border-top: none !important;
+}
+
 .px.menu .menu.transition.right {
-    left: calc(-100% - 150px) !important;
-    background: var(--mSubmC) !important;
+    width: 200px !important;
+    left: calc(-100% - 130px) !important;
+    background: var(--mS3C) !important;
 }
 
 .px.menu .ui.item.simple.dropdown > .menu.transition {
@@ -141,7 +159,7 @@
 
 .px.menu .dropdown .menu-item {
     font-family: 'Maven Pro', sans-serif !important;
-    font-size: 1.15rem;
+    font-size: 1.0rem;
     color: var(--mTextC) !important;
     height: var(--menuHeight) !important;
     display: flex;
