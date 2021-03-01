@@ -248,7 +248,13 @@ export const getFieldValueFromRow = (object: any, field: string) => {
 }
 
 export function clamp(min: number, value: number, max: number) {
-    return value > min ? value > max ? max : value : min;
+    if (min <= value && value <= max) {
+        return value;
+    }
+    if (value < min) {
+        return min;
+    }
+    return max;
 }
 
 export function getDefaultValidMsg(words: LanguageBaseWords) {

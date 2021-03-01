@@ -40,7 +40,7 @@ class WindowServiceClass {
 
     public subscribe = (callBack: (value: SizeChangeResult) => void) => {
         const newId = generateId();
-        const screenType = window.innerWidth < 650 ? 'Mobile' : ( window.innerWidth < 950 ? 'Tablet' : 'Computer' );
+        const screenType = window.innerWidth < 768 ? 'Mobile' : ( window.innerWidth < 1035 ? 'Tablet' : 'Computer' );
         this.callBacks.set(newId, callBack);
         setTimeout(() => {
             callBack({
@@ -63,7 +63,7 @@ class WindowServiceClass {
     }
 
     private callSubscribe = () => {
-        const screenType = window.innerWidth < 650 ? 'Mobile' : ( window.innerWidth < 950 ? 'Tablet' : 'Computer' );
+        const screenType = window.innerWidth < 768 ? 'Mobile' : ( window.innerWidth < 1035 ? 'Tablet' : 'Computer' );
         [ ...this.callBacks.values() as any ].forEach(callback => {
             if (callback) {
                 callback({
@@ -76,7 +76,7 @@ class WindowServiceClass {
     }
 
     getSetting = (): SizeChangeResult => {
-        const screenType = window.innerWidth < 650 ? 'Mobile' : ( window.innerWidth < 950 ? 'Tablet' : 'Computer' );
+        const screenType = window.innerWidth < 768 ? 'Mobile' : ( window.innerWidth < 1035 ? 'Tablet' : 'Computer' );
         return {
             width: window.innerWidth,
             height: window.innerHeight,

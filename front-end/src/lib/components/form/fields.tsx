@@ -14,7 +14,7 @@ import {
     TextAreaDTO,
     TextFieldSetting
 } from "./models";
-import { Input, TextArea as STextArea } from "semantic-ui-react";
+import { Button as SButton, Header, Icon, Input, TextArea as STextArea } from "semantic-ui-react";
 import { Button } from "../basic";
 
 
@@ -248,6 +248,30 @@ export function ImageField(props: ImageDTO) {
                     }
                 } }
             />
+        </div>
+    );
+}
+
+export function Counter(props: { min: number, max: number, value: number, onChange: (value: number) => void }) {
+    return (
+        <div className={ 'px-lib input-counter' }>
+            <SButton
+                icon
+                onClick={ () => {
+                    if (props.value - 1 >= props.min) {
+                        props.onChange(props.value - 1);
+                    }
+                } }
+            ><Icon name={ 'minus' }/></SButton>
+            <Header className={ 'px-non-margin' }>{ props.value }</Header>
+            <SButton
+                icon
+                onClick={ () => {
+                    if (props.value + 1 <= props.max) {
+                        props.onChange(props.value + 1);
+                    }
+                } }
+            ><Icon name={ 'plus' }/></SButton>
         </div>
     );
 }

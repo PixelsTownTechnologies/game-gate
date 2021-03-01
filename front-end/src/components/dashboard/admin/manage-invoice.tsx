@@ -17,9 +17,12 @@ import { UserBaseDTO } from "../../../lib/models/user";
 import { Button } from "../../../lib/components/basic";
 import React from "react";
 import { DialogFormActionResult } from "../../../lib/components/form/dialog-form";
+import UserFacadeService from "../../../lib/services/facade-service/user-facade-service";
+import TokenService from "../../../lib/services/token-service";
 
 interface ManageInvoicesProps extends EntityWrapperProps<InvoiceDTO> {
     users: UserBaseDTO[];
+    user: UserBaseDTO;
 }
 
 interface ManageInvoicesState extends EntityWrapperState<InvoiceDTO> {
@@ -229,10 +232,12 @@ class ManageInvoices extends EntityWrapper<InvoiceDTO, ManageInvoicesProps, Mana
             if ([ 'setBalance', 'removeBalance', 'addBalance' ].includes(this.state.action)) {
                 const response = await this.service.createEntity({...this.state.selectedForm, ...form});
                 if (response) {
+                    if (response.user.id === this.props.user.id) {
+                        UserFacadeService.checkToken(TokenService.getToken()).then();
+                    }
                     this.setState({selectedForm: undefined});
                     this.setAction('');
-                    await this.userService.flushStore();
-                    await this.userService.find();
+                    await this.userService.reload();
                     return {pass: true};
                 }
             }

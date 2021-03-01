@@ -3,21 +3,32 @@ import EntityWrapper, {
     EntityWrapperProps,
     EntityWrapperState
 } from "../../../lib/components/wrapper/entity-wrapprt";
-import { gameCardService, gameService } from "../../../services/service-config";
+import { countriesService, gameCardKeysService, gameCardService, gameService } from "../../../services/service-config";
 import { LanguageSystemWords } from "../../../models/language";
 import { Wrapper } from "../../shared/wrapper";
 import { Table, TableSetting } from "../../../lib/components/tabels";
 import { DFormField } from "../../../lib/components/form/models";
-import { costFormat, getDefaultValidMsg, getEmptyForm, removeEmpty } from "../../../lib/utils/utils";
-import { connect } from "react-redux";
-import { generateMapStateEntityToProps } from "../../../lib/store/util";
-import { GameCardDTO, GameDTO, gameStateTypeToTypes, gameTypes, platformTypes } from "../../../models/game";
+import { costFormat, getDefaultValidMsg, getEmptyForm, isEmpty, removeEmpty } from "../../../lib/utils/utils";
+import {
+    GameCardDTO,
+    GameDTO,
+    gameStateTypeToTypes,
+    gameTypes,
+    platformTypes,
+    platformTypeStateToPlatform
+} from "../../../models/game";
 import React from 'react';
-import { Divider, FlexBox, FlexSpace } from "../../../lib/components/containers";
-import { Divider as SDivider, Header } from "semantic-ui-react";
-import { Button } from "../../../lib/components/basic";
+import { Divider, FlexBox, FlexSpace, If } from "../../../lib/components/containers";
 import DialogForm, { DialogFormActionResult } from "../../../lib/components/form/dialog-form";
 import { EntityService } from "../../../lib/services/entity-service/entity-service";
+import Dialog from "../../../lib/components/form/dialog";
+import { TextArea } from "../../../lib/components/form/fields";
+import { Button } from "../../../lib/components/basic";
+import { generateMapStateEntityToProps } from "../../../lib/store/util";
+import { connect } from "react-redux";
+import { Divider as SDivider, Form, Header, TextArea as STextArea } from 'semantic-ui-react';
+import MDEditor from '@uiw/react-md-editor';
+import { CountryDTO } from "../../../lib/models/country";
 
 const ACTIONS = {
     EDIT_GC: 'EDIT_GC',
@@ -25,11 +36,27 @@ const ACTIONS = {
 }
 
 interface ManageGamesProps extends EntityWrapperProps<GameDTO> {
+    countries: CountryDTO[];
 }
 
 interface ManageGamesState extends EntityWrapperState<GameDTO> {
     selectedGCForm?: GameCardDTO;
     gameCardAction: string;
+    subDialogSettings?: {
+        show: boolean;
+        fieldName: string;
+        game: GameDTO;
+        type: 'editor' | 'text';
+    };
+    isSubDialogLoading: boolean;
+    subDialogForm: any;
+    showKeyDialog: boolean;
+    keyForm?: {
+        format: string;
+        fileContent: string;
+        reviewContent: string;
+        keysResult: string[];
+    };
 }
 
 
@@ -43,6 +70,7 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
     }
 
     init = (): void => {
+        new EntityService(countriesService).find().then();
     }
 
     getConfig(): EntityWrapperConfig {
@@ -77,22 +105,44 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
                 title: word.fields.name,
                 center: true,
                 type: 'text',
-                width: 120
+                width: 250
+            },
+            {
+                fieldName: 'card_name',
+                title: word.entities.game.fields.card_name,
+                center: true,
+                type: 'text',
+                width: 150
             },
             {
                 fieldName: 'show',
                 title: word.entities.game.fields.show,
                 center: true,
                 type: 'boolean',
-                width: 80
+                width: 100
             },
             {
                 fieldName: 'type',
                 title: word.entities.game.fields.type,
                 type: 'valueMap',
                 center: true,
-                width: 80,
+                width: 100,
                 valueMap: gameStateTypeToTypes
+            },
+            {
+                fieldName: 'country',
+                title: word.entities.game.fields.country,
+                type: 'text',
+                center: true,
+                width: 140
+            },
+            {
+                fieldName: 'platform',
+                title: word.entities.game.fields.platform,
+                type: 'valueMap',
+                center: true,
+                width: 120,
+                valueMap: platformTypeStateToPlatform
             },
             {
                 fieldName: 'details',
@@ -101,19 +151,34 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
                 center: true,
                 width: 80,
                 onClick: (row) => {
-                    console.log(row);
+                    this.setState({
+                        subDialogSettings: {
+                            show: true,
+                            fieldName: 'details',
+                            game: row,
+                            type: "editor"
+                        },
+                        subDialogForm: {details: row['details']}
+                    });
                 }
             },
-            {
+            /*{
                 fieldName: 'about',
                 title: word.entities.game.fields.about,
                 type: 'viewButton',
                 center: true,
                 width: 80,
                 onClick: (row) => {
-                    console.log(row);
+                    this.setState({
+                        subDialogSettings: {
+                            show: true,
+                            fieldName: 'about',
+                            game: row,
+                            type:"editor"
+                        }
+                    });
                 }
-            },
+            },*/
             {
                 fieldName: 'notes',
                 title: word.entities.game.fields.notes,
@@ -121,20 +186,25 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
                 center: true,
                 width: 80,
                 onClick: (row) => {
-                    console.log(row);
+                    this.setState({
+                        subDialogSettings: {
+                            show: true,
+                            fieldName: 'notes',
+                            game: row,
+                            type: "text"
+                        },
+                        subDialogForm: {notes: row['notes']}
+                    });
                 }
             },
             {
                 fieldName: 'video',
                 title: word.entities.game.fields.video,
-                type: 'link',
+                type: 'text',
                 center: true,
-                width: 80,
-                subSetting: {
-                    linkText: word.basic.goTo
-                }
+                width: 120
             },
-            {
+            /*{
                 fieldName: 'facebook',
                 title: word.entities.game.fields.facebook,
                 type: 'link',
@@ -163,13 +233,13 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
                 subSetting: {
                     linkText: word.basic.goTo
                 }
-            },
+            },*/
             {
                 fieldName: 'bg_card',
                 title: word.entities.game.fields.bg_card,
                 type: 'link',
                 center: true,
-                width: 60,
+                width: 120,
                 subSetting: {
                     linkText: word.basic.show
                 }
@@ -179,7 +249,7 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
                 title: word.entities.game.fields.bg_cover,
                 type: 'link',
                 center: true,
-                width: 60,
+                width: 120,
                 subSetting: {
                     linkText: word.basic.show
                 }
@@ -189,7 +259,7 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
                 title: word.entities.game.fields.logo,
                 type: 'link',
                 center: true,
-                width: 60,
+                width: 100,
                 subSetting: {
                     linkText: word.basic.show
                 }
@@ -209,6 +279,12 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
             value: ( platformTypes as any )[key],
             key: ( platformTypes as any )[key]
         } ));
+        let countriesOptions = [ {text: 'Global', value: 'Global', key: 'Global'} ];
+        countriesOptions = this.props.countries ? [ ...countriesOptions, ...this.props.countries.map(c => ( {
+            text: c.name,
+            value: c.name,
+            key: c.name,
+        } )) ] : countriesOptions;
         const words = this.state.word as LanguageSystemWords;
         return [
             [
@@ -216,14 +292,14 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
                     fieldName: 'name',
                     type: 'text',
                     fieldTitle: words.entities.game.fields.name,
-                    subInputOptions: {length: 32},
+                    subInputOptions: {length: 64},
                     validator: {required: true}
                 },
                 {
-                    fieldName: 'show',
-                    type: 'boolean',
-                    fieldTitle: words.entities.game.fields.show,
-                    defaultValue: true
+                    fieldName: 'country',
+                    type: 'list',
+                    fieldTitle: words.entities.game.fields.country,
+                    subInputOptions: {listOptions: countriesOptions}
                 }
             ],
             [
@@ -243,26 +319,43 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
             ],
             [
                 {
+                    fieldName: 'card_name',
+                    type: 'text',
+                    fieldTitle: words.entities.game.fields.card_name,
+                    subInputOptions: {length: 64},
+                    validator: {required: true}
+                },
+                {
+                    fieldName: 'show',
+                    type: 'boolean',
+                    fieldTitle: words.entities.game.fields.show,
+                    defaultValue: true
+                }
+            ],
+            [
+                {
                     fieldName: 'notes',
                     type: 'bigText',
                     fieldTitle: words.entities.game.fields.notes,
                     subInputOptions: {length: 255}
                 }
             ],
-            [
-                {
-                    fieldName: 'about',
-                    type: 'bigText',
-                    fieldTitle: words.entities.game.fields.about,
-                    subInputOptions: {length: 255}
-                }
-            ],
+            /* [
+                 {
+                     fieldName: 'about',
+                     type: 'bigText',
+                     fieldTitle: words.entities.game.fields.about,
+                     subInputOptions: {length: 255}
+                 }
+             ],*/
             [
                 {
                     fieldName: 'details',
                     type: 'bigText',
                     fieldTitle: words.entities.game.fields.details,
-                    subInputOptions: {length: 255}
+                    subInputOptions: {length: 255},
+                    disabled: true,
+                    defaultValue: 'No Details To View Here'
                 }
             ],
             [
@@ -273,7 +366,7 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
                     subInputOptions: {length: 255}
                 }
             ],
-            [
+            /*[
                 {
                     fieldName: 'facebook',
                     type: 'text',
@@ -296,7 +389,7 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
                     fieldTitle: words.entities.game.fields.youtube,
                     subInputOptions: {length: 255}
                 }
-            ],
+            ],*/
             [
                 {
                     fieldName: 'bg_card',
@@ -320,7 +413,10 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
     getActionToTitleMap(): { [p: string]: string } {
         const words: LanguageSystemWords = this.word() as LanguageSystemWords;
         return {
-            'edit': words.title.actions.editEnums,
+            'edit': words.entities.game.actions.edit,
+            'add': words.entities.game.actions.add,
+            [ACTIONS.EDIT_GC]: words.entities.gameCard.actions.edit,
+            [ACTIONS.ADD_GC]: words.entities.gameCard.actions.add
         };
     }
 
@@ -339,7 +435,7 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
         return true;
     }
 
-    onTableSelect = (form: GameDTO) =>{
+    onTableSelect = (form: GameDTO) => {
         super.onTableSelect(form);
         this.setState({gameCardAction: '', selectedGCForm: undefined});
     }
@@ -375,13 +471,94 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
                 const response = await this.gameCardService.updateEntity(this.state.selectedGCForm.id, form);
                 if (response) {
                     await this.reloadContent();
-                    this.setState({selectedGCForm: this.state.selectedForm.game_cards
-                            .filter(gc => gc.id === this.state.selectedGCForm?.id)[0]});
+                    this.setState({
+                        selectedGCForm: this.state.selectedForm.game_cards
+                            .filter(gc => gc.id === this.state.selectedGCForm?.id)[0]
+                    });
                     return {pass: true};
                 }
             }
         }
+        if (this.state.subDialogSettings) {
+            const response = await this.service.updateEntity(this.state.subDialogSettings.game.id, form);
+            if (response) {
+                this.setState({selectedForm: this.getData()?.filter(e => e.id === this.state.selectedForm?.id)?.[0]});
+                return {pass: true};
+            }
+        }
         return super.handleSaveAction(form as GameDTO);
+    }
+
+    public async reloadContent() {
+        await super.reloadContent();
+        this.setState({
+            selectedGCForm: this.state.selectedForm?.game_cards
+                .filter(gc => gc.id === this.state.selectedGCForm?.id)[0]
+        });
+    }
+
+    showDetailsDialog = () => {
+        const words = this.state.word as LanguageSystemWords;
+        const subDialogSettings = this.state.subDialogSettings;
+        if (!subDialogSettings) {
+            return null;
+        }
+        return (
+            <Dialog
+                open={ !!this.state.subDialogSettings && this.state.subDialogSettings.show }
+                onClose={ () => {
+                    this.setState({subDialogSettings: undefined});
+                } }
+                headerText={ words.entities.game.actions.editSubData }
+                size={ 'large' }
+                closeButtonSetting={ {
+                    show: true,
+                    disabled: this.state.isSubDialogLoading,
+                    text: words.basic.cancel,
+                    onClick: () => {
+                        this.setState({subDialogSettings: undefined});
+                    }
+                } }
+                saveButtonSetting={
+                    {
+                        show: true,
+                        text: words.basic.save,
+                        loading: this.state.isSubDialogLoading,
+                        onClick: () => {
+                            this.setState({isSubDialogLoading: true});
+                            this.handleSaveAction(this.state.subDialogForm as any).then(d => {
+                                if (d) {
+                                    this.setState({isSubDialogLoading: false, subDialogSettings: undefined});
+                                }
+                            });
+                        }
+                    }
+                }
+                deleteButtonSetting={ {
+                    show: false
+                } }
+            >
+                <If flag={ subDialogSettings.type === 'editor' }>
+                    <MDEditor
+                        value={ this.state.subDialogForm[subDialogSettings.fieldName] }
+                        onChange={ (e) => {
+                            this.setState({subDialogForm: {[subDialogSettings.fieldName]: e}});
+                        } }
+                    />
+                </If>
+                <If flag={ subDialogSettings.type === 'text' }>
+                    <Form>
+                        <TextArea
+                            value={ this.state.subDialogForm[subDialogSettings.fieldName] }
+                            length={ 255 }
+                            onChange={ (e) => {
+                                this.setState({subDialogForm: {[subDialogSettings.fieldName]: e}});
+                            } }
+                        />
+                    </Form>
+                </If>
+            </Dialog>
+        );
     }
 
     getGameCardTableSetting = (): TableSetting[] => {
@@ -414,6 +591,13 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
                 center: true,
                 type: 'boolean',
                 width: 80
+            },
+            {
+                fieldName: 'available_keys',
+                title: word.entities.gameCard.fields.available_keys,
+                center: true,
+                type: 'number',
+                width: 100
             },
             {
                 fieldName: 'price',
@@ -490,15 +674,15 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
                     fieldName: 'max',
                     type: 'range',
                     fieldTitle: words.entities.gameCard.fields.max,
-                    defaultValue: 1,
+                    defaultValue: 10,
                     subInputOptions: {max: 9999999999, min: 1}
                 },
                 {
                     fieldName: 'min',
                     type: 'range',
                     fieldTitle: words.entities.gameCard.fields.min,
-                    defaultValue: 0,
-                    subInputOptions: {max: 9999999999, min: 0}
+                    defaultValue: 1,
+                    subInputOptions: {max: 9999999999, min: 1}
                 }
             ],
             [
@@ -529,7 +713,7 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
     showGameCardForm = () => {
         if (this.state.gameCardAction && this.state.selectedGCForm && this.state.selectedForm) {
             const words = this.state.word;
-            const actionTitle = this.getActionToTitleMap()[this.state.action];
+            const actionTitle = this.getActionToTitleMap()[this.state.gameCardAction];
             const config = this.getConfig();
             return (
                 <DialogForm
@@ -550,6 +734,7 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
                     onDelete={ async (id: number) => {
                         if (id) {
                             await this.gameCardService.deleteEntity(id);
+                            await this.reloadContent();
                             this.setState({gameCardAction: ''});
                             this.setState({selectedGCForm: undefined});
                         }
@@ -578,9 +763,35 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
                     </div>
                     <div className={ 'px-stp-5' }>
                         <Button
+                            text={ word.entities.game.keys.addKeys }
+                            disabled={
+                                !state.selectedGCForm
+                                || state.gameCardAction === ACTIONS.ADD_GC
+                                || !state.selectedForm
+                                || state.selectedForm.type === gameTypes.Charging
+                            }
+                            color={'black'}
+                            onClick={ () => {
+                                this.setState({
+                                    showKeyDialog: true, keyForm: {
+                                        fileContent: '',
+                                        format: 'Code : value\n' +
+                                            'Serial : value',
+                                        reviewContent: '',
+                                        keysResult: []
+                                    }
+                                });
+                            } }
+                            iconSetting={ {name: 'key', attachToButton: true, labelPosition: 'left'} }
+                        />
+                        <Button
                             color={ 'grey' }
-                            onClick={ () => this.setState({gameCardAction: ACTIONS.EDIT_GC }) }
-                            disabled={ !state.selectedGCForm || state.gameCardAction === ACTIONS.ADD_GC }
+                            onClick={ () => this.setState({gameCardAction: ACTIONS.EDIT_GC}) }
+                            disabled={
+                                !state.selectedGCForm
+                                || state.gameCardAction === ACTIONS.ADD_GC
+                                || !state.selectedForm
+                            }
                             text={ state.word.basic.edit }
                             iconSetting={ {name: 'edit', labelPosition: 'left', attachToButton: true} }
                         />
@@ -588,7 +799,7 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
                             disabled={ !state.selectedForm }
                             onClick={ () => {
                                 this.setState({selectedGCForm: getEmptyForm(ACTIONS.ADD_GC, this.getGameCardFormFields())});
-                                this.setState({gameCardAction: ACTIONS.ADD_GC });
+                                this.setState({gameCardAction: ACTIONS.ADD_GC});
                             } }
                             text={ state.word.basic.add }
                             iconSetting={ {name: 'plus', labelPosition: 'left', attachToButton: true} }
@@ -601,17 +812,180 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
                     showContainer
                     selectable
                     unStackable
+                    selectedId={ this.state.selectedGCForm?.id }
                     settings={ this.getGameCardTableSetting() }
                     data={ state.selectedForm && state.selectedForm.game_cards ? state.selectedForm.game_cards : [] }
                     onSelect={ (form: GameCardDTO) => {
                         this.setState({selectedGCForm: form});
                     } }
                 />
-                {this.showGameCardForm()}
+                { this.showGameCardForm() }
+                { this.showDetailsDialog() }
+                { this.showKeysForm() }
             </FlexBox>
         );
     }
 
+    showKeysForm = () => {
+        if (this.state.showKeyDialog && this.state.keyForm) {
+            const words = this.state.word as LanguageSystemWords;
+            return (
+                <Dialog
+                    open={ this.state.showKeyDialog }
+                    headerText={ words.entities.game.keys.addKeys }
+                    onClose={
+                        () => {
+                            this.setState({showKeyDialog: false, keyForm: undefined});
+                        }
+                    }
+                    closeButtonSetting={ {
+                        text: words.entities.game.keys.viewKeys,
+                        disabled: this.state.isSubDialogLoading,
+                        onClick: () => {
+                            if (this.state.keyForm) {
+                                const formatList = this.state.keyForm.format.split('\n').map(line => {
+                                    const list = line.split('value');
+                                    return list.length > 0 && isEmpty(list?.[1]) ? list[0] : null;
+                                }).filter(v => !!v);
+                                if (formatList && formatList.length > 0) {
+                                    const fileLines = this.state.keyForm?.fileContent.split('\n').filter(l => {
+                                        let isMatch = false;
+                                        formatList.forEach((format, index) => {
+                                            isMatch = isMatch || l.split(format as string).length > 1;
+                                        });
+                                        return isMatch;
+                                    });
+                                    const keysList = [];
+                                    if (fileLines) {
+                                        for (let i = 0; fileLines.length >= i; i = i + formatList.length) {
+                                            let key = '';
+                                            formatList.forEach((format, index) => {
+                                                if (format && fileLines[i + index] && fileLines[i + index].split(format)?.[1]) {
+                                                    key = key + ( index > 0 ? '\n' : '' ) + fileLines[i + index].split(format)[1];
+                                                }
+                                            });
+                                            if (!isEmpty(key)) {
+                                                keysList.push(key);
+                                            }
+                                        }
+                                    }
+                                    this.setState({keyForm: {...this.state.keyForm, keysResult: keysList}});
+                                }
+                            }
+                        }
+                    } }
+                    saveButtonSetting={ {
+                        disabled: this.state.keyForm?.keysResult?.length < 1,
+                        text: words.entities.game.keys.saveGeneratedKeys,
+                        loading: this.state.isSubDialogLoading,
+                        onClick: () => {
+                            if (this.state.keyForm?.keysResult && this.state.selectedGCForm) {
+                                const form = {
+                                    keys: this.state.keyForm?.keysResult,
+                                    game_card_id: this.state.selectedGCForm.id
+                                };
+                                this.setState({isSubDialogLoading: true});
+                                new EntityService(gameCardKeysService).createEntity(form).then(data => {
+                                    if (data) {
+                                        this.reloadContent().then(data => {
+                                            this.setState({
+                                                selectedGCForm: this.state?.selectedForm?.game_cards
+                                                    .filter(gc => gc.id === this.state.selectedGCForm?.id)[0]
+                                            });
+                                        });
+                                        this.setState({
+                                            isSubDialogLoading: false,
+                                            showKeyDialog: false,
+                                            keyForm: undefined
+                                        });
+                                    }
+                                })
+                            }
+                        }
+                    } }
+                    deleteButtonSetting={ {
+                        inverted: true,
+                        color: 'grey',
+                        text: words.basic.cancel,
+                        disabled: this.state.isSubDialogLoading,
+                        onClick: () => {
+                            this.setState({
+                                showKeyDialog: false,
+                                keyForm: undefined,
+                                selectedGCForm: this.state.gameCardAction === ACTIONS.ADD_GC ? undefined : this.state.selectedGCForm
+                            });
+                        }
+                    } }
+                    scrollingContent
+                >
+                    <Form>
+                        <Form.Field>
+                            <label>{ words.entities.game.keys.fileFormat }</label>
+                            <STextArea
+                                rows={ 5 }
+                                value={ this.state.keyForm.format }
+                                placeholder={ 'Code : value\nSerial Number : value' }
+                                onChange={ (value) => {
+                                    this.setState({
+                                        keyForm: {
+                                            ...this.state.keyForm, format: value.target.value
+                                        } as any
+                                    });
+                                } }
+                            />
+                        </Form.Field>
+                        <Form.Field>
+                            <label>{ words.entities.game.keys.file }</label>
+                            <input type={ 'file' } onChange={ async (e: any) => {
+                                e.preventDefault()
+                                const reader = new FileReader()
+                                reader.onload = async (e1: any) => {
+                                    const text = ( e1.target.result )
+                                    this.setState({
+                                        keyForm: {
+                                            ...this.state.keyForm, fileContent: text
+                                        } as any
+                                    });
+                                };
+                                reader.readAsText(e.target.files[0])
+                            } }/>
+                        </Form.Field>
+                        <If flag={ !isEmpty(this.state.keyForm.fileContent) }>
+                            <Form.Field>
+                                <label>{ words.entities.game.keys.fileContent }</label>
+                                <STextArea
+                                    rows={ 10 }
+                                    value={ this.state.keyForm.fileContent }
+                                    onChange={ (value) => {
+                                        this.setState({
+                                            keyForm: {
+                                                ...this.state.keyForm, fileContent: value.target.value
+                                            } as any
+                                        });
+                                    } }
+                                />
+                            </Form.Field>
+                        </If>
+                        <If flag={ !isEmpty(this.state.keyForm.keysResult) }>
+                            <Form.Field>
+                                <label>{ words.entities.game.keys.fileContent }</label>
+                                <STextArea
+                                    rows={ this.state.keyForm.keysResult.length > 40 ? 30 : 20 }
+                                    value={
+                                        `Number Of Keys: ${ this.state.keyForm.keysResult.length }\n--------------- Keys Data ---------------\n${ this.state.keyForm.keysResult
+                                            .map((key, index) => `[${ index + 1 }]\n---------------\n${ key }\n---------------\n`)
+                                            .join('\n').trim() }`
+                                    }
+                                />
+                            </Form.Field>
+                        </If>
+                    </Form>
+                </Dialog>
+            );
+        }
+        return null;
+    }
+
 }
 
-export default connect(generateMapStateEntityToProps([ gameService.storeName ]))(ManageGames);
+export default connect(generateMapStateEntityToProps([ gameService.storeName, countriesService.storeName ]))(ManageGames);

@@ -8,8 +8,9 @@ export const platformTypeStateToPlatform = {
     C: 'Computer',
     M: 'Mobile',
     P: 'PlayStation',
-    X: 'XBox'
-}
+    X: 'XBox',
+    G: 'Global'
+} as any;
 
 export const gameTypes = {
     Keys: 'K',
@@ -20,7 +21,51 @@ export const platformTypes = {
     Computer: 'C',
     Mobile: 'M',
     PlayStation: 'P',
-    XBox: 'X'
+    XBox: 'X',
+    Global: 'G',
+}
+
+export const orderState = {
+    InProgress: 'I',
+    Complete: 'C',
+    Error: 'E'
+}
+
+export const orderStateToWord = {
+    I: 'InProgress',
+    C: 'Complete',
+    E: 'Error'
+}
+
+export interface UserOrderOwner {
+    id: number;
+    username: string;
+}
+
+export interface OrderDTO extends BaseEntity {
+    owner: UserOrderOwner;
+    game_card: GameCardDTO;
+    create: Date;
+    compete_date: Date;
+    review_date: Date;
+
+    account_id: string;
+    extra_info: string;
+    review_description: string;
+    error_msg: string;
+
+    state: 'I' | 'C' | 'E';
+
+    review_star: number;
+    quantity: number;
+
+}
+
+export interface GameKeyDTO extends BaseEntity {
+    game_card: number | GameCardDTO;
+    order: number;
+    description: string;
+    available: boolean;
 }
 
 export interface GameCardDTO extends BaseEntity {
@@ -47,6 +92,8 @@ export interface GameDTO extends BaseEntity {
     game_cards: GameCardDTO[];
 
     name: string;
+    card_name: string;
+    country: string;
     game_type: string;
     type: string;
     platform: string;

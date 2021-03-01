@@ -304,7 +304,7 @@ class Form<FormEntityDTO> extends BaseComponent<FormDTO<FormEntityDTO>, FormStat
                                     list={ row }
                                     mapper={ (row1: DFormField, key1) => {
                                         const fieldValidators = this.state.validationResult.filter(v => v.field === row1.fieldName);
-                                        let validateMessage = null;
+                                        let validateMessage: any = null;
                                         if (isUndefined(row1.showErrorOnField) || row1.showErrorOnField) {
                                             if (fieldValidators && fieldValidators.length > 0
                                                 && fieldValidators[0].result && fieldValidators[0].result.length > 0) {

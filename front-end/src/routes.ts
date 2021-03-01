@@ -10,12 +10,15 @@ import TokenService from "./lib/services/token-service";
 import { flushUser } from "./lib/store/actions/user";
 import ManageGames from "./components/dashboard/admin/manage-games";
 import { flushEntities } from "./lib/store/actions/entity";
+import { GameViewer } from "./components/dashboard/system/game-viewer/game-viewer";
+import ManageOrders from "./components/dashboard/admin/manage-orders";
 
 export const ROUTES_URL = {
     HOME: '/',
     TEST: '/',
     USER: {
         PROFILE: '/user/profile',
+        ORDER_HISTORY: '',
         AUTH: {
             LOGIN: '/user/sing-in',
             REGISTER: '/user/sing-up',
@@ -25,9 +28,11 @@ export const ROUTES_URL = {
             MANAGE_USERS: '/admin/manage-users',
             MANAGE_ENUMS: '/admin/manage-enums',
             MANAGE_INVOICE: '/admin/manage-invoices',
-            MANAGE_GAMES: '/admin/manage-games'
+            MANAGE_GAMES: '/admin/manage-games',
+            MANAGE_ORDERS: '/admin/manage-orders'
         }
-    }
+    },
+    GAME_VIEWER: '/game/view'
 }
 
 
@@ -63,7 +68,17 @@ export default [
                 permission: PERMISSIONS.MANAGE_USERS,
                 menuSetting: {
                     text: 'title.manageUsers',
-                    icon: 'users'
+                    //icon: 'users'
+                },
+            },
+            {
+                component: ManageOrders,
+                path: ROUTES_URL.USER.ADMIN.MANAGE_ORDERS,
+                authenticate: true,
+                permission: PERMISSIONS.MANAGE_ORDERS,
+                menuSetting: {
+                    text: 'title.manageOrders',
+                    //icon: 'list alternate'
                 },
             },
             {
@@ -73,7 +88,7 @@ export default [
                 permission: PERMISSIONS.MANAGE_GAMES,
                 menuSetting: {
                     text: 'title.manageGames',
-                    icon: 'game'
+                  //  icon: 'game'
                 },
             },
             {
@@ -83,7 +98,7 @@ export default [
                 permission: PERMISSIONS.MANAGE_INVOICE,
                 menuSetting: {
                     text: 'title.manageInvoice',
-                    icon: 'paste'
+                   // icon: 'paste'
                 },
             },
             {
@@ -93,9 +108,9 @@ export default [
                 permission: PERMISSIONS.MANAGE_ENUMS,
                 menuSetting: {
                     text: 'title.manageEnums',
-                    icon: 'list alternate'
+                    //icon: 'list alternate'
                 },
-            }
+            },
         ]
     },
     {
@@ -134,5 +149,9 @@ export default [
     {
         component: ComponentPPXPage,
         path: ROUTES_URL.TEST
+    },
+    {
+        component: GameViewer,
+        path: ROUTES_URL.GAME_VIEWER + '/:gameId?/:gameCardId?'
     }
 ] as RouteConfig[];

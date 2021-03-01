@@ -3,15 +3,15 @@ body {
 }
 
 
-.ui.button.black {
-    --bgColor1: rgb(50, 50, 50);
+.px-lib.ui.button.black {
+    --bgColor1: rgb(80, 80, 80);
     --bgClor2: rgb(70, 70, 70);
-    --bgColorHover: rgb(66, 66, 66);
-    --bgColorDiable: rgb(57, 57, 57);
+    --bgColorHover: rgb(90, 90, 90);
+    --bgColorDiable: rgb(37, 37, 37);
     --textColor: #fbfbfb;
 }
 
-.ui.button.grey {
+.px-lib.ui.button.grey {
     --bgColor1: rgb(120, 120, 120);
     --bgClor2: rgb(110, 110, 110);
     --bgColorHover: rgb(125, 125, 125);
@@ -19,7 +19,7 @@ body {
     --textColor: #fbfbfb;
 }
 
-.ui.button.blue {
+.px-lib.ui.button.blue {
     --bgColor1: rgba(240, 240, 240, 0.4);
     --bgClor2: rgba(254, 254, 254, 0.4);
     --bgColorHover: rgba(255, 255, 255, 0.6);
@@ -27,7 +27,7 @@ body {
     --textColor: #2d2d2d;
 }
 
-.ui.grey.button {
+.px-lib.ui.grey.button {
     --bgColor1: #939393;
     --bgClor2: #a0a0a0;
     --textColor: #ffffff;
@@ -35,12 +35,29 @@ body {
     --bgColorDiable: #282828;
 }
 
-.ui.button.brown {
+.px-lib.ui.button.brown {
     --bgColor1: rgba(240, 240, 240, 0);
     --bgClor2: rgba(240, 240, 240, 0);
     --bgColorHover: rgba(255, 255, 255, 0.6);
     --bgColorDiable: rgb(50, 50, 50);
     --textColor: #2d2d2d;
+}
+
+
+.px-lib.ui.button.olive {
+    --bgColor1: rgba(240, 240, 240, 90);
+    --bgClor2: rgba(240, 240, 240, 80);
+    --bgColorHover: rgba(255, 255, 255, 0.6);
+    --bgColorDiable: rgb(50, 50, 50);
+    --textColor: #2d2d2d;
+}
+
+.px-lib.ui.button.orange {
+    --bgColor1: #f03027;
+    --bgClor2: #ed2b22;
+    --bgColorHover: #fc4d45;
+    --bgColorDiable: #672900;
+    --textColor: #fff;
 }
 
 .px-div {
@@ -58,4 +75,74 @@ body {
 
 .ui.header.white {
     color: white !important;
+}
+
+.game-viewer-bg {
+    background: white;
+}
+
+.gv .ui.header {
+    color: #3e3e3e !important;
+}
+
+.g-card {
+    background-color: #fff;
+
+    border: 0.12rem solid rgba(159, 159, 159, 0.65);
+}
+
+.g-card.active {
+    background: #ff640033;
+    border: 0.12rem solid #ff6400;
+}
+
+.g-card.sold:hover {
+    background: #fff;
+    border: 0.12rem solid rgba(159, 159, 159, 0.65);
+}
+
+
+.g-card:hover {
+    background: #ff640033;
+    border: 0.12rem solid #ff6400;
+}
+
+.gc-price {
+    color: #f03027 !important;
+}
+
+.gc-credits {
+    color: #28cd53 !important;
+}
+
+.total-card {
+    background: white;
+}
+
+.black-text {
+    color: #0f0f0f !important;
+}
+
+.red-text {
+    color: #e80000 !important;
+}
+
+.white {
+    color: white !important;
+}
+
+.order-confirm-box {
+    background: white;
+}
+
+.counter-c {
+    background: white;
+}
+
+.order-info-box {
+    background: white;
+}
+
+.order-confirm-header {
+    background: #f03027 !important;
 }

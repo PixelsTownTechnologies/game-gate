@@ -12,6 +12,7 @@ import { Table, TableSetting } from "../tabels";
 import { BaseComponentProps, BaseComponentState } from "../components";
 import { DFormField } from "../form/models";
 import DialogForm, { DialogFormActionResult } from "../form/dialog-form";
+import { ENTITY_ACTIONS } from "../../services/models/actions";
 
 
 export interface EntityWrapperProps<Entity extends BaseEntity> extends BaseComponentProps {
@@ -50,6 +51,7 @@ abstract class EntityWrapper<Entity extends BaseEntity,
         } as EntityState;
         this.getData.bind(this);
         this.onTableSelect.bind(this);
+        this.reloadContent.bind(this);
         this.handleSaveAction.bind(this);
     }
 
@@ -65,17 +67,21 @@ abstract class EntityWrapper<Entity extends BaseEntity,
         return this.state.direction;
     }
 
-    reloadContent = async () => {
+    public async reloadContent() {
         await this.service.reload();
+        this.loaderId = this.service.loaderSubscribe(Object.values(ENTITY_ACTIONS), loading => {
+            this.setState({actionLoading: loading});
+        });
         if (this.state.selectedForm && this.state.selectedForm.id) {
             const list = this.getData().filter(e => e.id === this.state.selectedForm?.id);
-            if(list && list.length > 0){
+            if (list && list.length > 0) {
                 this.setState({selectedForm: list[0]});
             }
         }
     }
 
     componentDidMount = () => {
+        this.service.loaderUnSubscribe(this.loaderId);
         this.languageServiceID = LanguageService.subscribe((setting) => {
             if (this) {
                 this.setState({direction: setting.direction, word: setting.words});
@@ -131,6 +137,9 @@ abstract class EntityWrapper<Entity extends BaseEntity,
                     } }
                     onClose={
                         () => {
+                            if(this.state.action === 'add'){
+                                this.setState({selectedForm:undefined});
+                            }
                             this.setAction('');
                         }
                     }
@@ -194,10 +203,10 @@ abstract class EntityWrapper<Entity extends BaseEntity,
                     </div>
                 </FlexSpace>
                 <Divider hidden/>
-                <Table onSelect={ (form: Entity) => this.onTableSelect(form) } showContainer selectable unStackable onRefresh={ async () => {
-                    this.setState({selectedForm: undefined});
-                    await this.reloadContent();
-                } } settings={ tableSettings } data={ this.getFilteredData() }/>
+                <Table selectedId={this.state.selectedForm?.id} onSelect={ (form: Entity) => this.onTableSelect(form) } showContainer selectable unStackable
+                       onRefresh={ async () => {
+                           await this.reloadContent();
+                       } } settings={ tableSettings } data={ this.getFilteredData() }/>
                 <If flag={ this.showExtraElement() }>
                     <Divider hidden/>
                     { this.showExtraElement() }
@@ -207,7 +216,7 @@ abstract class EntityWrapper<Entity extends BaseEntity,
         );
     }
 
-    public onTableSelect (form: Entity) {
+    public onTableSelect(form: Entity) {
         this.setState({selectedForm: form});
     }
 
@@ -216,13 +225,14 @@ abstract class EntityWrapper<Entity extends BaseEntity,
             if (this.state.action === 'edit') {
                 const response = await this.service.updateEntity(this.state.selectedForm.id, form);
                 if (response) {
-                    this.setState({selectedForm: undefined});
+                    this.setState({selectedForm: this.getData()?.filter(e => e.id === this.state.selectedForm?.id)?.[0]});
                     return {pass: true};
                 }
             }
             if (this.state.action === 'add') {
                 const response = await this.service.createEntity(form);
                 if (response) {
+                    this.setState({selectedForm:undefined});
                     return {pass: true};
                 }
             }

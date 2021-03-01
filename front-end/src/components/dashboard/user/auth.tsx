@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Wrapper } from "../../shared/wrapper";
 import { Divider } from "semantic-ui-react";
 import { Logo } from "../../shared/base";
-import { FlexBox, FlexCenter, FlexSpace, SegmentBox } from "../../../lib/components/containers";
+import { FlexBox, FlexCenter, FlexSpace, If, SegmentBox } from "../../../lib/components/containers";
 import { clamp, getDefaultValidMsg, isFalse, isTrue } from "../../../lib/utils/utils";
 import { useLanguage } from "../../../lib/hooks/languageHook";
 import Form from "../../../lib/components/form/form";
@@ -16,7 +16,7 @@ import { registerUser } from "../../../lib/store/actions/user";
 import { activeLoader, flushLoader } from "../../../lib/store/actions/loader";
 import { useLoader } from "../../../lib/hooks/generic";
 
-export function LoginWidget() {
+export function LoginWidget({pxIf, asComponent, onSignIn}: { pxIf?: boolean, asComponent?: boolean, onSignIn?: (form: any) => Promise<{ pass: boolean }> }) {
     const {words, dir} = useLanguage();
     const {width} = useWindow();
     const loginLoader = useLoader();
@@ -25,26 +25,38 @@ export function LoginWidget() {
     const [ isSignInPress, setSignInPress ] = useState(false);
     const [ loginSuccess, setLoginSuccess ] = useState(false);
     const [ form, setForm ] = useState({username: '', password: ''});
-    const onSignIn = () => {
+    if (isFalse(pxIf)) {
+        return null;
+    }
+    const handleSignIn = () => {
         setSignInPress(true);
         if (validationResult?.valid) {
             loginLoader.activate();
-            UserFacadeService.login(form, true).then(data => {
-                if (!data) {
-                    setError(true);
-                } else {
-                    setLoginSuccess(true);
-                    setTimeout(() => {
-                        activeLoader();
+            if (onSignIn) {
+                onSignIn(form).then((d) => {
+                    if (!d || !d.pass) {
+                        setError(true);
+                    }
+                    loginLoader.disabled();
+                });
+            } else {
+                UserFacadeService.login(form, true).then(data => {
+                    if (!data) {
+                        setError(true);
+                    } else {
+                        setLoginSuccess(true);
                         setTimeout(() => {
-                            TokenService.saveToken(data.token);
-                            registerUser(data.user);
-                            flushLoader();
-                        }, 500);
-                    }, 200);
-                }
-                loginLoader.disabled();
-            });
+                            activeLoader();
+                            setTimeout(() => {
+                                TokenService.saveToken(data.token);
+                                registerUser(data.user);
+                                flushLoader();
+                            }, 500);
+                        }, 200);
+                    }
+                    loginLoader.disabled();
+                });
+            }
         }
     };
     return (
@@ -90,12 +102,14 @@ export function LoginWidget() {
             <FlexSpace>
                 <Button
                     text={ words.authPages.signIn }
-                    onClick={ onSignIn }
+                    onClick={ handleSignIn }
                     loading={ loginLoader.isLoading }
                 />
-                <Link to={ ROUTES_URL.USER.AUTH.FORGET_PASSWORD }>
-                    { words.authPages.forgetPassword }?
-                </Link>
+                <If flag={ !isTrue(asComponent) }>
+                    <Link to={ ROUTES_URL.USER.AUTH.FORGET_PASSWORD }>
+                        { words.authPages.forgetPassword }?
+                    </Link>
+                </If>
             </FlexSpace>
 
         </SegmentBox>

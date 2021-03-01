@@ -3,12 +3,13 @@ import { LanguageSystemWords } from "../../models/language";
 const ENGLISH_LANGUAGE: LanguageSystemWords = {
     appName: 'GAMERS-DZ',
     basic: {
-        yes: 'yes',
-        no: 'no',
-        save: 'save',
-        delete: 'delete',
-        cancel: 'cancel',
-        show: 'show',
+        yes: 'Yes',
+        no: 'No',
+        ok: 'Ok',
+        save: 'Save',
+        delete: 'Delete',
+        cancel: 'Cancel',
+        show: 'Show',
         theme: 'Theme',
         dark: 'Dark',
         light: 'Light',
@@ -22,11 +23,13 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
         edit: 'Edit',
         add: 'Add',
         goTo: 'GoTO',
-        view: 'View'
+        view: 'View',
+        backToHome: 'Back To Home',
+        notFound: 'Not Found'
     },
     fields: {
-        id: 'id',
-        name: 'name',
+        id: 'Id',
+        name: 'Name',
         value: 'Value'
     },
     userFields: {
@@ -110,6 +113,7 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
         manageEnums: 'Manage Enums',
         manageInvoice: 'Manage Invoice',
         manageGames: 'Manage Games',
+        manageOrders: 'Manage Order',
         dashboard: 'Dashboard',
         actions: {
             editUser: 'Edit User',
@@ -143,16 +147,31 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
     entities: {
         game: {
             title: 'Manage Games',
+            actions: {
+                add: 'Add New Game',
+                edit: 'Edit Game',
+                editSubData: 'Show And Edit Sub Data'
+            }, keys: {
+                fileContent: 'File Content',
+                addKeys: 'Add Keys',
+                saveGeneratedKeys: 'Save',
+                viewKeys: 'Review Keys',
+                fileFormat: 'File Format',
+                file: 'Select File',
+                fileFormatNote: 'Please any padding lines'
+            },
             fields: {
                 name: 'Name',
                 game_type: 'Category',
+                card_name: 'Card Name',
                 type: 'Type',
+                country: 'Country',
                 platform: 'Platform',
                 notes: 'Notes',
                 show: 'Is Show',
                 about: 'About',
                 details: 'Details',
-                video: 'Video URL',
+                video: 'Video ID',
                 facebook: 'FaceBook URL',
                 website: 'Website URL',
                 youtube: 'Youtube URL',
@@ -163,6 +182,10 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
         },
         gameCard: {
             title: 'Manage Game Card',
+            actions: {
+                add: 'Add New Game Card',
+                edit: 'Edit Game Card'
+            },
             fields: {
                 name: 'Name',
                 sold_flag: 'Is Sold',
@@ -175,12 +198,67 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
                 max: 'Max Quantity',
                 min: 'Min Quantity',
                 points: 'Reward Points',
-                available_keys: 'Num Available Keys',
+                available_keys: 'Available Keys',
                 order_min: 'Min Quantity Order',
                 order_max: 'Max Quantity Order',
             }
+        },
+        order: {
+            account_id: 'Account ID',
+            compete_date: 'Complete Date',
+            error_msg: 'Warning Msg',
+            extra_info: 'Extra Order Info',
+            orderDate: 'Order Date',
+            ownerId: 'Owner ID',
+            ownerUsername: 'Owner UserName',
+            quantity: 'Quantity',
+            review_description: 'Review Description',
+            review_star: 'Review Star',
+            reviewDate: 'Review Date',
+            state: 'Order State',
+            title: 'Manage Orders',
+            stateMap: {
+                C: 'Completed',
+                E: 'Warning',
+                I: 'In Progress'
+            },
+            actions: {
+                convertToComplete: 'Convert To Complete',
+                convertToError: 'Convert To Error',
+                convertToInProgress: 'Convert To In Progress',
+                edit: 'Edit',
+            },
         }
+    },
+    gameViewer: {
+        fields: {
+            orderId: 'Account ID',
+            rulesLabel: 'I assume all responsibility for the information you provide',
+            subDetails: 'More Information?'
+        },
+        importantNotes: 'Important Note',
+        addToFavorite: 'Add Favorite',
+        offer: 'Offer',
+        selectCardType: 'Select Card Type',
+        selectQuantity: 'Select Quantity',
+        reviews: 'Reviews',
+        buyNow: 'Buy Now',
+        addToCart: 'Add To Cart',
+        total: 'Total',
+        selectOrderData: 'Select Order Data',
+        credits: 'Credits',
+        sold: 'Stock Out',
+        totalPrice: 'Total Cost',
+        details: 'Game Details',
+        videoGame: 'Game Trailer',
+        orderHistory: 'Order History',
+        orderThanksMsg: 'Thanks for order, You can tracking order from',
+        confirmOrder: 'Confirm Your Order',
+        continue: 'Continue',
+        orderMsgOne: 'Please verify the order details before continue, We are not responsible for the information you provided',
+        noBalance: 'Your balance is not enough',
+        failedMsg: 'Order Failed, Please try again later'
     }
-} as LanguageSystemWords;
+};
 
 export default ENGLISH_LANGUAGE;

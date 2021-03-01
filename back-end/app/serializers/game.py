@@ -21,6 +21,6 @@ class GameSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'name', 'show', 'game_type', 'type',
             'platform', 'notes', 'about', 'details', 'video', 'bg_card',
-            'facebook', 'website', 'youtube', 'logo', 'bg_cover',
-            'is_deletable', 'is_editable', 'game_cards'
+            'facebook', 'website', 'youtube', 'logo', 'bg_cover', 'country',
+            'is_deletable', 'is_editable', 'game_cards', 'card_name'
         ]

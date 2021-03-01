@@ -1,3 +1,7 @@
+* {
+    --globalFont: 'Maven Pro', sans-serif;
+}
+
 .ui.input {
     border-radius: unset !important;
 }
@@ -6,7 +10,24 @@
     border-radius: unset !important;
 }
 
-.ui.error.message{
+.ui.error.message {
     border-radius: unset !important;
 }
 
+.card-image:after {
+    content: '';
+    width: 120px !important;
+    height: 120px !important;
+    background: #1c75a2;
+}
+
+.global-f {
+    font-family: var(--globalFont) !important;
+}
+
+.button-list[dir="rtl"] {
+    display: flex !important;
+    justify-content: end !important;
+    align-items: center !important;
+    flex-direction: row-reverse !important;
+}

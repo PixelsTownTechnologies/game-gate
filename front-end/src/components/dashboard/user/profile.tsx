@@ -9,7 +9,6 @@ import { UserBaseDTO } from "../../../lib/models/user";
 import { clamp, getDefaultValidMsg, pxIfSelf } from "../../../lib/utils/utils";
 import { Button, IconButton, Image, Link, MessageErrors } from "../../../lib/components/basic";
 import ProfileIcon from '../../../assets/icons/profile.png';
-import { useStore } from "../../../lib/store/util";
 import { EmailInput, TextField } from "../../../lib/components/form/fields";
 import Form from "../../../lib/components/form/form";
 import UserFacadeService from "../../../lib/services/facade-service/user-facade-service";
@@ -17,6 +16,7 @@ import { VALIDATOR_CODES } from "../../../lib/models/validators";
 import LanguageService from "../../../lib/services/language-service";
 import ThemeService from "../../../lib/services/theme-service";
 import { ROUTES_URL } from "../../../routes";
+import { useStore } from "../../../lib/hooks/user";
 
 interface ProfileProps {
     user: UserBaseDTO;
@@ -79,7 +79,7 @@ export const Profile = (props: ProfileProps) => {
                     <Image src={ selectedAvatar } border width={ 200 }/>
                     <Header className={ 'px-non-margin px-stp-10' }
                             as={ 'h1' }>{ pxIfSelf(user.username, 'User 999999') }</Header>
-                    <div>{ user.email }</div>
+                    <div className={'black-text'}>{ user.email }</div>
                 </FlexCenter>
                 <FlexCenter padding={20}>
                     <Link className={ 'px-slm-5 px-srm-5' } to={ ROUTES_URL.HOME }>
@@ -159,7 +159,7 @@ export const Profile = (props: ProfileProps) => {
                             </SForm.Field>
                             <SForm.Field>
                                 <label>{ words.userFields.userName }</label>
-                                <TextField length={ 32 } onChange={ (value) => {
+                                <TextField length={ 16 } onChange={ (value) => {
                                     onChange({...form, username: value});
                                 } } value={ form.username }/>
                             </SForm.Field>

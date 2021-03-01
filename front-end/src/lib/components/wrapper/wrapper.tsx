@@ -38,14 +38,10 @@ class WidgetWrapper extends BaseComponent<WidgetWrapperProps, BaseComponentState
 
     element: any;
 
-    constructor(props: WidgetWrapperProps) {
-        super(props);
+    initialize = () => {
         if (this.props.scrollTopLoaderCB) {
             this.props.scrollTopLoaderCB(this.scrollToTop);
         }
-    }
-
-    initialize = () => {
         setTimeout(() => {
             this.scrollToTop();
         }, 200);
@@ -77,7 +73,6 @@ class WidgetWrapper extends BaseComponent<WidgetWrapperProps, BaseComponentState
             window.scrollTo(0, 0);
             if (this.props.widgets && this.props.widgets.loader) {
                 const LoaderComponent = this.props.widgets.loader;
-                console.log(this.props.loading)
                 return <LoaderComponent show={ this.props.loading }/>;
             } else {
                 return (

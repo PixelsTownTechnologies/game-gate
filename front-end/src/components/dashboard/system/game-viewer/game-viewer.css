@@ -1,0 +1,234 @@
+.card-view {
+    flex: 2;
+}
+
+.max-width {
+    width: 100% !important;
+}
+
+.gv .ui.header, .gv span, .gv div {
+    font-family: var(--globalFont);
+    font-weight: 600 !important;
+}
+
+
+.gv.t-info {
+    margin-left: 50px;
+    flex: 60%;
+    display: flex;
+    min-height: 80%;
+    flex-direction: column;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+}
+
+.gv.t-info > div {
+    width: 100%;
+}
+
+@media only screen and (min-width: 980px) {
+    .gv.t-info {
+        margin-left: 50px;
+    }
+}
+
+@media only screen and (max-width: 980px) {
+    .gv.t-info {
+        margin-top: 30px;
+    }
+}
+
+.import-notes {
+    max-width: 600px;
+}
+
+.ui.button.olive {
+    border-radius: 25px !important;
+    font-family: var(--globalFont);
+    border: 0.2rem solid rgba(132, 132, 132, 0.27);
+}
+
+.status-info {
+    display: flex;
+    flex-direction: row;
+}
+
+.status-info > .ui.header {
+    margin: 0 !important;
+    padding: 0 !important;
+    margin-left: 20px !important;
+}
+
+.status-info > .ui.header:nth-child(1) {
+    margin-left: 0 !important;
+}
+
+.countries-icon {
+    filter: invert();
+    width: 20px !important;
+    margin-top: -3px !important;
+}
+
+.game-card-c {
+    display: flex;
+    flex: 1 6 600px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+@media only screen and (max-width: 1230px) {
+    .game-card-c {
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+/* Game Card*/
+.g-card {
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 5px 10px 0 #3d3e3f40;
+    border-radius: 10px;
+    min-width: clamp(200px, 65vh, 350px);
+    max-width: clamp(200px, 65vh, 350px);
+    min-height: 86px;
+    max-height: 86px;
+    transition: 300ms;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    margin: 15px;
+}
+
+@media only screen and (max-width: 980px) {
+    .g-card {
+        min-width: clamp(200px, 60vh, 320px);
+        max-width: clamp(200px, 60vh, 320px);
+    }
+}
+
+
+.total-card {
+    border: 0.12rem solid rgba(159, 159, 159, 0.65);
+    max-width: clamp(240px, 40%, 320px);
+    padding: 20px;
+    margin: 15px;
+    box-shadow: 0 5px 10px 0 #3d3e3f40;
+    border-radius: 10px;
+    flex: 30%;
+    height: fit-content !important;
+    max-height: 220px !important;
+    min-width: fit-content !important;
+}
+
+.total-card > div > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.total-card h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    transition: 2000ms;
+    font-family: var(--globalFont);
+}
+
+.image-s-box {
+    width: 45px;
+    height: 45px;
+    min-width: 45px;
+    max-width: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0 0 10px 0 rgba(100, 100, 100, 0.35);
+    margin-right: 15px;
+}
+
+.image-s-box img {
+    width: 38px;
+}
+
+.g-card-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.g-card-info h5 {
+    margin: 0;
+    font-family: var(--globalFont) !important;
+}
+
+.gc-name {
+    font-size: 1.08rem;
+}
+
+.gc-offer {
+    position: absolute !important;
+    top: -7px !important;
+    left: calc(100% + 16px) !important;
+    font-family: var(--globalFont) !important;
+}
+
+.gc-price {
+    width: fit-content !important;
+}
+
+.total-card-button {
+    padding: 2px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.total-card-button > button {
+    min-width: 120px !important;
+    border-radius: 25px !important;
+}
+
+.counter-c {
+    font-size: 1.4rem !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--globalFont);
+    border: 0.12rem solid rgba(159, 159, 159, 0.65);
+    min-width: clamp(120px, 30vh, 200px);
+    max-width: clamp(120px, 30vh, 200px);
+    padding: 5px;
+    margin: 10px;
+    box-shadow: 0 5px 10px 0 #3d3e3f40;
+    border-radius: 10px;
+    min-width: fit-content !important;
+}
+
+.details-section {
+}
+
+.video-embed {
+    border-radius: 12px !important;
+}
+.order-info-box .ui.form{
+    width: 100%;
+}
+
+
+.order-info-box{
+    font-size: 1.4rem !important;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--globalFont);
+    border: 0.12rem solid rgba(159, 159, 159, 0.65);
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 5px 10px 0 #3d3e3f40;
+    border-radius: 10px;
+    min-width: fit-content !important;
+}

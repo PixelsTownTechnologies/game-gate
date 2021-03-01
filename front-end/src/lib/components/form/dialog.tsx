@@ -42,13 +42,18 @@ class Dialog extends React.Component<DialogDTO, DialogState> {
             <Modal
                 size={ size ? size : 'small' }
                 open={ open }
-                onClose={ onClose }
+                onClose={ () => {
+                    if (!this.props.closeButtonSetting?.disabled) {
+                        onClose();
+                    }
+                } }
                 className={ 'px-lib' }
             >
                 <Modal.Header>
                     <FlexSpace dir={ pxIf(dir, dir, DIR.AUTO) }>
                         <Header>{ headerText }</Header>
-                        <Button size={ 'tiny' } basic color={'grey'} onClick={ onClose }
+                        <Button disabled={ this.props.closeButtonSetting?.disabled } size={ 'tiny' } basic
+                                color={ 'grey' } onClick={ onClose }
                                 iconSetting={ {name: 'times', attachToButton: true} }/>
                     </FlexSpace>
                 </Modal.Header>
@@ -56,7 +61,7 @@ class Dialog extends React.Component<DialogDTO, DialogState> {
                     { children }
                 </Modal.Content>
                 <Modal.Actions>
-                    <FlexSpace padding={10}>
+                    <FlexSpace padding={ 10 }>
                         <div>
                             <Button { ...deleteButtonSetting }/>
                         </div>

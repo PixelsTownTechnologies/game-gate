@@ -7,6 +7,18 @@ export interface BaseComponentProps {
     children?: JSX.Element | React.ReactNode | null;
 }
 
+export interface BaseRouteComponentProps extends BaseComponentProps {
+    location: {
+        pathname: string;
+        search: string;
+    };
+    match: {
+        params: any;
+        path: string;
+        url: string
+    };
+}
+
 export interface BaseComponentState {
     direction: string;
     word: LanguageBaseWords;

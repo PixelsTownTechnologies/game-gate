@@ -112,27 +112,38 @@ class Menu extends BaseComponent<MenuProps, MenuState> {
                     <FlexBox justifyContent={ 'flex-start' }>
                         { this.showSection2() }
                     </FlexBox>
+                    <MenuSearch onSearch={ (value) => {
+                        console.log(value)
+                    } }/>
                 </FlexSpace>
-                <FlexBox alignItems={ 'center' } justifyContent={ 'flex-end' } className={ 'section3' }>
+                <FlexBox alignItems={ 'center' } justifyContent={ 'flex-start' } className={ 'section3' }>
                     <FlexBox alignItems={ 'center' }>
-                        <MenuSearch onSearch={ (value) => {
-                            console.log(value)
-                        } }/>
                         <Dropdown
                             item
                             simple
                             direction={ 'right' }
-                            trigger={ <Image className={ 'profile-icon' }
-                                             width={ 'tiny' } src={ Avatar }/> }
+                            trigger={
+                                <div className={ 'profile-icon' }>
+                                    <Image
+                                        width={ 'tiny' } src={ Avatar }/>
+                                        <FlexBox flexDirection={'column'} justifyContent={'flex-start'}
+                                                 pxIf={this.state.type === 'Computer' && isUserAuthenticate()}>
+                                            <Header className={ 'global-f px-non-margin' }
+                                                    as={ 'h5' }>{ this.props.user.username }</Header>
+                                            <Header className={ 'global-f px-non-margin' }
+                                                    as={ 'h6' }>${ costFormat(this.props.user.balance) }</Header>
+                                        </FlexBox>
+                                </div>
+                            }
                         >
                             <Dropdown.Menu>
                                 <If flag={ isUserAuthenticate() }>
                                     <Dropdown.Item className={ 'menu-header' }>
                                         <Image src={ Profile }/>
                                         <Divider hidden/>
-                                        <Header className={ 'px-non-margin' }
+                                        <Header className={ 'global-f px-non-margin' }
                                                 as={ 'h3' }>{ this.props.user.username }</Header>
-                                        <Header className={ 'px-non-margin' }
+                                        <Header className={ 'global-f px-non-margin' }
                                                 as={ 'h5' }>${ costFormat(this.props.user.balance) }</Header>
                                     </Dropdown.Item>
                                     {
@@ -166,7 +177,8 @@ class Menu extends BaseComponent<MenuProps, MenuState> {
                                 <If flag={ !isUserAuthenticate() }>
                                     <FlexCenter flexDirection={ 'column' } padding={ 20 } className={ 'auth-r-menu' }>
                                         <Logo size={ 'tiny' }/>
-                                        <Header as={ 'h4' }>{ this.word().authPages.welcomeMsg } { this.word().appName }</Header>
+                                        <Header
+                                            as={ 'h4' }>{ this.word().authPages.welcomeMsg } { this.word().appName }</Header>
                                         <Button.Group className={ 'buttons' }>
                                             <Link to={ ROUTES_URL.USER.AUTH.REGISTER }>
                                                 <Button content={ this.word().authPages.signUp }/>

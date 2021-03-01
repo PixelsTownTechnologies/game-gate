@@ -47,13 +47,13 @@ export interface TableDTO<EntityDTO extends BaseEntity> extends BaseComponentPro
         | 'linkedin'
         | 'instagram'
         | 'youtube';
+    selectedId?: number ;
 }
 
 export interface TableState extends BaseComponentState {
     selectedPageSize: number;
     pageNumber: number;
     filters: any[];
-    selectedRowKey?: any;
     loadingRefresh?: boolean;
 }
 
@@ -65,7 +65,7 @@ export class Table<EntityDTO extends BaseEntity> extends BaseComponent<TableDTO<
         super(props);
         this.state = {
             ...this.state,
-            selectedPageSize: 5,
+            selectedPageSize: 15,
             pageNumber: 1,
             filters: []
         }
@@ -214,9 +214,8 @@ export class Table<EntityDTO extends BaseEntity> extends BaseComponent<TableDTO<
             <STable.Row
                 className='px-t-pointer'
                 key={ cellData.id }
-                active={ `${ this.state.selectedRowKey }` === `${ cellData.id }` }
+                active={ `${ this.props.selectedId }` === `${ cellData.id }` }
                 onClick={ () => {
-                    this.setState({selectedRowKey: cellData.id});
                     if (this.props.onSelect) {
                         this.props.onSelect(cellData);
                     }
@@ -348,6 +347,7 @@ export class Table<EntityDTO extends BaseEntity> extends BaseComponent<TableDTO<
                                     } else {
                                         displayValue = (
                                             <a
+                                                dir={this.state.direction}
                                                 target={'_blank' as any}
                                                 href={ value }
                                             >
@@ -379,10 +379,10 @@ export class Table<EntityDTO extends BaseEntity> extends BaseComponent<TableDTO<
                             }
                         }
                         return (
-                            <STable.Cell key={ `id__${ cellData.id }_${ index2 }` }
+                            <STable.Cell direction={this.state.direction} key={ `id__${ cellData.id }_${ index2 }` }
                                          style={ {width: setting.width, minWidth: setting.width} }
                                          className={ buildCN(setting.center ? 'center-text' : '') }>
-                                <div>
+                                <div dir={this.state.direction}>
                                     { displayValue }
                                 </div>
                             </STable.Cell>

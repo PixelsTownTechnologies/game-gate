@@ -1,0 +1,102 @@
+.card-view {
+    background: #c1c1c1 url("../../../assets/images/card.png");
+    background-size: cover;
+    width: 140px !important;
+    max-width: 140px !important;
+    height: 180px !important;
+    border-radius: 20px;
+    box-shadow: 0 0 15px 0 rgba(154, 154, 154, 0.50
+    );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px 20px 30px;
+    border: 0.1rem solid rgba(120, 120, 120, 0.4);
+}
+
+.card-view > div {
+    max-width: 70px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin: 15px;
+}
+
+.card-view > div > img {
+    max-width: 70px !important;
+}
+
+.card-view .ui.header {
+    font-family: var(--globalFont);
+    color: #8a8a8a !important;
+}
+
+.state-info-c {
+
+}
+
+.order-confirm-box {
+    margin: 15px;
+    width: 800px !important;
+    max-height: 80vh;
+    overflow: auto;
+}
+
+@media only screen and (max-width: 980px) {
+    .order-confirm-box {
+        width: 90% !important;
+    }
+}
+.order-confirm-header{
+    width: 100%;
+    min-height: 120px;
+    padding: 30px 20px;
+}
+
+.order-confirm-container{
+    padding: 0 !important;
+    background: #3d3e3f20;
+}
+
+.order-confirm-container > div:nth-child(1) {
+    flex: 30% !important;
+    max-width: fit-content !important;
+    padding: 20px !important;
+    padding-right: 0 !important;
+}
+
+@media only screen and (max-width: 480px) {
+    .order-confirm-container > div:nth-child(1) {
+        padding: 20px 0 0 0 !important;
+    }
+}
+
+.order-confirm-container > div:nth-child(2) {
+    flex: 60% !important;
+}
+
+.order-confirm-bottom{
+    min-height: 200px;
+}
+
+h2.state-info {
+    font-size: 1.4rem !important;
+}
+
+h3.state-info {
+    font-size: 1.2rem !important;
+}
+
+.state-info {
+    width: fit-content !important;
+    margin: 5px 0 !important;
+    font-family: var(--globalFont) !important;
+}
+
+.confirm-button{
+    width: fit-content !important;
+    height: fit-content !important;
+    font-size: 1.2rem !important;
+}

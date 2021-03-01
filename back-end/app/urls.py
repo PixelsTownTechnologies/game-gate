@@ -5,6 +5,7 @@ from django.urls import path
 
 from app.controllers.games import *
 from app.controllers.general import *
+from app.controllers.order import *
 from app.controllers.user import *
 
 urlpatterns_users = [
@@ -22,10 +23,14 @@ urlpatterns_users = [
     path('user/reset-password/send/', reset_code_view),
     path('user/reset-password/check/', check_reset_code),
     path('user/reset-password/change/', change_password_view),
+    path('system/countries', CountryListView.as_view())
 ]
 
 urlpatterns_orders = [
-
+    path('user/orders', UserOrderFetchCreate.as_view()),  # Fetch All & Create, User
+    path('user/order/<pk>', UserOrderRetrieveUpdate.as_view()),  # Fetch All & Create, User
+    path('admin/orders', AdminOrderFetch.as_view()),  # Fetch All, Admin
+    path('admin/order/<pk>', AdminOrderRetrieveUpdate.as_view()),  # Fetch Update, Admin
 ]
 
 urlpatterns_invoice = [
@@ -42,7 +47,11 @@ urlpatterns_games = [
     path('admin/fc/game', GameFetchCreate.as_view()),
     path('admin/game/<pk>', GameUpdateDelete.as_view()),
     path('admin/fc/game-card', GameCardFetchCreate.as_view()),
-    path('admin/game-card/<pk>', GameCardUpdateDelete.as_view())
+    path('admin/game-card/<pk>', GameCardUpdateDelete.as_view()),
+    path('admin/game-card/add/keys', GameCardAddKeys.as_view()),
+
+    path('system/games/fetch/<pk>', GameFetch.as_view()),
+    path('system/games/fetch-all', GameFetchAll.as_view()),
 ]
 
 routes = [

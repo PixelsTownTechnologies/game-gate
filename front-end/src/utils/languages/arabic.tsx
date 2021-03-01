@@ -6,6 +6,7 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
         yes: 'نعم',
         no: 'لا',
         save: 'حفظ',
+        ok: 'حسنا',
         delete: 'حذف',
         cancel: 'ألغاء',
         show: 'أظهار',
@@ -22,7 +23,9 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
         edit: 'تعديل',
         add: 'أضافة',
         goTo: 'انتقال',
-        view: 'أظهار'
+        view: 'أظهار',
+        backToHome: 'الصفحة الرئيسية',
+        notFound: 'العنصر غير متوفر'
     },
     fields: {
         id: 'الرقم التسلسلي',
@@ -109,6 +112,7 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
         manageUsers: 'أدارة المستخدمين',
         manageEnums: 'أدارت متغيرات النظام',
         manageInvoice: 'أدارة الفواتير',
+        manageOrders: 'أدارة الطلبات',
         manageGames: 'أدارة الالعاب',
         dashboard: 'لوحة التحكم',
         actions: {
@@ -143,16 +147,32 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
     entities: {
         game: {
             title: 'إدارة الألعاب',
+            actions: {
+                edit: 'تعديل العبة',
+                add: 'أضافة لعبة جديدة',
+                editSubData: 'تعديل المعلومات الاضافية'
+            },
+            keys: {
+                fileContent: 'معلومات الملف',
+                addKeys: 'أضافة مفاتيح',
+                saveGeneratedKeys: 'حفظ',
+                viewKeys: 'مراجعة النتائج',
+                fileFormat: 'ترتيب الملف',
+                file: 'أختار الملف',
+                fileFormatNote: 'ٌقم بازالة اي معلومات غير ضرورية'
+            },
             fields: {
                 name: 'ألاسم',
                 game_type: 'النوع',
+                country: 'البلد',
+                card_name: 'أسم الشعار',
                 type: 'نوع العرض',
                 show: 'أظهار',
                 platform: 'المنصه',
                 notes: 'ملاحظات',
                 about: 'حول',
                 details: 'تفاصيل',
-                video: 'رابط الفيديو',
+                video: 'رقم التسلسلي للفيديو',
                 facebook: 'رابط الفيسبوك',
                 website: 'رابط موقع الكتروني',
                 youtube: 'رابط اليوتيوب',
@@ -163,6 +183,10 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
         },
         gameCard: {
             title: 'إدارة بطاقة اللعبة',
+            actions: {
+                edit: 'تعديل بطاقة العبة',
+                add: 'أضافة بطاقة لعبة جديدة'
+            },
             fields: {
                 name: 'ألاسم',
                 sold_flag: 'تم البيع',
@@ -175,12 +199,67 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
                 max: 'الكمية القصوى',
                 min: 'الكمية الدنيا',
                 points: 'نقاط مكافأة',
-                available_keys: 'عدد المفاتيح المتوفرة',
+                available_keys: 'المفاتيح المتوفرة',
                 order_min: 'الحد الأدنى من الطلبات',
                 order_max: 'الحد الاقصى من الطلبات',
             }
+        },
+        order: {
+            account_id: 'رقم الحساب',
+            compete_date: 'تاريخ أكمال الطلب',
+            error_msg: 'معلومات اخطاء',
+            extra_info: 'معلومات طلب اضافية',
+            orderDate: 'تاريخ الطلب',
+            ownerId: 'رقم المالك',
+            ownerUsername: 'أسم المالك',
+            quantity: 'الكمية',
+            review_description: 'نص التقيم',
+            review_star: 'نسبة التقيم',
+            reviewDate: 'تاريخ التقيم',
+            state: 'حالة الطلب',
+            title: 'أدارة الطلبات',
+            stateMap: {
+                C: 'مكتمل',
+                E: 'خطاء معلومات',
+                I: 'قيد التنفيذ'
+            },
+            actions: {
+                convertToComplete: 'تحويل الى مكتمل',
+                convertToError: 'تحويل الى خطاء',
+                convertToInProgress: 'تحويل الى قيد تنفيذ',
+                edit: 'تعديل',
+            },
         }
+    },
+    gameViewer: {
+        fields: {
+            orderId: 'رمز الحساب',
+            rulesLabel: 'انا اتحمل كل المسؤولية عن المعلومات التي تقدمها',
+            subDetails: 'معلومات أضافية؟'
+        },
+        importantNotes: 'ملاحظات هامة',
+        addToFavorite: 'أضافة للمفضل',
+        offer: 'خصم',
+        selectCardType: 'أختار العرض',
+        selectQuantity: 'أختار الكمية',
+        reviews: 'التقيم',
+        buyNow: 'أشتر الان',
+        addToCart: 'أضافة الى السلة',
+        total: 'المجموع الكلي',
+        credits: 'نقاط',
+        selectOrderData: 'أدخال معلومات الطلب',
+        sold: 'تم البيع',
+        orderMsgOne: 'يرجى التأكد من تفاصيل الطلب قبل الاكمال نحن لا اتحمل اي مسؤلية عن المعلومات المقدمة',
+        details: 'تفاصيل',
+        totalPrice: 'السعر الكلي',
+        videoGame: 'عرض تقديمي للعبة',
+        orderHistory: 'سجل الطلبات',
+        orderThanksMsg: 'شكرًا على الطلب ، يمكنك تتبع الطلب من',
+        confirmOrder: 'تأكيد الطلب الخاص بك',
+        continue: 'أستمرار',
+        noBalance: 'رصيدك لا يكفي',
+        failedMsg: 'لقد فشل اكمال الطلب يرجى المحاولة فيما بعد'
     }
-} as LanguageSystemWords;
+};
 
 export default ARABIC_LANGUAGE;

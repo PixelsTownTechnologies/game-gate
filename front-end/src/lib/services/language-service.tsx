@@ -15,6 +15,7 @@ export interface LanguageBaseWords {
     basic: {
         yes: string;
         no: string;
+        ok: string;
         save: string;
         delete: string;
         cancel: string;
@@ -33,6 +34,8 @@ export interface LanguageBaseWords {
         add: string;
         goTo: string;
         view: string;
+        backToHome: string;
+        notFound: string;
     };
     fields: {
         id: string;

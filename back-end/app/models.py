@@ -48,6 +48,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     verify_file = models.FileField(upload_to='verify/files', blank=True, null=True)
     code = models.CharField(max_length=12, blank=True, null=True)
     is_reset_code = models.BooleanField(default=False, blank=True, null=True)
+    points = models.IntegerField(default=0, blank=True, null=True)
 
     objects = UserManager()
     USERNAME_FIELD = 'email'
@@ -159,16 +160,18 @@ class Invoice(models.Model):
 
 class Game(models.Model):
     TYPE_CHOICES = (
-        ('K', 'Keys'),
-        ('C', 'Charging'),
+        ('K', 'K'),
+        ('C', 'C'),
     )
     PLATFORM_CHOICES = (
-        ('C', 'Computer'),
-        ('M', 'Mobile'),
-        ('P', 'PlayStation'),
-        ('X', 'XBox'),
+        ('C', 'C'),
+        ('M', 'M'),
+        ('P', 'P'),
+        ('X', 'X'),
+        ('G', 'G')
     )
     name = models.CharField(max_length=64, null=True, blank=True)
+    card_name = models.CharField(max_length=64, null=True, blank=True)
     country = models.CharField(max_length=32, null=True, blank=True)
     show = models.BooleanField(default=True, null=True, blank=True)
     game_type = models.CharField(max_length=32, null=True, blank=True)
@@ -217,8 +220,7 @@ class GameCard(models.Model):
 
     @property
     def available_keys(self):
-        # check available keys
-        return 10
+        return len(self.keys.filter(available=True))
 
     @property
     def available(self):
@@ -236,7 +238,35 @@ class GameCard(models.Model):
 
     @property
     def is_sold(self):
-        return self.available_keys < self.order_min
+        return (self.game.type == 'K' and self.available_keys < self.order_min) or self.sold_flag
+
+    @property
+    def is_deletable(self):
+        return self.gc_orders.all().count() > 0
+
+    @property
+    def is_editable(self):
+        return True
+
+
+class Order(models.Model):
+    ORDER_STATUS = (
+        ('I', 'I'),
+        ('C', 'C'),
+        ('E', 'E'),
+    )
+    owner = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='user_orders', null=True, blank=True)
+    game_card = models.ForeignKey(GameCard, on_delete=models.DO_NOTHING, related_name='gc_orders', null=True, blank=True)
+    create = models.DateTimeField(auto_created=True, null=True, blank=True)
+    account_id = models.CharField(max_length=255, null=True, blank=True)
+    extra_info = models.TextField(null=True, blank=True)
+    compete_date = models.DateTimeField(null=True, blank=True)
+    review_date = models.DateTimeField(null=True, blank=True)
+    review_star = models.IntegerField(null=True, blank=True)
+    quantity = models.IntegerField(default=1, null=True, blank=True)
+    review_description = models.TextField(max_length=255, null=True, blank=True)
+    state = models.CharField(max_length=2, default='I', choices=ORDER_STATUS, null=True, blank=True)
+    error_msg = models.TextField(max_length=255, null=True, blank=True)
 
     @property
     def is_deletable(self):
@@ -245,3 +275,10 @@ class GameCard(models.Model):
     @property
     def is_editable(self):
         return True
+
+
+class GameKey(models.Model):
+    game_card = models.ForeignKey(GameCard, on_delete=models.DO_NOTHING, related_name='keys')
+    order = models.ForeignKey(Order, on_delete=models.DO_NOTHING, related_name='order_keys', null=True, blank=True)
+    description = models.TextField(default='', null=True, blank=True)
+    available = models.BooleanField(default=True, null=True, blank=True)

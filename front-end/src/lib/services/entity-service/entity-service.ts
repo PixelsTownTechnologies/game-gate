@@ -77,6 +77,7 @@ export class EntityService<Entity extends BaseEntity> extends BaseFacadeServices
         if (!actionAPI) {
             return Promise.resolve(undefined);
         }
+        this.setLoading(true, actionAPI);
         try {
             const response: AxiosResponse<any> = await this.getAxiosInstance(!!actionAPI.authenticate).delete(this.getURL(actionAPI) + '/' + id);
             if (this.entityConfig.loadToStore) {
@@ -103,6 +104,7 @@ export class EntityService<Entity extends BaseEntity> extends BaseFacadeServices
         if (!actionAPI) {
             return Promise.resolve(undefined);
         }
+        this.setLoading(true, actionAPI);
         try {
             if (this.entityConfig.loadToStore) {
                 const storeName = this.entityConfig.storeName ? this.entityConfig.storeName : this.entityConfig.name;
@@ -124,11 +126,37 @@ export class EntityService<Entity extends BaseEntity> extends BaseFacadeServices
         return Promise.resolve(undefined);
     }
 
+    loadToStore = (data: Entity[] | Entity) => {
+        if (this.entityConfig.loadToStore) {
+            const storeName = this.entityConfig.storeName ? this.entityConfig.storeName : this.entityConfig.name;
+            loadEntity(storeName, data);
+        }
+    }
+
+    findNoStore = async (): Promise<Entity[] | Entity | undefined> => {
+        const actionAPI = this.getSetting(ENTITY_ACTIONS.FIND);
+        if (!actionAPI) {
+            return Promise.resolve(undefined);
+        }
+        this.setLoading(true, actionAPI);
+        try {
+            const response: AxiosResponse<Entity[] | Entity> = await this.getAxiosInstance(!!actionAPI.authenticate)
+                .get(this.getURL(actionAPI));
+            return Promise.resolve(response.data);
+        } catch (error) {
+            this.throwError(actionAPI.type, error);
+        } finally {
+            this.setLoading(false, actionAPI);
+        }
+        return Promise.resolve(undefined);
+    }
+
     findById = async (id: any): Promise<Entity | undefined> => {
         const actionAPI = this.getSetting(ENTITY_ACTIONS.FIND_BY_ID);
         if (!actionAPI) {
             return Promise.resolve(undefined);
         }
+        this.setLoading(true, actionAPI);
         try {
             if (this.entityConfig.loadToStore) {
                 const storeName = this.entityConfig.storeName ? this.entityConfig.storeName : this.entityConfig.name;
@@ -221,8 +249,11 @@ export class EntityService<Entity extends BaseEntity> extends BaseFacadeServices
     }
 
     reload = async () => {
-        this.flushStore();
-        return await this.find();
+        const data = await this.findNoStore();
+        if(data){
+            this.loadToStore(data);
+        }
+        return data;
     }
 
     private getFormFields = (entity: any, actionAPI: APIActionConfig) => {
