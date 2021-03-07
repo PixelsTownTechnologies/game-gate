@@ -206,7 +206,7 @@ class Menu extends BaseComponent<MenuProps, MenuState> {
                     item
                     simple
                     trigger={ <div dir={ this.state.direction }
-                                   className={ 'menu-item' }> { this.getWordFromTextField(route.menuSetting?.text) } </div> }
+                                   className={ 'dp menu-item' }> { this.getWordFromTextField(route.menuSetting?.text) } </div> }
                 >
                     <Dropdown.Menu>
                         {

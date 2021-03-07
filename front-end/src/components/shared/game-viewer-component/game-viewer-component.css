@@ -1,12 +1,17 @@
 .card-view {
     background: #c1c1c1 url("../../../assets/images/card.png");
     background-size: cover;
-    width: 140px !important;
-    max-width: 140px !important;
-    height: 180px !important;
+
+    width: 120px !important;
+    max-width: 120px !important;
+    min-width: 120px !important;
+
+    height: 160px !important;
+    max-height: 160px !important;
+    min-height: 160px !important;
+
     border-radius: 20px;
-    box-shadow: 0 0 15px 0 rgba(154, 154, 154, 0.50
-    );
+    box-shadow: 0 0 15px 0 rgba(154, 154, 154, 0.50);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,7 +21,7 @@
 }
 
 .card-view > div {
-    max-width: 70px !important;
+    max-width: 60px !important;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,12 +30,14 @@
 }
 
 .card-view > div > img {
-    max-width: 70px !important;
+    max-width: 100% !important;
 }
 
 .card-view .ui.header {
     font-family: var(--globalFont);
+    font-size: 0.95em !important;
     color: #8a8a8a !important;
+    text-align: center !important;
 }
 
 .state-info-c {
@@ -49,13 +56,14 @@
         width: 90% !important;
     }
 }
-.order-confirm-header{
+
+.order-confirm-header {
     width: 100%;
     min-height: 120px;
     padding: 30px 20px;
 }
 
-.order-confirm-container{
+.order-confirm-container {
     padding: 0 !important;
     background: #3d3e3f20;
 }
@@ -77,7 +85,7 @@
     flex: 60% !important;
 }
 
-.order-confirm-bottom{
+.order-confirm-bottom {
     min-height: 200px;
 }
 
@@ -95,7 +103,7 @@ h3.state-info {
     font-family: var(--globalFont) !important;
 }
 
-.confirm-button{
+.confirm-button {
     width: fit-content !important;
     height: fit-content !important;
     font-size: 1.2rem !important;

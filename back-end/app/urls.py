@@ -43,6 +43,11 @@ urlpatterns_enum = [
     path('enums/<pk>', EnumUpdate.as_view())
 ]
 
+urlpatterns_files = [
+    path('files', FileCreateFetch.as_view()),
+    path('files/<pk>', FileRetrieveUpdateDestroy.as_view())
+]
+
 urlpatterns_games = [
     path('admin/fc/game', GameFetchCreate.as_view()),
     path('admin/game/<pk>', GameUpdateDelete.as_view()),
@@ -61,7 +66,8 @@ routes = [
     *urlpatterns_orders,
     *urlpatterns_invoice,
     *urlpatterns_enum,
-    *urlpatterns_games
+    *urlpatterns_games,
+    *urlpatterns_files
 ]
 
 urlpatterns = [*routes] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

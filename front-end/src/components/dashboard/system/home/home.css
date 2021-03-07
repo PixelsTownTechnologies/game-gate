@@ -1,0 +1,189 @@
+.home .app-header-name {
+    background: linear-gradient(50deg, #11998eee, #38ef7dee);
+    padding: 20px;
+    border-radius: 2px;
+    transform: skewX(-5deg);
+    width: fit-content;
+}
+
+.home .app-header-name .ui.header {
+    font-size: clamp(20px, 20vh, 40px) !important;
+    font-weight: 2500 !important;
+    font-family: 'Audiowide', cursive !important;
+    transform: skewX(5deg);
+    color: #ffffff !important;
+    padding: 0;
+    margin: 0;
+}
+
+.home .app-name-logo {
+    position: absolute;
+    top: 42%;
+    left: 70%;
+    width: 20% !important;
+    min-width: 200px !important;
+    filter: drop-shadow(0 0 20px #284d48);
+}
+
+.z_ind {
+    z-index: 1 !important;
+}
+
+.home-logo-box {
+    height: calc(100vh - 70px) !important;
+    min-height: 500px !important;
+    background: url("../../../../assets/images/home-bg2.jpeg") no-repeat center;
+    background-size: cover;
+    overflow: hidden !important;
+    position: relative;
+    box-shadow: 0 11px 20px 5px rgba(70, 66, 66, 0.40) !important;
+}
+
+.home-logo-box:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(50, 50, 50, 0.5);
+    pointer-events: none;
+}
+
+.home-logo-text {
+    padding-top: 100px;
+    padding-left: 10%;
+    padding-right: 10%;
+    width: 50%;
+}
+
+.border-logo2 {
+    /*
+    height: 100%;
+    position: absolute;
+    background: rgba(227, 0, 0, 0.90);
+    width: 70%;
+    transform: skewX(310deg);
+    left: -150px;
+     */
+}
+
+.border-logo {
+    background: linear-gradient(50deg, #11998e, #38ef7d);
+    top: 115%;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    transform: skewY(-40deg);
+}
+
+.app-sub-header {
+    font-size: clamp(15px, 12vh, 30px) !important;
+    font-family: 'Audiowide', cursive !important;
+    color: #f3f3f3 !important;
+    font-weight: 900 !important;
+    margin: 0;
+    text-shadow: 0 0 15px #03030388;
+    padding: 10px;
+}
+
+@media only screen and (max-width: 1100px) {
+
+    .border-logo {
+        top: 98%;
+    }
+
+    .home .app-name-logo {
+        top: 48%;
+        left: 65%;
+    }
+
+    .home .app-header-name .ui.header {
+        font-size: clamp(10px, 15vh, 30px) !important;
+    }
+}
+
+@media only screen and (max-height: 500px) {
+    .home-logo-text {
+        padding-top: 30px;
+    }
+
+}
+
+@media only screen and (max-width: 720px) {
+    .app-sub-header {
+        font-size: clamp(10px, 12vh, 25px) !important;
+        padding: 35px !important;
+    }
+
+    .home-logo-text {
+        font-size: clamp(10px, 15vh, 30px) !important;
+        width: 100%;
+    }
+
+    .home-logo-text {
+        padding-top: 55px;
+    }
+
+    .home .app-header-name .ui.header {
+        font-size: clamp(10px, 15vh, 30px) !important;
+    }
+
+    .border-logo {
+        top: 80%;
+    }
+
+    .home .app-name-logo {
+        top: 58%;
+        left: 42%;
+    }
+}
+
+.home-search-input {
+    box-shadow: 0 0 20px 2px #000000aa !important;
+    border-radius: 25px !important;
+    width: 90% !important;
+}
+
+
+.home-search-input > input {
+    font-family: var(--globalFont) !important;
+    border-radius: 25px !important;
+}
+
+.home-section2 {
+    padding-top: clamp(50px, 10%, 80px) !important;
+    padding-left: clamp(20px, 8%, 50px) !important;
+    padding-right: clamp(20px, 8%, 50px) !important;
+}
+
+.home-h1 {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.home-h1 > h1 {
+    font-size: 3rem !important;
+}
+
+
+@media only screen and (max-width: 920px) {
+
+    .home-h1 {
+        font-size: 2rem !important;
+    }
+}
+
+.home-view-section {
+    border: 0.005rem solid rgba(0,0,0,.2);
+    margin: clamp(25px, 5%, 55px);
+    border-radius: 15px;
+    background: white ;
+}
+
+.home-view-section > div {
+    padding-left: clamp(20px, 8%, 50px) !important;
+    padding-right: clamp(20px, 8%, 50px) !important;
+    padding-top: 40px;
+    border-bottom: 0.005rem solid rgba(0,0,0,.2);
+}

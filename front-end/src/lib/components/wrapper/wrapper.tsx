@@ -54,7 +54,7 @@ class WidgetWrapper extends BaseComponent<WidgetWrapperProps, BaseComponentState
     scrollToTop = () => {
         setTimeout(() => {
             if (this.element) {
-                this.element.scrollIntoView({behavior: "smooth"});
+               // this.element.scrollIntoView({behavior: "smooth"});
             }
         }, 50);
 

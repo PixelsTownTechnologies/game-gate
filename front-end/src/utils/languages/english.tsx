@@ -110,9 +110,10 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
     },
     title: {
         manageUsers: 'Manage Users',
-        manageEnums: 'Manage Enums',
+        manageEnums: 'Manage Config',
         manageInvoice: 'Manage Invoice',
         manageGames: 'Manage Games',
+        userHistory: 'History',
         manageOrders: 'Manage Order',
         dashboard: 'Dashboard',
         actions: {
@@ -204,6 +205,7 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
             }
         },
         order: {
+            orderHistory: 'Order History',
             account_id: 'Account ID',
             compete_date: 'Complete Date',
             error_msg: 'Warning Msg',
@@ -217,17 +219,33 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
             reviewDate: 'Review Date',
             state: 'Order State',
             title: 'Manage Orders',
+            orderKeys: 'Order Keys',
             stateMap: {
                 C: 'Completed',
                 E: 'Warning',
                 I: 'In Progress'
             },
             actions: {
+                review: 'Review',
+                showKeys: 'Show Keys',
                 convertToComplete: 'Convert To Complete',
                 convertToError: 'Convert To Error',
                 convertToInProgress: 'Convert To In Progress',
                 edit: 'Edit',
             },
+        },
+        files: {
+            title: 'Manage Resource',
+            action: {
+                edit: 'Edit',
+                add: 'Add',
+            },
+            fields:{
+                file: 'Resource URL',
+                name: 'Resource Name',
+                fileURL: 'Resource URL',
+                id: 'ID',
+            }
         }
     },
     gameViewer: {
@@ -258,6 +276,20 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
         orderMsgOne: 'Please verify the order details before continue, We are not responsible for the information you provided',
         noBalance: 'Your balance is not enough',
         failedMsg: 'Order Failed, Please try again later'
+    },
+    homeSettings: {
+        addSection: 'Add New Section',
+        ArText: 'Arabic Text',
+        editConfig: 'Home Config',
+        EnText: 'English Text',
+        sectionConfig: 'Section Config',
+        sections: 'Sections',
+        mainText: 'Main Home Text',
+        sectionDescription: 'Section Description',
+        sectionTitle: 'Section Title',
+        selectedGameCards: 'Selected Game Cards',
+        selectedGames: 'Selected Games',
+        specialDeals: 'Special Deals Section'
     }
 };
 

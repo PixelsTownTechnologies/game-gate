@@ -4,7 +4,7 @@ import { pxIf } from "../utils/utils";
 
 export const useWindow = (mobileValue?: any, computerValue?: any, tabletValue?: any): {
     sizeSetting: SizeChangeResult, type: "Mobile" | "Computer" | "Tablet",
-    value: any, width: number, height: number
+    value: any, width: number, height: number, isMobile: boolean, isComputer: boolean
 } => {
     const [ sizeSetting, setSizeSetting ] = React.useState<SizeChangeResult>(WindowService.getSetting());
     const [ callBackID, setCallBackID ] = React.useState<number | null>(null);
@@ -30,6 +30,8 @@ export const useWindow = (mobileValue?: any, computerValue?: any, tabletValue?: 
         type: sizeSetting.type,
         value: pxIf(sizeSetting.type === 'Mobile', mobileValue,
             pxIf(sizeSetting.type === 'Computer', computerValue ? computerValue : tabletValue, tabletValue ? tabletValue : computerValue)
-        ) as any
+        ) as any,
+        isMobile: sizeSetting.type === 'Mobile',
+        isComputer: sizeSetting.type === 'Computer',
     };
 }

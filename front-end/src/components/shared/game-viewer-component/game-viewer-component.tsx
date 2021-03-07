@@ -1,7 +1,7 @@
 import './game-viewer-component.css';
 import React from 'react';
 import { Divider as SDivider, Header, Image } from "semantic-ui-react";
-import { clamp, costFormat, isFalse, isNull } from "../../../lib/utils/utils";
+import { buildCN, clamp, costFormat, isFalse, isNull } from "../../../lib/utils/utils";
 import { GameCardDTO, GameDTO } from "../../../models/game";
 import { useWindow } from "../../../lib/hooks/screen-change";
 import { FlexBox, If } from "../../../lib/components/containers";
@@ -11,9 +11,9 @@ import { Button, Link } from "../../../lib/components/basic";
 import { ROUTES_URL } from "../../../routes";
 import { useLoader } from "../../../lib/hooks/generic";
 
-export function ImageCard(props: { logo: any, title: string }) {
+export function ImageCard(props: { logo: any, title: string, className?: string }) {
     return (
-        <div className={ 'card-view' }>
+        <div className={ buildCN('card-view', props.className ? props.className : '') }>
             <div>
                 <Image src={ props.logo }/>
             </div>

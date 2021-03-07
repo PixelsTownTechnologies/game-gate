@@ -111,6 +111,7 @@ export type DFormFieldType =
     | 'text'
     | 'number'
     | 'range'
+    | 'rating'
     | 'image'
     | 'boolean'
     | 'date'

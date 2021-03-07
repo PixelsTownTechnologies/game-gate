@@ -32,6 +32,7 @@ export interface LanguageSystemWords extends LanguageBaseWords {
         manageGames: string;
         manageOrders: string;
         dashboard: string;
+        userHistory: string;
         actions: {
             editUser: string;
             addUser: string;
@@ -123,8 +124,12 @@ export interface LanguageSystemWords extends LanguageBaseWords {
         };
         order: {
             title: string;
+            orderHistory: string;
+            orderKeys: string;
             actions: {
+                review: string;
                 edit: string;
+                showKeys: string;
                 convertToError: string;
                 convertToComplete: string;
                 convertToInProgress: string;
@@ -147,6 +152,19 @@ export interface LanguageSystemWords extends LanguageBaseWords {
             review_star: string;
             review_description: string;
         };
+        files: {
+            title: string;
+            action: {
+                edit: string;
+                add: string;
+            };
+            fields:{
+                file: string;
+                name: string;
+                id: string
+                fileURL: string;
+            }
+        }
     };
     gameViewer: {
         fields: {
@@ -176,5 +194,19 @@ export interface LanguageSystemWords extends LanguageBaseWords {
         noBalance: string;
         failedMsg: string;
         orderMsgOne: string;
+    };
+    homeSettings: {
+        editConfig: string;
+        addSection: string;
+        sectionTitle: string;
+        sectionDescription: string;
+        selectedGames: string;
+        selectedGameCards: string;
+        sections: string;
+        sectionConfig: string;
+        ArText: string;
+        EnText: string;
+        mainText: string;
+        specialDeals: string;
     };
 }

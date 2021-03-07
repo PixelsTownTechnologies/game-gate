@@ -303,3 +303,8 @@
     font-family: 'Maven Pro', sans-serif !important;
     color: #3d3e3f !important;
 }
+
+.dp.menu-item{
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+}

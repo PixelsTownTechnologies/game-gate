@@ -114,6 +114,7 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
         manageInvoice: 'أدارة الفواتير',
         manageOrders: 'أدارة الطلبات',
         manageGames: 'أدارة الالعاب',
+        userHistory: 'السجل',
         dashboard: 'لوحة التحكم',
         actions: {
             editUser: 'تعديل معلومات المستخدم',
@@ -205,6 +206,7 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
             }
         },
         order: {
+            orderHistory: 'سجل الطلبات',
             account_id: 'رقم الحساب',
             compete_date: 'تاريخ أكمال الطلب',
             error_msg: 'معلومات اخطاء',
@@ -224,11 +226,27 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
                 I: 'قيد التنفيذ'
             },
             actions: {
+                review: 'تقيم',
+                showKeys: 'أظهار المفاتيح',
                 convertToComplete: 'تحويل الى مكتمل',
                 convertToError: 'تحويل الى خطاء',
                 convertToInProgress: 'تحويل الى قيد تنفيذ',
                 edit: 'تعديل',
             },
+            orderKeys: 'مفاتيح الطلب'
+        },
+        files: {
+            title: 'إدارة الموارد',
+            action: {
+                edit: 'تعديل',
+                add: 'أضافة',
+            },
+            fields:{
+                file: 'الملف',
+                name: 'أسم الملف',
+                fileURL: 'رابط الملف',
+                id: 'الرقم تسلسلي',
+            }
         }
     },
     gameViewer: {
@@ -259,6 +277,20 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
         continue: 'أستمرار',
         noBalance: 'رصيدك لا يكفي',
         failedMsg: 'لقد فشل اكمال الطلب يرجى المحاولة فيما بعد'
+    },
+    homeSettings: {
+        addSection: 'إضافة قسم جديد',
+        ArText: 'النص عربي',
+        editConfig: 'أعدادات الصفحه الرئيسية',
+        EnText: 'النص الانجليزي',
+        sectionConfig: 'أعدادات القسم',
+        sections: 'الاقسام',
+        mainText: 'رسالة  الصفحه الرئيسية',
+        sectionDescription: 'وصف القسم',
+        sectionTitle: 'عنوان القسم',
+        selectedGameCards: 'بطاقات ألعاب مختارة',
+        selectedGames: 'ألعاب مختارة',
+        specialDeals: 'قسم الصفقات الخاصة'
     }
 };
 

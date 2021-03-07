@@ -5,6 +5,7 @@ import PERMISSIONS from './permissions';
 import routes from "./routes";
 import NotFound404Page from "./components/errors/not-found-404";
 import React from "react";
+import { endPoint } from './constant';
 
 export const CONSTANTS = {};
 
@@ -20,8 +21,8 @@ const THEMES = {
 }
 
 export default {
-    DEV_BACKEND_POINT: 'http://192.168.1.194:8000/',
-    LOCAL_BACKEND_POINT: 'http://192.168.1.194:8000/',
+    DEV_BACKEND_POINT: endPoint.dev,
+    LOCAL_BACKEND_POINT: endPoint.local,
     DEFAULT_THEME: 'dark',
     SKIP_AUTHENTICATION: false,
     ENABLE_DEVELOPMENT: true,

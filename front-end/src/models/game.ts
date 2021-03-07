@@ -45,6 +45,7 @@ export interface UserOrderOwner {
 export interface OrderDTO extends BaseEntity {
     owner: UserOrderOwner;
     game_card: GameCardDTO;
+    order_keys: GameKeyDTO[];
     create: Date;
     compete_date: Date;
     review_date: Date;
@@ -69,7 +70,7 @@ export interface GameKeyDTO extends BaseEntity {
 }
 
 export interface GameCardDTO extends BaseEntity {
-    game: number | GameDTO;
+    game: GameDTO | number;
     name: string;
 
     sold_flag: boolean;

@@ -1,5 +1,6 @@
 import 'semantic-ui-css/semantic.min.css';
 import './assets/global.css';
+import './assets/scroll.css';
 import { ApplicationWidget } from "./lib/widgets/application";
 import { ApplicationConfig } from "./lib/models/application";
 import { UserBaseDTO } from "./lib/models/user";

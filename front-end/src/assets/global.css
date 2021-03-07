@@ -3,11 +3,11 @@
 }
 
 .ui.input {
-    border-radius: unset !important;
+    border-radius: unset;
 }
 
 .ui.input > input {
-    border-radius: unset !important;
+    border-radius: unset;
 }
 
 .ui.error.message {
@@ -27,7 +27,27 @@
 
 .button-list[dir="rtl"] {
     display: flex !important;
-    justify-content: end !important;
+    justify-content: center !important;
     align-items: center !important;
     flex-direction: row-reverse !important;
+}
+
+.ui.star.rating {
+    width: fit-content !important;
+}
+
+.ui.star.rating .icon {
+    text-shadow: none !important;
+    outline: none !important;
+}
+
+.ui.star.rating .icon:focus {
+    text-shadow: none !important;
+    outline: none !important;
+}
+
+
+.grey-text {
+    color: #404142 !important;
+    font-family: 'Audiowide', cursive !important;
 }

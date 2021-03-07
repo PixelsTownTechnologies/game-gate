@@ -1,6 +1,24 @@
 from rest_framework import (serializers)
 
-from app.models import (User, Order, GameKey)
+from app.models import (User, Order, GameKey, GameCard, Game)
+
+
+class SimpleGameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Game
+        fields = [
+            'id', 'type'
+        ]
+
+
+class SimpleGameCardSerializer(serializers.ModelSerializer):
+    game = SimpleGameSerializer(required=True)
+
+    class Meta:
+        model = GameCard
+        fields = [
+            'id', 'game'
+        ]
 
 
 class GameKeySerializer(serializers.ModelSerializer):
@@ -21,6 +39,8 @@ class UserOrderSerializer(serializers.ModelSerializer):
 class OrderInfoSerializer(serializers.ModelSerializer):
     owner = UserOrderSerializer(required=False)
     order_keys = GameKeySerializer(many=True, required=False)
+    review_date = serializers.DateTimeField(input_formats=['%m/%d/%Y', ])
+    game_card = SimpleGameCardSerializer(required=False)
 
     class Meta:
         model = Order

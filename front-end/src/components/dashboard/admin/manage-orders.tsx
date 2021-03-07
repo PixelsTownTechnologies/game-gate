@@ -21,7 +21,6 @@ interface ManageOrdersProps extends EntityWrapperProps<OrderDTO> {
 }
 
 interface ManageOrdersState extends EntityWrapperState<OrderDTO> {
-    convertAction?: string;
 }
 
 const actions = {
@@ -43,7 +42,7 @@ class ManageOrders extends EntityWrapper<OrderDTO, ManageOrdersProps, ManageOrde
         const word: LanguageSystemWords = this.word() as LanguageSystemWords;
         return {
             title: word.title.manageOrders,
-            icon: 'paste'
+            icon: 'first order'
         };
     }
 
@@ -154,7 +153,7 @@ class ManageOrders extends EntityWrapper<OrderDTO, ManageOrdersProps, ManageOrde
             {
                 fieldName: 'review_star',
                 title: word.entities.order.review_star,
-                type: 'number',
+                type: 'rating',
                 width: 100,
                 center: true
             },
@@ -181,6 +180,7 @@ class ManageOrders extends EntityWrapper<OrderDTO, ManageOrdersProps, ManageOrde
                 {
                     fieldName: 'error_msg',
                     type: 'bigText',
+                    defaultValue: '',
                     fieldTitle: words.entities.order.error_msg
                 },
             ]

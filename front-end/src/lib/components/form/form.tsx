@@ -2,7 +2,7 @@ import React from 'react';
 import { DFormField, FormDTO } from "./models";
 import { BaseComponent, BaseComponentState } from "../components";
 import { EmailInput, ImageField, NumberField, PasswordInput, TextArea, TextField } from "./fields";
-import { Checkbox, Dropdown, Form as SForm } from "semantic-ui-react";
+import { Checkbox, Dropdown, Form as SForm, Rating } from "semantic-ui-react";
 import { ValidateResult, VALIDATOR_CODES, ValidatorResult } from "../../models/validators";
 import { DIR } from "../../utils/constant";
 import { FlexBox, Map } from "../containers";
@@ -28,15 +28,28 @@ export function getDynamicField(config: DFormField, onChange: (value: any) => vo
             />
         );
     }
+    if(config.type === 'rating'){
+        return (
+            <Rating
+                icon='star'
+                size='large'
+                onRate={(e, d)=>{
+                    onChange(d.rating);
+                }}
+                rating={ value ? value : 0 }
+                maxRating={ 5 }
+            />
+        );
+    }
     if (config.type === 'bigText') {
         return (
             <TextArea
-                length={ config.subInputOptions ? config.subInputOptions.length : undefined }
+                length={ config.subInputOptions ? config.subInputOptions.length : 99999999999999 }
                 className={ config.className }
                 dir={ dir }
                 placeholder={ config.placeholder }
                 onChange={ onChange }
-                value={ value }
+                value={ value ? value : ''}
             />
         );
     }
@@ -48,7 +61,7 @@ export function getDynamicField(config: DFormField, onChange: (value: any) => vo
                 dir={ dir }
                 placeholder={ config.placeholder }
                 onChange={ onChange }
-                value={ value }
+                value={ value ? value : '' }
             />
         );
     }

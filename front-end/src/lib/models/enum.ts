@@ -5,6 +5,6 @@ export interface EnumDTO extends BaseEntity {
     data: any;
     values: string;
     max_value: number;
-    type: 'text' | 'number';
+    type: 'text' | 'number' ;
     global_enum: boolean;
 }

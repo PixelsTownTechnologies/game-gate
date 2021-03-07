@@ -1,5 +1,4 @@
 import { RouteConfig } from "./lib/models/application";
-import ComponentPPXPage from "./testPage";
 import { ForgetPage, LoginPage, RegisterPage } from "./components/dashboard/user/auth";
 import { Profile } from "./components/dashboard/user/profile";
 import ManageUsers from "./components/dashboard/admin/manage-users";
@@ -12,13 +11,15 @@ import ManageGames from "./components/dashboard/admin/manage-games";
 import { flushEntities } from "./lib/store/actions/entity";
 import { GameViewer } from "./components/dashboard/system/game-viewer/game-viewer";
 import ManageOrders from "./components/dashboard/admin/manage-orders";
+import OrderHistory from "./components/dashboard/user/history/order-history";
+import { HomeWidget } from "./components/dashboard/system/home/home";
+import ManageFiles from "./components/dashboard/admin/manage-files";
 
 export const ROUTES_URL = {
     HOME: '/',
-    TEST: '/',
     USER: {
         PROFILE: '/user/profile',
-        ORDER_HISTORY: '',
+        ORDER_HISTORY: '/user/order-history',
         AUTH: {
             LOGIN: '/user/sing-in',
             REGISTER: '/user/sing-up',
@@ -26,9 +27,10 @@ export const ROUTES_URL = {
         },
         ADMIN: {
             MANAGE_USERS: '/admin/manage-users',
-            MANAGE_ENUMS: '/admin/manage-enums',
+            MANAGE_ENUMS: '/admin/manage-configurations',
             MANAGE_INVOICE: '/admin/manage-invoices',
             MANAGE_GAMES: '/admin/manage-games',
+            MANAGE_RESOURCES: '/admin/manage-resources',
             MANAGE_ORDERS: '/admin/manage-orders'
         }
     },
@@ -88,7 +90,7 @@ export default [
                 permission: PERMISSIONS.MANAGE_GAMES,
                 menuSetting: {
                     text: 'title.manageGames',
-                  //  icon: 'game'
+                    //  icon: 'game'
                 },
             },
             {
@@ -98,7 +100,7 @@ export default [
                 permission: PERMISSIONS.MANAGE_INVOICE,
                 menuSetting: {
                     text: 'title.manageInvoice',
-                   // icon: 'paste'
+                    // icon: 'paste'
                 },
             },
             {
@@ -108,6 +110,16 @@ export default [
                 permission: PERMISSIONS.MANAGE_ENUMS,
                 menuSetting: {
                     text: 'title.manageEnums',
+                    //icon: 'list alternate'
+                },
+            },
+            {
+                component: ManageFiles,
+                path: ROUTES_URL.USER.ADMIN.MANAGE_RESOURCES,
+                authenticate: true,
+                permission: PERMISSIONS.MANAGE_RESOURCES,
+                menuSetting: {
+                    text: 'entities.files.title',
                     //icon: 'list alternate'
                 },
             },
@@ -128,6 +140,16 @@ export default [
                 },
             },
             {
+                component: OrderHistory,
+                path: ROUTES_URL.USER.ORDER_HISTORY,
+                authenticate: true,
+                permission: PERMISSIONS.USER_HISTORY,
+                menuSetting: {
+                    text: 'entities.order.orderHistory',
+                    icon: 'clipboard'
+                },
+            },
+            {
                 isRoute: false,
                 menuSetting: {
                     link: false,
@@ -143,12 +165,8 @@ export default [
         ]
     },
     {
-        component: ComponentPPXPage,
+        component: HomeWidget,
         path: ROUTES_URL.HOME
-    },
-    {
-        component: ComponentPPXPage,
-        path: ROUTES_URL.TEST
     },
     {
         component: GameViewer,

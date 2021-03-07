@@ -256,8 +256,9 @@ class Order(models.Model):
         ('E', 'E'),
     )
     owner = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='user_orders', null=True, blank=True)
-    game_card = models.ForeignKey(GameCard, on_delete=models.DO_NOTHING, related_name='gc_orders', null=True, blank=True)
-    create = models.DateTimeField(auto_created=True, null=True, blank=True)
+    game_card = models.ForeignKey(GameCard, on_delete=models.DO_NOTHING, related_name='gc_orders', null=True,
+                                  blank=True)
+    create = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     account_id = models.CharField(max_length=255, null=True, blank=True)
     extra_info = models.TextField(null=True, blank=True)
     compete_date = models.DateTimeField(null=True, blank=True)
@@ -282,3 +283,16 @@ class GameKey(models.Model):
     order = models.ForeignKey(Order, on_delete=models.DO_NOTHING, related_name='order_keys', null=True, blank=True)
     description = models.TextField(default='', null=True, blank=True)
     available = models.BooleanField(default=True, null=True, blank=True)
+
+
+class File(models.Model):
+    file = models.ImageField(upload_to='general/files', blank=True, null=True)
+    name = models.TextField(blank=True, null=True)
+
+    @property
+    def is_deletable(self):
+        return True
+
+    @property
+    def is_editable(self):
+        return True

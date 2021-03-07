@@ -133,6 +133,7 @@ export interface LinkProps {
     children: any;
     disabled?: boolean;
     className?: string;
+    target?: '_blank' | '_self';
 }
 
 export function Link(props: LinkProps) {
@@ -145,6 +146,7 @@ export function Link(props: LinkProps) {
                 }
             } }
             to={ props.to }
+            target={props.target}
         >
             { props.children }
         </DLink>

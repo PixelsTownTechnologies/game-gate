@@ -1,0 +1,193 @@
+.vvg-container {
+    margin: 12px 8px;
+    background: #f5f5dc;
+
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px !important;
+    max-width: 282px;
+    min-width: 282px;
+    overflow: hidden;
+    max-height: 120px;
+    box-shadow: 0 10px 20px #3d3e3f80;
+}
+
+.vvg-container:hover .vvg-logo {
+    transform: scale(1.06, 1.06);
+}
+
+.vvg .text-w {
+    font-family: var(--globalFont) !important;
+    color: white !important;
+}
+
+.text-b {
+    font-family: var(--globalFont) !important;
+    color: #322f2f !important;
+}
+
+.vvg-header-container {
+    --headerBGImageURL: '';
+    width: 100%;
+    background: var(--headerBGImageURL, #363636) no-repeat center;
+    background-size: 350px;
+    background-color: #363636;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    border-radius: 10px;
+    padding: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.vvg-header-container:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(50, 50, 50, 0.50);
+    pointer-events: none;
+}
+
+.vvg-price-container {
+    height: 40px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.vvg-price-container > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.vvg-index {
+    z-index: 2;
+}
+
+.game-discount-l {
+    height: 1.65em;
+    padding: 5px 5px 5px 10px !important;
+}
+
+.game-discount-l:before {
+    width: 1.2em !important;
+    height: 1.2em !important;
+}
+
+.vvg-logo {
+    flex: 15%;
+    transition: 300ms;
+    background: white;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    border-radius: 12px;
+    box-shadow: 0 0 10px #3d3e3f80 !important;
+    overflow: hidden !important;
+    min-width: 55px;
+    min-height: 55px;
+    max-height: 55px;
+    max-width: 55px;
+}
+
+.vvg-logo img {
+}
+
+.vvg-name {
+    flex: 90%;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    font-family: var(--globalFont) !important;
+}
+
+.price-discount-s > h5 {
+    padding-right: 8px;
+}
+
+.line-price {
+    text-decoration: line-through;
+}
+
+.gcv-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px !important;
+    width: fit-content !important;
+    max-width: 200px !important;
+}
+
+.gcv-card-box {
+    transition: 500ms;
+}
+
+
+.gcv-container:hover .gcv-card-box {
+    transform: scale(1.05, 1.05);
+}
+
+.gcv-name-box {
+    margin-top: 12px;
+}
+
+.gcv-name-box > h5 {
+    text-align: center;
+    font-size: 0.9em !important;
+}
+
+.scroll-card-view-box > div:nth-child(1) {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.cv-button-box {
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-top: -15px !important;
+    z-index: 10 !important;
+}
+
+.scroll-card-view-container {
+    display: flex;
+    justify-content: flex-start;
+    align-content: center;
+    overflow-x: scroll;
+    transition: 500ms !important;
+}
+
+.scroll-card-view-container::-webkit-scrollbar {
+    height: 0 !important;
+}
+
+.cv-scroll-button {
+    background: white;
+    height: 30px;
+    border-radius: 20px !important;
+    overflow: hidden;
+    font-size: 0.2em !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.cv-scroll-button > button {
+    padding: 5px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+.scroll-card-view-box .ui.horizontal.divider:after, .scroll-card-view-box .ui.horizontal.divider:before {
+    width: 80vh !important;
+}

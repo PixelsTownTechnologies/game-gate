@@ -16,7 +16,7 @@ class UserOrderFetchCreate(generics.ListCreateAPIView):
     serializer_class = OrderInfoSerializer
 
     def get_queryset(self):
-        Order.objects.filter(owner=self.request.user)
+        return Order.objects.filter(owner=self.request.user)
 
     def create(self, request, *args, **kwargs):
         try:
@@ -46,10 +46,12 @@ class UserOrderFetchCreate(generics.ListCreateAPIView):
             game_card: GameCard = queryset[0]
             available_keys = game_card.keys.filter(available=True)
             total_cost = quantity * game_card.total_price
+            total_points = quantity * game_card.points
             if user.balance < total_cost or (available_keys.count() < quantity and game_card.game.type == 'K'):
                 release_order_api_access()
                 return Response(status=status.HTTP_400_BAD_REQUEST)
             user.balance = user.balance - total_cost
+            user.points = user.points + total_points
             order = Order.objects.create(owner=user, game_card=game_card,
                                          state='C' if game_card.game.type == 'K' else 'I',
                                          account_id=account_id, extra_info=extra_info,
@@ -77,7 +79,7 @@ class UserOrderRetrieveUpdate(generics.RetrieveUpdateAPIView):
     serializer_class = OrderInfoSerializer
 
     def get_queryset(self):
-        Order.objects.filter(owner=self.request.user)
+        return Order.objects.filter(owner=self.request.user)
 
 
 class AdminOrderFetch(generics.ListAPIView):

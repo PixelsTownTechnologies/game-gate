@@ -49,14 +49,10 @@ class EnumSerializer(serializers.ModelSerializer):
         fields = [*GENERAL_SERIALIZER_FIELDS, 'id', 'name', 'data', 'type', 'values', 'max_value']
 
 
-"""
-class OrderSerializer(serializers.ModelSerializer):
-    owner = UserAdminGeneralSerializer(read_only=True)
-
+class FilesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Order
-        fields = SERIALIZER_ALL_FIELDS
-"""
+        model = File
+        fields = [*GENERAL_SERIALIZER_FIELDS, 'id', 'name', 'file']
 
 
 class InvoiceSerializer(serializers.ModelSerializer):
@@ -73,19 +69,3 @@ class ReviewOwnerSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['country', 'full_name']
-
-
-"""
-class ReviewSerializer(serializers.ModelSerializer):
-    owner = ReviewOwnerSerializer(read_only=True)
-
-    class Meta:
-        model = Order
-        fields = ['id', 'rate', 'text', 'review_date', 'owner']
-
-
-class SheetSettingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = SheetSetting
-        fields = SERIALIZER_ALL_FIELDS
-"""

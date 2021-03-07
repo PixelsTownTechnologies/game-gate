@@ -8,7 +8,8 @@ export const ENTITIES = {
     INVOICE: 'INVOICE',
     GAME: 'GAME',
     GAME_CARD: 'GAME_CARD',
-    ORDER: 'ORDER'
+    ORDER: 'ORDER',
+    FILES:'FILES'
 }
 
 export const gameService: EntityServiceConfig = {
@@ -92,7 +93,7 @@ export const gameCardKeysService: EntityServiceConfig = {
             url: 'admin/game-card/add/keys'
         }
     ]
-}
+};
 
 export const gameCardService: EntityServiceConfig = {
     storeName: 'gameCards',
@@ -145,7 +146,7 @@ export const adminUserService: EntityServiceConfig = {
             formFields: [ 'username', 'email', 'password' ]
         }
     ]
-}
+};
 
 export const groupsService: EntityServiceConfig = {
     storeName: 'groups',
@@ -164,7 +165,7 @@ export const groupsService: EntityServiceConfig = {
             authenticate: true
         }
     ]
-}
+};
 
 export const enumsService: EntityServiceConfig = {
     storeName: 'enums',
@@ -184,7 +185,7 @@ export const enumsService: EntityServiceConfig = {
             authenticate: true
         }
     ]
-}
+};
 
 export const adminInvoiceService: EntityServiceConfig = {
     dataType: 'array',
@@ -204,11 +205,11 @@ export const adminInvoiceService: EntityServiceConfig = {
             authenticate: true
         }
     ]
-}
+};
 
 export const homeService: EntityServiceConfig = {
     name: ENTITIES.HOME,
-    storeName: 'zaid',
+    storeName: 'home',
     baseURL: 'home',
     dataType: 'object',
     loadToStore: true,
@@ -218,7 +219,7 @@ export const homeService: EntityServiceConfig = {
             authenticate: false
         }
     ]
-}
+};
 
 export const adminOrderService: EntityServiceConfig = {
     storeName: 'systemOrders',
@@ -270,6 +271,43 @@ export const userOrderService: EntityServiceConfig = {
         {
             type: 'FIND_BY_ID',
             url: 'user/order',
+            authenticate: true
+        },
+    ]
+};
+
+export const filesService: EntityServiceConfig = {
+    storeName: 'files',
+    name: ENTITIES.FILES,
+    dataType: 'array',
+    baseURL: '',
+    loadToStore: true,
+    actions: [
+        {
+            type: 'FIND',
+            url: 'files',
+            authenticate: true
+        },
+        {
+            type: 'CREATE',
+            url: 'files',
+            authenticate: true,
+            formData: true
+        },
+        {
+            type: 'UPDATE',
+            url: 'files',
+            authenticate: true,
+            formData: true
+        },
+        {
+            type: 'FIND_BY_ID',
+            url: 'files',
+            authenticate: true
+        },
+        {
+            type: 'DELETE',
+            url: 'files',
             authenticate: true
         },
     ]
