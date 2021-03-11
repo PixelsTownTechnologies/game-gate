@@ -12,12 +12,13 @@ import { TableSetting } from "../../../../lib/components/tabels";
 import { DFormField } from "../../../../lib/components/form/models";
 import { LanguageSystemWords } from "../../../../models/language";
 import { Wrapper } from "../../../shared/wrapper";
-import { getDefaultValidMsg } from "../../../../lib/utils/utils";
+import { costFormat, getDefaultValidMsg } from "../../../../lib/utils/utils";
 import { generateMapStateEntityToProps } from "../../../../lib/store/util";
-import { Button } from "../../../../lib/components/basic";
+import { Button, IconButton, Link } from "../../../../lib/components/basic";
 import { DialogFormActionResult } from "../../../../lib/components/form/dialog-form";
 import Dialog from "../../../../lib/components/form/dialog";
-import { Form, TextArea } from "semantic-ui-react";
+import { Form, Label, TextArea } from "semantic-ui-react";
+import { URL_ROUTES } from "../../../../routes";
 
 interface OrderHistoryProps extends EntityWrapperProps<OrderDTO> {
     user: UserBaseDTO;
@@ -44,7 +45,10 @@ class OrderHistory extends EntityWrapper<OrderDTO, OrderHistoryProps, OrderHisto
         const word: LanguageSystemWords = this.word() as LanguageSystemWords;
         return {
             title: word.entities.order.orderHistory,
-            icon: 'history'
+            icon: 'clipboard',
+            showTableContainer: false,
+            showSubMenu: true,
+            hideTopSections: true
         };
     }
 
@@ -56,19 +60,35 @@ class OrderHistory extends EntityWrapper<OrderDTO, OrderHistoryProps, OrderHisto
         const word: LanguageSystemWords = this.word() as LanguageSystemWords;
         return [
             {
-                fieldName: 'id',
-                title: word.fields.id,
-                type: 'text',
-                width: 80,
-                center: true
-            },
-            {
                 fieldName: 'state',
                 title: word.entities.order.state,
                 type: 'valueMap',
                 width: 100,
                 center: true,
-                valueMap: word.entities.order.stateMap
+                valueMap: word.entities.order.stateMap,
+                displayValue: (row) => {
+                    const colorMap = {
+                        'I': 'teal',
+                        'E': 'red',
+                        'C': 'green'
+                    } as any;
+                    return (
+                        <Label color={colorMap[row.state]}>{(word.entities.order.stateMap as any)[row.state]}</Label>
+                    );
+                }
+            },
+            {
+                fieldName: 'id',
+                title: word.fields.id,
+                type: 'link',
+                width: 80,
+                center: true,
+                displayValue: (row) => {
+                    return (
+                        <Link
+                            to={ URL_ROUTES.USER.ORDER_HISTORY_VIEW + '/' + row.id }>{ row.id.toPrecision(8).split('.').reverse().join('') }</Link>
+                    )
+                }
             },
             {
                 fieldName: 'quantity',
@@ -78,6 +98,16 @@ class OrderHistory extends EntityWrapper<OrderDTO, OrderHistoryProps, OrderHisto
                 center: true
             },
             {
+                fieldName: 'cost',
+                title: word.entities.order.cost,
+                type: 'formattedNumber',
+                width: 100,
+                center: true,
+                displayValue: (row) => {
+                    return `$${costFormat(row.cost)}` as any;
+                }
+            },
+            {
                 fieldName: 'create',
                 title: word.entities.order.orderDate,
                 type: 'date',
@@ -85,44 +115,25 @@ class OrderHistory extends EntityWrapper<OrderDTO, OrderHistoryProps, OrderHisto
                 center: true
             },
             {
-                fieldName: 'error_msg',
-                title: word.entities.order.error_msg,
-                type: 'text',
-                width: 200,
-                center: true
-            },
-            {
-                fieldName: 'account_id',
-                title: word.entities.order.account_id,
-                type: 'text',
-                width: 150,
-                center: true
-            },
-            {
-                fieldName: 'extra_info',
-                title: word.entities.order.extra_info,
-                type: 'text',
-                width: 150
-            },
-            {
-                fieldName: 'review_star',
-                title: word.entities.order.review_star,
-                type: 'rating',
+                fieldName: '',
+                title: word.basic.edit,
+                type: 'editButton',
                 width: 100,
-                center: true
-            },
-            {
-                fieldName: 'review_date',
-                title: word.entities.order.reviewDate,
-                type: 'date',
-                width: 120,
-                center: true
-            },
-            {
-                fieldName: 'review_description',
-                title: word.entities.order.review_description,
-                type: 'text',
-                width: 320
+                center: true,
+                displayValue: (row) =>{
+                    return (
+                        <IconButton
+                            name={ 'edit' }
+                            size={'mini'}
+                            disabled={row.state !== 'E'}
+                            onClick={ () => {
+                                if(row.state === 'E'){
+                                    this.setState({selectedForm: row, action: 'edit'});
+                                }
+                            } }
+                        />
+                    );
+                }
             },
         ];
     }
@@ -264,10 +275,9 @@ class OrderHistory extends EntityWrapper<OrderDTO, OrderHistoryProps, OrderHisto
             >
                 <Form>
                     <TextArea
-                        rows={15}
+                        rows={ 15 }
                         value={
-                            this.state.selectedForm?.order_keys?.
-                            map(k => k.description).join('\n------------------------------------\n')
+                            this.state.selectedForm?.order_keys?.map(k => k.description).join('\n------------------------------------\n')
                         }
                     />
                 </Form>

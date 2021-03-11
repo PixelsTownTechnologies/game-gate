@@ -43,7 +43,7 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
         isStaff: 'موظف',
         phone: 'رقم الهاتف',
         city: 'المدينة',
-        addressOne: 'العنوان الاول',
+        addressOne: 'العنوان',
         addressTwo: 'العنوان الاخير',
         state: 'القرية',
         zip_code: 'رقم المدينة',
@@ -208,6 +208,10 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
         order: {
             orderHistory: 'سجل الطلبات',
             account_id: 'رقم الحساب',
+            orderId: 'رقم الطلب',
+            key: 'المفتاح',
+            ownerAddress: 'موقع المالك',
+            download: 'تنزيل',
             compete_date: 'تاريخ أكمال الطلب',
             error_msg: 'معلومات اخطاء',
             extra_info: 'معلومات طلب اضافية',
@@ -217,6 +221,7 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
             quantity: 'الكمية',
             review_description: 'نص التقيم',
             review_star: 'نسبة التقيم',
+            cost: 'السعر الكلي',
             reviewDate: 'تاريخ التقيم',
             state: 'حالة الطلب',
             title: 'أدارة الطلبات',
@@ -247,6 +252,10 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
                 fileURL: 'رابط الملف',
                 id: 'الرقم تسلسلي',
             }
+        },
+        user: {
+            points: 'النقاط',
+            numberOfOrders: 'عدد الطلبات'
         }
     },
     gameViewer: {

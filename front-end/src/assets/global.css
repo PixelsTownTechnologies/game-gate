@@ -51,3 +51,7 @@
     color: #404142 !important;
     font-family: 'Audiowide', cursive !important;
 }
+
+label{
+    font-family: var(--globalFont) !important;
+}

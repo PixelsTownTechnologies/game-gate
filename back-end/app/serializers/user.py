@@ -6,12 +6,12 @@ from app.models import (User, Country)
 from app.serializers.general import (PermissionSerializer, GroupSerializer, CountrySerializer, NotificationSerializer)
 
 GENERAL_USER_FIELDS = ['id', 'avatar', 'verified', 'full_name',
-                       'first_name', 'last_name', 'zip_code']
+                       'first_name', 'last_name', 'zip_code' ]
 
 CONTACT_INFO_USER_FIELDS = ['city', 'address_one', 'phone',
                             'address_two', 'state', 'zip_code', 'email', 'verify_file']
 
-PRIVATE_USER_FIELDS = ['uuid', 'is_active', 'balance',
+PRIVATE_USER_FIELDS = ['uuid', 'is_active', 'balance', 'total_orders', 'points',
                        'groups', 'permissions', 'username', 'register_date', 'notifications']
 
 
@@ -79,7 +79,7 @@ class UserAdminSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [*GENERAL_SERIALIZER_FIELDS, *GENERAL_USER_FIELDS,
-                  *CONTACT_INFO_USER_FIELDS, 'username', 'groups', 'balance', 'country']
+                  *CONTACT_INFO_USER_FIELDS, 'username', 'groups', 'balance', 'country', 'total_orders', 'points']
         extra_kwargs = {
             'email': {'required': False},
         }

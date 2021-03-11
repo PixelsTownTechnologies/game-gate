@@ -32,6 +32,7 @@ class UserFacadeServiceClass extends BaseFacadeServices {
         } finally {
             this.setLoading(false);
         }
+        return undefined;
     }
 
     public async logout(): Promise<any> {
@@ -60,6 +61,7 @@ class UserFacadeServiceClass extends BaseFacadeServices {
         } finally {
             this.setLoading(false);
         }
+        return undefined;
     }
 
     public async checkEmail(email: string): Promise<CheckEmailResponse | undefined> {
@@ -73,6 +75,7 @@ class UserFacadeServiceClass extends BaseFacadeServices {
         } finally {
             this.setLoader(USER_ACTIONS.CHECK_EMAIL, false);
         }
+        return undefined;
     }
 
     public async checkToken(token: string): Promise<CheckTokenResponse | undefined> {
@@ -121,6 +124,7 @@ class UserFacadeServiceClass extends BaseFacadeServices {
         } finally {
             this.setLoader(USER_ACTIONS.ADMIN_GET_USERS, false);
         }
+        return [];
     }
 
     public async adminCreateUser(form: any): Promise<any> {

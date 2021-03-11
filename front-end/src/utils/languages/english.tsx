@@ -43,7 +43,7 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
         isStaff: 'Staff',
         phone: 'Phone',
         city: 'City',
-        addressOne: 'First Address',
+        addressOne: 'Address',
         addressTwo: 'Second Address',
         state: 'State',
         zip_code: 'Zip Code',
@@ -207,6 +207,10 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
         order: {
             orderHistory: 'Order History',
             account_id: 'Account ID',
+            orderId: 'Order ID',
+            key: 'Key',
+            ownerAddress: 'Owner Address',
+            download: 'Download',
             compete_date: 'Complete Date',
             error_msg: 'Warning Msg',
             extra_info: 'Extra Order Info',
@@ -219,6 +223,7 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
             reviewDate: 'Review Date',
             state: 'Order State',
             title: 'Manage Orders',
+            cost: 'Total Cost',
             orderKeys: 'Order Keys',
             stateMap: {
                 C: 'Completed',
@@ -246,6 +251,10 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
                 fileURL: 'Resource URL',
                 id: 'ID',
             }
+        },
+        user: {
+            points: 'User Points',
+            numberOfOrders: 'Total Orders'
         }
     },
     gameViewer: {

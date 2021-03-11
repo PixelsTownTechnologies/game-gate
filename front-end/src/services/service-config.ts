@@ -143,7 +143,7 @@ export const adminUserService: EntityServiceConfig = {
             type: 'CREATE',
             authenticate: true,
             url: 'admin/cg-users',
-            formFields: [ 'username', 'email', 'password' ]
+            formFields: [ 'username', 'email', 'password', 'address_one' ]
         }
     ]
 };

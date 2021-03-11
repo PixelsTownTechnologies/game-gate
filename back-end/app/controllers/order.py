@@ -56,7 +56,7 @@ class UserOrderFetchCreate(generics.ListCreateAPIView):
                                          state='C' if game_card.game.type == 'K' else 'I',
                                          account_id=account_id, extra_info=extra_info,
                                          compete_date=timezone.now() if game_card.game.type == 'K' else None,
-                                         quantity=quantity)
+                                         quantity=quantity, cost=total_cost)
             counter = 0
             for key in available_keys:
                 counter = counter + 1

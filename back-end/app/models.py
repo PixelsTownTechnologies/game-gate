@@ -63,6 +63,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         return False
 
     @property
+    def total_orders(self):
+        return self.user_orders.count() if self.user_orders is not None else 0
+
+    @property
     def is_editable(self):
         return True
 
@@ -262,11 +266,12 @@ class Order(models.Model):
     account_id = models.CharField(max_length=255, null=True, blank=True)
     extra_info = models.TextField(null=True, blank=True)
     compete_date = models.DateTimeField(null=True, blank=True)
-    review_date = models.DateTimeField(null=True, blank=True)
+    review_date = models.DateTimeField(default=None, null=True, blank=True)
     review_star = models.IntegerField(null=True, blank=True)
     quantity = models.IntegerField(default=1, null=True, blank=True)
     review_description = models.TextField(max_length=255, null=True, blank=True)
     state = models.CharField(max_length=2, default='I', choices=ORDER_STATUS, null=True, blank=True)
+    cost = models.FloatField(null=True, blank=True)
     error_msg = models.TextField(max_length=255, null=True, blank=True)
 
     @property

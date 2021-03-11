@@ -1,6 +1,6 @@
 import { RouteConfig } from "./lib/models/application";
 import { ForgetPage, LoginPage, RegisterPage } from "./components/dashboard/user/auth";
-import { Profile } from "./components/dashboard/user/profile";
+import { Profile } from "./components/dashboard/user/profile/profile";
 import ManageUsers from "./components/dashboard/admin/manage-users";
 import PERMISSIONS from "./permissions";
 import ManageEnums from "./components/dashboard/admin/manage-enums";
@@ -11,15 +11,17 @@ import ManageGames from "./components/dashboard/admin/manage-games";
 import { flushEntities } from "./lib/store/actions/entity";
 import { GameViewer } from "./components/dashboard/system/game-viewer/game-viewer";
 import ManageOrders from "./components/dashboard/admin/manage-orders";
-import OrderHistory from "./components/dashboard/user/history/order-history";
 import { HomeWidget } from "./components/dashboard/system/home/home";
 import ManageFiles from "./components/dashboard/admin/manage-files";
+import OrderHistory from "./components/dashboard/user/history/order-history";
+import SingleOrderHistory from "./components/dashboard/user/history/single-order-viewer";
 
-export const ROUTES_URL = {
+export const URL_ROUTES = {
     HOME: '/',
     USER: {
         PROFILE: '/user/profile',
         ORDER_HISTORY: '/user/order-history',
+        ORDER_HISTORY_VIEW: '/user/order-history/view',
         AUTH: {
             LOGIN: '/user/sing-in',
             REGISTER: '/user/sing-up',
@@ -43,17 +45,17 @@ export default [
         subRoutes: [
             {
                 component: LoginPage,
-                path: ROUTES_URL.USER.AUTH.LOGIN,
+                path: URL_ROUTES.USER.AUTH.LOGIN,
                 authenticate: false
             },
             {
                 component: RegisterPage,
-                path: ROUTES_URL.USER.AUTH.REGISTER,
+                path: URL_ROUTES.USER.AUTH.REGISTER,
                 authenticate: false
             },
             {
                 component: ForgetPage,
-                path: ROUTES_URL.USER.AUTH.FORGET_PASSWORD,
+                path: URL_ROUTES.USER.AUTH.FORGET_PASSWORD,
                 authenticate: false
             }
         ]
@@ -65,7 +67,7 @@ export default [
         subRoutes: [
             {
                 component: ManageUsers,
-                path: ROUTES_URL.USER.ADMIN.MANAGE_USERS,
+                path: URL_ROUTES.USER.ADMIN.MANAGE_USERS,
                 authenticate: true,
                 permission: PERMISSIONS.MANAGE_USERS,
                 menuSetting: {
@@ -75,7 +77,7 @@ export default [
             },
             {
                 component: ManageOrders,
-                path: ROUTES_URL.USER.ADMIN.MANAGE_ORDERS,
+                path: URL_ROUTES.USER.ADMIN.MANAGE_ORDERS,
                 authenticate: true,
                 permission: PERMISSIONS.MANAGE_ORDERS,
                 menuSetting: {
@@ -85,7 +87,7 @@ export default [
             },
             {
                 component: ManageGames,
-                path: ROUTES_URL.USER.ADMIN.MANAGE_GAMES,
+                path: URL_ROUTES.USER.ADMIN.MANAGE_GAMES,
                 authenticate: true,
                 permission: PERMISSIONS.MANAGE_GAMES,
                 menuSetting: {
@@ -95,7 +97,7 @@ export default [
             },
             {
                 component: ManageInvoices,
-                path: ROUTES_URL.USER.ADMIN.MANAGE_INVOICE,
+                path: URL_ROUTES.USER.ADMIN.MANAGE_INVOICE,
                 authenticate: true,
                 permission: PERMISSIONS.MANAGE_INVOICE,
                 menuSetting: {
@@ -105,7 +107,7 @@ export default [
             },
             {
                 component: ManageEnums,
-                path: ROUTES_URL.USER.ADMIN.MANAGE_ENUMS,
+                path: URL_ROUTES.USER.ADMIN.MANAGE_ENUMS,
                 authenticate: true,
                 permission: PERMISSIONS.MANAGE_ENUMS,
                 menuSetting: {
@@ -115,7 +117,7 @@ export default [
             },
             {
                 component: ManageFiles,
-                path: ROUTES_URL.USER.ADMIN.MANAGE_RESOURCES,
+                path: URL_ROUTES.USER.ADMIN.MANAGE_RESOURCES,
                 authenticate: true,
                 permission: PERMISSIONS.MANAGE_RESOURCES,
                 menuSetting: {
@@ -132,7 +134,7 @@ export default [
         subRoutes: [
             {
                 component: Profile,
-                path: ROUTES_URL.USER.PROFILE,
+                path: URL_ROUTES.USER.PROFILE,
                 authenticate: true,
                 menuSetting: {
                     text: 'menu.profile',
@@ -141,13 +143,19 @@ export default [
             },
             {
                 component: OrderHistory,
-                path: ROUTES_URL.USER.ORDER_HISTORY,
+                path: URL_ROUTES.USER.ORDER_HISTORY,
                 authenticate: true,
                 permission: PERMISSIONS.USER_HISTORY,
                 menuSetting: {
                     text: 'entities.order.orderHistory',
                     icon: 'clipboard'
                 },
+            },
+            {
+                component: SingleOrderHistory,
+                path: URL_ROUTES.USER.ORDER_HISTORY_VIEW + '/:orderId',
+                authenticate: true,
+                permission: PERMISSIONS.USER_HISTORY,
             },
             {
                 isRoute: false,
@@ -166,10 +174,10 @@ export default [
     },
     {
         component: HomeWidget,
-        path: ROUTES_URL.HOME
+        path: URL_ROUTES.HOME
     },
     {
         component: GameViewer,
-        path: ROUTES_URL.GAME_VIEWER + '/:gameId?/:gameCardId?'
+        path: URL_ROUTES.GAME_VIEWER + '/:gameId?/:gameCardId?'
     }
 ] as RouteConfig[];

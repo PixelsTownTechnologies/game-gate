@@ -29,6 +29,9 @@ export interface EntityWrapperConfig {
     title: string;
     icon?: string;
     showDelete?: boolean;
+    showTableContainer?: boolean;
+    showSubMenu?: boolean;
+    hideTopSections?: boolean;
 }
 
 abstract class EntityWrapper<Entity extends BaseEntity,
@@ -168,8 +171,8 @@ abstract class EntityWrapper<Entity extends BaseEntity,
         const Wrapper = this.getWrapper();
         const tableSettings = this.getTableSettings();
         return (
-            <Wrapper title={ config.title } icon={ config.icon } loading={ state.actionLoading }>
-                <FlexSpace>
+            <Wrapper showSubMenu={config.showSubMenu} title={ config.title } icon={ config.icon } loading={ state.actionLoading }>
+                <FlexSpace pxIf={!config.hideTopSections}>
                     <div className={ 'px-stp-5' }>
                         <Input
                             value={ this.state.searchValue }
@@ -179,7 +182,6 @@ abstract class EntityWrapper<Entity extends BaseEntity,
                             icon='search'
                             placeholder={ state.word.basic.search }
                         />
-
                     </div>
                     <div className={ 'px-stp-5' }>
                         { this.getSubButtons() }
@@ -203,7 +205,10 @@ abstract class EntityWrapper<Entity extends BaseEntity,
                     </div>
                 </FlexSpace>
                 <Divider hidden/>
-                <Table selectedId={this.state.selectedForm?.id} onSelect={ (form: Entity) => this.onTableSelect(form) } showContainer selectable unStackable
+                <Table
+                    selectedId={this.state.selectedForm?.id} onSelect={ (form: Entity) => this.onTableSelect(form) }
+                    showContainer={isTrueOrUndefined(config.showTableContainer)} selectable unStackable
+
                        onRefresh={ async () => {
                            await this.reloadContent();
                        } } settings={ tableSettings } data={ this.getFilteredData() }/>

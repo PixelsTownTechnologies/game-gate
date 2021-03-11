@@ -8,8 +8,9 @@ export const useWindow = (mobileValue?: any, computerValue?: any, tabletValue?: 
 } => {
     const [ sizeSetting, setSizeSetting ] = React.useState<SizeChangeResult>(WindowService.getSetting());
     const [ callBackID, setCallBackID ] = React.useState<number | null>(null);
+    const [ cleanSubscribe, setCleanSubscribe ] = React.useState<boolean>(false);
     React.useEffect(() => {
-        if (!callBackID) {
+        if (!callBackID && !cleanSubscribe) {
             setCallBackID(WindowService.subscribe((settings) => {
                 if (settings.width !== sizeSetting.width || settings.height !== sizeSetting.height) {
                     setSizeSetting(settings);
@@ -18,11 +19,13 @@ export const useWindow = (mobileValue?: any, computerValue?: any, tabletValue?: 
         }
         return () => {
             if (callBackID) {
+                setCleanSubscribe(true);
                 WindowService.unsubscribe(callBackID);
                 setCallBackID(null);
             }
         }
-    }, [ callBackID, sizeSetting.width, sizeSetting.height ]);
+        // eslint-disable-next-line
+    }, [ callBackID, cleanSubscribe ]);
     return {
         sizeSetting,
         width: sizeSetting.width,

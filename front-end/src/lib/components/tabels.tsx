@@ -24,6 +24,7 @@ export interface TableSetting {
         buttonText?: string;
         buttonIcon?: string;
         linkText?: string;
+        isButtonDisabled?: boolean;
     },
     center?: boolean;
 }
@@ -65,7 +66,7 @@ export class Table<EntityDTO extends BaseEntity> extends BaseComponent<TableDTO<
         super(props);
         this.state = {
             ...this.state,
-            selectedPageSize: 15,
+            selectedPageSize: 25,
             pageNumber: 1,
             filters: []
         }
@@ -306,6 +307,7 @@ export class Table<EntityDTO extends BaseEntity> extends BaseComponent<TableDTO<
                                     displayValue = (
                                         <IconButton
                                             name={ 'edit' }
+                                            disabled={setting.subSetting?.isButtonDisabled}
                                             onClick={ () => {
                                                 if (setting.onClick) {
                                                     setting.onClick(cellData);

@@ -89,9 +89,30 @@ class ManageUsers extends EntityWrapper<UserBaseDTO, ManageUsersProps, ManageUse
                 center: true
             },
             {
+                fieldName: 'address_one',
+                title: word.userFields.addressOne,
+                type: 'text',
+                width: 200,
+                center: true
+            },
+            {
                 fieldName: 'balance',
                 title: word.userFields.balance,
                 type: 'balance',
+                width: 120,
+                center: true
+            },
+            {
+                fieldName: 'points',
+                title: word.entities.user.points,
+                type: 'formattedNumber',
+                width: 120,
+                center: true
+            },
+            {
+                fieldName: 'total_orders',
+                title: word.entities.user.numberOfOrders,
+                type: 'formattedNumber',
                 width: 120,
                 center: true
             },
@@ -120,6 +141,15 @@ class ManageUsers extends EntityWrapper<UserBaseDTO, ManageUsersProps, ManageUse
 
                 }
             ],
+            [
+            {
+                fieldName: 'address_one',
+                type: 'text',
+                subInputOptions: {length: 128},
+                fieldTitle: this.state.word.userFields.addressOne
+
+            }
+        ],
             [
                 {
                     fieldName: 'password',

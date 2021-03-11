@@ -155,3 +155,7 @@ body {
 .home .app-name-logo {
     /*filter: drop-shadow(0 0 0.75rem #11998e) !important;*/
 }
+
+.red-text{
+    color: #f03027 !important;
+}

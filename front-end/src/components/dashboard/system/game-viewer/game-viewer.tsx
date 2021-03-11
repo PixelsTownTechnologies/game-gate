@@ -28,7 +28,7 @@ import { useFavorite } from "../../../../hooks/storage";
 import Countries from '../../../../assets/icons/countries.png';
 import { Counter, TextArea, TextField } from "../../../../lib/components/form/fields";
 import MDEditor from '@uiw/react-md-editor';
-import { useStore } from "../../../../lib/hooks/user";
+import { useEntityStore } from "../../../../lib/hooks/user";
 import { UserBaseDTO } from "../../../../lib/models/user";
 import { isUserAuthenticate } from "../../../../lib/utils/application-helper";
 import { LoginWidget } from "../../user/auth";
@@ -81,7 +81,7 @@ export function GameViewerWidget({game, gameCardId}: GameViewerWidgetProps) {
     const [ showLogin, setShowLogin ] = useState(false);
     const [ showPaymentConfirm, setShowPaymentConfirm ] = useState(false);
     const [ showNoBalance, setShowNoBalance ] = useState(false);
-    const user = useStore<UserBaseDTO>('user');
+    const user = useEntityStore<UserBaseDTO>('user');
     const {words, dir} = useLanguage();
     const {width, type} = useWindow();
     if (!game) {
@@ -117,7 +117,8 @@ export function GameViewerWidget({game, gameCardId}: GameViewerWidgetProps) {
                     extra_info,
                     game_card_id
                 });
-            if(data){
+            if (data) {
+                await new EntityService(userOrderService).reload().then();
                 updateUser({balance: user.balance - totalPrice} as any);
             }
             return !!data;
@@ -126,9 +127,9 @@ export function GameViewerWidget({game, gameCardId}: GameViewerWidgetProps) {
     };
 
     const handleAddToCard = () => {
-        if(isUserAuthenticate()){
+        if (isUserAuthenticate()) {
 
-        }else {
+        } else {
             setShowLogin(true);
         }
     };

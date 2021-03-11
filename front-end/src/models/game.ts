@@ -59,6 +59,7 @@ export interface OrderDTO extends BaseEntity {
 
     review_star: number;
     quantity: number;
+    cost: number;
 
 }
 

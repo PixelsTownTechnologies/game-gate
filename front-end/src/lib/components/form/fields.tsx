@@ -205,6 +205,7 @@ export class EmailInput extends React.Component<EmailInputProps, EmailInputState
 export function TextArea(props: TextAreaDTO) {
     return (
         <STextArea
+            disabled={ props.disabled }
             value={ props.value }
             className={ props.className ? props.className : '' }
             placeholder={ props.placeholder ? props.placeholder : '' }

@@ -126,6 +126,9 @@ export interface LanguageSystemWords extends LanguageBaseWords {
             title: string;
             orderHistory: string;
             orderKeys: string;
+            key: string;
+            download: string;
+            ownerAddress: string;
             actions: {
                 review: string;
                 edit: string;
@@ -140,6 +143,7 @@ export interface LanguageSystemWords extends LanguageBaseWords {
                 E: string;
             };
             ownerId: string;
+            orderId: string;
             ownerUsername: string;
             orderDate: string;
             compete_date: string;
@@ -151,6 +155,7 @@ export interface LanguageSystemWords extends LanguageBaseWords {
             reviewDate: string;
             review_star: string;
             review_description: string;
+            cost: string;
         };
         files: {
             title: string;
@@ -164,6 +169,10 @@ export interface LanguageSystemWords extends LanguageBaseWords {
                 id: string
                 fileURL: string;
             }
+        };
+        user: {
+            points: string;
+            numberOfOrders: string;
         }
     };
     gameViewer: {

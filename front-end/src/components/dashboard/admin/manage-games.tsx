@@ -861,7 +861,7 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
                                             let key = '';
                                             formatList.forEach((format, index) => {
                                                 if (format && fileLines[i + index] && fileLines[i + index].split(format)?.[1]) {
-                                                    key = key + ( index > 0 ? '\n' : '' ) + fileLines[i + index].split(format)[1];
+                                                    key = key + ( index > 0 ? '\n' : '' ) + format + fileLines[i + index].split(format)[1];
                                                 }
                                             });
                                             if (!isEmpty(key)) {

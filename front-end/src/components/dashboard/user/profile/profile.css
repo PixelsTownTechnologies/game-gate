@@ -1,0 +1,16 @@
+.profile-content-box {
+    padding-left: 30px;
+    width: 100%;
+    padding-right: 30px;
+    padding-top: 10px;
+}
+
+.profile-container {
+    padding-top: clamp(20px, 15%, 50px);
+    padding-left: clamp(10px, 5%, 30px);
+    padding-right: clamp(10px, 5%, 30px);
+}
+
+.p-max-text {
+    max-width: 90%;
+}

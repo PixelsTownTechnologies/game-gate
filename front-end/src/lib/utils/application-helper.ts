@@ -1,6 +1,7 @@
 import { ActionEntityStoreBase } from "../store/action-base";
 import { RouteConfig, StoreState } from "../models/application";
 import Application from "../app/application";
+import { Unsubscribe } from "redux";
 
 export const appDispatch = (action: ActionEntityStoreBase<any>): any => {
     return Application.dispatch(action);
@@ -22,8 +23,8 @@ export const getStoreState = (): StoreState => {
     return Application.store.getState() as any;
 }
 
-export const listenStateStore = (setStateCallback: (state: any) => void, entityName: string): void => {
-    Application.store.subscribe(() => {
+export const listenStateStore = (setStateCallback: (state: any) => void, entityName: string): Unsubscribe => {
+    return Application.store.subscribe(() => {
         const storeValue = getStoreState() as any;
         if (storeValue && storeValue[entityName]) {
             setStateCallback({[entityName]: storeValue[entityName]});

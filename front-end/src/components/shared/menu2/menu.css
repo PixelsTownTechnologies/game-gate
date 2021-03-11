@@ -32,8 +32,9 @@
 }
 
 .m-app-name {
-    font-size: clamp(15px, 12vh, 25px) !important;
-    font-weight: 2500 !important;
+    font-size: clamp(16px, 14vh, 28px) !important;
+    transform: scaleY(1.15);
+    font-weight: 600 !important;
     font-family: 'Audiowide', cursive !important;
     color: #ffffff !important;
     padding: 0;
@@ -65,6 +66,7 @@
 }
 
 .menu .m-search-input > input {
+    min-width: 360px !important;
     border-radius: 20px !important;
 }
 
@@ -136,6 +138,7 @@
     font-family: var(--globalFont) !important;
     font-size: 0.88em !important;
     padding: 4px;
+    text-align: initial;
 }
 
 .menu-item > span {

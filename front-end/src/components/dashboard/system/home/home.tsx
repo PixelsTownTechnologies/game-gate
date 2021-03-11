@@ -7,7 +7,7 @@ import AppLogo from "../../../../assets/logo/logo.png";
 import { FlexBox, If } from "../../../../lib/components/containers";
 import { useWindow } from "../../../../lib/hooks/screen-change";
 import { EntityService } from "../../../../lib/services/entity-service/entity-service";
-import { gameService, homeService } from "../../../../services/service-config";
+import { homeService } from "../../../../services/service-config";
 import { GameCardDTO, GameDTO } from "../../../../models/game";
 import { GameCard, GameCardBig, ScrollCardView } from "../../../shared/games-components/games-components";
 import { DIR } from "../../../../lib/utils/constant";
@@ -50,79 +50,80 @@ function HomeSection2(props: {
 
 
 export function HomeWidget() {
-    const {width, type} = useWindow();
-    const [ list, setList ] = useState<GameDTO[]>([]);
+    const {type} = useWindow();
     const language = useLanguage();
     const [ isHomeLoading, setHomeLoading ] = useState<boolean>(false);
+    const [ errorLoading, setErrorLoading ] = useState<boolean>(false);
     const [ homeConfig, setHomeConfig ] = useState<HomeDetails | null>(null);
     const languageFlag = language.language.flag;
     const loader = useLoader();
-    new EntityService<GameDTO>(gameService).find().then(data => {
-        setList(data as GameDTO[]);
-    })
     const isMobile = type === 'Mobile';
     useEffect(() => {
-        if (!loader.isLoading && !isHomeLoading) {
+        if (!loader.isLoading && !isHomeLoading && !errorLoading) {
             loader.activate();
             new EntityService(homeService).find().then((data) => {
                 const homeData: HomeDTO = data as any;
-                const games = ( homeData?.games ? homeData.games : [] ).map(g => {
-                    return {
-                        ...g,
-                        logo: (
-                            !isEmpty(g.logo)
-                                ? (
-                                    g.logo.includes('http')
-                                        ? g.logo : `${ endPoint.dev }${ g.logo.slice(1, g.logo.length) }`
-                                ) : null
-                        ),
-                        bg_card: (
-                            !isEmpty(g.bg_card)
-                                ? (
-                                    g.bg_card.includes('http')
-                                        ? g.bg_card : `${ endPoint.dev }${ g.bg_card.slice(1, g.bg_card.length) }`
-                                ) : null
-                        ),
-                        bg_cover: (
-                            !isEmpty(g.bg_cover)
-                                ? (
-                                    g.bg_cover.includes('http')
-                                        ? g.bg_cover : `${ endPoint.dev }${ g.bg_cover.slice(1, g.bg_cover.length) }`
-                                ) : null
-                        ),
-                    } as GameDTO;
-                });
-                const gameCards = ( homeData?.gameCards ? homeData?.gameCards : [] ).map(gc => {
-                    return {...gc, game: games.filter(g => g.id === gc.game)?.[0]}
-                }).filter(g => !!g.game);
-                let homeConfigEnum: HomeDetails = homeData?.enums?.filter(e => e.name === 'Home Config')?.[0]?.values as any;
-                homeConfigEnum = homeConfigEnum ? JSON.parse(homeConfigEnum as any) : null;
-                if (homeConfigEnum) {
-                    if (homeConfigEnum.specialDeals && homeConfigEnum.specialDeals.games) {
-                        homeConfigEnum.specialDeals.games = ( homeConfigEnum.specialDeals.games as number[] )
-                            .map((gameID) => games?.filter(g => g.id === gameID)?.[0]).filter(r => !!r);
+                if (homeData) {
+                    const games = ( homeData?.games ? homeData.games : [] ).map(g => {
+                        return {
+                            ...g,
+                            logo: (
+                                !isEmpty(g.logo)
+                                    ? (
+                                        g.logo.includes('http')
+                                            ? g.logo : `${ endPoint.dev }${ g.logo.slice(1, g.logo.length) }`
+                                    ) : null
+                            ),
+                            bg_card: (
+                                !isEmpty(g.bg_card)
+                                    ? (
+                                        g.bg_card.includes('http')
+                                            ? g.bg_card : `${ endPoint.dev }${ g.bg_card.slice(1, g.bg_card.length) }`
+                                    ) : null
+                            ),
+                            bg_cover: (
+                                !isEmpty(g.bg_cover)
+                                    ? (
+                                        g.bg_cover.includes('http')
+                                            ? g.bg_cover : `${ endPoint.dev }${ g.bg_cover.slice(1, g.bg_cover.length) }`
+                                    ) : null
+                            ),
+                        } as GameDTO;
+                    });
+                    const gameCards = ( homeData?.gameCards ? homeData?.gameCards : [] ).map(gc => {
+                        return {...gc, game: games.filter(g => g.id === gc.game)?.[0]}
+                    }).filter(g => !!g.game);
+                    let homeConfigEnum: HomeDetails = homeData?.enums?.filter(e => e.name === 'Home Config')?.[0]?.values as any;
+                    homeConfigEnum = homeConfigEnum ? JSON.parse(homeConfigEnum as any) : null;
+                    if (homeConfigEnum) {
+                        if (homeConfigEnum.specialDeals && homeConfigEnum.specialDeals.games) {
+                            homeConfigEnum.specialDeals.games = ( homeConfigEnum.specialDeals.games as number[] )
+                                .map((gameID) => games?.filter(g => g.id === gameID)?.[0]).filter(r => !!r);
+                        }
+                        if (homeConfigEnum.specialDeals && homeConfigEnum.specialDeals.gameCards) {
+                            homeConfigEnum.specialDeals.gameCards = ( homeConfigEnum.specialDeals.gameCards as number[] )
+                                .map((gameID) => gameCards?.filter(g => g.id === gameID)?.[0]).filter(r => !!r);
+                        }
+                        if (homeConfigEnum?.sections) {
+                            homeConfigEnum.sections.forEach(sec => {
+                                if (sec.games) {
+                                    sec.games = ( sec.games as number[] )
+                                        .map((gameID) => games?.filter(g => g.id === gameID)?.[0]).filter(r => !!r) as any;
+                                }
+                                if (sec.gameCards) {
+                                    sec.gameCards = ( sec.gameCards as number[] )
+                                        .map((gameID) => gameCards?.filter(g => g.id === gameID)?.[0]).filter(r => !!r) as any;
+                                }
+                            })
+                        }
                     }
-                    if (homeConfigEnum.specialDeals && homeConfigEnum.specialDeals.gameCards) {
-                        homeConfigEnum.specialDeals.gameCards = ( homeConfigEnum.specialDeals.gameCards as number[] )
-                            .map((gameID) => gameCards?.filter(g => g.id === gameID)?.[0]).filter(r => !!r);
-                    }
-                    if (homeConfigEnum?.sections) {
-                        homeConfigEnum.sections.forEach(sec => {
-                            if (sec.games) {
-                                sec.games = ( sec.games as number[] )
-                                    .map((gameID) => gameCards?.filter(g => g.id === gameID)?.[0]).filter(r => !!r) as any;
-                            }
-                            if (sec.gameCards) {
-                                sec.gameCards = ( sec.gameCards as number[] )
-                                    .map((gameID) => gameCards?.filter(g => g.id === gameID)?.[0]).filter(r => !!r) as any;
-                            }
-                        })
-                    }
+                    setHomeConfig(homeConfigEnum);
+                    setHomeLoading(true);
+                } else {
+                    setErrorLoading(true);
                 }
-                setHomeConfig(homeConfigEnum);
-                setHomeLoading(true);
                 loader.disabled();
-            })
+            });
         }
     });
     return (
@@ -151,7 +152,7 @@ export function HomeWidget() {
                         <Divider hidden/>
                         <If flag={ type === 'Computer' }>
                             <Divider hidden/>
-                            <Input onChange={ (e) => {
+                            <Input onChange={ () => {
                             } } onKeyPress={ (e: any) => {
                                 if (e.key === 'Enter') {
                                 }
@@ -171,21 +172,24 @@ export function HomeWidget() {
                         homeConfig?.sections.map((s, key) => {
                             return (
                                 <div key={ key }>
-                                    <ScrollCardView description={ ( s.description as any )?.[languageFlag] }
-                                                    title={ ( s.title as any )?.[languageFlag] } list={ [
-                                        ...( s?.games as GameDTO[] )?.map(g => {
-                                            return (
-                                                <GameCardBig key={ `game_${ g.id }` } game={ g as GameDTO }/>
-                                            )
-                                        }),
-                                        ...( s?.gameCards as GameCardDTO[] )?.map(g => {
-                                            return (
-                                                <GameCardBig key={ `gameCard_${ g.id }` } game={ g.game as GameDTO }
-                                                             gameCard={ g as GameCardDTO }/>
-                                            )
-                                        }),
-                                    ]
-                                    }/>
+                                    <ScrollCardView
+                                        description={ ( s.description as any )?.[languageFlag] }
+                                        title={ ( s.title as any )?.[languageFlag] }
+                                        list={ [
+                                            ...( s?.games as GameDTO[] )?.map(g => {
+                                                return (
+                                                    <GameCardBig key={ `game_${ g.id }` } game={ g as GameDTO }/>
+                                                )
+                                            }),
+                                            ...( s?.gameCards as GameCardDTO[] )?.map(g => {
+                                                return (
+                                                    <GameCardBig key={ `gameCard_${ g.id }` } game={ g.game as GameDTO }
+                                                                 gameCard={ g as GameCardDTO }/>
+                                                )
+                                            }),
+                                        ]
+                                        }
+                                    />
                                 </div>
                             );
                         })

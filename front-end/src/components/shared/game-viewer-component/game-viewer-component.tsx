@@ -8,7 +8,7 @@ import { FlexBox, If } from "../../../lib/components/containers";
 import { useLanguage } from "../../../lib/hooks/languageHook";
 import ConfirmCart from '../../../assets/icons/cart.png';
 import { Button, Link } from "../../../lib/components/basic";
-import { ROUTES_URL } from "../../../routes";
+import { URL_ROUTES } from "../../../routes";
 import { useLoader } from "../../../lib/hooks/generic";
 
 export function ImageCard(props: { logo: any, title: string, className?: string }) {
@@ -88,7 +88,7 @@ export function OrderConfirm({pxIf, gameCard, game, quantity, onCancel, onAccept
             >
                 <If flag={ success }>
                     <Header as={ 'h3' }>{ words.gameViewer.orderThanksMsg }
-                        <Link to={ ROUTES_URL.USER.ORDER_HISTORY }> { words.gameViewer.orderHistory }</Link>
+                        <Link to={ URL_ROUTES.USER.ORDER_HISTORY }> { words.gameViewer.orderHistory }</Link>
                     </Header>
                 </If>
                 <If flag={ !success }>

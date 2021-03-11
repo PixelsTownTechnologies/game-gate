@@ -9,7 +9,7 @@ import { Logo } from "../base";
 import Avatar from '../../../assets/icons/avatar.png';
 // @ts-ignore
 import Profile from '../../../assets/icons/profile.png';
-import { ROUTES_URL } from "../../../routes";
+import { URL_ROUTES } from "../../../routes";
 import { Button, Dimmer, Divider, Dropdown, Header, Icon, Image, Input, Segment } from "semantic-ui-react";
 import { useWindow } from "../../../lib/hooks/screen-change";
 import { useLanguage } from "../../../lib/hooks/languageHook";
@@ -72,6 +72,9 @@ class Menu2 extends BaseComponent<MenuProps, MenuState> {
     }
 
     destroy(): void {
+        if (this.windowId) {
+            WindowService.unsubscribe(this.windowId);
+        }
     }
 
     initialize(): void {
@@ -104,7 +107,7 @@ class Menu2 extends BaseComponent<MenuProps, MenuState> {
         return (
             <FlexBox flexDirection={ 'column' } alignItems={ 'center' } className={ 'px menu' }>
                 <FlexSpace className={ 'section1' }>
-                    <Link to={ ROUTES_URL.HOME }>
+                    <Link to={ URL_ROUTES.HOME }>
                         <Header className={ 'm-app-name' }>
                             GAMERS DZ
                         </Header>
@@ -130,7 +133,7 @@ class Menu2 extends BaseComponent<MenuProps, MenuState> {
                 item
                 simple
                 direction={ 'right' }
-                className={!isUserAuthenticate() ? 'auth-r-menu' : ''}
+                className={ !isUserAuthenticate() ? 'auth-r-menu' : '' }
                 trigger={
                     <div className={ 'profile-icon' }>
                         <Image
@@ -155,15 +158,16 @@ class Menu2 extends BaseComponent<MenuProps, MenuState> {
                             <Header className={ 'global-f px-non-margin' }
                                     as={ 'h5' }>${ costFormat(this.props.user.balance) }</Header>
                         </Dropdown.Item>
-                        <div>
+                        <div dir={ this.state.direction }>
                             {
-                                this.getRoutesRight()?.[0].subRoutes?.map((route, index) => {
+                                this.getRoutesRight()?.[0].subRoutes?.filter(r => !!r.menuSetting).map((route, index) => {
                                     return (
                                         <Link
                                             to={ route.path ? route.path : '' }
                                             key={ index }
+                                            dir={ this.state.direction }
                                         >
-                                            <Dropdown.Item>
+                                            <Dropdown.Item dir={ this.state.direction }>
                                                 <div
                                                     onClick={ () => {
                                                         route.menuSetting?.onClick?.();
@@ -176,7 +180,8 @@ class Menu2 extends BaseComponent<MenuProps, MenuState> {
                                                         <Icon name={ route.menuSetting?.icon as any }/>
                                                         <Space count={ 1 }/>
                                                     </If>
-                                                    <span>{ this.getWordFromTextField(route.menuSetting?.text) }</span>
+                                                    <span
+                                                        dir={ this.state.direction }>{ this.getWordFromTextField(route.menuSetting?.text) }</span>
                                                 </div>
                                             </Dropdown.Item>
                                         </Link>
@@ -191,10 +196,10 @@ class Menu2 extends BaseComponent<MenuProps, MenuState> {
                             <Header
                                 as={ 'h4' }>{ this.word().authPages.welcomeMsg } { this.word().appName }</Header>
                             <Button.Group className={ 'buttons' }>
-                                <Link to={ ROUTES_URL.USER.AUTH.REGISTER }>
+                                <Link to={ URL_ROUTES.USER.AUTH.REGISTER }>
                                     <Button content={ this.word().authPages.signUp }/>
                                 </Link>
-                                <Link to={ ROUTES_URL.USER.AUTH.LOGIN }>
+                                <Link to={ URL_ROUTES.USER.AUTH.LOGIN }>
                                     <Button content={ this.word().authPages.signIn }/>
                                 </Link>
                             </Button.Group>
@@ -216,12 +221,12 @@ class Menu2 extends BaseComponent<MenuProps, MenuState> {
                     trigger={ <div dir={ this.state.direction }
                                    className={ 'dp menu-item' }> { this.getWordFromTextField(route.menuSetting?.text) } </div> }
                 >
-                    <Dropdown.Menu>
+                    <Dropdown.Menu dir={ this.state.direction }>
                         {
-                            route.subRoutes?.map((subRoute, index) => {
+                            route.subRoutes?.filter(r => !!r.menuSetting).map((subRoute, index) => {
                                 return (
                                     <Link to={ subRoute.path } key={ index }>
-                                        <Dropdown.Item>
+                                        <Dropdown.Item dir={ this.state.direction }>
                                             <div
                                                 dir={ this.state.direction }
                                                 className={ 'menu-item' }
@@ -231,7 +236,8 @@ class Menu2 extends BaseComponent<MenuProps, MenuState> {
                                                     <Icon name={ subRoute.menuSetting?.icon as any }/>
                                                     <Space count={ 1 }/>
                                                 </If>
-                                                <span>{ this.getWordFromTextField(subRoute.menuSetting?.text) }</span>
+                                                <span
+                                                    dir={ this.state.direction }>{ this.getWordFromTextField(subRoute.menuSetting?.text) }</span>
                                             </div>
                                         </Dropdown.Item>
                                     </Link>

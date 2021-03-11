@@ -10,7 +10,7 @@ import { LanguageSystemWords } from "../../../models/language";
 import { Wrapper } from "../../shared/wrapper";
 import { TableSetting } from "../../../lib/components/tabels";
 import { DFormField } from "../../../lib/components/form/models";
-import { costFormat, generateId, getDefaultValidMsg } from "../../../lib/utils/utils";
+import { costFormat, getDefaultValidMsg } from "../../../lib/utils/utils";
 import { HomeDetails } from "../../../models/home-details";
 import { Button } from "../../../lib/components/basic";
 import { Dropdown, Form, Segment } from "semantic-ui-react";

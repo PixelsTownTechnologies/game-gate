@@ -7,7 +7,7 @@ import { Link } from "../../../lib/components/basic";
 import { Logo } from "../base";
 import Avatar from '../../../assets/icons/avatar.png';
 import Profile from '../../../assets/icons/profile.png';
-import { ROUTES_URL } from "../../../routes";
+import { URL_ROUTES } from "../../../routes";
 import { Button, Dimmer, Divider, Dropdown, Header, Icon, Image, Input, Segment } from "semantic-ui-react";
 import { useWindow } from "../../../lib/hooks/screen-change";
 import { useLanguage } from "../../../lib/hooks/languageHook";
@@ -103,7 +103,7 @@ class Menu extends BaseComponent<MenuProps, MenuState> {
             <FlexBox alignItems={ 'center' } className={ 'px menu' }>
                 <FlexSpace className={ 'section1' }>
                     <FlexCenter>
-                        <Link to={ ROUTES_URL.HOME }>
+                        <Link to={ URL_ROUTES.HOME }>
                             <Logo size={ 'tiny' }/>
                         </Link>
                     </FlexCenter>
@@ -180,10 +180,10 @@ class Menu extends BaseComponent<MenuProps, MenuState> {
                                         <Header
                                             as={ 'h4' }>{ this.word().authPages.welcomeMsg } { this.word().appName }</Header>
                                         <Button.Group className={ 'buttons' }>
-                                            <Link to={ ROUTES_URL.USER.AUTH.REGISTER }>
+                                            <Link to={ URL_ROUTES.USER.AUTH.REGISTER }>
                                                 <Button content={ this.word().authPages.signUp }/>
                                             </Link>
-                                            <Link to={ ROUTES_URL.USER.AUTH.LOGIN }>
+                                            <Link to={ URL_ROUTES.USER.AUTH.LOGIN }>
                                                 <Button content={ this.word().authPages.signIn }/>
                                             </Link>
                                         </Button.Group>

@@ -5,6 +5,7 @@ import { buildCN, pxIf, pxIfSelf } from "../../utils/utils";
 import { Divider, FlexBox, FlexCenter, If } from "../containers";
 import { Header, Icon } from "semantic-ui-react";
 import { BaseComponent, BaseComponentProps, BaseComponentState } from "../components";
+import WindowService from "../../services/window.service";
 
 export interface BaseWrapperProps extends BaseComponentProps {
     loading?: boolean;
@@ -17,6 +18,8 @@ export interface BaseWrapperProps extends BaseComponentProps {
 
     hideTitle?: boolean;
 
+    showSubMenu?: boolean;
+
     icon?: string;
     title?: string;
     subTitleChildren?: JSX.Element | null;
@@ -27,16 +30,22 @@ export interface BaseWrapperProps extends BaseComponentProps {
 export interface WidgetWrapperProps extends BaseWrapperProps {
     widgets: {
         menu?: JSX.Element;
+        subMenu?: React.ComponentType<any>;
         footer?: JSX.Element;
         titleSectionView?: React.ComponentType<{ title: string, icon?: string, children?: JSX.Element }>;
         loader?: React.ComponentType<any>;
     }
 }
 
+export interface WidgetWrapperStates extends BaseComponentState {
+    type: 'Mobile' | 'Computer' | 'Tablet';
+}
 
-class WidgetWrapper extends BaseComponent<WidgetWrapperProps, BaseComponentState> {
+
+class WidgetWrapper extends BaseComponent<WidgetWrapperProps, WidgetWrapperStates> {
 
     element: any;
+    screenID?: number;
 
     initialize = () => {
         if (this.props.scrollTopLoaderCB) {
@@ -45,16 +54,21 @@ class WidgetWrapper extends BaseComponent<WidgetWrapperProps, BaseComponentState
         setTimeout(() => {
             this.scrollToTop();
         }, 200);
+        this.screenID = WindowService.subscribe((setting) => {
+            this.setState({type: ( setting.type as any )} as any);
+        });
     };
 
     destroy = () => {
-
+        if (this.screenID) {
+            WindowService.unsubscribe(this.screenID);
+        }
     };
 
     scrollToTop = () => {
         setTimeout(() => {
             if (this.element) {
-               // this.element.scrollIntoView({behavior: "smooth"});
+                // this.element.scrollIntoView({behavior: "smooth"});
             }
         }, 50);
 
@@ -97,11 +111,12 @@ class WidgetWrapper extends BaseComponent<WidgetWrapperProps, BaseComponentState
             return (
                 <FlexBox dir={ this.state.direction } flexDirection={ 'column' }>
                     <FlexBox dir={ this.state.direction } justifyContent={ 'space-between' } alignItems={ 'center' }>
-                        <FlexCenter className={'px-title-header'} dir={this.state.direction}>
+                        <FlexCenter className={ 'px-title-header' } dir={ this.state.direction }>
                             <If flag={ this.props.icon }>
-                                <Icon size={'big'} name={ this.props.icon as any }/>
+                                <Icon size={ 'big' } name={ this.props.icon as any }/>
                             </If>
-                            <Header className={'px-non-margin'} as={ 'h1' }>{ pxIfSelf(this.props.title, 'No Title') as string }</Header>
+                            <Header className={ 'px-non-margin' }
+                                    as={ 'h1' }>{ pxIfSelf(this.props.title, 'No Title') as string }</Header>
                         </FlexCenter>
                         <If flag={ this.props.subTitleChildren }>
                             <div dir={ this.state.direction }>
@@ -109,13 +124,14 @@ class WidgetWrapper extends BaseComponent<WidgetWrapperProps, BaseComponentState
                             </div>
                         </If>
                     </FlexBox>
-                    <Divider className={'simple'}/>
+                    <Divider className={ 'simple' }/>
                 </FlexBox>
             );
         }
     }
 
-    show(props: WidgetWrapperProps, state: BaseComponentState) {
+    show(props: WidgetWrapperProps, state: WidgetWrapperStates) {
+        const SubMenu = props.widgets.subMenu as any;
         return (
             <div
                 dir={ this.state.direction }
@@ -135,8 +151,19 @@ class WidgetWrapper extends BaseComponent<WidgetWrapperProps, BaseComponentState
                     <If flag={ props.showMenuInContainer }>
                         { this.renderMenu() }
                     </If>
-                    { this.renderTitleSection() }
-                    { props.children }
+                    <FlexBox dir={ this.state.direction } className={ buildCN('sub-menu-fb', (state.type !== 'Mobile' && props.showSubMenu && SubMenu)
+                        ? '' : 'show-full-div') }
+                             flexDirection={ 'row' }>
+                        {
+                            state.type !== 'Mobile' && props.showSubMenu && SubMenu ? (
+                                <SubMenu/>
+                            ) : null
+                        }
+                        <div>
+                            { this.renderTitleSection() }
+                            { props.children }
+                        </div>
+                    </FlexBox>
                 </div>
                 { this.renderFooter() }
             </div>

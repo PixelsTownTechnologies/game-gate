@@ -8,7 +8,7 @@ import { useLanguage } from "../../../lib/hooks/languageHook";
 import Form from "../../../lib/components/form/form";
 import { useWindow } from "../../../lib/hooks/screen-change";
 import { Button, Link, MessageErrors, Redirect } from "../../../lib/components/basic";
-import { ROUTES_URL } from "../../../routes";
+import { URL_ROUTES } from "../../../routes";
 import { EmailValidator, LengthValidator, ValidateResult, VALIDATOR_CODES } from "../../../lib/models/validators";
 import UserFacadeService from "../../../lib/services/facade-service/user-facade-service";
 import TokenService from "../../../lib/services/token-service";
@@ -62,7 +62,7 @@ export function LoginWidget({pxIf, asComponent, onSignIn}: { pxIf?: boolean, asC
     return (
         <SegmentBox minWidth={ clamp(300, width * 0.6, 500) } dir={ dir } nonBoard raised stacked
                     header={ words.authPages.signInTo + ' ' + words.appName }>
-            <Redirect flag={ loginSuccess } url={ ROUTES_URL.HOME }/>
+            <Redirect flag={ loginSuccess } url={ URL_ROUTES.HOME }/>
             <MessageErrors show={ error } subErrorMsg={ words.errors.emailOrPasswordNotCorrect }/>
             <Form
                 onChange={ form => {
@@ -106,7 +106,7 @@ export function LoginWidget({pxIf, asComponent, onSignIn}: { pxIf?: boolean, asC
                     loading={ loginLoader.isLoading }
                 />
                 <If flag={ !isTrue(asComponent) }>
-                    <Link to={ ROUTES_URL.USER.AUTH.FORGET_PASSWORD }>
+                    <Link to={ URL_ROUTES.USER.AUTH.FORGET_PASSWORD }>
                         { words.authPages.forgetPassword }?
                     </Link>
                 </If>
@@ -126,7 +126,7 @@ export function LoginPage() {
                 <Divider hidden/>
                 <LoginWidget/>
                 <Divider hidden/>
-                <Link to={ ROUTES_URL.USER.AUTH.REGISTER }>
+                <Link to={ URL_ROUTES.USER.AUTH.REGISTER }>
                     { words.authPages.registerNow }
                 </Link>
             </FlexBox>
@@ -176,8 +176,8 @@ export function RegisterWidget() {
     return (
         <SegmentBox minWidth={ clamp(300, width * 0.6, 500) } dir={ dir } nonBoard raised stacked
                     header={ words.authPages.register + ' ' + words.appName }>
-            <Redirect flag={ isTrue(loginSuccess) } url={ ROUTES_URL.HOME }/>
-            <Redirect flag={ isFalse(loginSuccess) } url={ ROUTES_URL.USER.AUTH.LOGIN }/>
+            <Redirect flag={ isTrue(loginSuccess) } url={ URL_ROUTES.HOME }/>
+            <Redirect flag={ isFalse(loginSuccess) } url={ URL_ROUTES.USER.AUTH.LOGIN }/>
             <MessageErrors show={ error } subErrorMsg={ words.errors.emailAlreadyUsed }/>
             <Form
                 onChange={ form => {
@@ -247,7 +247,7 @@ export function RegisterPage() {
                      className={ 'px-f-height' }>
                 <RegisterWidget/>
                 <Divider hidden/>
-                <Link to={ ROUTES_URL.USER.AUTH.LOGIN }>
+                <Link to={ URL_ROUTES.USER.AUTH.LOGIN }>
                     { words.authPages.haveAccountLogin }
                 </Link>
             </FlexBox>
@@ -310,7 +310,7 @@ export function ForgetWidget() {
     return (
         <SegmentBox minWidth={ clamp(300, width * 0.6, 500) } dir={ dir } nonBoard raised stacked
                     header={ words.authPages.sendResetCode }>
-            <Redirect flag={ redirectToLogin } url={ ROUTES_URL.USER.AUTH.LOGIN }/>
+            <Redirect flag={ redirectToLogin } url={ URL_ROUTES.USER.AUTH.LOGIN }/>
             <MessageErrors show={ error && state === 0 } subErrorMsg={ words.errors.emailNotUsed }/>
             <MessageErrors show={ error && state === 1 } subErrorMsg={ words.errors.verifyCodeNotCorrect }/>
             <MessageErrors show={ error && state === 2 }

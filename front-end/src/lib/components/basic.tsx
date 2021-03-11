@@ -132,6 +132,7 @@ export interface LinkProps {
     to: string;
     children: any;
     disabled?: boolean;
+    dir?: string;
     className?: string;
     target?: '_blank' | '_self';
 }
@@ -147,6 +148,7 @@ export function Link(props: LinkProps) {
             } }
             to={ props.to }
             target={props.target}
+            dir={props.dir ? props.dir: 'auto'}
         >
             { props.children }
         </DLink>

@@ -85,6 +85,7 @@ export interface TextAreaDTO {
     dir?: string;
     placeholder?: string;
     length?: number;
+    disabled?: boolean;
 }
 
 export interface ImageDTO {

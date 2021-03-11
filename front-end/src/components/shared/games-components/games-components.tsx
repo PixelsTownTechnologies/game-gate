@@ -1,14 +1,13 @@
 import { Button, Divider, Icon, Image, Label } from "semantic-ui-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { GameCardDTO, GameDTO } from "../../../models/game";
 import './games-components.css';
 import { Link } from "../../../lib/components/basic";
-import { ROUTES_URL } from "../../../routes";
+import { URL_ROUTES } from "../../../routes";
 import { FlexBox, FlexCenter, If } from "../../../lib/components/containers";
 import { buildCN, costFormat, isEmpty } from "../../../lib/utils/utils";
 import Logo from '../../../assets/logo/logo-bg-w.jpg';
 import { ImageCard } from "../game-viewer-component/game-viewer-component";
-import { setInterval } from "timers";
 import { useWindow } from "../../../lib/hooks/screen-change";
 import { DIR } from "../../../lib/utils/constant";
 import { useLanguage } from "../../../lib/hooks/languageHook";
@@ -16,7 +15,7 @@ import { useLanguage } from "../../../lib/hooks/languageHook";
 export function GameCard(props: { gameCard?: GameCardDTO, game: GameDTO }) {
     const style = props.game.bg_card ? {'--headerBGImageURL': `url(${ props.game.bg_card })`} : {};
     return (
-        <Link to={ ROUTES_URL.GAME_VIEWER + '/' + props.game.id + ( props.gameCard ? `/${ props.gameCard.id }` : '' ) }>
+        <Link to={ URL_ROUTES.GAME_VIEWER + '/' + props.game.id + ( props.gameCard ? `/${ props.gameCard.id }` : '' ) }>
             <div className={ 'vvg vvg-container' }>
                 <div style={ style as any } className={ 'vvg-header-container' }>
                     <div className={ 'vvg-index vvg-logo' }>
@@ -52,9 +51,9 @@ export function GameCard(props: { gameCard?: GameCardDTO, game: GameDTO }) {
 
 
 export function GameCardBig(props: { gameCard?: GameCardDTO, game: GameDTO }) {
-    const style = props.game.bg_card ? {'--headerBGImageURL': `url(${ props.game.bg_card })`} : {};
+    //const style = props.game.bg_card ? {'--headerBGImageURL': `url(${ props.game.bg_card })`} : {};
     return (
-        <Link to={ ROUTES_URL.GAME_VIEWER + '/' + props.game.id + ( props.gameCard ? `/${ props.gameCard.id }` : '' ) }>
+        <Link to={ URL_ROUTES.GAME_VIEWER + '/' + props.game.id + ( props.gameCard ? `/${ props.gameCard.id }` : '' ) }>
             <div className={ 'gcv-container' }>
                 <ImageCard
                     className={ 'gcv-card-box' }

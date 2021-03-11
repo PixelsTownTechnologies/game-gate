@@ -8,13 +8,13 @@ import { LanguageSystemWords } from "../../../models/language";
 import { Wrapper } from "../../shared/wrapper";
 import { TableSetting } from "../../../lib/components/tabels";
 import { DFormField } from "../../../lib/components/form/models";
-import { getDefaultValidMsg } from "../../../lib/utils/utils";
+import { costFormat, getDefaultValidMsg } from "../../../lib/utils/utils";
 import { connect } from "react-redux";
 import { generateMapStateEntityToProps } from "../../../lib/store/util";
 import { UserBaseDTO } from "../../../lib/models/user";
 import React from "react";
 import { OrderDTO } from "../../../models/game";
-import { Button, Dropdown } from "semantic-ui-react";
+import { Button, Dropdown, Label } from "semantic-ui-react";
 
 interface ManageOrdersProps extends EntityWrapperProps<OrderDTO> {
     user: UserBaseDTO;
@@ -100,7 +100,16 @@ class ManageOrders extends EntityWrapper<OrderDTO, ManageOrdersProps, ManageOrde
                 type: 'valueMap',
                 width: 100,
                 center: true,
-                valueMap: word.entities.order.stateMap
+                displayValue: (row) => {
+                    const colorMap = {
+                        'I': 'teal',
+                        'E': 'red',
+                        'C': 'green'
+                    } as any;
+                    return (
+                        <Label color={colorMap[row.state]}>{(word.entities.order.stateMap as any)[row.state]}</Label>
+                    );
+                }
             },
             {
                 fieldName: 'quantity',
@@ -108,6 +117,16 @@ class ManageOrders extends EntityWrapper<OrderDTO, ManageOrdersProps, ManageOrde
                 type: 'number',
                 width: 100,
                 center: true
+            },
+            {
+                fieldName: 'cost',
+                title: word.entities.order.cost,
+                type: 'formattedNumber',
+                width: 100,
+                center: true,
+                displayValue: (row) => {
+                    return `$${costFormat(row.cost)}` as any;
+                }
             },
             {
                 fieldName: 'owner.id',
@@ -121,6 +140,13 @@ class ManageOrders extends EntityWrapper<OrderDTO, ManageOrdersProps, ManageOrde
                 title: word.entities.order.ownerUsername,
                 type: 'text',
                 width: 120,
+                center: true
+            },
+            {
+                fieldName: 'owner.address_one',
+                title: word.entities.order.ownerAddress,
+                type: 'text',
+                width: 200,
                 center: true
             },
             {
