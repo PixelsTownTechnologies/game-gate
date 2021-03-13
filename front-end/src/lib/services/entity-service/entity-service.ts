@@ -48,7 +48,7 @@ export class EntityService<Entity extends BaseEntity> extends BaseFacadeServices
         try {
             const response: AxiosResponse<Entity> = await this.getAxiosInstance(!!actionAPI.authenticate).post(this.getURL(actionAPI), entity);
             if (this.entityConfig.loadToStore) {
-                const storeName = this.entityConfig.storeName ? this.entityConfig.storeName : this.entityConfig.name;
+                const storeName = this.entityConfig.storeName;
                 if (isEntityLoaded(storeName)) {
                     if (this.entityConfig.dataType === 'array') {
                         loadEntity(storeName, [ ...getEntityByName(storeName), response.data ]);
@@ -81,7 +81,7 @@ export class EntityService<Entity extends BaseEntity> extends BaseFacadeServices
         try {
             const response: AxiosResponse<any> = await this.getAxiosInstance(!!actionAPI.authenticate).delete(this.getURL(actionAPI) + '/' + id);
             if (this.entityConfig.loadToStore) {
-                const storeName = this.entityConfig.storeName ? this.entityConfig.storeName : this.entityConfig.name;
+                const storeName = this.entityConfig.storeName;
                 if (isEntityLoaded(storeName)) {
                     if (this.entityConfig.dataType === 'array') {
                         loadEntity(storeName, ( getEntityByName(storeName) as Entity[] ).filter(row => row.id !== id));
@@ -107,14 +107,14 @@ export class EntityService<Entity extends BaseEntity> extends BaseFacadeServices
         this.setLoading(true, actionAPI);
         try {
             if (this.entityConfig.loadToStore) {
-                const storeName = this.entityConfig.storeName ? this.entityConfig.storeName : this.entityConfig.name;
+                const storeName = this.entityConfig.storeName;
                 if (isEntityLoaded(storeName)) {
                     return Promise.resolve(getEntityByName(storeName) as Entity[]);
                 }
             }
             const response: AxiosResponse<Entity[] | Entity> = await this.getAxiosInstance(!!actionAPI.authenticate).get(this.getURL(actionAPI));
             if (this.entityConfig.loadToStore) {
-                const storeName = this.entityConfig.storeName ? this.entityConfig.storeName : this.entityConfig.name;
+                const storeName = this.entityConfig.storeName;
                 loadEntity(storeName, response.data);
             }
             return Promise.resolve(response.data);
@@ -128,7 +128,7 @@ export class EntityService<Entity extends BaseEntity> extends BaseFacadeServices
 
     loadToStore = (data: Entity[] | Entity) => {
         if (this.entityConfig.loadToStore) {
-            const storeName = this.entityConfig.storeName ? this.entityConfig.storeName : this.entityConfig.name;
+            const storeName = this.entityConfig.storeName;
             loadEntity(storeName, data);
         }
     }
@@ -159,7 +159,7 @@ export class EntityService<Entity extends BaseEntity> extends BaseFacadeServices
         this.setLoading(true, actionAPI);
         try {
             if (this.entityConfig.loadToStore) {
-                const storeName = this.entityConfig.storeName ? this.entityConfig.storeName : this.entityConfig.name;
+                const storeName = this.entityConfig.storeName;
                 if (isEntityLoaded(storeName)) {
                     if (this.entityConfig.dataType === 'array') {
                         const list = ( getEntityByName(storeName) as Entity[] );
@@ -176,7 +176,7 @@ export class EntityService<Entity extends BaseEntity> extends BaseFacadeServices
             }
             const response: AxiosResponse<Entity> = await this.getAxiosInstance(!!actionAPI.authenticate).get(this.getURL(actionAPI) + '/' + id);
             if (this.entityConfig.loadToStore) {
-                const storeName = this.entityConfig.storeName ? this.entityConfig.storeName : this.entityConfig.name;
+                const storeName = this.entityConfig.storeName;
                 if (isEntityLoaded(storeName)) {
                     if (this.entityConfig.dataType === 'array') {
                         loadEntity(storeName, [ ...getEntityByName(storeName), response.data ]);
@@ -211,7 +211,7 @@ export class EntityService<Entity extends BaseEntity> extends BaseFacadeServices
         try {
             const response: AxiosResponse<Entity> = await this.getAxiosInstance(!!actionAPI.authenticate).put(this.getURL(actionAPI) + '/' + id, form);
             if (this.entityConfig.loadToStore) {
-                const storeName = this.entityConfig.storeName ? this.entityConfig.storeName : this.entityConfig.name;
+                const storeName = this.entityConfig.storeName;
                 if (isEntityLoaded(storeName)) {
                     if (this.entityConfig.dataType === 'array') {
                         const itemList = ( getEntityByName(storeName) as Entity[] ).filter(row => row.id === id);
@@ -243,14 +243,14 @@ export class EntityService<Entity extends BaseEntity> extends BaseFacadeServices
 
     flushStore = () => {
         if (this.entityConfig.loadToStore) {
-            const storeName = this.entityConfig.storeName ? this.entityConfig.storeName : this.entityConfig.name;
+            const storeName = this.entityConfig.storeName;
             loadEntity(storeName, undefined);
         }
     }
 
     reload = async () => {
         const data = await this.findNoStore();
-        if(data){
+        if (data) {
             this.loadToStore(data);
         }
         return data;

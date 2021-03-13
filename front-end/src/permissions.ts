@@ -4,7 +4,9 @@ const PERMISSIONS = {
     MANAGE_INVOICE: '',
     MANAGE_GAMES: '',
     MANAGE_ORDERS: '',
+    MANAGE_EMBED_GAMES: '',
     MANAGE_RESOURCES: '',
+    MANAGE_ACCESSORIES: '',
 
     USER_HISTORY: ''
 };

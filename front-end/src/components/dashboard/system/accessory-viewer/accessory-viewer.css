@@ -1,0 +1,153 @@
+
+.acc-info-container {
+    padding: 60px 7% 20px;
+}
+
+.details-section {
+    padding: 60px 7% 20px !important;
+}
+
+.acc-info-container > div:nth-child(1) {
+    flex: 10%;
+}
+
+.acc-info-container > div:nth-child(2) {
+    flex: 50%;
+}
+
+.acc-container {
+    width: 100%;
+}
+
+.acc-info {
+    padding: 30px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+@media only screen and (max-width: 600px) {
+    .acc-info {
+        padding: 30px 20px;
+    }
+
+    .acc-info-container {
+        padding: 40px 2% 20px !important;
+    }
+
+    .details-section {
+        padding: 40px 2% 20px !important;
+    }
+
+}
+
+
+.acc-header-section {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    width: fit-content;
+}
+
+.acc-header-section h1 {
+    margin: 0 !important;
+    font-family: var(--globalFont) !important;
+}
+
+.acc-header-section h4 {
+    margin: 0 6px !important;
+    margin-bottom: 3px !important;
+    font-family: var(--globalFont) !important;
+    font-weight: 600 !important;
+}
+
+.acc-rating-section {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.acc-rating-section h4 {
+    margin: 0 6px !important;
+    font-family: var(--globalFont) !important;
+    font-weight: 300 !important;
+}
+
+.acc-price-section {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.acc-price-section h2 {
+    font-family: var(--globalFont) !important;
+    margin: 0 0 -2px;
+}
+
+.acc-discount-price {
+    text-decoration: line-through;
+    font-family: var(--globalFont);
+    color: #505254;
+    margin: 0;
+    padding: 0 15px;
+}
+
+.acc-discount {
+    height: 1.65em;
+    font-family: var(--globalFont) !important;
+    padding: 5px 5px 5px 10px !important;
+}
+
+.acc-discount:before {
+    width: 1.2em !important;
+    height: 1.2em !important;
+}
+
+.acc-counter-section h2 {
+    font-family: var(--globalFont) !important;
+    font-weight: 600 !important;
+}
+
+.acc-overview {
+    font-family: var(--globalFont) !important;
+    font-weight: 900 !important;
+    color: #333336 !important;
+    font-size: 2em !important;
+}
+
+.acc-counter-section button {
+    background: #ff4747 !important;
+    color: white !important;
+}
+
+.acc-counter-section .input-counter {
+    width: fit-content !important;
+}
+
+.acc-buttons-section button {
+    min-width: 120px !important;
+    border-radius: 20px !important;
+}
+
+.acc-buttons-section button:nth-child(1) {
+    margin-right: 10px;
+}
+
+.acc-description-section {
+    max-width: 500px;
+}
+
+.acc-no-balance-msg {
+    margin: 12px 0 12px 10px !important;
+}
+
+.w-background {
+    background: white !important;
+}

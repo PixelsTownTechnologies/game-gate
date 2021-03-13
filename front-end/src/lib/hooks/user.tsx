@@ -10,6 +10,7 @@ export function useEntityStore<T>(entityName: string): T {
     React.useEffect(() => {
         if (!cleanSubscribe && !callBack) {
             setCallBack(listenStateStore(state => {
+                console.log(state)
                 setEntity(state[entityName]);
             }, entityName));
         }

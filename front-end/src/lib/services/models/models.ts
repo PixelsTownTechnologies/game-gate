@@ -26,7 +26,6 @@ export const ACTIONS = {
  * storeName: undefined -> Entity Name Will used
  */
 export interface EntityServiceConfig {
-    name: string;
     storeName: string;
     loadToStore?: boolean;
     baseURL: string;

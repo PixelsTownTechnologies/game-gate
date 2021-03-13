@@ -15,6 +15,9 @@ import { HomeWidget } from "./components/dashboard/system/home/home";
 import ManageFiles from "./components/dashboard/admin/manage-files";
 import OrderHistory from "./components/dashboard/user/history/order-history";
 import SingleOrderHistory from "./components/dashboard/user/history/single-order-viewer";
+import ManageAccessory from "./components/dashboard/admin/manage-accesory";
+import ManageEmbedGame from "./components/dashboard/admin/manage-embed-games";
+import { AccessoryViewer } from "./components/dashboard/system/accessory-viewer/accessory-viewer";
 
 export const URL_ROUTES = {
     HOME: '/',
@@ -33,10 +36,14 @@ export const URL_ROUTES = {
             MANAGE_INVOICE: '/admin/manage-invoices',
             MANAGE_GAMES: '/admin/manage-games',
             MANAGE_RESOURCES: '/admin/manage-resources',
-            MANAGE_ORDERS: '/admin/manage-orders'
+            MANAGE_ORDERS: '/admin/manage-orders',
+            MANAGE_EMBED_GAMES: '/admin/manage-embed-games',
+            MANAGE_ACCESSORIES: '/admin/manage-accessories',
         }
     },
-    GAME_VIEWER: '/game/view'
+    GAME_VIEWER: '/view/game',
+    ACCESSORY_VIEWER: '/view/accessory',
+    EMBED_GAME_VIEWER: '/view/embed-game'
 }
 
 
@@ -93,6 +100,26 @@ export default [
                 menuSetting: {
                     text: 'title.manageGames',
                     //  icon: 'game'
+                },
+            },
+            {
+                component: ManageAccessory,
+                path: URL_ROUTES.USER.ADMIN.MANAGE_ACCESSORIES,
+                authenticate: true,
+                permission: PERMISSIONS.MANAGE_RESOURCES,
+                menuSetting: {
+                    text: 'entities.accessory.title',
+                    //icon: 'life ring'
+                },
+            },
+            {
+                component: ManageEmbedGame,
+                path: URL_ROUTES.USER.ADMIN.MANAGE_EMBED_GAMES,
+                authenticate: true,
+                permission: PERMISSIONS.MANAGE_EMBED_GAMES,
+                menuSetting: {
+                    text: 'entities.embedGames.title',
+                    //icon: 'rocket'
                 },
             },
             {
@@ -179,5 +206,9 @@ export default [
     {
         component: GameViewer,
         path: URL_ROUTES.GAME_VIEWER + '/:gameId?/:gameCardId?'
+    },
+    {
+        component: AccessoryViewer,
+        path: URL_ROUTES.ACCESSORY_VIEWER + '/:accessoryId'
     }
 ] as RouteConfig[];

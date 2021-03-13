@@ -1,20 +1,7 @@
 import { EntityServiceConfig } from "../lib/services/models/models";
 
-export const ENTITIES = {
-    HOME: 'HOME',
-    USER: 'USER',
-    GROUPS: 'GROUPS',
-    ENUMS: 'ENUMS',
-    INVOICE: 'INVOICE',
-    GAME: 'GAME',
-    GAME_CARD: 'GAME_CARD',
-    ORDER: 'ORDER',
-    FILES:'FILES'
-}
-
 export const gameService: EntityServiceConfig = {
     storeName: 'games',
-    name: ENTITIES.GAME,
     dataType: 'array',
     baseURL: '',
     loadToStore: true,
@@ -26,7 +13,7 @@ export const gameService: EntityServiceConfig = {
         }, {
             type: 'FIND_BY_ID',
             authenticate: true,
-            url: 'admin/game/',
+            url: 'admin/game',
             formData: true
         }, {
             type: 'CREATE',
@@ -48,7 +35,6 @@ export const gameService: EntityServiceConfig = {
 
 export const systemGameService: EntityServiceConfig = {
     storeName: 'gamesSystem',
-    name: ENTITIES.GAME,
     dataType: 'array',
     baseURL: '',
     loadToStore: false,
@@ -65,8 +51,109 @@ export const systemGameService: EntityServiceConfig = {
     ]
 };
 
+export const accessoryService: EntityServiceConfig = {
+    storeName: 'accessory',
+    dataType: 'array',
+    baseURL: '',
+    loadToStore: true,
+    actions: [
+        {
+            type: 'FIND',
+            authenticate: true,
+            url: 'admin/fc/accessory'
+        }, {
+            type: 'FIND_BY_ID',
+            authenticate: true,
+            url: 'admin/accessory',
+            formData: true
+        }, {
+            type: 'CREATE',
+            authenticate: true,
+            url: 'admin/fc/accessory',
+            formData: true
+        }, {
+            type: 'UPDATE',
+            authenticate: true,
+            url: 'admin/accessory',
+            formData: true
+        }, {
+            type: 'DELETE',
+            authenticate: true,
+            url: 'admin/accessory'
+        }
+    ]
+};
+
+export const systemAccessoryService: EntityServiceConfig = {
+    storeName: 'accessorySystem',
+    dataType: 'array',
+    baseURL: '',
+    loadToStore: false,
+    actions: [
+        {
+            type: 'FIND',
+            authenticate: false,
+            url: 'system/accessory/fetch-all'
+        }, {
+            type: 'FIND_BY_ID',
+            authenticate: false,
+            url: 'system/accessory/fetch'
+        }
+    ]
+};
+
+export const embedGamesService: EntityServiceConfig = {
+    storeName: 'embedGames',
+    dataType: 'array',
+    baseURL: '',
+    loadToStore: true,
+    actions: [
+        {
+            type: 'FIND',
+            authenticate: true,
+            url: 'admin/fc/embed-games'
+        }, {
+            type: 'FIND_BY_ID',
+            authenticate: true,
+            url: 'admin/embed-games',
+            formData: true
+        }, {
+            type: 'CREATE',
+            authenticate: true,
+            url: 'admin/fc/embed-games',
+            formData: true
+        }, {
+            type: 'UPDATE',
+            authenticate: true,
+            url: 'admin/embed-games',
+            formData: true
+        }, {
+            type: 'DELETE',
+            authenticate: true,
+            url: 'admin/embed-games'
+        }
+    ]
+};
+
+export const systemEmbedGamesService: EntityServiceConfig = {
+    storeName: 'embedGamesSystem',
+    dataType: 'array',
+    baseURL: '',
+    loadToStore: false,
+    actions: [
+        {
+            type: 'FIND',
+            authenticate: false,
+            url: 'system/embed-games/fetch-all'
+        }, {
+            type: 'FIND_BY_ID',
+            authenticate: false,
+            url: 'system/embed-games/fetch'
+        }
+    ]
+};
+
 export const countriesService: EntityServiceConfig = {
-    name: '',
     storeName: 'countries',
     loadToStore: true,
     baseURL: '',
@@ -82,7 +169,6 @@ export const countriesService: EntityServiceConfig = {
 
 export const gameCardKeysService: EntityServiceConfig = {
     storeName: 'gameCards',
-    name: ENTITIES.GAME_CARD,
     dataType: 'array',
     baseURL: '',
     loadToStore: false,
@@ -97,7 +183,6 @@ export const gameCardKeysService: EntityServiceConfig = {
 
 export const gameCardService: EntityServiceConfig = {
     storeName: 'gameCards',
-    name: ENTITIES.GAME_CARD,
     dataType: 'array',
     baseURL: '',
     loadToStore: false,
@@ -123,7 +208,6 @@ export const gameCardService: EntityServiceConfig = {
 };
 
 export const adminUserService: EntityServiceConfig = {
-    name: ENTITIES.USER,
     storeName: 'users',
     dataType: 'array',
     baseURL: 'admin/users',
@@ -152,7 +236,6 @@ export const groupsService: EntityServiceConfig = {
     storeName: 'groups',
     dataType: 'array',
     loadToStore: true,
-    name: ENTITIES.GROUPS,
     baseURL: 'user/groups',
     actions: [
         {
@@ -170,7 +253,6 @@ export const groupsService: EntityServiceConfig = {
 export const enumsService: EntityServiceConfig = {
     storeName: 'enums',
     baseURL: 'system/enums',
-    name: ENTITIES.ENUMS,
     loadToStore: true,
     dataType: 'array',
     actions: [
@@ -190,7 +272,6 @@ export const enumsService: EntityServiceConfig = {
 export const adminInvoiceService: EntityServiceConfig = {
     dataType: 'array',
     loadToStore: true,
-    name: ENTITIES.INVOICE,
     baseURL: '',
     storeName: 'invoices',
     actions: [
@@ -208,7 +289,6 @@ export const adminInvoiceService: EntityServiceConfig = {
 };
 
 export const homeService: EntityServiceConfig = {
-    name: ENTITIES.HOME,
     storeName: 'home',
     baseURL: 'home',
     dataType: 'object',
@@ -223,7 +303,6 @@ export const homeService: EntityServiceConfig = {
 
 export const adminOrderService: EntityServiceConfig = {
     storeName: 'systemOrders',
-    name: ENTITIES.ORDER,
     dataType: 'array',
     baseURL: '',
     loadToStore: true,
@@ -248,7 +327,6 @@ export const adminOrderService: EntityServiceConfig = {
 
 export const userOrderService: EntityServiceConfig = {
     storeName: 'userOrders',
-    name: ENTITIES.ORDER,
     dataType: 'array',
     baseURL: '',
     loadToStore: true,
@@ -278,7 +356,6 @@ export const userOrderService: EntityServiceConfig = {
 
 export const filesService: EntityServiceConfig = {
     storeName: 'files',
-    name: ENTITIES.FILES,
     dataType: 'array',
     baseURL: '',
     loadToStore: true,

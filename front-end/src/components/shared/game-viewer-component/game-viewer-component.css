@@ -75,7 +75,7 @@
     padding-right: 0 !important;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 400px) {
     .order-confirm-container > div:nth-child(1) {
         padding: 20px 0 0 0 !important;
     }
@@ -107,4 +107,8 @@ h3.state-info {
     width: fit-content !important;
     height: fit-content !important;
     font-size: 1.2rem !important;
+}
+
+.order-state-info-c {
+
 }

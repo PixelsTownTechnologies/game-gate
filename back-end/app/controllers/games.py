@@ -4,8 +4,8 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from app.models import (GameCard, Game, GameKey)
-from app.serializers.game import (GameCardSerializer, GameSerializer)
+from app.models import (GameCard, Game, GameKey, Accessory, EmbedGame)
+from app.serializers.game import (GameCardSerializer, GameSerializer, AccessorySerializer, EmbedGameSerializer)
 
 
 class GameCardFetchCreate(generics.ListCreateAPIView):
@@ -53,10 +53,58 @@ class GameUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
 
 
 class GameFetchAll(generics.ListAPIView):
-    queryset = Game.objects.all()
+    queryset = Game.objects.filter(show=True)
     serializer_class = GameSerializer
 
 
 class GameFetch(generics.RetrieveAPIView):
-    queryset = Game.objects.all()
+    queryset = Game.objects.filter(show=True)
     serializer_class = GameSerializer
+
+
+class AccessoryFetchCreate(generics.ListCreateAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    queryset = Accessory.objects.all()
+    serializer_class = AccessorySerializer
+
+
+class AccessoryUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    queryset = Accessory.objects.all()
+    serializer_class = AccessorySerializer
+
+
+class AccessoryFetchAll(generics.ListAPIView):
+    queryset = Accessory.objects.filter(show=True)
+    serializer_class = AccessorySerializer
+
+
+class AccessoryFetch(generics.RetrieveAPIView):
+    queryset = Accessory.objects.filter(show=True)
+    serializer_class = AccessorySerializer
+
+
+class EmbedGameFetchCreate(generics.ListCreateAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    queryset = EmbedGame.objects.all()
+    serializer_class = EmbedGameSerializer
+
+
+class EmbedGameUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    queryset = EmbedGame.objects.all()
+    serializer_class = EmbedGameSerializer
+
+
+class EmbedGameFetchAll(generics.ListAPIView):
+    queryset = EmbedGame.objects.all()
+    serializer_class = EmbedGameSerializer
+
+
+class EmbedGameFetch(generics.RetrieveAPIView):
+    queryset = EmbedGame.objects.all()
+    serializer_class = EmbedGameSerializer

@@ -198,6 +198,48 @@ class Game(models.Model):
     bg_card = models.ImageField(upload_to='games/bg_card', blank=True, null=True)
 
     @property
+    def game_orders(self):
+        orders = []
+        if self.game_cards is not None:
+            for gc in self.game_cards.all():
+                if gc.gc_orders is not None:
+                    orders = [*orders, *gc.gc_orders.all()]
+        return orders
+
+    @property
+    def game_complete_orders(self):
+        orders = []
+        if self.game_cards is not None:
+            for gc in self.game_cards.all():
+                if gc.gc_orders is not None:
+                    orders = [*orders, *gc.gc_orders.filter(state='C')]
+        return orders
+
+    @property
+    def total_orders(self):
+        return len(self.game_orders)
+
+    @property
+    def total_reviews(self):
+        if True:
+            return 15
+        total_reviews = 0
+        for order in self.game_complete_orders:
+            if order.review_star is not None:
+                total_reviews += 1
+        return total_reviews
+
+    @property
+    def review_stars(self):
+        star_count = 0
+        total_reviews = 0
+        for order in self.game_complete_orders:
+            if order.review_star is not None:
+                total_reviews += 1
+                star_count += order.review_star
+        return (star_count / total_reviews) if total_reviews > 0 else 0
+
+    @property
     def is_deletable(self):
         return (self.game_cards is None) or len(self.game_cards.all()) < 1
 
@@ -253,6 +295,103 @@ class GameCard(models.Model):
         return True
 
 
+class Accessory(models.Model):
+    name = models.CharField(max_length=64, null=True, blank=True)
+    price = models.FloatField(default=1, null=True, blank=True)
+    discount = models.FloatField(default=0.0, null=True, blank=True)
+    points = models.IntegerField(default=0, null=True, blank=True)
+    system_quantity = models.IntegerField(default=0, null=True, blank=True)
+    max = models.IntegerField(default=10, null=True, blank=True)
+    min = models.IntegerField(default=0, null=True, blank=True)
+    show = models.BooleanField(default=True, null=True, blank=True)
+    sold_flag = models.BooleanField(default=False, null=True, blank=True)
+    type = models.CharField(max_length=32, null=True, blank=True)
+
+    details = models.TextField(default='', null=True, blank=True)
+    short_description = models.TextField(default='', null=True, blank=True)
+
+    video = models.CharField(max_length=255, default='', null=True, blank=True)
+
+    # Media
+    logo = models.ImageField(upload_to='accessory/logo', blank=True, null=True)
+    image1 = models.ImageField(upload_to='accessory/images', blank=True, null=True)
+    image2 = models.ImageField(upload_to='accessory/images', blank=True, null=True)
+    image3 = models.ImageField(upload_to='accessory/images', blank=True, null=True)
+    image4 = models.ImageField(upload_to='accessory/images', blank=True, null=True)
+
+    @property
+    def total_price(self):
+        discount = self.discount if self.discount is not None else 0
+        return self.price - (self.price * discount / 100)
+
+    @property
+    def total_orders(self):
+        if True:
+            return 23
+        return self.accessory_orders.all().count()
+
+    @property
+    def review_stars(self):
+        if True:
+            return 4.3
+        star_count = 0
+        total_reviews = 0
+        for order in self.accessory_orders.filter(state='C'):
+            if order.review_star is not None:
+                total_reviews += 1
+                star_count += order.review_star
+        return (star_count / total_reviews) if total_reviews > 0 else 0
+
+    @property
+    def total_reviews(self):
+        if True:
+            return 15
+        total_reviews = 0
+        for order in self.accessory_orders.filter(state='C'):
+            if order.review_star is not None:
+                total_reviews += 1
+        return total_reviews
+
+    @property
+    def order_min(self):
+        return self.min
+
+    @property
+    def order_max(self):
+        if self.system_quantity < self.max:
+            return self.system_quantity
+        return self.max
+
+    @property
+    def is_sold(self):
+        return (self.system_quantity < 1) or (self.system_quantity < self.order_min) or self.sold_flag
+
+    @property
+    def is_deletable(self):
+        return False
+
+    @property
+    def is_editable(self):
+        return True
+
+
+class EmbedGame(models.Model):
+    src = models.CharField(max_length=500, null=True, blank=True)
+    name = models.CharField(max_length=64, null=True, blank=True)
+    type = models.CharField(max_length=32, null=True, blank=True)
+    details = models.TextField(default='', null=True, blank=True)
+    video = models.CharField(max_length=255, default='', null=True, blank=True)
+    logo = models.ImageField(upload_to='embedGames/logo', blank=True, null=True)
+
+    @property
+    def is_deletable(self):
+        return True
+
+    @property
+    def is_editable(self):
+        return True
+
+
 class Order(models.Model):
     ORDER_STATUS = (
         ('I', 'I'),
@@ -262,13 +401,17 @@ class Order(models.Model):
     owner = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='user_orders', null=True, blank=True)
     game_card = models.ForeignKey(GameCard, on_delete=models.DO_NOTHING, related_name='gc_orders', null=True,
                                   blank=True)
+    accessory = models.ForeignKey(Accessory, on_delete=models.DO_NOTHING, related_name='accessory_orders', null=True,
+                                  blank=True)
     create = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     account_id = models.CharField(max_length=255, null=True, blank=True)
     extra_info = models.TextField(null=True, blank=True)
+    ship_location = models.CharField(max_length=255, null=True, blank=True)
     compete_date = models.DateTimeField(null=True, blank=True)
     review_date = models.DateTimeField(default=None, null=True, blank=True)
     review_star = models.IntegerField(null=True, blank=True)
     quantity = models.IntegerField(default=1, null=True, blank=True)
+
     review_description = models.TextField(max_length=255, null=True, blank=True)
     state = models.CharField(max_length=2, default='I', choices=ORDER_STATUS, null=True, blank=True)
     cost = models.FloatField(null=True, blank=True)

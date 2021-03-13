@@ -59,6 +59,22 @@ urlpatterns_games = [
     path('system/games/fetch-all', GameFetchAll.as_view()),
 ]
 
+urlpatterns_accessory = [
+    path('admin/fc/accessory', AccessoryFetchCreate.as_view()),
+    path('admin/accessory/<pk>', AccessoryUpdateDelete.as_view()),
+
+    path('system/accessory/fetch/<pk>', AccessoryFetch.as_view()),
+    path('system/accessory/fetch-all', AccessoryFetchAll.as_view()),
+]
+
+urlpatterns_embed_games = [
+    path('admin/fc/embed-games', EmbedGameFetchCreate.as_view()),
+    path('admin/embed-games/<pk>', EmbedGameUpdateDelete.as_view()),
+
+    path('system/embed-games/fetch/<pk>', EmbedGameFetch.as_view()),
+    path('system/embed-games/fetch-all', EmbedGameFetchAll.as_view()),
+]
+
 routes = [
     path('home/', home),
     path('admin/', admin.site.urls),
@@ -67,6 +83,8 @@ routes = [
     *urlpatterns_invoice,
     *urlpatterns_enum,
     *urlpatterns_games,
+    *urlpatterns_accessory,
+    *urlpatterns_embed_games,
     *urlpatterns_files
 ]
 

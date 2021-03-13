@@ -1,135 +1,192 @@
 import './game-viewer-component.css';
 import React from 'react';
-import { Divider as SDivider, Header, Image } from "semantic-ui-react";
-import { buildCN, clamp, costFormat, isFalse, isNull } from "../../../lib/utils/utils";
-import { GameCardDTO, GameDTO } from "../../../models/game";
+import { Divider as SDivider, Header, Image as SImage } from "semantic-ui-react";
+import { buildCN, costFormat, isFalse, isNull } from "../../../lib/utils/utils";
+import { AccessoryDTO, GameCardDTO, GameDTO } from "../../../models/game";
 import { useWindow } from "../../../lib/hooks/screen-change";
 import { FlexBox, If } from "../../../lib/components/containers";
 import { useLanguage } from "../../../lib/hooks/languageHook";
 import ConfirmCart from '../../../assets/icons/cart.png';
-import { Button, Link } from "../../../lib/components/basic";
+import { Button, Image, Link } from "../../../lib/components/basic";
 import { URL_ROUTES } from "../../../routes";
 import { useLoader } from "../../../lib/hooks/generic";
+import Logo from '../../../assets/logo/logo-bg-w.jpg';
 
 export function ImageCard(props: { logo: any, title: string, className?: string }) {
-    return (
-        <div className={ buildCN('card-view', props.className ? props.className : '') }>
-            <div>
-                <Image src={ props.logo }/>
-            </div>
-            <Header className={ 'px-non-margin' } as={ 'h5' }>{ props.title }</Header>
-        </div>
-    );
+	return (
+		<div className={ buildCN('card-view', props.className ? props.className : '') }>
+			<div>
+				<SImage src={ props.logo ? props.logo : Logo }/>
+			</div>
+			<Header className={ 'px-non-margin' } as={ 'h5' }>{ props.title }</Header>
+		</div>
+	);
 }
 
-export function OrderConfirm({pxIf, gameCard, game, quantity, onCancel, onAccept}: {
-    pxIf?: boolean,
-    gameCard?: GameCardDTO, game?: GameDTO, quantity?: number, onCancel: () => void, onAccept: () => Promise<boolean | null>
+
+export function OrderItemView({game, quantity, gameCard, accessory, shipLocation}: {
+	game?: GameDTO,
+	gameCard?: GameCardDTO, quantity?: number,
+	accessory?: AccessoryDTO, shipLocation?: string
 }) {
-    const {width, type} = useWindow();
-    const {words} = useLanguage();
-    const [ error, setError ] = React.useState(false);
-    const [ success, setSuccess ] = React.useState(false);
-    const loader = useLoader();
-    if (isFalse(pxIf) || !gameCard || !game || !quantity) {
-        return null;
-    }
-    const isMobile = type === 'Mobile';
-    return (
-        <div className={ 'order-confirm-box' }>
-            <div className={ 'order-confirm-header' }>
-                <FlexBox justifyContent={ 'flex-end' } alignItems={ 'center' }>
-                    <Button disabled={ loader.isLoading } size={ 'tiny' } basic
-                            color={ 'grey' } onClick={ () => onCancel() }
-                            iconSetting={ {name: 'times', attachToButton: true} }/>
-                </FlexBox>
-                <SDivider hidden/>
-                <FlexBox flexDirection={ 'column' } alignItems={ 'center' }
-                         justifyContent={ 'center' }>
-                    <Header as={ 'h1' } className={ 'white' }>{ words.gameViewer.confirmOrder }</Header>
-                    <SDivider hidden/>
-                    <Image src={ ConfirmCart }/>
-                </FlexBox>
-            </div>
-            <FlexBox
-                className={ 'order-confirm-container' }
-                flexDirection={ 'row' }
-                alignItems={ isMobile ? 'center' : undefined }
-                justifyContent={ isMobile ? 'center' : 'space-between' }
-                warp
-            >
-                <div>
-                    <ImageCard logo={ game.logo } title={ game.card_name }/>
-                </div>
-                <FlexBox
-                    justifyContent={ isMobile ? 'center' : undefined }
-                    alignItems={ isMobile ? 'center' : undefined }
-                    warp flexDirection={ 'column' } padding={ 40 }
-                >
-                    <Header className={ 'state-info' } as={ 'h2' }>{ gameCard.name }</Header>
-                    <FlexBox warp flexDirection={ 'column' } justifyContent={ 'flex-start' }>
-                        <Header className={ 'state-info' } as={ 'h3' }>
-                            { words.gameViewer.selectQuantity }: { quantity }
-                        </Header>
-                        <Header className={ 'state-info' } as={ 'h3' }>
-                            { words.gameViewer.totalPrice }: <span
-                            className={ 'gc-price' }>${ costFormat(quantity * gameCard.total_price) }</span>
-                        </Header>
-                    </FlexBox>
-                </FlexBox>
-            </FlexBox>
-            <FlexBox
-                className={ 'order-confirm-bottom' }
-                flexDirection={ 'column' }
-                alignItems={ 'center' }
-                justifyContent={ 'center' }
-                padding={ clamp(20, width * 0.1, 60) }
-                warp
-            >
-                <If flag={ success }>
-                    <Header as={ 'h3' }>{ words.gameViewer.orderThanksMsg }
-                        <Link to={ URL_ROUTES.USER.ORDER_HISTORY }> { words.gameViewer.orderHistory }</Link>
-                    </Header>
-                </If>
-                <If flag={ !success }>
-                    <Header as={ 'h3' }>
-                        { words.gameViewer.orderMsgOne }
-                    </Header>
-                </If>
-                <SDivider hidden/>
-                <If flag={ error }>
-                    <Header as={ 'h4' }>
-                        { words.gameViewer.failedMsg }
-                    </Header>
-                </If>
-                <Button
-                    loading={ loader.isLoading }
-                    disabled={ loader.isLoading }
-                    onClick={ () => {
-                        if (!success) {
-                            loader.activate();
-                            onAccept().then((d) => {
-                                if (isNull(d)) {
-                                    loader.disabled();
-                                    return;
-                                }
-                                if (!d) {
-                                    setError(true);
-                                } else {
-                                    setError(false);
-                                    setSuccess(true);
-                                }
-                                loader.disabled();
-                            });
-                        } else {
-                            onCancel();
-                        }
-                    } }
-                    className={ 'confirm-button' }
-                    color={ 'orange' }
-                    text={ success ? words.basic.ok : words.gameViewer.continue }
-                />
-            </FlexBox>
-        </div>
-    );
+	const {isMobile} = useWindow();
+	const {words} = useLanguage();
+	return (
+		<FlexBox
+			className={ 'order-confirm-container' }
+			flexDirection={ isMobile ? 'column' : 'row' }
+			alignItems={ isMobile ? 'center' : undefined }
+			justifyContent={ isMobile ? 'center' : 'space-between' }
+			warp
+		>
+			<div>
+				{
+					game ? (
+						<ImageCard logo={ game.logo } title={ game.card_name }/>
+					) : null
+				}
+				{
+					accessory ? (
+						<Image width={ 200 } src={ accessory.logo }/>
+					) : null
+				}
+			</div>
+			<FlexBox
+				justifyContent={ isMobile ? 'center' : undefined }
+				alignItems={ isMobile ? 'center' : undefined }
+				warp flexDirection={ 'column' } padding={ 20 }
+			>
+				{
+					gameCard?.name ? (
+						<Header className={ 'state-info' } as={ 'h2' }>{ gameCard?.name }</Header>
+					) : null
+				}
+				{
+					accessory?.name ? (
+						<Header className={ 'state-info' } as={ 'h2' }>{ accessory?.name }</Header>
+					) : null
+				}
+				<FlexBox className={ 'order-state-info-c' } warp flexDirection={ 'column' }
+				         justifyContent={ 'flex-start' }>
+					<Header className={ 'state-info' } as={ 'h3' }>
+						{ words.viewer.selectedQuantity }: { quantity }
+					</Header>
+					<Header className={ 'state-info' } as={ 'h3' }>
+						{ words.gameViewer.totalPrice }: <span
+						className={ 'gc-price' }>${ costFormat(
+						( quantity ? quantity : 1 ) * ( gameCard ? gameCard.total_price : ( accessory ? accessory.total_price : 1 ) ))
+					}</span>
+					</Header>
+					{
+						shipLocation ? (
+							<Header className={ 'state-info' } as={ 'h3' }>
+								{ words.viewer.totalEarnPoint }: { costFormat(
+								( quantity ? quantity : 1 ) * ( gameCard ? gameCard.points : ( accessory ? accessory.points : 1 ) ))
+							}
+							</Header>
+						) : null
+					}
+					{
+						shipLocation ? (
+							<Header className={ 'state-info' } as={ 'h3' }>
+								{ words.viewer.shipLocation }: { shipLocation }
+							</Header>
+						) : null
+					}
+				</FlexBox>
+			</FlexBox>
+		</FlexBox>
+	);
+}
+
+export function OrderConfirm({pxIf, gameCard, game, quantity, onCancel, onAccept, accessory, shipLocation, orderId}: {
+	pxIf?: boolean, accessory?: AccessoryDTO, shipLocation?: string, orderId?: number,
+	gameCard?: GameCardDTO, game?: GameDTO, quantity?: number, onCancel: () => void, onAccept: () => Promise<boolean | null>
+}) {
+	const {words} = useLanguage();
+	const [ error, setError ] = React.useState(false);
+	const [ success, setSuccess ] = React.useState(false);
+	const loader = useLoader();
+	if (isFalse(pxIf)) {
+		return null;
+	}
+	return (
+		<div className={ 'order-confirm-box' }>
+			<div className={ 'order-confirm-header' }>
+				<FlexBox justifyContent={ 'flex-end' } alignItems={ 'center' }>
+					<Button disabled={ loader.isLoading } size={ 'tiny' } basic
+					        color={ 'grey' } onClick={ () => onCancel() }
+					        iconSetting={ {name: 'times', attachToButton: true} }/>
+				</FlexBox>
+				<SDivider hidden/>
+				<FlexBox flexDirection={ 'column' } alignItems={ 'center' }
+				         justifyContent={ 'center' }>
+					<Header as={ 'h1' } className={ 'white' }>{ words.gameViewer.confirmOrder }</Header>
+					<SDivider hidden/>
+					<SImage src={ ConfirmCart }/>
+				</FlexBox>
+			</div>
+			<OrderItemView shipLocation={ shipLocation } accessory={ accessory } quantity={ quantity } game={ game }
+			               gameCard={ gameCard }/>
+			<FlexBox
+				className={ 'order-confirm-bottom' }
+				flexDirection={ 'column' }
+				alignItems={ 'center' }
+				justifyContent={ 'center' }
+				padding={ 30 }
+				warp
+			>
+				<If flag={ success }>
+					<Header as={ 'h3' }>{ words.gameViewer.orderThanksMsg }
+						<Link to={ URL_ROUTES.USER.ORDER_HISTORY }> { words.gameViewer.orderHistory }</Link>
+					</Header>
+					<If flag={ orderId }>
+						<Header as={ 'h3' }>
+							<Link
+								to={ URL_ROUTES.USER.ORDER_HISTORY_VIEW + '/' + orderId }>
+								{ orderId ? orderId.toPrecision(8).split('.').reverse().join('') : 0 }</Link>
+						</Header>
+					</If>
+				</If>
+				<If flag={ !success }>
+					<Header as={ 'h3' }>
+						{ words.gameViewer.orderMsgOne }
+					</Header>
+				</If>
+				<SDivider hidden/>
+				<If flag={ error }>
+					<Header as={ 'h4' }>
+						{ words.gameViewer.failedMsg }
+					</Header>
+				</If>
+				<Button
+					loading={ loader.isLoading }
+					disabled={ loader.isLoading }
+					onClick={ () => {
+						if (!success) {
+							loader.activate();
+							onAccept().then((d) => {
+								if (isNull(d)) {
+									loader.disabled();
+									return;
+								}
+								if (!d) {
+									setError(true);
+								} else {
+									setError(false);
+									setSuccess(true);
+								}
+								loader.disabled();
+							});
+						} else {
+							onCancel();
+						}
+					} }
+					className={ 'confirm-button' }
+					color={ 'orange' }
+					text={ success ? words.basic.ok : words.gameViewer.continue }
+				/>
+			</FlexBox>
+		</div>
+	);
 }

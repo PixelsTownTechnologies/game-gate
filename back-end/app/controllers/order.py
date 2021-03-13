@@ -5,9 +5,76 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from app.models import (User, GameCard, Order)
+from app.models import (User, GameCard, Order, Accessory, Invoice)
 from app.permissions import (release_order_api_access, get_order_api_access)
 from app.serializers.order import (OrderInfoSerializer)
+
+
+def handle_accessory_order(user: User, quantity, accessory_id, ship_location):
+    try:
+        accessory_id = int(accessory_id)
+        quantity = int(quantity)
+    except Exception:
+        release_order_api_access()
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    queryset = Accessory.objects.filter(id=accessory_id)
+    if queryset is None or len(queryset) < 1:
+        release_order_api_access()
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    accessory: Accessory = queryset[0]
+    if accessory.system_quantity < quantity:
+        release_order_api_access()
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    total_cost = quantity * accessory.total_price
+    total_points = quantity * accessory.points
+    if user.balance < total_cost:
+        release_order_api_access()
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    user.balance = user.balance - total_cost
+    user.points = user.points + total_points
+    order = Order.objects.create(owner=user, accessory=accessory, ship_location=ship_location,
+                                 quantity=quantity, cost=total_cost)
+    user.save()
+    Invoice.objects.create(amount=total_cost, action='P', details='New Order ' + str(order.id), user=user).save()
+    return Response(status=status.HTTP_201_CREATED, data=OrderInfoSerializer(order).data)
+
+
+def handle_game_card_order(user: User, game_card_id, quantity, account_id, extra_info):
+    try:
+        game_card_id = int(game_card_id)
+        quantity = int(quantity)
+    except Exception:
+        release_order_api_access()
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    queryset = GameCard.objects.filter(id=game_card_id)
+    if queryset is None or len(queryset) < 1:
+        release_order_api_access()
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    game_card: GameCard = queryset[0]
+    available_keys = game_card.keys.filter(available=True)
+    total_cost = quantity * game_card.total_price
+    total_points = quantity * game_card.points
+    if user.balance < total_cost or (available_keys.count() < quantity and game_card.game.type == 'K'):
+        release_order_api_access()
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    user.balance = user.balance - total_cost
+    user.points = user.points + total_points
+    order = Order.objects.create(owner=user, game_card=game_card,
+                                 state='C' if game_card.game.type == 'K' else 'I',
+                                 account_id=account_id, extra_info=extra_info,
+                                 compete_date=timezone.now() if game_card.game.type == 'K' else None,
+                                 quantity=quantity, cost=total_cost)
+    counter = 0
+    for key in available_keys:
+        counter = counter + 1
+        key.available = False
+        key.order = order
+        key.save()
+        if counter == quantity:
+            break
+    user.save()
+    Invoice.objects.create(amount=total_cost, action='P', details='New Order ' + str(order.id), user=user).save()
+    return Response(status=status.HTTP_201_CREATED, data=OrderInfoSerializer(order).data)
 
 
 class UserOrderFetchCreate(generics.ListCreateAPIView):
@@ -29,45 +96,17 @@ class UserOrderFetchCreate(generics.ListCreateAPIView):
             quantity = data.get('quantity', 1)
             extra_info = data.get('extra_info', '')
             account_id = data.get('account_id', '')
+            ship_location = data.get('ship_location', '')
+            accessory_id = data.get('accessory_id', None)
             game_card_id = data.get('game_card_id', None)
-            if game_card_id is None:
+            if game_card_id is None and accessory_id is None:
                 release_order_api_access()
                 return Response(status=status.HTTP_400_BAD_REQUEST)
-            try:
-                game_card_id = int(game_card_id)
-                quantity = int(quantity)
-            except Exception:
-                release_order_api_access()
-                return Response(status=status.HTTP_400_BAD_REQUEST)
-            queryset = GameCard.objects.filter(id=game_card_id)
-            if queryset is None or len(queryset) < 1:
-                release_order_api_access()
-                return Response(status=status.HTTP_400_BAD_REQUEST)
-            game_card: GameCard = queryset[0]
-            available_keys = game_card.keys.filter(available=True)
-            total_cost = quantity * game_card.total_price
-            total_points = quantity * game_card.points
-            if user.balance < total_cost or (available_keys.count() < quantity and game_card.game.type == 'K'):
-                release_order_api_access()
-                return Response(status=status.HTTP_400_BAD_REQUEST)
-            user.balance = user.balance - total_cost
-            user.points = user.points + total_points
-            order = Order.objects.create(owner=user, game_card=game_card,
-                                         state='C' if game_card.game.type == 'K' else 'I',
-                                         account_id=account_id, extra_info=extra_info,
-                                         compete_date=timezone.now() if game_card.game.type == 'K' else None,
-                                         quantity=quantity, cost=total_cost)
-            counter = 0
-            for key in available_keys:
-                counter = counter + 1
-                key.available = False
-                key.order = order
-                key.save()
-                if counter == quantity:
-                    break
-            user.save()
-            release_order_api_access()
-            return Response(status=status.HTTP_201_CREATED, data=OrderInfoSerializer(order).data)
+            if game_card_id is not None:
+                return handle_game_card_order(user, game_card_id, quantity, account_id, extra_info)
+            if accessory_id is not None:
+                return handle_accessory_order(user, quantity, accessory_id, ship_location)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
         except Exception:
             release_order_api_access()
             return Response(status=status.HTTP_400_BAD_REQUEST)

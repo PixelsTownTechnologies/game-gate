@@ -20,6 +20,9 @@ class WindowServiceClass {
                 }, 100);
             }
         });
+        setInterval(() =>{
+            this.callSubscribe();
+        }, 3000)
     }
 
     getScreen() {
