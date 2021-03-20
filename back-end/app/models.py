@@ -221,8 +221,6 @@ class Game(models.Model):
 
     @property
     def total_reviews(self):
-        if True:
-            return 15
         total_reviews = 0
         for order in self.game_complete_orders:
             if order.review_star is not None:
@@ -326,14 +324,10 @@ class Accessory(models.Model):
 
     @property
     def total_orders(self):
-        if True:
-            return 23
         return self.accessory_orders.all().count()
 
     @property
     def review_stars(self):
-        if True:
-            return 4.3
         star_count = 0
         total_reviews = 0
         for order in self.accessory_orders.filter(state='C'):
@@ -344,8 +338,6 @@ class Accessory(models.Model):
 
     @property
     def total_reviews(self):
-        if True:
-            return 15
         total_reviews = 0
         for order in self.accessory_orders.filter(state='C'):
             if order.review_star is not None:
@@ -406,16 +398,16 @@ class Order(models.Model):
     create = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     account_id = models.CharField(max_length=255, null=True, blank=True)
     extra_info = models.TextField(null=True, blank=True)
-    ship_location = models.CharField(max_length=255, null=True, blank=True)
+    ship_location = models.CharField(max_length=500, null=True, blank=True)
     compete_date = models.DateTimeField(null=True, blank=True)
     review_date = models.DateTimeField(default=None, null=True, blank=True)
     review_star = models.IntegerField(null=True, blank=True)
     quantity = models.IntegerField(default=1, null=True, blank=True)
 
-    review_description = models.TextField(max_length=255, null=True, blank=True)
+    review_description = models.TextField(max_length=555, null=True, blank=True)
     state = models.CharField(max_length=2, default='I', choices=ORDER_STATUS, null=True, blank=True)
     cost = models.FloatField(null=True, blank=True)
-    error_msg = models.TextField(max_length=255, null=True, blank=True)
+    error_msg = models.TextField(max_length=500, null=True, blank=True)
 
     @property
     def is_deletable(self):
@@ -436,6 +428,23 @@ class GameKey(models.Model):
 class File(models.Model):
     file = models.ImageField(upload_to='general/files', blank=True, null=True)
     name = models.TextField(blank=True, null=True)
+
+    @property
+    def is_deletable(self):
+        return True
+
+    @property
+    def is_editable(self):
+        return True
+
+
+class Ads(models.Model):
+    name = models.CharField(max_length=128, blank=True, null=True)
+    cover = models.ImageField(upload_to='ads/files', blank=True, null=True)
+    external_link = models.TextField(blank=True, null=True)
+    forward_id = models.CharField(max_length=16, blank=True, null=True)
+    type = models.CharField(max_length=16, blank=True, null=True)
+    show = models.BooleanField(default=True, null=True, blank=True)
 
     @property
     def is_deletable(self):

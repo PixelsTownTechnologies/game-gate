@@ -21,7 +21,8 @@ import { useEntityStore } from "../../../../lib/hooks/user";
 import { SubMenu } from "../../../shared/sub-menu/sub-menu";
 import Dialog from "../../../../lib/components/form/dialog";
 import { UserDTO } from "../../../../models/user";
-import { updateUser } from "../../../../lib/store/actions/user";
+import { connect } from "react-redux";
+import { StoreState } from "../../../../lib/models/application";
 
 interface ProfileProps {
 	user: UserBaseDTO;
@@ -34,9 +35,9 @@ interface ProfileProps {
  */
 export function UpdateUserDataDialog(props: { onClose: () => void, open: boolean, fields: string[], message?: string }) {
 	const user = useEntityStore<UserDTO>('user');
-	const {words, dir} = useLanguage();
+	const {words} = useLanguage();
 	const loader = useLoader();
-	const {form, onChange, onValidate, isValid, setForm} = useForm({
+	const {form, onChange} = useForm({
 		username: user.username,
 		address_one: user.address_one ? user.address_one : '',
 		address_two: user.address_two ? user.address_two : '',
@@ -68,7 +69,7 @@ export function UpdateUserDataDialog(props: { onClose: () => void, open: boolean
 							address_two: form.address_two,
 							phone: form.phone
 						}).then((data) => {
-							if(data) {
+							if (data) {
 								setTimeout(() => {
 									props.onClose();
 								}, 200);
@@ -121,7 +122,7 @@ export function UpdateUserDataDialog(props: { onClose: () => void, open: boolean
 	);
 }
 
-export const Profile = (props: ProfileProps) => {
+const Profile = ({user}: ProfileProps) => {
 	const {words, dir} = useLanguage();
 	const loader = useLoader();
 	const userLoader = useLoader();
@@ -131,15 +132,14 @@ export const Profile = (props: ProfileProps) => {
 	const [ isSubmit, setIsSubmit ] = React.useState(false);
 	//const [ toggleDark, setToggleDark ] = React.useState(ThemeService.getLoadedThemeName() === 'dark');
 	const [ selectedAvatar ] = useState(ProfileIcon);
-	const user = useEntityStore<UserBaseDTO>('user');
 	const {form, onChange, onValidate, isValid, setForm} = useForm({
 		currentPassword: '',
 		newPassword: '',
 		confirmPassword: '',
-		username: user.username,
-		address_one: user.address_one,
-		address_two: user.address_two ? user.address_two : '',
-		phone: user.phone ? user.phone : ''
+		username: user?.username,
+		address_one: user?.address_one,
+		address_two: user?.address_two ? user?.address_two : '',
+		phone: user?.phone ? user?.phone : ''
 	});
 	if (!user) {
 		return null;
@@ -273,7 +273,7 @@ export const Profile = (props: ProfileProps) => {
 								</SForm.Field>
 								<SForm.Field>
 									<label>{ words.userFields.userName }</label>
-									<TextField length={ 16 } onChange={ (value) => {
+									<TextField length={ 12 } onChange={ (value) => {
 										onChange({...form, username: value});
 									} } value={ form.username }/>
 								</SForm.Field>
@@ -380,4 +380,6 @@ export const Profile = (props: ProfileProps) => {
 	);
 }
 
-export default Profile;
+export default connect((state: StoreState, ownProps) => {
+	return {...ownProps, user: state.user};
+})(Profile as any);

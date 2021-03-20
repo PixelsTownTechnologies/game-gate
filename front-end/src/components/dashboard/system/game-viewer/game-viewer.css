@@ -90,8 +90,8 @@
     cursor: pointer;
     box-shadow: 0 5px 10px 0 #3d3e3f40;
     border-radius: 10px;
-    min-width: clamp(200px, 65vh, 350px);
-    max-width: clamp(200px, 65vh, 350px);
+    min-width: clamp(210px, 65vh, 350px);
+    max-width: clamp(210px, 65vh, 350px);
     min-height: 86px;
     max-height: 86px;
     transition: 300ms;
@@ -231,4 +231,20 @@
     box-shadow: 0 5px 10px 0 #3d3e3f40;
     border-radius: 10px;
     min-width: fit-content !important;
+}
+
+
+.game-rating-section {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.game-rating-section h4 {
+    margin: 0 6px !important;
+    font-family: var(--globalFont) !important;
+    font-weight: 300 !important;
 }

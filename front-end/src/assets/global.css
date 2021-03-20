@@ -52,6 +52,84 @@
     font-family: 'Audiowide', cursive !important;
 }
 
-label{
+.white-text {
+    color: #ffffff !important;
+    font-family: 'Audiowide', cursive !important;
+}
+
+
+label {
     font-family: var(--globalFont) !important;
+}
+
+.global-font {
+    font-family: var(--globalFont) !important;
+}
+
+.video-embed {
+    width: 95% !important;
+    height: 500px !important;
+    margin: 2.5% !important;
+}
+
+@media only screen and (max-width: 1080px) {
+    .video-embed {
+        height: 400px !important;
+    }
+}
+
+@media only screen and (max-width: 680px) {
+    .video-embed {
+        height: 160px !important;
+    }
+}
+
+.ui.page.modals.dimmer {
+    z-index: 9999999 !important;
+}
+
+.main-app-loader {
+    z-index: 99999999 !important;
+}
+
+.max-height {
+    height: 100% !important;
+}
+
+.center-not-found {
+    height: calc(90vh - 200px) !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center !important;
+    justify-items: center !important;
+    align-self: center !important;
+}
+
+
+.dialog-ads {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dialog-ads-container{
+    position: relative;
+}
+
+.dialog-ads-container i{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: #302e2e;
+    font-size: 2em;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.dialog-ads img{
+    max-height: 50vh;
+    align-self: center;
+    height: 100% !important;
 }

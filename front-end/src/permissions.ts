@@ -7,6 +7,7 @@ const PERMISSIONS = {
     MANAGE_EMBED_GAMES: '',
     MANAGE_RESOURCES: '',
     MANAGE_ACCESSORIES: '',
+    MANAGE_ADS:'',
 
     USER_HISTORY: ''
 };

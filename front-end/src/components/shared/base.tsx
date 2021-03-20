@@ -14,7 +14,7 @@ export function Loader(props: { show: boolean }) {
         return null;
     }
     return (
-        <Dimmer page active>
+        <Dimmer page active className={'main-app-loader'}>
             <Logo/>
             <Divider hidden/>
             <Divider hidden/>

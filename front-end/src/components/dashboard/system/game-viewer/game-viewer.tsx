@@ -22,7 +22,7 @@ import {
 	Header,
 	Icon,
 	Image,
-	Label
+	Label, Rating
 } from "semantic-ui-react";
 import { useFavorite } from "../../../../hooks/storage";
 import Countries from '../../../../assets/icons/countries.png';
@@ -36,10 +36,12 @@ import UserFacadeService from "../../../../lib/services/facade-service/user-faca
 import TokenService from "../../../../lib/services/token-service";
 import { registerUser, updateUser } from "../../../../lib/store/actions/user";
 import Logo from '../../../../assets/logo/logo-bg-w.jpg';
+import { ReviewScrollCard } from "../../../shared/review/review-component";
 
 interface GameViewerWidgetProps {
 	game: GameDTO | null;
 	gameCardId: number | null;
+	onPay: () => void;
 }
 
 export function GameCardWidget({logo, isSelected, onSelect, gameCard}: {
@@ -72,7 +74,7 @@ export function GameCardWidget({logo, isSelected, onSelect, gameCard}: {
 	);
 }
 
-export function GameViewerWidget({game, gameCardId}: GameViewerWidgetProps) {
+export function GameViewerWidget({game, gameCardId, onPay}: GameViewerWidgetProps) {
 	const {isFavorite, addToFavorite, removeFromFavorite} = useFavorite();
 	const [ isInFavorite, setInFavorite ] = useState<boolean>(isFavorite(game ? game.id : 0));
 	const urlGame = game?.game_cards?.filter(gc => gc.id === gameCardId)?.[0];
@@ -86,6 +88,16 @@ export function GameViewerWidget({game, gameCardId}: GameViewerWidgetProps) {
 	const user = useEntityStore<UserBaseDTO>('user');
 	const {words, dir} = useLanguage();
 	const {width, type} = useWindow();
+	useEffect(() =>{
+		if(selectedCard?.id !== gameCardId){
+			const newUrlGame = game?.game_cards?.filter(gc => gc.id === gameCardId)?.[0];
+			if(!newUrlGame?.is_sold) {
+				setSelectedCard(!newUrlGame?.is_sold ? newUrlGame : undefined);
+				setSelectedQuantity(!newUrlGame?.is_sold && newUrlGame?.order_min? newUrlGame.order_min : 0);
+			}
+		}
+		// eslint-disable-next-line
+	}, [gameCardId])
 	if (!game) {
 		return null;
 	}
@@ -104,7 +116,6 @@ export function GameViewerWidget({game, gameCardId}: GameViewerWidgetProps) {
 			}
 		}
 	};
-	
 	const onAcceptOrder = async () => {
 		if (selectedCard && game && user && isUserAuthenticate()) {
 			const quantity = game?.type === gameTypes.Keys ? selectedQuantity : 1;
@@ -128,7 +139,6 @@ export function GameViewerWidget({game, gameCardId}: GameViewerWidgetProps) {
 		}
 		return null;
 	};
-	
 	const handleAddToCard = () => {
 		if (isUserAuthenticate()) {
 		
@@ -136,7 +146,6 @@ export function GameViewerWidget({game, gameCardId}: GameViewerWidgetProps) {
 			setShowLogin(true);
 		}
 	};
-	
 	const handleSingIn = async (form: any) => {
 		const data = await UserFacadeService.login(form, true);
 		if (data) {
@@ -148,10 +157,10 @@ export function GameViewerWidget({game, gameCardId}: GameViewerWidgetProps) {
 		}
 		return {pass: false};
 	}
-	
 	return (
-		<FlexBox flexDirection={ 'column' } justifyContent={ 'flex-start' } padding={ clamp(10, width * 0.10, 60) }>
-			<FlexBox justifyContent={ type !== 'Computer' ? 'center' : undefined } className={ 'max-width' }
+		<FlexBox flexDirection={ 'column' } justifyContent={ 'flex-start' }>
+			<FlexBox padding={ clamp(10, width * 0.10, 60) }
+			         justifyContent={ type !== 'Computer' ? 'center' : undefined } className={ 'max-width white-bg' }
 			         alignItems={ 'center' } warp>
 				<ImageCard logo={ game.logo } title={ game.card_name }/>
 				<div className={ 'gv t-info' }>
@@ -168,11 +177,22 @@ export function GameViewerWidget({game, gameCardId}: GameViewerWidgetProps) {
 									{ game.platform ? platformTypeStateToPlatform[game.platform] : 'Global' }
 								</Header>
 							</div>
-							<SDivider hidden/>
-							<p className={ 'import-notes' }>
-								{ words.gameViewer.importantNotes }: <span
-								className={ 'red-text' }>{ game.notes }</span>
-							</p>
+							<div className={ 'game-rating-section' }>
+								<Rating maxRating={ 5 } disabled defaultRating={ game.review_stars + 0.5 }
+								        icon='star'
+								        size='large'/>
+								<Header as={ 'h4' }>{ game.review_stars ? costFormat(game.review_stars) : '0.0' }</Header>
+								<Header as={ 'h4' }>{ game.total_reviews } { words.viewer.reviews }</Header>
+								<Header as={ 'h4' }>{ game.total_orders } { words.viewer.orders }</Header>
+							</div>
+							{
+								game.notes ? (
+									<p className={ 'import-notes' }>
+										{ words.gameViewer.importantNotes }: <span
+										className={ 'red-text' }>{ game.notes }</span>
+									</p>
+								) : null
+							}
 						</div>
 						<div>
 							<Button onClick={ () => {
@@ -192,8 +212,8 @@ export function GameViewerWidget({game, gameCardId}: GameViewerWidgetProps) {
 					</FlexBox>
 				</div>
 			</FlexBox>
-			<SDivider hidden/>
-			<FlexBox justifyContent={ 'center' } alignItems={ type === 'Mobile' ? 'center' : undefined }
+			<FlexBox className={ 'white-bg' } padding={ clamp(10, width * 0.10, 60) } justifyContent={ 'center' }
+			         alignItems={ type === 'Mobile' ? 'center' : undefined }
 			         flexDirection={ 'column' }>
 				<Header color={ 'grey' } as={ 'h3' }>{ words.gameViewer.selectCardType }</Header>
 				<FlexBox className={ 'full-width' } justifyContent={ 'center' } warp>
@@ -265,10 +285,10 @@ export function GameViewerWidget({game, gameCardId}: GameViewerWidgetProps) {
 					</div>
 				</FlexBox>
 			</FlexBox>
-			<SDivider hidden/>
 			<If flag={ game.type === gameTypes.Keys }>
-				<FlexBox justifyContent={ 'center' }
+				<FlexBox padding={ clamp(10, width * 0.10, 30) } justifyContent={ 'center' }
 				         alignItems={ 'center' }
+				         className={ 'white-bg' }
 				         flexDirection={ 'column' }>
 					<Header color={ 'grey' } as={ 'h3' }>{ words.gameViewer.selectQuantity }</Header>
 					<FlexCenter>
@@ -284,11 +304,10 @@ export function GameViewerWidget({game, gameCardId}: GameViewerWidgetProps) {
 						</div>
 					</FlexCenter>
 				</FlexBox>
-				<SDivider hidden/>
 			</If>
 			<If flag={ game.type === gameTypes.Charging }>
-				<SDivider hidden/>
-				<FlexBox justifyContent={ 'center' }
+				<FlexBox padding={ clamp(10, width * 0.10, 60) } justifyContent={ 'center' }
+				         className={ 'white-bg' }
 				         alignItems={ type === 'Mobile' ? 'center' : undefined }
 				         flexDirection={ 'column' }>
 					<Header color={ 'grey' } as={ 'h3' }>{ words.gameViewer.selectOrderData }</Header>
@@ -330,9 +349,9 @@ export function GameViewerWidget({game, gameCardId}: GameViewerWidgetProps) {
 						</div>
 					</FlexBox>
 				</FlexBox>
-				<SDivider hidden/>
 			</If>
-			<FlexBox justifyContent={ 'center' } alignItems={ type === 'Mobile' ? 'center' : undefined }
+			<FlexBox className={ 'white-bg' } padding={ clamp(10, width * 0.10, 60) } justifyContent={ 'center' }
+			         alignItems={ type === 'Mobile' ? 'center' : undefined }
 			         flexDirection={ 'column' }>
 				<FlexBox justifyContent={ 'center' } alignItems={ 'center' }
 				         flexDirection={ 'column' }>
@@ -344,23 +363,31 @@ export function GameViewerWidget({game, gameCardId}: GameViewerWidgetProps) {
 					<MDEditor.Markdown source={ game.details }/>
 					<SDivider hidden/>
 					<Embed
-						active={ true }
+						defaultActive={ !!game.video }
 						className={ 'px-non-padding video-embed' }
-						style={ {
-							width: `${ clamp(300, width * 0.6, 800) }px`,
-							height: `${ clamp(200, width * 0.4, 400) }px`
-						} }
 						id={ game.video }
 						source='youtube'
 					/>
 				</FlexBox>
 				<SDivider hidden/>
 			</FlexBox>
-			<SDivider hidden/>
+			<FlexBox padding={ clamp(10, width * 0.10, 60) } justifyContent={ 'center' } alignItems={ 'center' }
+			         className={ 'review-details-section green-bg' }>
+				<ReviewScrollCard
+					showAvg
+					avgReview={ game.review_stars }
+					headerClassName={ 'white-text' }
+					title={ words.reviews.gamesReviews }
+					reviews={ game?.game_orders?.filter(ord => ord.review_star && ord.review_star > 0) }
+				/>
+			</FlexBox>
 			<If flag={ showPaymentConfirm || showLogin }>
 				<Dimmer page active>
 					<LoginWidget onSignIn={ handleSingIn } asComponent pxIf={ showLogin }/>
 					<OrderConfirm
+						onAcceptNextSuccess={ () => {
+							onPay();
+						} }
 						orderId={ orderId }
 						onAccept={ onAcceptOrder }
 						onCancel={ () => setShowPaymentConfirm(false) }
@@ -385,33 +412,51 @@ export function GameViewer(props: BaseRouteComponentProps) {
 	const [ game, setGame ] = useState<GameDTO | null>(null);
 	const loader = useLoader();
 	const [ isNotFoundPage, setNotFoundPage ] = useState<boolean>(isNull(gameId));
+	const fetchEntity = () => {
+		loader.activate();
+		service.findById(gameId).then((data) => {
+			if (data) {
+				setGame(data);
+			} else {
+				setNotFoundPage(true);
+			}
+			loader.disabled();
+		})
+	}
+	useEffect(() => {
+		if (gameId !== game?.id) {
+			setGame(null);
+			setNotFoundPage(false);
+			setTimeout(() => {
+				fetchEntity();
+			}, 50);
+		}
+	}, [ gameId ])
+	// eslint-disable-next-line
 	useEffect(() => {
 		if (!game && !isNotFoundPage) {
-			loader.activate();
-			service.findById(gameId).then((data) => {
-				if (data) {
-					setGame(data);
-				} else {
-					setNotFoundPage(true);
-				}
-				loader.disabled();
-			})
+			fetchEntity();
 		}
-	});
+	}, []);
 	return (
 		<Wrapper
-			className={ 'game-viewer-component-bg' }
 			loading={ loader.isLoading }
-			hideContainer={ !isNotFoundPage }
-			fitContainer={ isNotFoundPage }
+			hideContainer
+			fitContainer={ false }
 			hideTitle
 		>
-			<If flag={ isNotFoundPage && !loader.isLoading }>
-				<NotFoundWidget/>
-			</If>
+			{
+				isNotFoundPage && !loader.isLoading ?(
+					<div className={'center-not-found'}>
+						<NotFoundWidget/>
+					</div>
+				) : null
+			}
 			{
 				game ? (
-					<GameViewerWidget game={ game } gameCardId={ gameCardId }/>
+					<GameViewerWidget onPay={ () => {
+						fetchEntity();
+					} } game={ game } gameCardId={ gameCardId }/>
 				) : null
 			}
 		</Wrapper>

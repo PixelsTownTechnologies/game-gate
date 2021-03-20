@@ -43,6 +43,15 @@ class LogSerializer(serializers.ModelSerializer):
         fields = SERIALIZER_ALL_FIELDS
 
 
+class AdsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ads
+        fields = [
+            'id', 'is_deletable', 'is_editable', 'name', 'show'
+            , 'cover', 'external_link', 'forward_id'
+            , 'type']
+
+
 class EnumSerializer(serializers.ModelSerializer):
     class Meta:
         model = Enum

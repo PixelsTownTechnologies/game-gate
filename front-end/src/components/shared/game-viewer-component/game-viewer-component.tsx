@@ -99,8 +99,8 @@ export function OrderItemView({game, quantity, gameCard, accessory, shipLocation
 	);
 }
 
-export function OrderConfirm({pxIf, gameCard, game, quantity, onCancel, onAccept, accessory, shipLocation, orderId}: {
-	pxIf?: boolean, accessory?: AccessoryDTO, shipLocation?: string, orderId?: number,
+export function OrderConfirm({pxIf, gameCard, game, quantity, onCancel, onAccept, accessory, shipLocation, orderId, onAcceptNextSuccess}: {
+	pxIf?: boolean, accessory?: AccessoryDTO, shipLocation?: string, orderId?: number, onAcceptNextSuccess?: () => void,
 	gameCard?: GameCardDTO, game?: GameDTO, quantity?: number, onCancel: () => void, onAccept: () => Promise<boolean | null>
 }) {
 	const {words} = useLanguage();
@@ -115,7 +115,12 @@ export function OrderConfirm({pxIf, gameCard, game, quantity, onCancel, onAccept
 			<div className={ 'order-confirm-header' }>
 				<FlexBox justifyContent={ 'flex-end' } alignItems={ 'center' }>
 					<Button disabled={ loader.isLoading } size={ 'tiny' } basic
-					        color={ 'grey' } onClick={ () => onCancel() }
+					        color={ 'grey' } onClick={ () => {
+						if (success && onAcceptNextSuccess) {
+							onAcceptNextSuccess();
+						}
+						onCancel();
+					} }
 					        iconSetting={ {name: 'times', attachToButton: true} }/>
 				</FlexBox>
 				<SDivider hidden/>
@@ -179,6 +184,9 @@ export function OrderConfirm({pxIf, gameCard, game, quantity, onCancel, onAccept
 								loader.disabled();
 							});
 						} else {
+							if (success && onAcceptNextSuccess) {
+								onAcceptNextSuccess();
+							}
 							onCancel();
 						}
 					} }

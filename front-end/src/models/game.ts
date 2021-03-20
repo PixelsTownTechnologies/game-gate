@@ -100,7 +100,7 @@ export interface AccessoryDTO extends BaseEntity {
 	review_stars: number;
 	total_reviews: number;
 	
-	game_orders: ReviewDTO[];
+	accessory_orders: ReviewDTO[];
 	
 	video?: string;
 	
@@ -156,6 +156,12 @@ export interface GameDTO extends BaseEntity {
 	notes: string;
 	about: string;
 	details: string;
+	
+	game_orders: ReviewDTO[];
+	
+	total_orders: number;
+	review_stars: number;
+	total_reviews: number;
 	
 	video?: string;
 	facebook?: string;

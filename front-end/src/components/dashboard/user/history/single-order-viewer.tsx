@@ -28,8 +28,8 @@ export function OrderWidgetView({orderView, loader, hideKeySection, hideReviewSe
 	const downloadTxtFile = () => {
 		if (order?.order_keys) {
 			const element = document.createElement("a");
-			const file = new Blob(order?.order_keys.map((k, index) => 'key'
-				+ ( index + 1 ) + '\n' + k.description + '\n'), {type: 'text/plain'});
+			const file = new Blob(order?.order_keys.map((k, index) => '[ key'
+				+ ( index + 1 ) + ' ]\n' + k.description + '------------------------------\n'), {type: 'text/plain'});
 			element.href = URL.createObjectURL(file);
 			element.download = "keys.txt";
 			document.body.appendChild(element);
@@ -166,7 +166,7 @@ export function OrderWidgetView({orderView, loader, hideKeySection, hideReviewSe
 							<Header className={ 'state-info' } as={ 'h2' }>
 								{ order?.game_card.name }
 							</Header>
-							<Header className={ 'state-info' } as={ 'h2' }>
+							<Header dir={ dir } className={ 'state-info' } as={ 'h2' }>
 								{ words.viewer.itemID }:
 								<Link
 									to={ URL_ROUTES.GAME_VIEWER + `/${ order.game_card.game.id }/${ order.game_card.id }` }>
@@ -184,11 +184,11 @@ export function OrderWidgetView({orderView, loader, hideKeySection, hideReviewSe
 						disabled={ isReviewDisabled }
 						icon='star'
 						size='massive'
-						rating={ reviewForm.review_star ? order.review_star: 0}
+						rating={ reviewForm.review_star ? order.review_star : 0 }
 						maxRating={ 5 }
 					/>
 				</If>
-				<If flag={ (!order.review_star || order.review_star < 1) && !isTrue(hideReviewSection) }>
+				<If flag={ ( !order.review_star || order.review_star < 1 ) && !isTrue(hideReviewSection) }>
 					<Rating
 						disabled={ isReviewDisabled }
 						icon='star'
@@ -205,12 +205,14 @@ export function OrderWidgetView({orderView, loader, hideKeySection, hideReviewSe
 					<Form>
 						<Form.Field>
 							<TextArea
+								className={ 'review-text-area' }
 								value={ reviewForm.review_description }
 								onChange={ (value) => {
 									if (!isReviewDisabled) {
 										setReviewForm({...reviewForm, review_description: value});
 									}
 								} }
+								length={ 255 }
 							/>
 						</Form.Field>
 					</Form>
@@ -278,7 +280,7 @@ export function OrderWidgetView({orderView, loader, hideKeySection, hideReviewSe
 											<Segment.Group key={ key.id }>
 												<Segment>{ words.entities.order.key + ' ' + ( index + 1 ) }</Segment>
 												<Segment.Group>
-													<Segment>
+													<Segment dir={ 'ltr' }>
 														{ key.description.split('\n').map((line, index) => {
 															return <p key={ index }>{ line }</p>
 														}) }

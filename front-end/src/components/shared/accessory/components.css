@@ -1,0 +1,123 @@
+.accessory-card {
+    margin: 20px 15px;
+    max-width: 190px;
+    min-width: 190px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: column;
+    min-height: 300px !important;
+    max-height: 300px !important;
+    background: white;
+    padding: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 4px 0 #3d3e3f30;
+}
+
+.ac-img-container{
+    width: 190px;
+    max-width: 190px;
+    overflow: hidden;
+    height: 190px !important;
+    max-height: 190px !important;
+    display: flex !important;
+    align-self: center !important;
+    justify-content: center !important;
+}
+
+.ac-img-container img {
+    max-width: unset !important;
+    height: 190px;
+    max-height: 190px;
+    transition: 500ms;
+    background: #3d3e3f00 !important;
+}
+
+.accessory-card:hover {
+    box-shadow: 0 4px 6px 0 #3d3e3f50;
+}
+
+.accessory-card > div:nth-child(1) {
+    position: relative;
+}
+
+.accessory-card > div .ui.label {
+    position: absolute;
+    top: calc(100% - 17px);
+    right: 0;
+    font-family: var(--globalFont) !important;
+}
+
+
+.accessory-card:hover img {
+    transform: scale(1.04, 1.04);
+}
+
+
+.accessory-card-info {
+    padding: 12px 15px;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.accessory-card-info h5 {
+    font-family: var(--globalFont);
+    color: #333434;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    margin: 10px 0 0;
+    width: 100%;
+}
+
+.accessory-card-info > div {
+    width: 100%;
+    padding-top: 20px;
+}
+
+.accessory-card-info > div h4 {
+    font-family: var(--globalFont);
+    color: #333434;
+    margin: 0;
+}
+
+.accessory-card-info > div h6 {
+    font-family: var(--globalFont);
+    color: #333434;
+    margin: 0;
+}
+
+.acc-price-label {
+    top: -10px !important;
+    left: -13px !important;
+    width: fit-content !important;
+}
+
+
+.embed-game-card {
+    margin: 8px 12px;
+    position: relative;
+    max-width: 135px;
+}
+
+.embed-game-card h4 {
+    font-family: var(--globalFont);
+    color: #333434;
+    margin: 10px 0 0;
+    overflow: hidden;
+    text-align: center;
+}
+
+.embed-game-card > div > div:nth-child(1) img {
+    transition: 500ms;
+    background: #3d3e3f00 !important;
+}
+
+.embed-game-card > div:nth-child(1):hover img {
+    transform: scale(1.04, 1.04);
+}

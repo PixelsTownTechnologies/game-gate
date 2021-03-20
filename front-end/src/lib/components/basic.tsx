@@ -4,13 +4,14 @@ import { buildCN, isFalse, pxIf, pxIfSelf } from "../utils/utils";
 import { SemanticSIZES } from "semantic-ui-react/dist/commonjs/generic";
 import { Link as DLink, Redirect as DRedirect } from 'react-router-dom';
 import { BaseComponentProps } from "./components";
+import NoImage from '../assets/images/noImage.jpg';
 
 export function Loader(props: { show: boolean }) {
 	if (!props.show) {
 		return null;
 	}
 	return (
-		<Dimmer active>
+		<Dimmer page active>
 			<SLoader/>
 		</Dimmer>
 	);
@@ -100,7 +101,6 @@ export function RouteButton(props: LinkButton) {
 	) as any;
 }
 
-
 interface IconButton extends BaseButton {
 	name: string;
 }
@@ -127,9 +127,9 @@ export function IconTextButton(props: IconTextButton) {
 	} }/>
 }
 
-
 export interface LinkProps {
 	to: string;
+	out?: boolean;
 	children: any;
 	disabled?: boolean;
 	dir?: string;
@@ -138,6 +138,23 @@ export interface LinkProps {
 }
 
 export function Link(props: LinkProps) {
+	if (props.out) {
+		return (
+			<a
+				href={ props.to }
+				className={ buildCN('px-lib link', props.className ? props.className : '') }
+				onClick={ (e) => {
+					if (props.disabled) {
+						e.preventDefault();
+					}
+				} }
+				target={ props.target }
+				dir={ props.dir ? props.dir : 'auto' }
+			>
+				{ props.children }
+			</a>
+		)
+	}
 	return (
 		<DLink
 			className={ buildCN('px-lib link', props.className ? props.className : '') }
@@ -175,6 +192,7 @@ interface ImageProps {
 }
 
 export function Image(props: ImageProps) {
+	const [error, setError] = useState(false);
 	return (
 		<div
 			style={ {'--imageWidth': `${ props.width }px`} as any }
@@ -193,7 +211,8 @@ export function Image(props: ImageProps) {
 		>
 			<img alt={ '' }
 			     style={ {'padding': props.padding ? props.padding : 0} as any }
-			     src={ props.src }
+			     src={ props.src && !error ? props.src : NoImage }
+			     onError={() => setError(true)}
 			/>
 		</div>
 	);
@@ -250,21 +269,21 @@ export const MessageErrors = (props: {
 }
 
 export function ImageShower(props: { mainImage: any, imageList: any[], width: number, padding?: number }) {
-	const [ selected, setSelectedImage ] = useState(props.mainImage);
+	const [ selected, setSelectedImage ] = useState(props.mainImage ? props.mainImage : NoImage);
 	return (
 		<div className={ 'px-lib image-shower' }>
 			<div>
-				<Image width={ props.width } padding={ props.padding } src={ selected }/>
+				<Image width={ props.width } src={ selected }/>
 			</div>
 			<div style={ {maxWidth: props.width} }>
 				{
-					[ props.mainImage, ...props.imageList ].map((img, index) => {
+					[ selected, ...props.imageList ].map((img, index) => {
 						return <Image
-							key={index}
+							key={ index }
 							onClick={ () => {
 								setSelectedImage(img);
 							} }
-							width={ ( props.width / ( 1 + props.imageList.length ) ) - 15 }
+							width={ ( props.width / 5 ) - 15 }
 							src={ img }
 						/>;
 					})

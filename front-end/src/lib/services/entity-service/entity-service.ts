@@ -150,6 +150,24 @@ export class EntityService<Entity extends BaseEntity> extends BaseFacadeServices
         }
         return Promise.resolve(undefined);
     }
+    
+    findSingleNoStore = async (): Promise<Entity[] | Entity | undefined> => {
+        const actionAPI = this.getSetting(ENTITY_ACTIONS.FIND_BY_ID);
+        if (!actionAPI) {
+            return Promise.resolve(undefined);
+        }
+        this.setLoading(true, actionAPI);
+        try {
+            const response: AxiosResponse<Entity[] | Entity> = await this.getAxiosInstance(!!actionAPI.authenticate)
+                .get(this.getURL(actionAPI));
+            return Promise.resolve(response.data);
+        } catch (error) {
+            this.throwError(actionAPI.type, error);
+        } finally {
+            this.setLoading(false, actionAPI);
+        }
+        return Promise.resolve(undefined);
+    }
 
     findById = async (id: any): Promise<Entity | undefined> => {
         const actionAPI = this.getSetting(ENTITY_ACTIONS.FIND_BY_ID);
@@ -200,7 +218,7 @@ export class EntityService<Entity extends BaseEntity> extends BaseFacadeServices
         }
         return Promise.resolve(undefined);
     }
-
+    
     updateEntity = async (id: any, form: any): Promise<Entity | undefined> => {
         const actionAPI = this.getSetting(ENTITY_ACTIONS.UPDATE);
         if (!actionAPI) {

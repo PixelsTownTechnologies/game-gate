@@ -143,7 +143,12 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
 		}
 	},
 	menu: {
-		profile: 'Profile'
+		profile: 'Profile',
+		games: 'Games',
+		accessories: 'Accessories',
+		embedGames: 'Online Games',
+		topSells: 'Top Selling',
+		topOffers: 'Best Offers'
 	},
 	entities: {
 		game: {
@@ -299,6 +304,22 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
 				logo: 'Logo'
 			},
 		},
+		ads: {
+			action: {
+				add: 'Add New Ad',
+				edit: 'Edit Ad'
+			},
+			fields: {
+				cover: 'Ad Cover',
+				external_link: 'External Link',
+				forward_id: 'Forward ID',
+				id: 'ID',
+				type: 'Type',
+				show: 'Show',
+				name: 'Name'
+			},
+			title: 'Manage Ads'
+		}
 	},
 	gameViewer: {
 		fields: {
@@ -341,7 +362,18 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
 		sectionTitle: 'Section Title',
 		selectedGameCards: 'Selected Game Cards',
 		selectedGames: 'Selected Games',
-		specialDeals: 'Special Deals Section'
+		specialDeals: 'Special Deals Section',
+		dialogAds: 'Dialog Ads',
+		homeAds1: 'Home Main ads 1',
+		homeAds2: 'Home Main ads 2',
+		homeImages: 'Home Images',
+		image: 'Image',
+		selectedResources: 'Selected Resources',
+		accessorySection: 'Accessory Section',
+		embedGameSection: 'Embed Games Section',
+		selectedAccessory: 'Selected Accessories',
+		selectedEmbedGames: 'Selected Embed Games',
+		homeVideoId: 'Home Video ID'
 	},
 	viewer: {
 		reviews: 'Reviews',
@@ -356,7 +388,28 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
 		totalEarnPoint: 'Total Earn Points',
 		shipLocationMessage: 'Please provide your address and phone number.',
 		itemID: 'Item ID',
-		itemName: 'Item Name'
+		itemName: 'Item Name',
+		viewMore: 'View More',
+	},
+	searchViewer: {
+		searchTitle: 'Looking for Help?',
+		lookingForAccessory: 'Looking For Accessories',
+		lookingForGame: 'Looking For Games',
+		lookingForOnlineGame: 'Looking For Online Games',
+		showMore: 'Show More',
+		noItemsFitSearch: 'Sorry, but nothing matched your search terms. Please try again with some different keywords.'
+	},
+	reviews: {
+		amazing: 'Will it\'s really amazing!! I advise everyone to buy it',
+		veryGood: 'Will it\'s Very Good, I advise everyone to buy it',
+		good: 'Will it\'s Good, Try it',
+		notBad: 'I don\'t like it so much',
+		bad: 'It\'s bad, left you can try it',
+		noReviews: 'No Reviews To Shows',
+		gamesReviews: 'Game Reviews',
+		accessoryReviews: 'Accessory Reviews',
+		userReviews: 'Users Reviews',
+		userReviewsSection: 'Reviews are written by real users and only after a completed order. Besides spam, no reviews are edited or deleted'
 	}
 };
 

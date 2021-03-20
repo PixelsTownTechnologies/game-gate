@@ -238,7 +238,7 @@ export function ImageField(props: ImageDTO) {
                 onChange={ (event) => {
                     if (props.onChange && event.target.files) {
                         const image = event.target.files[0];
-                        if (image && ( image.type === 'image/jpeg'
+                        if (image && ( image.type === 'image/jpeg' || image.type === 'image/gif'
                             || image.type === 'image/png' || image.type === 'image/jpg' )) {
                             props.onChange(image, URL.createObjectURL(image));
                         } else {

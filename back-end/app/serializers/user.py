@@ -2,11 +2,12 @@ from django.contrib.auth.models import (Group)
 from rest_framework import serializers
 
 from app.constants import GENERAL_SERIALIZER_FIELDS
-from app.models import (User, Country)
+from app.models import (User)
+from app.resources import (get_enum_value, create_notification)
 from app.serializers.general import (PermissionSerializer, GroupSerializer, CountrySerializer, NotificationSerializer)
 
 GENERAL_USER_FIELDS = ['id', 'avatar', 'verified', 'full_name',
-                       'first_name', 'last_name', 'zip_code' ]
+                       'first_name', 'last_name', 'zip_code']
 
 CONTACT_INFO_USER_FIELDS = ['city', 'address_one', 'phone',
                             'address_two', 'state', 'zip_code', 'email', 'verify_file']
@@ -43,22 +44,19 @@ class UserSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        country = validated_data.get('country', None)
-        if country is not None:
-            validated_data.pop('country')
+        reward_point_enum = get_enum_value('New User Reward Point')
+        new_user_reward_point = int(reward_point_enum) if reward_point_enum is not None else 1000
+        reward_balance_enum = get_enum_value('New User Reward Balance')
+        new_user_balance_point = int(reward_balance_enum) if reward_balance_enum is not None else 0
         user = User.objects.create_user(**validated_data)
-        if country is not None and Country.objects.filter(name=country['name']) is not None and len(
-                Country.objects.filter(name=country['name'])) > 0:
-            user.country_id = Country.objects.filter(name=country['name'])[0].id
+        user.points = new_user_reward_point
+        user.balance = new_user_balance_point
         user.groups.add(Group.objects.get(name='User'))
         user.save()
+        create_notification(user, 'Welcome In Coins Gate')
         return user
 
     def update(self, instance: User, validated_data):
-        country = validated_data.get('country', None)
-        if country is not None and Country.objects.filter(id=country['id']) is not None and len(
-                Country.objects.filter(id=country['id'])) > 0:
-            instance.country_id = country['id']
         instance.username = validated_data.get('username', instance.username)
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
@@ -85,22 +83,19 @@ class UserAdminSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        country = validated_data.get('country', None)
-        if country is not None:
-            validated_data.pop('country')
+        reward_point_enum = get_enum_value('New User Reward Point')
+        new_user_reward_point = int(reward_point_enum) if reward_point_enum is not None else 1000
+        reward_balance_enum = get_enum_value('New User Reward Balance')
+        new_user_balance_point = int(reward_balance_enum) if reward_balance_enum is not None else 0
         user = User.objects.create_user(**validated_data)
-        if country is not None and Country.objects.filter(name=country['name']) is not None and len(
-                Country.objects.filter(name=country['name'])) > 0:
-            user.country_id = Country.objects.filter(name=country['name'])[0].id
+        user.points = new_user_reward_point
+        user.balance = new_user_balance_point
         user.groups.add(Group.objects.get(name='User'))
         user.save()
+        create_notification(user, 'Welcome In Coins Gate')
         return user
 
     def update(self, instance: User, validated_data):
-        country = validated_data.get('country', None)
-        if country is not None and Country.objects.filter(name=country['name']) is not None and len(
-                Country.objects.filter(name=country['name'])) > 0:
-            instance.country_id = Country.objects.filter(name=country['name']).first().id
         instance.username = validated_data.get('username', instance.username)
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
@@ -109,5 +104,6 @@ class UserAdminSerializer(serializers.ModelSerializer):
         instance.address_two = validated_data.get('address_two', instance.address_two)
         instance.city = validated_data.get('city', instance.city)
         instance.phone = validated_data.get('phone', instance.phone)
+        instance.points = validated_data.get('points', instance.points)
         instance.save()
         return instance

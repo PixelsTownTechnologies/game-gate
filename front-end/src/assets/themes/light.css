@@ -149,7 +149,7 @@ body {
 
 /* Home */
 .home-bg {
-    background: #f5f5f5 !important;
+    background: #e2e2e2 !important;
 }
 
 .home .app-name-logo {
@@ -165,6 +165,9 @@ body {
 }
 
 .white-bg {
-    background: white !important;
-    padding: 50px;
+    background: #f5f5f5 !important;
+}
+
+.green-bg {
+    background: linear-gradient(90deg, #11998e, #38ef7d) !important;
 }

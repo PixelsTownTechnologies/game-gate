@@ -1,0 +1,182 @@
+.review-container {
+    padding: 15px;
+    border: 1px solid #3d3e3f50;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-width: 270px;
+    max-width: 270px;
+    min-height: 190px;
+    max-height: 190px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 5px 3px 0 #3d3e3f25;
+}
+
+.review-header {
+    display: flex;
+    justify-content: flex-start;
+    align-self: flex-end;
+}
+
+.review-header h6 {
+    font-size: 0.8em;
+    padding: 0 5px;
+    margin-top: 5px !important;
+}
+
+.review-header h4 {
+    font-size: 1.4em;
+}
+
+.review-header h4, .review-header h6 {
+    font-family: var(--globalFont);
+    margin: 0;
+    width: fit-content;
+    height: fit-content;
+}
+
+.review-description {
+    margin-top: 5px;
+}
+
+.review-description p {
+    margin-top: 10px;
+    height: 110px;
+    overflow-y: auto;
+}
+
+.review-scroll-container {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-content: center;
+    overflow: auto !important;
+    transition: 500ms !important;
+    width: 835px;
+    max-width: 835px;
+    min-width: 835px;
+    min-height: 150px;
+}
+
+.review-scroll-box {
+    position: relative;
+    min-height: 150px;
+    width: 100%;
+}
+
+.review-scroll-container::-webkit-scrollbar {
+     height: 0 !important;
+}
+
+.review-scroll-button {
+    position: absolute;
+    bottom: calc((190px + 10px - 50px) / 2) !important;
+    width: 60px;
+    height: 60px;
+    background: #00000000 !important;
+    border: 3px solid rgba(255, 255, 255, 0.90) !important;
+    color: white !important;
+    border-radius: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+}
+
+.review-scroll-button.re-left {
+    left: 0;
+}
+
+.review-scroll-button.re-right {
+    right: 0;
+}
+
+@media only screen and (max-width: 1100px) {
+
+}
+
+@media only screen and (max-width: 1040px) {
+    .review-scroll-container {
+        width: 555px;
+        max-width: 555px;
+        min-width: 555px;
+    }
+}
+
+@media only screen and (max-width: 740px) {
+    .review-scroll-container {
+        width: 275px;
+        max-width: 275px;
+        min-width: 275px;
+    }
+}
+
+
+@media only screen and (max-width: 500px) {
+    .review-scroll-button {
+        bottom: calc((190px + 10px - 80px) / 2) !important;
+        border: 1px solid rgba(255, 255, 255, 0.90) !important;
+        width: 35px;
+        height: 100px;
+    }
+
+    .review-scroll-button.re-left {
+        left: -10px;
+    }
+
+    .review-scroll-button.re-right {
+        right: -10px;
+    }
+}
+
+
+@media only screen and (max-width: 380px) {
+    .review-scroll-button {
+        top: calc((100% - 30px) / 2);
+        width: 20px;
+        height: 100px;
+    }
+
+    .review-scroll-button.re-left {
+        left: -20px;
+    }
+
+    .review-scroll-button.re-right {
+        right: -20px;
+    }
+}
+
+.review-scroll-cc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.review-scroll-title-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 5px;
+}
+
+
+.review-scroll-title-section > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.review-scroll-title-section > div h4 {
+    margin: 0 !important;
+    font-size: 1.4em !important;
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+    font-family: var(--globalFont) !important;
+    color: white !important;
+}
+
+.review-details-section {
+    padding: 7% !important;
+}

@@ -5,8 +5,8 @@ import string
 import requests
 from django.core.mail import send_mail
 
-from settings.base import EMAIL_HOST_USER
 from app.constants import ENUMS_NAME
+from settings.base import EMAIL_HOST_USER
 
 
 def create_log(request, action):
@@ -99,3 +99,16 @@ def send_order_email(order):
         EMAIL_HOST_USER,
         [email, ]
     )
+
+
+def get_enum_value(enum_name: str):
+    from app.models import (Enum)
+    value = None
+    try:
+        value = None
+        enums = Enum.objects.filter(name=enum_name)
+        if enums is not None and enums[0] is not None and enums[0].data is not None:
+            value = enums[0].data
+    except Exception:
+        pass
+    return value

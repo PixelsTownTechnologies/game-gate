@@ -32,7 +32,9 @@ class NotFound404Page extends React.Component<NotFound404Props, NotFound404State
     render() {
         return (
             <Wrapper hideTitle fitContainer className={ 'red' } containerCName={ 'px-non-padding' }>
-                <NotFoundWidget/>
+                <div className={'center-not-found'}>
+                    <NotFoundWidget/>
+                </div>
             </Wrapper>
         );
     }

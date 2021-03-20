@@ -1,12 +1,12 @@
 .vvg-container {
-    margin: 12px 8px;
+    margin: 15px 15px;
     background: #f5f5dc;
 
     display: flex;
     flex-direction: column;
     border-radius: 16px !important;
-    max-width: 282px;
-    min-width: 282px;
+    max-width: 310px;
+    min-width: 310px;
     overflow: hidden;
     max-height: 120px;
     box-shadow: 0 10px 20px #3d3e3f80;
@@ -127,7 +127,8 @@
     flex-direction: column;
     padding: 20px !important;
     width: fit-content !important;
-    max-width: 200px !important;
+    max-width: 190px !important;
+    min-width: 190px !important;
 }
 
 .gcv-card-box {
@@ -136,7 +137,7 @@
 
 
 .gcv-container:hover .gcv-card-box {
-    transform: scale(1.05, 1.05);
+    transform: scale(1.03, 1.03);
 }
 
 .gcv-name-box {
@@ -190,4 +191,8 @@
 
 .scroll-card-view-box .ui.horizontal.divider:after, .scroll-card-view-box .ui.horizontal.divider:before {
     width: 80vh !important;
+}
+
+.view-more-button{
+    border-radius: 20px !important;
 }

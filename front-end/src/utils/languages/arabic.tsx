@@ -143,7 +143,12 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
 		}
 	},
 	menu: {
-		profile: 'الملف الشخصي'
+		profile: 'الملف الشخصي',
+		games: 'العاب',
+		accessories: 'ملحقات',
+		embedGames: 'العاب مباشرة',
+		topSells: 'الأكثر مبيعا',
+		topOffers: 'أفضل العروض'
 	},
 	entities: {
 		game: {
@@ -300,6 +305,22 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
 				logo: 'شعار'
 			},
 		},
+		ads: {
+			action: {
+				add: 'أضافة اعلان',
+				edit: 'تعديل الاعلان'
+			},
+			fields: {
+				cover: 'صورة الاعلان',
+				external_link: 'رابط خارجي',
+				forward_id: 'رقم العنصر',
+				id: 'رقم التسلسلي',
+				type: 'النوع',
+				show: 'أظهار',
+				name: 'الاسم'
+			},
+			title: 'أدارة الاعلانات'
+		},
 	},
 	gameViewer: {
 		fields: {
@@ -342,7 +363,18 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
 		sectionTitle: 'عنوان القسم',
 		selectedGameCards: 'بطاقات ألعاب مختارة',
 		selectedGames: 'ألعاب مختارة',
-		specialDeals: 'قسم الصفقات الخاصة'
+		specialDeals: 'قسم الصفقات الخاصة',
+		dialogAds: 'أعلان الرائيسي',
+		homeAds1: 'أعلان الصفحه الرئيسي 1',
+		homeAds2: 'أعلان الصفحه الرئيسي 2',
+		homeImages: 'صور الصفحه الرئيسي',
+		image: 'الصورة',
+		selectedResources: 'المصادر مختارة',
+		accessorySection: 'قسم الملحقات',
+		embedGameSection: 'قسم ألعاب المضمنة',
+		selectedAccessory: 'الملحقات المختارة',
+		selectedEmbedGames: 'ألعاب تضمين المختارة',
+		homeVideoId: 'رمز فيديو الصفحة الرئيسية'
 	},
 	viewer: {
 		reviews: 'التقييمات',
@@ -357,7 +389,28 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
 		totalEarnPoint: 'مجموع النقاط المكتسبة',
 		shipLocationMessage: 'يرجى تقديم عنوانك ورقم هاتفك.',
 		itemID: 'الرقم التسلسلي للعنصر',
-		itemName: 'أسم العنصر'
+		itemName: 'أسم العنصر',
+		viewMore: 'أظهار المزيد'
+	},
+	searchViewer: {
+		searchTitle: 'هل تحتاج مساعده؟',
+		lookingForAccessory: 'تبحث عن اكسسوارات؟',
+		lookingForGame: 'هل تبحث عن ألعاب؟',
+		lookingForOnlineGame: 'هل تبحث عن ألعاب على الإنترنت؟',
+		showMore: 'أظهار المزيد',
+		noItemsFitSearch: 'آسف ، ولكن لا شيء يطابق شروط البحث الخاصة بك. أرجو المحاولة مرة أخرى بإستخدام كلمات أخرى.'
+	},
+	reviews: {
+		amazing: 'إنه لأمر مدهش حقًا !! ، أنصح الجميع بشرائه',
+		veryGood: 'جيدًا جدًا ، أنصح الجميع بشرائه',
+		good: 'هذا جيد ، جربه',
+		notBad: 'لم أحب ذلك كثيرا ، يمكنك تجربته',
+		bad: 'إنه أمر سيء ، يمكنك تجربته',
+		noReviews: 'لا يوجد تقييمات للعرض',
+		gamesReviews: 'تقييمات العبة',
+		accessoryReviews: 'تقييمات',
+		userReviews: 'تقييمات المستخدمين',
+		userReviewsSection: 'تتم كتابة المراجعات من قبل مستخدمين حقيقيين وفقط بعد إكمال الطلب. بالإضافة إلى البريد العشوائي ، لا يتم تحرير أو حذف أي مراجعات'
 	}
 };
 

@@ -2,8 +2,7 @@ import React from 'react';
 import '../../assets/custome/wrapper.css';
 import { Loader } from "../basic";
 import { buildCN, pxIf, pxIfSelf } from "../../utils/utils";
-import { Divider, FlexBox, FlexCenter, If } from "../containers";
-import { Header, Icon } from "semantic-ui-react";
+import { FlexBox, If, TitleView } from "../containers";
 import { BaseComponent, BaseComponentProps, BaseComponentState } from "../components";
 import WindowService from "../../services/window.service";
 
@@ -34,6 +33,7 @@ export interface WidgetWrapperProps extends BaseWrapperProps {
 		footer?: JSX.Element;
 		titleSectionView?: React.ComponentType<{ title: string, icon?: string, children?: JSX.Element }>;
 		loader?: React.ComponentType<any>;
+		extra?: any;
 	}
 }
 
@@ -68,7 +68,7 @@ class WidgetWrapper extends BaseComponent<WidgetWrapperProps, WidgetWrapperState
 	scrollToTop = () => {
 		setTimeout(() => {
 			if (this.element) {
-				this.element.scrollIntoView({behavior: "smooth"});
+				//this.element.scrollIntoView({behavior: "smooth"});
 			}
 		}, 50);
 		
@@ -109,23 +109,12 @@ class WidgetWrapper extends BaseComponent<WidgetWrapperProps, WidgetWrapperState
 				)
 			}
 			return (
-				<FlexBox dir={ this.state.direction } flexDirection={ 'column' }>
-					<FlexBox dir={ this.state.direction } justifyContent={ 'space-between' } alignItems={ 'center' }>
-						<FlexCenter className={ 'px-title-header' } dir={ this.state.direction }>
-							<If flag={ this.props.icon }>
-								<Icon size={ 'big' } name={ this.props.icon as any }/>
-							</If>
-							<Header className={ 'px-non-margin' }
-							        as={ 'h1' }>{ pxIfSelf(this.props.title, 'No Title') as string }</Header>
-						</FlexCenter>
-						<If flag={ this.props.subTitleChildren }>
-							<div dir={ this.state.direction }>
-								{ this.props.subTitleChildren }
-							</div>
-						</If>
-					</FlexBox>
-					<Divider className={ 'simple' }/>
-				</FlexBox>
+				<TitleView
+					dir={ this.state.direction }
+					title={this.props.title}
+					icon={this.props.icon}
+					subTitleChildren={this.props.subTitleChildren}
+				/>
 			);
 		}
 	}
@@ -166,6 +155,7 @@ class WidgetWrapper extends BaseComponent<WidgetWrapperProps, WidgetWrapperState
 						</div>
 					</FlexBox>
 				</div>
+				{this.props?.widgets?.extra ? this.props?.widgets?.extra : null}
 				{ this.renderFooter() }
 			</div>
 		);

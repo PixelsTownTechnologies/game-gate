@@ -61,6 +61,11 @@ export interface LanguageSystemWords extends LanguageBaseWords {
 	};
 	menu: {
 		profile: string;
+		games: string;
+		accessories: string;
+		embedGames: string;
+		topSells: string;
+		topOffers: string;
 	};
 	entities: {
 		game: {
@@ -217,6 +222,22 @@ export interface LanguageSystemWords extends LanguageBaseWords {
 				logo: string;
 			};
 		};
+		ads: {
+			title: string;
+			action: {
+				edit: string;
+				add: string;
+			};
+			fields: {
+				cover: string;
+				external_link: string;
+				id: string
+				forward_id: string;
+				type: string;
+				show: string;
+				name: string;
+			}
+		};
 	};
 	gameViewer: {
 		fields: {
@@ -260,6 +281,17 @@ export interface LanguageSystemWords extends LanguageBaseWords {
 		EnText: string;
 		mainText: string;
 		specialDeals: string;
+		homeImages: string;
+		image: string;
+		homeAds1: string;
+		homeAds2: string;
+		dialogAds: string;
+		selectedResources: string;
+		embedGameSection: string;
+		selectedEmbedGames: string;
+		accessorySection: string;
+		selectedAccessory: string;
+		homeVideoId: string;
 	};
 	viewer: {
 		reviews: string;
@@ -275,5 +307,26 @@ export interface LanguageSystemWords extends LanguageBaseWords {
 		shipLocationMessage: string;
 		itemID:string;
 		itemName: string;
-	}
+		viewMore: string;
+	};
+	searchViewer: {
+		lookingForGame: string;
+		lookingForOnlineGame: string;
+		lookingForAccessory: string;
+		showMore: string;
+		searchTitle: string;
+		noItemsFitSearch: string;
+	};
+	reviews: {
+		amazing: string;
+		veryGood: string;
+		good: string;
+		notBad: string;
+		bad: string;
+		noReviews: string;
+		gamesReviews: string;
+		accessoryReviews: string;
+		userReviews: string;
+		userReviewsSection: string;
+	};
 }

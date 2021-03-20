@@ -14,7 +14,7 @@ def handle_accessory_order(user: User, quantity, accessory_id, ship_location):
     try:
         accessory_id = int(accessory_id)
         quantity = int(quantity)
-    except Exception:
+    except Exception as e:
         release_order_api_access()
         return Response(status=status.HTTP_400_BAD_REQUEST)
     queryset = Accessory.objects.filter(id=accessory_id)
@@ -30,12 +30,15 @@ def handle_accessory_order(user: User, quantity, accessory_id, ship_location):
     if user.balance < total_cost:
         release_order_api_access()
         return Response(status=status.HTTP_400_BAD_REQUEST)
+    accessory.system_quantity = accessory.system_quantity - quantity
     user.balance = user.balance - total_cost
     user.points = user.points + total_points
     order = Order.objects.create(owner=user, accessory=accessory, ship_location=ship_location,
                                  quantity=quantity, cost=total_cost)
     user.save()
-    Invoice.objects.create(amount=total_cost, action='P', details='New Order ' + str(order.id), user=user).save()
+    accessory.save()
+    Invoice.objects.create(amount=total_cost, action='P', details='New Order ' + str(order.id), user=user)
+    release_order_api_access()
     return Response(status=status.HTTP_201_CREATED, data=OrderInfoSerializer(order).data)
 
 
@@ -74,6 +77,7 @@ def handle_game_card_order(user: User, game_card_id, quantity, account_id, extra
             break
     user.save()
     Invoice.objects.create(amount=total_cost, action='P', details='New Order ' + str(order.id), user=user).save()
+    release_order_api_access()
     return Response(status=status.HTTP_201_CREATED, data=OrderInfoSerializer(order).data)
 
 
@@ -106,6 +110,7 @@ class UserOrderFetchCreate(generics.ListCreateAPIView):
                 return handle_game_card_order(user, game_card_id, quantity, account_id, extra_info)
             if accessory_id is not None:
                 return handle_accessory_order(user, quantity, accessory_id, ship_location)
+            release_order_api_access()
             return Response(status=status.HTTP_400_BAD_REQUEST)
         except Exception:
             release_order_api_access()

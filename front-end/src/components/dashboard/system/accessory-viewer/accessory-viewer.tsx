@@ -3,9 +3,9 @@ import './accessory-viewer.css';
 import { BaseRouteComponentProps } from "../../../../lib/components/components";
 import { useLanguage } from "../../../../lib/hooks/languageHook";
 import { Wrapper } from "../../../shared/wrapper";
-import { FlexBox, If } from "../../../../lib/components/containers";
+import { FlexBox, FlexCenter, If } from "../../../../lib/components/containers";
 import { NotFoundWidget } from "../../../errors/not-found-404";
-import { clamp, isNull } from "../../../../lib/utils/utils";
+import { clamp, costFormat, isNull } from "../../../../lib/utils/utils";
 import { OrderConfirm } from "../../../shared/game-viewer-component/game-viewer-component";
 import { AccessoryDTO } from "../../../../models/game";
 import { EntityService } from "../../../../lib/services/entity-service/entity-service";
@@ -24,13 +24,15 @@ import { getUser, registerUser, updateUser } from "../../../../lib/store/actions
 import { ImageShower } from "../../../../lib/components/basic";
 import { Counter } from "../../../../lib/components/form/fields";
 import { UpdateUserDataDialog } from "../../user/profile/profile";
+import { ReviewScrollCard } from "../../../shared/review/review-component";
 
 interface AccessoryViewerWidgetProps {
 	accessory: AccessoryDTO | null;
+	onPay: () => void;
 }
 
 
-export function AccessoryViewerWidget({accessory}: AccessoryViewerWidgetProps) {
+export function AccessoryViewerWidget({accessory, onPay}: AccessoryViewerWidgetProps) {
 	const [ showLogin, setShowLogin ] = useState(false);
 	const [ selectedQuantity, setSelectedQuantity ] = useState(accessory && !accessory.is_sold ? accessory.order_min : 1);
 	const [ showPaymentConfirm, setShowPaymentConfirm ] = useState(false);
@@ -104,7 +106,7 @@ export function AccessoryViewerWidget({accessory}: AccessoryViewerWidgetProps) {
 		>
 			<FlexBox dir={ dir } className={ 'max-width acc-info-container w-background ' }
 			         warp>
-				<ImageShower width={ clamp(320, width * 0.35, 400) } padding={ 25 } mainImage={ accessory.logo }
+				<ImageShower width={ clamp(270, width * 0.30, 350) } padding={ 25 } mainImage={ accessory.logo }
 				             imageList={ [ accessory.image1, accessory.image2, accessory.image3, accessory.image4 ].filter(i => !!i) }/>
 				<div dir={ dir } className={ 'acc-info' }>
 					<div>
@@ -116,14 +118,15 @@ export function AccessoryViewerWidget({accessory}: AccessoryViewerWidgetProps) {
 							<Rating maxRating={ 5 } disabled defaultRating={ accessory.review_stars + 0.5 }
 							        icon='star'
 							        size='large'/>
-							<Header as={ 'h4' }>{ accessory.review_stars }</Header>
+							<Header
+								as={ 'h4' }>{ accessory.review_stars ? costFormat(accessory.review_stars) : '0.0' }</Header>
 							<Header as={ 'h4' }>{ accessory.total_reviews } { words.viewer.reviews }</Header>
 							<Header as={ 'h4' }>{ accessory.total_orders } { words.viewer.orders }</Header>
 						</div>
 						<div dir={ dir } className={ 'acc-price-section' }>
 							<h2>${ accessory.total_price } US</h2>
 							<If flag={ accessory.discount && accessory.discount > 0 }>
-								<h4 className={ 'acc-discount-price' }>${ accessory.price } US</h4>
+								<h4 className={ 'acc-discount-price' }>${ costFormat(accessory.price) } US</h4>
 								<Label className={ 'text-w acc-discount' } color='purple' tag>
 									-{ accessory.discount }%
 								</Label>
@@ -162,15 +165,22 @@ export function AccessoryViewerWidget({accessory}: AccessoryViewerWidgetProps) {
 							<SDivider hidden/>
 						</If>
 						<div className={ 'acc-buttons-section' }>
-							<Button color='google plus'
-							        onClick={ () => {
-								        handleBuyNow();
-							        } }>
-								{ words.gameViewer.buyNow }
+							<Button
+								disabled={ accessory.is_sold }
+								color='google plus'
+								onClick={ () => {
+									if (!accessory.is_sold) {
+										handleBuyNow();
+									}
+								} }>
+								{ accessory.is_sold ? words.gameViewer.sold : words.gameViewer.buyNow }
 							</Button>
 							<Button
+								disabled={ accessory.is_sold }
 								onClick={ () => {
-									handleAddToCard();
+									if (!accessory.is_sold) {
+										handleAddToCard();
+									}
 								} } color='facebook'>
 								{ words.gameViewer.addToCart }
 							</Button>
@@ -178,11 +188,8 @@ export function AccessoryViewerWidget({accessory}: AccessoryViewerWidgetProps) {
 					</div>
 				</div>
 			</FlexBox>
-			<SDivider hidden/>
-			<SDivider hidden/>
 			<FlexBox justifyContent={ 'center' } alignItems={ type === 'Mobile' ? 'center' : undefined }
 			         flexDirection={ 'column' }>
-				<SDivider hidden/>
 				<FlexBox dir={ dir } className={ 'details-section w-background ' } padding={ 25 }
 				         flexDirection={ 'column' }>
 					<FlexBox justifyContent={ 'center' } alignItems={ type === 'Mobile' ? 'center' : undefined }
@@ -194,21 +201,30 @@ export function AccessoryViewerWidget({accessory}: AccessoryViewerWidgetProps) {
 					<SDivider hidden/>
 					<SDivider hidden/>
 					<Embed
+						defaultActive={ !!accessory.video }
 						className={ 'px-non-padding video-embed' }
-						style={ {
-							width: `${ clamp(300, width * 0.4, 600) }px`,
-							height: `${ clamp(180, width * 0.32, 370) }px`
-						} }
 						id={ accessory.video }
 						source='youtube'
 					/>
 				</FlexBox>
 			</FlexBox>
-			<SDivider hidden/>
+			<FlexBox justifyContent={ 'center' } alignItems={ 'center' }
+			         className={ 'review-details-section green-bg' }>
+				<ReviewScrollCard
+					showAvg={ true }
+					avgReview={ accessory.review_stars }
+					headerClassName={ 'white-text' }
+					title={ words.reviews.accessoryReviews }
+					reviews={ accessory?.accessory_orders?.filter(ord => ord.review_star && ord.review_star > 0) }
+				/>
+			</FlexBox>
 			<If flag={ showPaymentConfirm || showLogin }>
 				<Dimmer page active>
 					<LoginWidget onSignIn={ handleSingIn } asComponent pxIf={ showLogin }/>
 					<OrderConfirm
+						onAcceptNextSuccess={ () => {
+							onPay();
+						} }
 						orderId={ orderId }
 						shipLocation={ getUser().address_one }
 						onAccept={ onAcceptOrder }
@@ -233,38 +249,56 @@ export function AccessoryViewerWidget({accessory}: AccessoryViewerWidgetProps) {
 export function AccessoryViewer(props: BaseRouteComponentProps) {
 	const accessoryId: number | null = props.match.params.accessoryId
 	&& !isNaN(Number(props.match.params.accessoryId)) ? Number(props.match.params.accessoryId) : null;
-	
 	const service = new EntityService<AccessoryDTO>(systemAccessoryService);
 	const [ accessory, setAccessory ] = useState<AccessoryDTO | null>(null);
 	const loader = useLoader();
 	const [ isNotFoundPage, setNotFoundPage ] = useState<boolean>(isNull(accessoryId));
+	const fetchEntity = () => {
+		loader.activate();
+		service.findById(accessoryId).then((data) => {
+			if (!!data) {
+				setAccessory(data);
+			} else {
+				setNotFoundPage(true);
+			}
+			loader.disabled();
+		})
+	}
 	useEffect(() => {
-		if (!accessory && !isNotFoundPage) {
-			loader.activate();
-			service.findById(accessoryId).then((data) => {
-				if (!!data) {
-					setAccessory(data);
-				} else {
-					setNotFoundPage(true);
-				}
-				loader.disabled();
-			})
+		if (accessoryId !== accessory?.id) {
+			setAccessory(null);
+			setNotFoundPage(false);
+			setTimeout(() => {
+				fetchEntity();
+			}, 50);
 		}
-	});
+	}, [ accessoryId ])
+	// eslint-disable-next-line
+	useEffect(() => {
+		if (( !accessory && !isNotFoundPage )) {
+			fetchEntity();
+		}
+	}, []);
 	return (
 		<Wrapper
 			className={ 'game-viewer-component-bg' }
 			loading={ loader.isLoading }
-			hideContainer={ !isNotFoundPage }
-			fitContainer={ isNotFoundPage }
+			hideContainer
+			fitContainer={ false }
 			hideTitle
 		>
-			<If flag={ isNotFoundPage && !loader.isLoading }>
-				<NotFoundWidget/>
-			</If>
+			{
+				isNotFoundPage && !loader.isLoading ?(
+					<div className={'center-not-found'}>
+						<NotFoundWidget/>
+					</div>
+				) : null
+			}
 			{
 				accessory ? (
-					<AccessoryViewerWidget accessory={ accessory }/>
+					<AccessoryViewerWidget onPay={ () => {
+						fetchEntity();
+					} } accessory={ accessory }/>
 				) : null
 			}
 		</Wrapper>

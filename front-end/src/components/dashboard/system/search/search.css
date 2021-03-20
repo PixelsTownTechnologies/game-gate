@@ -1,0 +1,41 @@
+.ss-search-input input {
+    border-radius: 20px !important;
+    margin: 3px !important;
+    min-width: 300px !important;
+}
+
+.game-viewer-ss {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 2%;
+}
+
+
+@media only screen and (max-width: 720px) {
+    .game-viewer-ss {
+        justify-content: center;
+        align-items: flex-start;
+    }
+}
+
+.show-more-button-ss {
+    max-width: 220px;
+    min-width: 220px;
+    align-self: center;
+    border-radius: 20px !important;
+}
+
+.game-viewer-ss.game-cards {
+
+}
+
+.game-viewer-ss.accessory a {
+    --accCard: 180px;
+}
+
+.game-viewer-ss.embed-games {
+
+}

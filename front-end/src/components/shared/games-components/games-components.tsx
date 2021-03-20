@@ -1,14 +1,13 @@
 import { Button, Divider, Icon, Image, Label } from "semantic-ui-react";
-import React, { useState } from "react";
+import React from "react";
 import { GameCardDTO, GameDTO } from "../../../models/game";
 import './games-components.css';
-import { Link } from "../../../lib/components/basic";
+import { Link, LinkButton } from "../../../lib/components/basic";
 import { URL_ROUTES } from "../../../routes";
-import { FlexBox, FlexCenter, If } from "../../../lib/components/containers";
+import { FlexBox, FlexCenter, FlexSpace, If } from "../../../lib/components/containers";
 import { buildCN, costFormat, isEmpty } from "../../../lib/utils/utils";
 import Logo from '../../../assets/logo/logo-bg-w.jpg';
 import { ImageCard } from "../game-viewer-component/game-viewer-component";
-import { useWindow } from "../../../lib/hooks/screen-change";
 import { DIR } from "../../../lib/utils/constant";
 import { useLanguage } from "../../../lib/hooks/languageHook";
 
@@ -51,7 +50,6 @@ export function GameCard(props: { gameCard?: GameCardDTO, game: GameDTO }) {
 
 
 export function GameCardBig(props: { gameCard?: GameCardDTO, game: GameDTO }) {
-	//const style = props.game.bg_card ? {'--headerBGImageURL': `url(${ props.game.bg_card })`} : {};
 	return (
 		<Link to={ URL_ROUTES.GAME_VIEWER + '/' + props.game.id + ( props.gameCard ? `/${ props.gameCard.id }` : '' ) }>
 			<div className={ 'gcv-container' }>
@@ -69,20 +67,35 @@ export function GameCardBig(props: { gameCard?: GameCardDTO, game: GameDTO }) {
 }
 
 
-export function ScrollCardView(props: { list?: any[], title?: string, description?: string }) {
+export function ScrollCardView(props: { list?: any[], title?: string, description?: string, showMoreURL?: string }) {
 	const sectionRef = React.useRef<HTMLDivElement>(null);
-	const {isMobile} = useWindow();
 	const language = useLanguage();
-	if (isEmpty(props.list)) {
+	if (isEmpty(props.list) || isEmpty(props.list?.filter(v => !!v))) {
 		return null;
 	}
 	return (
 		<div className={ 'scroll-card-view-box' }>
 			<FlexBox dir={ language.dir } flexDirection={ 'column' }
-			         justifyContent={ !isMobile ? 'flex-start' : 'center' }
-			         alignItems={ isMobile ? 'center' : undefined }>
-				<h1 className={ 'grey-text' }> { props.title ? props.title : '' } </h1>
-				<h4 className={ 'grey-text px-non-margin' }> { props.description ? props.description : '' } </h4>
+			         justifyContent={ 'flex-start' }>
+				<FlexSpace dir={language.dir}>
+					<h1 className={ 'grey-text' }> { props.title ? props.title : '' } </h1>
+					{
+						props.showMoreURL ? (
+							<LinkButton buttonSetting={ {
+								text: language.words.viewer.viewMore,
+								basic: true,
+								color: 'grey',
+								className: 'view-more-button'
+							} } url={ props.showMoreURL }/>
+						) : null
+					}
+				</FlexSpace>
+				<Divider hidden/>
+				{
+					props.description ?
+						<h4 className={ 'grey-text px-non-margin' }>  { props.description } </h4>
+						: null
+				}
 			</FlexBox>
 			<Divider hidden/>
 			<div dir={ DIR.LTR } ref={ sectionRef } className={ 'scroll-card-view-container' }>
@@ -99,7 +112,7 @@ export function ScrollCardView(props: { list?: any[], title?: string, descriptio
 							onClick={
 								() => {
 									if (sectionRef.current) {
-										sectionRef.current.scrollBy({behavior: 'smooth', left: -150});
+										sectionRef.current.scrollBy({behavior: 'smooth', left: -250});
 									}
 								}
 							}>
@@ -110,8 +123,7 @@ export function ScrollCardView(props: { list?: any[], title?: string, descriptio
 							onClick={
 								() => {
 									if (sectionRef.current) {
-										sectionRef.current.scrollBy({behavior: 'smooth', left: 150});
-										;
+										sectionRef.current.scrollBy({behavior: 'smooth', left: 250});
 									}
 								}
 							}>

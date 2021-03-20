@@ -5,11 +5,12 @@ from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from app.models import (Country, Invoice, User, Enum, File, Game, GameCard)
+from app.models import (Country, Invoice, User, Enum, File, Game, GameCard, Ads, Accessory, EmbedGame, Order)
 from app.resources import (create_notification)
+from app.serializers.game import (GameCardSerializer, GameSerializer, AccessorySerializer, EmbedGameSerializer,
+                                  ReviewSerializer)
 from app.serializers.general import (CountrySerializer)
-from app.serializers.game import (GameCardSerializer, GameSerializer)
-from app.serializers.general import (InvoiceSerializer, EnumSerializer, FilesSerializer)
+from app.serializers.general import (InvoiceSerializer, EnumSerializer, FilesSerializer, AdsSerializer)
 
 
 class CountryListView(generics.ListAPIView):
@@ -89,11 +90,53 @@ class EnumUpdate(generics.UpdateAPIView):
     serializer_class = EnumSerializer
 
 
+class AdsFetchCreate(generics.ListCreateAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    queryset = Ads.objects.all()
+    serializer_class = AdsSerializer
+
+
+class AdsUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    queryset = Ads.objects.all()
+    serializer_class = AdsSerializer
+
+
+class SystemEntitiesConfigRetrieve(generics.RetrieveAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def retrieve(self, request, *args, **kwargs):
+        return Response(status=status.HTTP_200_OK,
+                        data={
+                            'enums': EnumSerializer(Enum.objects.all(), many=True).data,
+                            'games': GameSerializer(Game.objects.all(), many=True).data,
+                            'gameCards': GameCardSerializer(GameCard.objects.all(),
+                                                            many=True).data,
+                            'accessory': AccessorySerializer(Accessory.objects.all(), many=True).data,
+                            'reviews': ReviewSerializer(
+                                Order.objects.all(),
+                                many=True).data,
+                            'embedGames': EmbedGameSerializer(EmbedGame.objects.all(), many=True).data,
+                            'ads': AdsSerializer(Ads.objects.all(), many=True).data,
+                            'resources': FilesSerializer(File.objects.all(), many=True).data
+                        })
+
+
 @api_view(['GET'])
 def home(request):
     return Response(status=status.HTTP_200_OK,
                     data={
                         'enums': EnumSerializer(Enum.objects.filter(global_enum=True), many=True).data,
                         'games': GameSerializer(Game.objects.filter(show=True), many=True).data,
-                        'gameCards': GameCardSerializer(GameCard.objects.filter(show=True, game__show=True), many=True).data
-                          })
+                        'gameCards': GameCardSerializer(GameCard.objects.filter(show=True, game__show=True),
+                                                        many=True).data,
+                        'accessory': AccessorySerializer(Accessory.objects.filter(show=True), many=True).data,
+                        'reviews': ReviewSerializer(
+                            Order.objects.exclude(review_star__lt=1).exclude(review_star=None).filter(state='C'),
+                            many=True).data,
+                        'embedGames': EmbedGameSerializer(EmbedGame.objects.exclude(src=None), many=True).data,
+                        'ads': AdsSerializer(Ads.objects.exclude(cover=None), many=True).data
+                    })

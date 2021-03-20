@@ -33,7 +33,7 @@
 
 .m-app-name {
     font-size: clamp(16px, 14vh, 28px) !important;
-    transform: scaleY(1.15);
+    transform: scaleY(1.1);
     font-weight: 600 !important;
     font-family: 'Audiowide', cursive !important;
     color: #ffffff !important;
@@ -76,18 +76,18 @@
 
 .px.menu .profile-icon > img {
     cursor: pointer;
-    width: 35px !important;
-    max-width: 35px !important;
+    width: 30px !important;
+    max-width: 30px !important;
     margin: 10px 5px !important;
     height: 100% !important;
 }
 
 .px.menu .profile-icon h5 {
-    font-size: 1.08em !important;
+    font-size: 0.85em !important;
 }
 
 .px.menu .profile-icon h6 {
-    font-size: 0.75em !important;
+    font-size: 0.7em !important;
 }
 
 
@@ -98,6 +98,7 @@
     justify-content: center;
     align-items: center;
     font-family: var(--globalFont) !important;
+    padding: 5px;
 }
 
 
@@ -139,6 +140,10 @@
     font-size: 0.88em !important;
     padding: 4px;
     text-align: initial;
+    max-width: 200px !important;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
 }
 
 .menu-item > span {
@@ -152,7 +157,7 @@
 }
 
 .items-menu > div {
-    height: 55px !important;
+    height: 57px !important;
     text-align: center !important;
     display: flex !important;
     align-items: center !important;
@@ -166,17 +171,20 @@
 
 .menu .menu.transition.right {
     padding: 0 !important;
-    left: -3vh !important;
+    left: -25px !important;
+    max-width: 180px;
+    min-width: 180px;
 }
 
 @media only screen and (max-width: 1032px) {
     .menu .menu.transition.right {
-        left: -12vh !important;
+        left: -130px !important;
     }
 }
 
 .menu .menu.transition.right > div:nth-child(1) {
     padding: 20px 45px !important;
+    padding-top: 32px !important;
 }
 
 .menu .menu.transition.right > div:nth-child(2) {
@@ -203,15 +211,29 @@
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    justify-content: center !important;
+    justify-content: flex-start !important;
     height: fit-content !important;
     border-bottom: 0.08em solid #3d3e3f80 !important;
     margin-bottom: 5px !important;
     padding: 0 !important;
+    position: relative;
+    min-height: 140px;
+}
+
+.menu .u-menu-header img {
+    margin-bottom: 8px !important;
+
 }
 
 .menu .u-menu-header h5 {
-    font-size: 0.8em !important;
+    font-size: 0.9em !important;
+}
+
+.user-points-label {
+    position: absolute;
+    top: calc(100% - 25px);
+    right: -7px;
+    font-size: 0.7em !important;
 }
 
 .mobile-button {
@@ -269,4 +291,50 @@
 
 .menu .auth-r-menu .menu.transition.right > div {
     padding: 20px 20px !important;
+}
+
+.search-more-button {
+    border-radius: 20px !important;
+}
+
+.right-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.languages-dd-button {
+    font-size: 1.3em !important;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+}
+
+.languages-dd > div {
+    border-top: 0 !important;
+    border-radius: 0 !important;
+    padding: 12px 5px !important;
+    border-bottom-right-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+    animation: 1000ms showMenuDropdown !important;
+}
+
+.languages-dd.ui.dropdown .menu > .item {
+    padding: 0 !important;
+    height: 25px !important;
+    text-align: center !important;
+    display: flex !important;
+    align-items: center !important;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+    font-size: 1.1em !important;
+    font-family: var(--globalFont) !important;
+    font-weight: 900 !important;
+}
+
+.languages-dd > div > div:hover {
+    background: #3d3e3f00 !important;
+}
+
+.auth-r-menu .menu.transition.right {
+    max-width: 240px;
 }

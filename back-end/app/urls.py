@@ -75,8 +75,15 @@ urlpatterns_embed_games = [
     path('system/embed-games/fetch-all', EmbedGameFetchAll.as_view()),
 ]
 
+urlpatterns_ads = [
+    path('admin/fc/ads', AdsFetchCreate.as_view()),
+    path('admin/ads/<pk>', AdsUpdateDelete.as_view()),
+]
+
+
 routes = [
     path('home/', home),
+    path('system/entities/', SystemEntitiesConfigRetrieve.as_view()),
     path('admin/', admin.site.urls),
     *urlpatterns_users,
     *urlpatterns_orders,
@@ -85,6 +92,7 @@ routes = [
     *urlpatterns_games,
     *urlpatterns_accessory,
     *urlpatterns_embed_games,
+    *urlpatterns_ads,
     *urlpatterns_files
 ]
 

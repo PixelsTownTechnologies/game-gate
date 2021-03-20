@@ -82,25 +82,8 @@ class AdminUserFetchCreate(generics.ListCreateAPIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
-    serializer_class = UserAdminSerializer
+    serializer_class = UserSerializer
 
-    def create(self, request, *args, **kwargs):
-        validated_data = request.data
-        email = validated_data.get('email', '')
-        if len(User.objects.filter(email=email)) > 0:
-            return Response({'errors': 'userNameUsed'})
-        country = validated_data.get('country', None)
-        if country is not None:
-            validated_data.pop('country')
-        user = User.objects.create_user(**validated_data)
-        if country is not None and Country.objects.filter(name=country['name']) is not None and len(
-                Country.objects.filter(name=country['name'])) > 0:
-            user.country_id = Country.objects.filter(name=country['name'])[0].id
-        if Group.objects.filter(name='User').first() is not None:
-            user.groups.add(Group.objects.get(name='User'))
-        user.save()
-        create_notification(user, 'Welcome In Coins Gate')
-        return Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)
 
 
 class AdminListGroups(generics.ListAPIView):

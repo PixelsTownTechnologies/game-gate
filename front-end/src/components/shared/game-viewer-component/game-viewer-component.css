@@ -1,17 +1,17 @@
 .card-view {
-    background: #c1c1c1 url("../../../assets/images/card.png");
+    background: #cfc6c6 url("../../../assets/images/card.png");
     background-size: cover;
 
-    width: 120px !important;
-    max-width: 120px !important;
-    min-width: 120px !important;
+    width: 140px !important;
+    max-width: 140px !important;
+    min-width: 140px !important;
 
-    height: 160px !important;
-    max-height: 160px !important;
-    min-height: 160px !important;
+    height: 180px !important;
+    max-height: 180px !important;
+    min-height: 180px !important;
 
     border-radius: 20px;
-    box-shadow: 0 0 15px 0 rgba(154, 154, 154, 0.50);
+    box-shadow: 0 5px 8px 0 rgba(154, 154, 154, 0.50);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,7 +21,7 @@
 }
 
 .card-view > div {
-    max-width: 60px !important;
+    max-width: 70px !important;
     display: flex;
     justify-content: center;
     align-items: center;

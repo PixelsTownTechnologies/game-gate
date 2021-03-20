@@ -161,10 +161,6 @@
     display: none;
 }
 
-.ui.page.modals.dimmer {
-    z-index: 99999999999999999999999 !important;
-}
-
 .ui.modal {
     animation: 600ms viewModalAnimationPX !important;
     animation-direction: alternate;
@@ -234,8 +230,9 @@
 }
 
 .px-lib.image > img {
-    max-width: calc(var(--imageWidth) + 30px);
-    width: calc(var(--imageWidth) + 30px);
+    /*max-width: calc(var(--imageWidth) + 30px);
+    width: calc(var(--imageWidth) + 30px);*/
+    height: 100% !important;
     border-radius: 5px !important;
 }
 
@@ -248,8 +245,8 @@
 }
 
 .px-lib.image.image-boarder {
-    border: 6px solid rgba(254, 254, 254, 0.4);
-    padding: 5px;
+    border: 1px solid rgba(254, 254, 254, 0.4);
+    padding: 2px;
     box-shadow: 0 5px 19px 8px rgba(12, 12, 12, 0.25);
 
 }
