@@ -171,3 +171,12 @@ body {
 .green-bg {
     background: linear-gradient(90deg, #11998e, #38ef7d) !important;
 }
+
+
+.px-lib.ui.button.white-button{
+    --bgColor1: #ffffff00;
+    --bgClor2: #ffffff00;
+    --bgColorHover: rgba(255, 255, 255, 0.6);
+    --bgColorDiable: rgb(50, 50, 50);
+    --textColor: #ffffff;
+}

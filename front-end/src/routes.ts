@@ -20,6 +20,8 @@ import ManageEmbedGame from "./components/dashboard/admin/manage-embed-games";
 import { AccessoryViewer } from "./components/dashboard/system/accessory-viewer/accessory-viewer";
 import ManageAds from "./components/dashboard/admin/manage-ads";
 import { SearchOnItem } from "./components/dashboard/system/search/item-search";
+import EmbedGame from "./components/dashboard/system/embed-game-viewer/embed-game-viewer";
+import ManagePointShop from "./components/dashboard/admin/manage-point-shop";
 
 export const URL_ROUTES = {
 	HOME: '/',
@@ -42,6 +44,7 @@ export const URL_ROUTES = {
 			MANAGE_EMBED_GAMES: '/admin/manage-embed-games',
 			MANAGE_ACCESSORIES: '/admin/manage-accessories',
 			MANAGE_ADS: '/admin/manage-ads',
+			MANAGE_POINT_SHOP: '/admin/manage-point-shop',
 		},
 	},
 	GAME_VIEWER: '/view/game',
@@ -124,6 +127,16 @@ export default [
 				menuSetting: {
 					text: 'entities.embedGames.title',
 					//icon: 'rocket'
+				},
+			},
+			{
+				component: ManagePointShop,
+				path: URL_ROUTES.USER.ADMIN.MANAGE_POINT_SHOP,
+				authenticate: true,
+				permission: PERMISSIONS.MANAGE_POINT_SHOP,
+				menuSetting: {
+					text: 'entities.pointShop.title',
+					//  icon: 'game'
 				},
 			},
 			{
@@ -224,6 +237,10 @@ export default [
 	{
 		component: AccessoryViewer,
 		path: URL_ROUTES.ACCESSORY_VIEWER + '/:accessoryId'
+	},
+	{
+		component: EmbedGame,
+		path: URL_ROUTES.EMBED_GAME_VIEWER + '/:gameId?'
 	},
 	{
 		component: SearchOnItem,

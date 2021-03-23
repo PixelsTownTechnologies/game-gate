@@ -453,3 +453,29 @@ class Ads(models.Model):
     @property
     def is_editable(self):
         return True
+
+
+class PointShop(models.Model):
+    point_cost = models.IntegerField(blank=True, null=True)
+    game_card = models.ForeignKey(GameCard, on_delete=models.DO_NOTHING, blank=True, null=True)
+    money_reword = models.FloatField(blank=True, null=True)
+    name = models.CharField(max_length=128, blank=True, null=True)
+    quantity = models.IntegerField(default=1, null=True, blank=True)
+
+    @property
+    def show(self):
+        if self.game_card is not None:
+            if self.game_card.is_sold \
+                    or (not self.game_card.show) \
+                    or (self.game_card.available_keys < self.quantity) \
+                    or ((self.game_card.game is not None) and (not self.game_card.game.show)):
+                return False
+        return True
+
+    @property
+    def is_deletable(self):
+        return True
+
+    @property
+    def is_editable(self):
+        return True

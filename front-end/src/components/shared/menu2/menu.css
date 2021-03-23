@@ -338,3 +338,8 @@
 .auth-r-menu .menu.transition.right {
     max-width: 240px;
 }
+
+ div.user-section > div > div.profile-icon > div{
+     min-width: 75px !important;
+     max-width: 75px !important;
+ }

@@ -75,11 +75,18 @@ urlpatterns_embed_games = [
     path('system/embed-games/fetch-all', EmbedGameFetchAll.as_view()),
 ]
 
+urlpatterns_point_shop = [
+    path('admin/fc/point-shop', PointShopFetchCreate.as_view()),
+    path('admin/point-shop/<pk>', PointShopUpdateDelete.as_view()),
+
+    path('system/point-shop/fetch/<pk>', PointShopFetch.as_view()),
+    path('system/point-shop/fetch-all', PointShopFetchAll.as_view()),
+]
+
 urlpatterns_ads = [
     path('admin/fc/ads', AdsFetchCreate.as_view()),
     path('admin/ads/<pk>', AdsUpdateDelete.as_view()),
 ]
-
 
 routes = [
     path('home/', home),
@@ -93,7 +100,8 @@ routes = [
     *urlpatterns_accessory,
     *urlpatterns_embed_games,
     *urlpatterns_ads,
-    *urlpatterns_files
+    *urlpatterns_files,
+    *urlpatterns_point_shop
 ]
 
 urlpatterns = [*routes] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

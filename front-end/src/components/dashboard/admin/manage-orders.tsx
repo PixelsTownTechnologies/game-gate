@@ -265,7 +265,7 @@ class ManageOrders extends EntityWrapper<OrderDTO, ManageOrdersProps, ManageOrde
 			return null;
 		}
 		return (
-			<div className={ 'white-bg' } ref={ (el) => {
+			<div className={ '' } ref={ (el) => {
 				this.divRef = el;
 			} }>
 				<OrderWidgetView orderView={ this.state.selectedForm } hideKeySection hideReviewSection/>

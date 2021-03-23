@@ -4,8 +4,9 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from app.models import (GameCard, Game, GameKey, Accessory, EmbedGame)
+from app.models import (GameCard, Game, GameKey, Accessory, EmbedGame, PointShop)
 from app.serializers.game import (GameCardSerializer, GameSerializer, AccessorySerializer, EmbedGameSerializer)
+from app.serializers.general import (PointShopSerializer)
 
 
 class GameCardFetchCreate(generics.ListCreateAPIView):
@@ -108,3 +109,27 @@ class EmbedGameFetchAll(generics.ListAPIView):
 class EmbedGameFetch(generics.RetrieveAPIView):
     queryset = EmbedGame.objects.all()
     serializer_class = EmbedGameSerializer
+
+
+class PointShopFetchCreate(generics.ListCreateAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    queryset = PointShop.objects.all()
+    serializer_class = PointShopSerializer
+
+
+class PointShopUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    queryset = PointShop.objects.all()
+    serializer_class = PointShopSerializer
+
+
+class PointShopFetchAll(generics.ListAPIView):
+    queryset = PointShop.objects.all()
+    serializer_class = PointShopSerializer
+
+
+class PointShopFetch(generics.RetrieveAPIView):
+    queryset = PointShop.objects.all()
+    serializer_class = PointShopSerializer

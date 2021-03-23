@@ -1,7 +1,7 @@
 import './home.css';
 import { Wrapper } from "../../../shared/wrapper";
 import React, { useEffect, useState } from 'react';
-import { Dimmer, Divider, Embed, Icon, Image, Modal } from "semantic-ui-react";
+import { Divider, Embed, Image } from "semantic-ui-react";
 import { FlexBox, FlexCenter, If } from "../../../../lib/components/containers";
 import { useWindow } from "../../../../lib/hooks/screen-change";
 import { EntityService } from "../../../../lib/services/entity-service/entity-service";
@@ -19,7 +19,7 @@ import Image3 from '../../../../assets/testing/images/image3.jpg';
 import Image4 from '../../../../assets/testing/images/image4.jpg';
 import Image5 from '../../../../assets/testing/images/image5.jpg';
 import { AdsDTO } from "../../../../models/ads";
-import { AdsBox, buildAdsURL } from "../../../shared/ads/ads";
+import { AdsBox } from "../../../shared/ads/ads";
 import { AccessoryCard, EmbedGameCard } from "../../../shared/accessory/components";
 import { URL_ROUTES } from "../../../../routes";
 import { EmbedGameDTO } from "../../../../models/embed-game";
@@ -171,7 +171,7 @@ function HomeSection1(props: { images?: any[], ads1?: AdsDTO, ads2?: AdsDTO }) {
 	const {width} = useWindow();
 	return (
 		<div className={ 'home-section1' }>
-			<ImageSlider images={ !isEmpty(props.images) && props.images  ? props.images : defaultImages }/>
+			<ImageSlider images={ !isEmpty(props.images) && props.images ? props.images : defaultImages }/>
 			<If flag={ width > 970 }>
 				<div>
 					{
@@ -252,10 +252,11 @@ export function HomeWidget() {
 				loader.disabled();
 			});
 		}
+		// eslint-disable-next-line
 	}, []);
 	return (
 		<Wrapper loading={ loader.isLoading } className={ 'home home-bg' } hideTitle hideContainer>
-			<div className={ 'white-bg' }>
+			<div className={ 'white-bg px-sbp-50' }>
 				<HomeSection1
 					images={ homeConfig?.mainImages }
 					ads1={ homeConfig?.mainAds1 as AdsDTO }

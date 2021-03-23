@@ -17,7 +17,7 @@ class GameCardSerializer(serializers.ModelSerializer):
 class GameSerializer(serializers.ModelSerializer):
     game_cards = GameCardSerializer(many=True, read_only=True, required=False)
     game_orders = ReviewSerializer(many=True, required=False)
-    
+
     class Meta:
         model = Game
         fields = [
@@ -49,4 +49,22 @@ class EmbedGameSerializer(serializers.ModelSerializer):
             'id', 'name', 'src', 'type',
             'details', 'video', 'logo',
             'is_deletable', 'is_editable'
+        ]
+
+
+class SimpleGameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Game
+        fields = [
+            'id', 'logo', 'bg_card', 'game_cards', 'card_name'
+        ]
+
+
+class SimpleGameCardSerializer(serializers.ModelSerializer):
+    game = SimpleGameSerializer()
+
+    class Meta:
+        model = GameCard
+        fields = [
+            'id', 'name', 'game'
         ]

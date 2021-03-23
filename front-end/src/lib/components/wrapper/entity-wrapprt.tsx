@@ -13,6 +13,7 @@ import { BaseComponentProps, BaseComponentState } from "../components";
 import { DFormField } from "../form/models";
 import DialogForm, { DialogFormActionResult } from "../form/dialog-form";
 import { ENTITY_ACTIONS } from "../../services/models/actions";
+import WindowService from "../../services/window.service";
 
 
 export interface EntityWrapperProps<Entity extends BaseEntity> extends BaseComponentProps {
@@ -42,6 +43,7 @@ abstract class EntityWrapper<Entity extends BaseEntity,
 	service: EntityService<Entity>;
 	loaderId?: number;
 	private languageServiceID?: number;
+	private timerSubscribeID?: number;
 	
 	protected constructor(props: EntityProps, serviceConfig: EntityServiceConfig) {
 		super(props);
@@ -71,6 +73,11 @@ abstract class EntityWrapper<Entity extends BaseEntity,
 		return this.state.direction;
 	}
 	
+	refreshData = () => {
+		this.service.reload().then();
+		this.setState({actionLoading: false});
+	}
+	
 	public async reloadContent() {
 		await this.service.reload();
 		this.loaderId = this.service.loaderSubscribe(Object.values(ENTITY_ACTIONS), loading => {
@@ -79,7 +86,7 @@ abstract class EntityWrapper<Entity extends BaseEntity,
 		if (this.state.selectedForm && this.state.selectedForm.id) {
 			const list = this.getData().filter(e => e.id === this.state.selectedForm?.id);
 			if (list && list.length > 0) {
-				this.setState({selectedForm: list[0]});
+				this.onTableSelect(list[0]);
 			}
 		}
 	}
@@ -98,12 +105,18 @@ abstract class EntityWrapper<Entity extends BaseEntity,
 				this.setState({direction: setting.direction, word: setting.words});
 			}
 		});
+		this.timerSubscribeID = WindowService.timerSubscribe(() => {
+			this.refreshData();
+		});
 		this.initialize();
 	}
 	
 	componentWillUnmount = () => {
 		if (this.languageServiceID) {
 			LanguageService.unsubscribe(this.languageServiceID);
+		}
+		if (this.timerSubscribeID) {
+			WindowService.timerUnsubscribe(this.timerSubscribeID);
 		}
 		this.destroy()
 	}
@@ -151,7 +164,7 @@ abstract class EntityWrapper<Entity extends BaseEntity,
 					onClose={
 						() => {
 							if (this.state.action === 'add') {
-								this.setState({selectedForm: undefined});
+								this.onTableSelect(undefined);
 							}
 							this.setAction('');
 						}
@@ -160,7 +173,7 @@ abstract class EntityWrapper<Entity extends BaseEntity,
 						if (id) {
 							await this.service.deleteEntity(id);
 							this.setAction('');
-							this.setState({selectedForm: undefined});
+							this.onTableSelect(undefined);
 						}
 						return {pass: false, errors: [ words.serviceErrors.invalidId ]};
 					} }
@@ -207,7 +220,7 @@ abstract class EntityWrapper<Entity extends BaseEntity,
 						<Button
 							pxIf={ this.showAddButton() }
 							onClick={ () => {
-								this.setState({selectedForm: getEmptyForm('add', this.getFormFields())});
+								this.onTableSelect(getEmptyForm('add', this.getFormFields()));
 								this.setAction('add');
 							} }
 							text={ state.word.basic.add }
@@ -234,7 +247,7 @@ abstract class EntityWrapper<Entity extends BaseEntity,
 		);
 	}
 	
-	public onTableSelect(form: Entity) {
+	public onTableSelect(form?: Entity) {
 		this.setState({selectedForm: form});
 	}
 	
@@ -243,14 +256,14 @@ abstract class EntityWrapper<Entity extends BaseEntity,
 			if (this.state.action === 'edit') {
 				const response = await this.service.updateEntity(this.state.selectedForm.id, form);
 				if (response) {
-					this.setState({selectedForm: this.getData()?.filter(e => e.id === this.state.selectedForm?.id)?.[0]});
+					this.onTableSelect(this.getData()?.filter(e => e.id === this.state.selectedForm?.id)?.[0])
 					return {pass: true};
 				}
 			}
 			if (this.state.action === 'add') {
 				const response = await this.service.createEntity(form);
 				if (response) {
-					this.setState({selectedForm: undefined});
+					this.onTableSelect(undefined);
 					return {pass: true};
 				}
 			}

@@ -238,6 +238,21 @@ export interface LanguageSystemWords extends LanguageBaseWords {
 				name: string;
 			}
 		};
+		pointShop: {
+			title: string;
+			actions: {
+				add: string;
+				edit: string;
+			};
+			fields: {
+				name: string;
+				game_card: string;
+				point_cost: string;
+				quantity: string;
+				show: string;
+				money_reword: string;
+			};
+		};
 	};
 	gameViewer: {
 		fields: {
@@ -305,9 +320,13 @@ export interface LanguageSystemWords extends LanguageBaseWords {
 		totalEarnPoint: string;
 		phoneNumber: string;
 		shipLocationMessage: string;
-		itemID:string;
+		itemID: string;
 		itemName: string;
 		viewMore: string;
+		gameDescription: string;
+		embedGameSimilar: string;
+		gameSimilar: string;
+		accessoriesSimilar: string;
 	};
 	searchViewer: {
 		lookingForGame: string;

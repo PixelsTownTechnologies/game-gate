@@ -305,6 +305,9 @@ export const getEnumFromList = (enumList: EnumDTO[], enumName: string): EnumDTO 
 }
 
 export function searchOnValue(value: string, searchValue: string): boolean {
+	if (!value || !searchValue) {
+		return false;
+	}
 	let includeValue = false;
 	searchValue.split(' ').forEach(v => {
 		includeValue = includeValue || value.includes(v);

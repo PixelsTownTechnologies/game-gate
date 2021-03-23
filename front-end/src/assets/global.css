@@ -68,8 +68,8 @@ label {
 
 .video-embed {
     width: 95% !important;
-    height: 500px !important;
-    margin: 2.5% !important;
+    min-width: 260px !important;
+    height: 480px !important;
 }
 
 @media only screen and (max-width: 1080px) {
@@ -80,9 +80,17 @@ label {
 
 @media only screen and (max-width: 680px) {
     .video-embed {
+        height: 200px !important;
+    }
+}
+
+
+@media only screen and (max-width: 550px) {
+    .video-embed {
         height: 160px !important;
     }
 }
+
 
 .ui.page.modals.dimmer {
     z-index: 9999999 !important;
@@ -106,30 +114,22 @@ label {
 }
 
 
-.dialog-ads {
-    width: 100%;
-    height: 50%;
-    display: flex;
-    align-items: center;
+.scroll-card-view-section {
+    min-width: 100% !important;
+    max-width: 100% !important;
+
+    padding: 50px clamp(30px, calc((100% - 1060px) / 2), 500px) !important;
     justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 }
 
-.dialog-ads-container{
-    position: relative;
+.scroll-card-view-section > div {
+    width: 100% !important;
 }
 
-.dialog-ads-container i{
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    color: #302e2e;
-    font-size: 2em;
-    padding: 5px;
-    cursor: pointer;
-}
 
-.dialog-ads img{
-    max-height: 50vh;
-    align-self: center;
-    height: 100% !important;
+.text-align-c {
+    text-align: center !important;
 }

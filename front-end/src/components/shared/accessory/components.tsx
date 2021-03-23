@@ -3,21 +3,22 @@ import './components.css';
 import { AccessoryDTO } from "../../../models/game";
 import { Image, Link } from "../../../lib/components/basic";
 import { URL_ROUTES } from "../../../routes";
-import { Label, Image as SImage } from "semantic-ui-react";
+import { Label} from "semantic-ui-react";
 import { costFormat } from "../../../lib/utils/utils";
 import { EmbedGameDTO } from "../../../models/embed-game";
 import { FlexBox } from "../../../lib/components/containers";
 import { useLanguage } from "../../../lib/hooks/languageHook";
 import NoImage from '../../../lib/assets/images/noImage.jpg';
+import { getImageURL } from "../../../utils/util";
 
 export function EmbedGameCard({game}: { game?: EmbedGameDTO }) {
 	if (!game) {
 		return null;
 	}
 	return (
-		<Link to={ URL_ROUTES.ACCESSORY_VIEWER + '/' + game.id } className={ 'embed-game-card' }>
+		<Link to={ URL_ROUTES.EMBED_GAME_VIEWER + '/' + game.id } className={ 'embed-game-card' }>
 			<div>
-				<Image src={ game.logo } width={ 135 }/>
+				<Image src={ getImageURL(game.logo) } width={ 135 }/>
 			</div>
 			<h4>{ game.name }</h4>
 		</Link>
@@ -35,7 +36,8 @@ export function AccessoryCard({accessory}: { accessory?: AccessoryDTO }) {
 			<div>
 				<div  className={ 'ac-img-container' }>
 				<img
-					src={ accessory.logo && !error ? accessory.logo : NoImage }
+					alt={''}
+					src={ accessory.logo && !error ? getImageURL(accessory.logo) : NoImage }
 					onError={() => setError(true)}
 				/>
 				</div>

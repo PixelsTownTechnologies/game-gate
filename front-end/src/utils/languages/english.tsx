@@ -319,6 +319,21 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
 				name: 'Name'
 			},
 			title: 'Manage Ads'
+		},
+		pointShop: {
+			title: 'Manage Point Shop',
+			actions: {
+				add: 'Add Point Card',
+				edit: 'Edit Point Card',
+			},
+			fields: {
+				name: 'Name',
+				game_card: 'Game Card',
+				point_cost: 'Price In Point',
+				quantity: 'Quantity',
+				show: 'Show',
+				money_reword: 'Money Reword'
+			}
 		}
 	},
 	gameViewer: {
@@ -390,6 +405,10 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
 		itemID: 'Item ID',
 		itemName: 'Item Name',
 		viewMore: 'View More',
+		gameDescription: 'GAME DESCRIPTION',
+		accessoriesSimilar: 'Check Similar Accessories',
+		embedGameSimilar: 'Check Similar Games',
+		gameSimilar: 'Check Similar Games'
 	},
 	searchViewer: {
 		searchTitle: 'Looking for Help?',

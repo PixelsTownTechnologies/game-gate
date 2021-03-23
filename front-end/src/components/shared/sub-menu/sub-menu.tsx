@@ -6,10 +6,10 @@ import { FlexBox } from "../../../lib/components/containers";
 import { costFormat } from "../../../lib/utils/utils";
 import { useLanguage } from "../../../lib/hooks/languageHook";
 import { UserDTO } from "../../../models/user";
-import { useEntityStore } from "../../../lib/hooks/user";
+import { connect } from "react-redux";
+import { StoreState } from "../../../lib/models/application";
 
-export function SubMenu() {
-	const user = useEntityStore<UserDTO>('user');
+function SubMenuClass({user}: { user: UserDTO }) {
 	const {dir, words} = useLanguage();
 	if (!user) {
 		return null;
@@ -40,3 +40,8 @@ export function SubMenu() {
 		</SMenu>
 	);
 }
+
+
+export const SubMenu = connect((state: StoreState, ownProps) => {
+	return {...ownProps, user: state.user, home: state.entity['home']};
+})(SubMenuClass as any);

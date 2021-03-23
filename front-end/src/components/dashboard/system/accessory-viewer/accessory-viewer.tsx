@@ -3,9 +3,9 @@ import './accessory-viewer.css';
 import { BaseRouteComponentProps } from "../../../../lib/components/components";
 import { useLanguage } from "../../../../lib/hooks/languageHook";
 import { Wrapper } from "../../../shared/wrapper";
-import { FlexBox, FlexCenter, If } from "../../../../lib/components/containers";
+import { FlexBox, If } from "../../../../lib/components/containers";
 import { NotFoundWidget } from "../../../errors/not-found-404";
-import { clamp, costFormat, isNull } from "../../../../lib/utils/utils";
+import { clamp, costFormat, isEmpty, isNull, searchOnValue } from "../../../../lib/utils/utils";
 import { OrderConfirm } from "../../../shared/game-viewer-component/game-viewer-component";
 import { AccessoryDTO } from "../../../../models/game";
 import { EntityService } from "../../../../lib/services/entity-service/entity-service";
@@ -25,14 +25,21 @@ import { ImageShower } from "../../../../lib/components/basic";
 import { Counter } from "../../../../lib/components/form/fields";
 import { UpdateUserDataDialog } from "../../user/profile/profile";
 import { ReviewScrollCard } from "../../../shared/review/review-component";
+import { connect } from "react-redux";
+import { StoreState } from "../../../../lib/models/application";
+import { HomeDTO } from "../../../../models/home-details";
+import { ScrollCardView } from "../../../shared/games-components/games-components";
+import { URL_ROUTES } from "../../../../routes";
+import { AccessoryCard } from "../../../shared/accessory/components";
 
 interface AccessoryViewerWidgetProps {
 	accessory: AccessoryDTO | null;
 	onPay: () => void;
+	similarAccessories: AccessoryDTO[];
 }
 
 
-export function AccessoryViewerWidget({accessory, onPay}: AccessoryViewerWidgetProps) {
+export function AccessoryViewerWidget({accessory, onPay, similarAccessories}: AccessoryViewerWidgetProps) {
 	const [ showLogin, setShowLogin ] = useState(false);
 	const [ selectedQuantity, setSelectedQuantity ] = useState(accessory && !accessory.is_sold ? accessory.order_min : 1);
 	const [ showPaymentConfirm, setShowPaymentConfirm ] = useState(false);
@@ -188,9 +195,29 @@ export function AccessoryViewerWidget({accessory, onPay}: AccessoryViewerWidgetP
 					</div>
 				</div>
 			</FlexBox>
-			<FlexBox justifyContent={ 'center' } alignItems={ type === 'Mobile' ? 'center' : undefined }
+			{
+				!isEmpty(similarAccessories) ?
+					(
+						<div className={ 'scroll-card-view-section white-bg em-viewer-container green-bg' }>
+							<ScrollCardView
+								textClassName={ 'white-text' }
+								showMoreURL={ URL_ROUTES.SEARCH + '/accessory' }
+								title={ words.viewer.accessoriesSimilar }
+								list={
+									similarAccessories?.map((accessory, index) => {
+										return (
+											<AccessoryCard key={ index } accessory={ accessory }/>
+										);
+									})
+								}
+							/>
+						</div>
+					) : null
+			}
+			<FlexBox justifyContent={ 'center' } className={ 'w-background' }
+			         alignItems={ type === 'Mobile' ? 'center' : undefined }
 			         flexDirection={ 'column' }>
-				<FlexBox dir={ dir } className={ 'details-section w-background ' } padding={ 25 }
+				<FlexBox dir={ dir } className={ 'details-section' } padding={ 25 }
 				         flexDirection={ 'column' }>
 					<FlexBox justifyContent={ 'center' } alignItems={ type === 'Mobile' ? 'center' : undefined }
 					         flexDirection={ 'column' }>
@@ -245,8 +272,11 @@ export function AccessoryViewerWidget({accessory, onPay}: AccessoryViewerWidgetP
 	);
 }
 
+interface AccessoryViewerProps extends BaseRouteComponentProps {
+	accessory: AccessoryDTO[];
+}
 
-export function AccessoryViewer(props: BaseRouteComponentProps) {
+function AccessoryViewerClass(props: AccessoryViewerProps) {
 	const accessoryId: number | null = props.match.params.accessoryId
 	&& !isNaN(Number(props.match.params.accessoryId)) ? Number(props.match.params.accessoryId) : null;
 	const service = new EntityService<AccessoryDTO>(systemAccessoryService);
@@ -272,13 +302,33 @@ export function AccessoryViewer(props: BaseRouteComponentProps) {
 				fetchEntity();
 			}, 50);
 		}
+		// eslint-disable-next-line
 	}, [ accessoryId ])
-	// eslint-disable-next-line
 	useEffect(() => {
 		if (( !accessory && !isNotFoundPage )) {
 			fetchEntity();
 		}
+		// eslint-disable-next-line
 	}, []);
+	let similarAccessories = props.accessory && accessory ?
+		props.accessory.filter(acc => {
+			return (
+				acc.id !== accessory.id && (
+					acc.type === accessory.type
+					|| searchOnValue(acc.name, accessory.name)
+					|| searchOnValue(acc.type, accessory.name)
+					|| searchOnValue(acc.details, accessory.name)
+					|| searchOnValue(acc.short_description, accessory.name)
+				)
+			)
+		})
+		: [];
+	if (similarAccessories.length < 12 && ( props.accessory.length - similarAccessories.length ) > 0 && accessory) {
+		const similarAccessoriesIds = similarAccessories.map(eg => eg.id);
+		const otherUnSimilarAccessories = props.accessory.filter(acc => acc.id !== accessory.id)
+			.filter(acc => !similarAccessoriesIds.includes(acc.id));
+		similarAccessories = [ ...similarAccessories, ...otherUnSimilarAccessories.slice(0, ( 12 - similarAccessories.length )) ];
+	}
 	return (
 		<Wrapper
 			className={ 'game-viewer-component-bg' }
@@ -288,19 +338,27 @@ export function AccessoryViewer(props: BaseRouteComponentProps) {
 			hideTitle
 		>
 			{
-				isNotFoundPage && !loader.isLoading ?(
-					<div className={'center-not-found'}>
+				isNotFoundPage && !loader.isLoading ? (
+					<div className={ 'center-not-found' }>
 						<NotFoundWidget/>
 					</div>
 				) : null
 			}
 			{
 				accessory ? (
-					<AccessoryViewerWidget onPay={ () => {
-						fetchEntity();
-					} } accessory={ accessory }/>
+					<AccessoryViewerWidget
+						similarAccessories={ similarAccessories }
+						onPay={ () => {
+							fetchEntity();
+						} }
+						accessory={ accessory }/>
 				) : null
 			}
 		</Wrapper>
 	);
 }
+
+export const AccessoryViewer = connect((state: StoreState, props) => {
+	const home: ( HomeDTO | null ) = state.entity['home'] ? ( state.entity['home'] as HomeDTO ) : null;
+	return {...props, accessory: home && !isEmpty(home.accessory) ? home.accessory : []};
+})(AccessoryViewerClass);

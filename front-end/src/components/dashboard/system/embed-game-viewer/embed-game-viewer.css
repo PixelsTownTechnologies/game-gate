@@ -1,0 +1,69 @@
+.em-viewer-container {
+
+}
+
+@media only screen and (max-width: 600px) {
+    .em-viewer-container {
+        padding: 0;
+    }
+}
+
+
+.em-viewer-container iframe {
+    width: 100%;
+    height: calc(100vh - 250px);
+    min-height: 500px;
+    border: unset !important;
+}
+
+.eg-info-container {
+    padding: 50px clamp(20px, calc((100% - 1150px) / 2), 500px) !important;
+    display: flex;
+}
+
+.eg-info-container > div:nth-child(1) {
+    flex: 75%;
+}
+
+.eg-info-container > div:nth-child(2) {
+    background: white;
+    flex: 25%;
+    min-width: 200px;
+    height: fit-content;
+    padding: 5px 5px 50px;
+}
+
+
+@media only screen and (max-width: 950px) {
+    .eg-info-container > div:nth-child(2) {
+        display: none;
+    }
+}
+
+.ads-section{
+    overflow: hidden;
+}
+
+.ads-section a {
+    display: flex;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    min-height: calc((400px - 40px) / 2) !important;
+    max-height: calc((400px - 40px) / 2) !important;
+}
+
+.ads-section a:hover img {
+    transform: scale(1.04, 1.04);
+}
+
+.ads-section a img {
+    background: #00000050 !important;
+    width: 100% !important;
+    min-width: 180px !important;
+    max-width: 240px !important;
+    transition: 600ms !important;
+}
+

@@ -135,6 +135,12 @@
     padding-top: 25px !important;
 }
 
+
+.px-sbp-50 {
+    padding-bottom: 50px !important;
+}
+
+
 .auto {
     text-align: match-parent !important;
 }

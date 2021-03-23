@@ -5,7 +5,7 @@ import { useLanguage } from "../../../../lib/hooks/languageHook";
 import { Wrapper } from "../../../shared/wrapper";
 import { Divider, FlexBox, FlexCenter, If, Map } from "../../../../lib/components/containers";
 import { NotFoundWidget } from "../../../errors/not-found-404";
-import { buildCN, clamp, costFormat, isNull } from "../../../../lib/utils/utils";
+import { buildCN, clamp, costFormat, isEmpty, isNull, searchOnValue } from "../../../../lib/utils/utils";
 import { ImageCard, OrderConfirm } from "../../../shared/game-viewer-component/game-viewer-component";
 import { GameCardDTO, GameDTO, gameTypes, platformTypeStateToPlatform } from "../../../../models/game";
 import { EntityService } from "../../../../lib/services/entity-service/entity-service";
@@ -22,7 +22,8 @@ import {
 	Header,
 	Icon,
 	Image,
-	Label, Rating
+	Label,
+	Rating
 } from "semantic-ui-react";
 import { useFavorite } from "../../../../hooks/storage";
 import Countries from '../../../../assets/icons/countries.png';
@@ -37,9 +38,17 @@ import TokenService from "../../../../lib/services/token-service";
 import { registerUser, updateUser } from "../../../../lib/store/actions/user";
 import Logo from '../../../../assets/logo/logo-bg-w.jpg';
 import { ReviewScrollCard } from "../../../shared/review/review-component";
+import { connect } from "react-redux";
+import { StoreState } from "../../../../lib/models/application";
+import { HomeDTO } from "../../../../models/home-details";
+import { manipulateHomeData } from "../../../../utils/util";
+import { GameCardBig, ScrollCardView } from "../../../shared/games-components/games-components";
+import { URL_ROUTES } from "../../../../routes";
+import { AccessoryCard } from "../../../shared/accessory/components";
 
 interface GameViewerWidgetProps {
 	game: GameDTO | null;
+	similarGames: GameCardDTO[];
 	gameCardId: number | null;
 	onPay: () => void;
 }
@@ -74,7 +83,7 @@ export function GameCardWidget({logo, isSelected, onSelect, gameCard}: {
 	);
 }
 
-export function GameViewerWidget({game, gameCardId, onPay}: GameViewerWidgetProps) {
+export function GameViewerWidget({game, gameCardId, onPay, similarGames}: GameViewerWidgetProps) {
 	const {isFavorite, addToFavorite, removeFromFavorite} = useFavorite();
 	const [ isInFavorite, setInFavorite ] = useState<boolean>(isFavorite(game ? game.id : 0));
 	const urlGame = game?.game_cards?.filter(gc => gc.id === gameCardId)?.[0];
@@ -88,16 +97,16 @@ export function GameViewerWidget({game, gameCardId, onPay}: GameViewerWidgetProp
 	const user = useEntityStore<UserBaseDTO>('user');
 	const {words, dir} = useLanguage();
 	const {width, type} = useWindow();
-	useEffect(() =>{
-		if(selectedCard?.id !== gameCardId){
+	useEffect(() => {
+		if (selectedCard?.id !== gameCardId) {
 			const newUrlGame = game?.game_cards?.filter(gc => gc.id === gameCardId)?.[0];
-			if(!newUrlGame?.is_sold) {
+			if (!newUrlGame?.is_sold) {
 				setSelectedCard(!newUrlGame?.is_sold ? newUrlGame : undefined);
-				setSelectedQuantity(!newUrlGame?.is_sold && newUrlGame?.order_min? newUrlGame.order_min : 0);
+				setSelectedQuantity(!newUrlGame?.is_sold && newUrlGame?.order_min ? newUrlGame.order_min : 0);
 			}
 		}
 		// eslint-disable-next-line
-	}, [gameCardId])
+	}, [ gameCardId ])
 	if (!game) {
 		return null;
 	}
@@ -157,6 +166,7 @@ export function GameViewerWidget({game, gameCardId, onPay}: GameViewerWidgetProp
 		}
 		return {pass: false};
 	}
+	
 	return (
 		<FlexBox flexDirection={ 'column' } justifyContent={ 'flex-start' }>
 			<FlexBox padding={ clamp(10, width * 0.10, 60) }
@@ -181,7 +191,8 @@ export function GameViewerWidget({game, gameCardId, onPay}: GameViewerWidgetProp
 								<Rating maxRating={ 5 } disabled defaultRating={ game.review_stars + 0.5 }
 								        icon='star'
 								        size='large'/>
-								<Header as={ 'h4' }>{ game.review_stars ? costFormat(game.review_stars) : '0.0' }</Header>
+								<Header
+									as={ 'h4' }>{ game.review_stars ? costFormat(game.review_stars) : '0.0' }</Header>
 								<Header as={ 'h4' }>{ game.total_reviews } { words.viewer.reviews }</Header>
 								<Header as={ 'h4' }>{ game.total_orders } { words.viewer.orders }</Header>
 							</div>
@@ -350,6 +361,25 @@ export function GameViewerWidget({game, gameCardId, onPay}: GameViewerWidgetProp
 					</FlexBox>
 				</FlexBox>
 			</If>
+			{
+				!isEmpty(similarGames) ?
+					(
+						<div className={ 'scroll-card-view-section white-bg em-viewer-container green-bg' }>
+							<ScrollCardView
+								textClassName={ 'white-text' }
+								showMoreURL={ URL_ROUTES.SEARCH + '/game' }
+								title={ words.viewer.gameSimilar }
+								list={
+									similarGames?.map((game, index) => {
+										return (
+											<GameCardBig key={ index } game={ game.game as GameDTO } gameCard={game}/>
+										);
+									})
+								}
+							/>
+						</div>
+					) : null
+			}
 			<FlexBox className={ 'white-bg' } padding={ clamp(10, width * 0.10, 60) } justifyContent={ 'center' }
 			         alignItems={ type === 'Mobile' ? 'center' : undefined }
 			         flexDirection={ 'column' }>
@@ -402,8 +432,11 @@ export function GameViewerWidget({game, gameCardId, onPay}: GameViewerWidgetProp
 	);
 }
 
+interface GameViewerProps extends BaseRouteComponentProps {
+	gameCards: GameCardDTO[];
+}
 
-export function GameViewer(props: BaseRouteComponentProps) {
+function GameViewerClass(props: GameViewerProps) {
 	const gameId: number | null = props.match.params.gameId
 	&& !isNaN(Number(props.match.params.gameId)) ? Number(props.match.params.gameId) : null;
 	const gameCardId: number | null = props.match.params.gameCardId
@@ -431,13 +464,32 @@ export function GameViewer(props: BaseRouteComponentProps) {
 				fetchEntity();
 			}, 50);
 		}
+		// eslint-disable-next-line
 	}, [ gameId ])
-	// eslint-disable-next-line
 	useEffect(() => {
 		if (!game && !isNotFoundPage) {
 			fetchEntity();
 		}
+		// eslint-disable-next-line
 	}, []);
+	let similarGames = props.gameCards && game ?
+		props.gameCards.filter(g => {
+			const gameOfCard = g.game as GameDTO;
+			return (
+				gameOfCard && gameOfCard.id !== game.id && (
+					gameOfCard.platform === game.platform
+					|| searchOnValue(gameOfCard.name, game.name)
+					|| searchOnValue(gameOfCard.details, game.name)
+				)
+			)
+		})
+		: [];
+	if (similarGames.length < 12 && ( props.gameCards.length - similarGames.length ) > 0 && game) {
+		const similarGamesIds = similarGames.map(eg => eg.id);
+		console.log(similarGamesIds, props.gameCards.filter(eg => (eg.game as GameDTO).id !== game.id))
+		const otherUnSimilarGames = props.gameCards.filter(eg => (eg.game as GameDTO).id !== game.id).filter(eg => !similarGamesIds.includes(eg.id));
+		similarGames = [ ...similarGames, ...otherUnSimilarGames.slice(0, ( 12 - similarGames.length )) ];
+	}
 	return (
 		<Wrapper
 			loading={ loader.isLoading }
@@ -446,19 +498,29 @@ export function GameViewer(props: BaseRouteComponentProps) {
 			hideTitle
 		>
 			{
-				isNotFoundPage && !loader.isLoading ?(
-					<div className={'center-not-found'}>
+				isNotFoundPage && !loader.isLoading ? (
+					<div className={ 'center-not-found' }>
 						<NotFoundWidget/>
 					</div>
 				) : null
 			}
 			{
 				game ? (
-					<GameViewerWidget onPay={ () => {
+					<GameViewerWidget
+						similarGames={similarGames}
+						onPay={ () => {
 						fetchEntity();
-					} } game={ game } gameCardId={ gameCardId }/>
+					} } game={ game }
+						gameCardId={ gameCardId }
+					/>
 				) : null
 			}
 		</Wrapper>
 	);
 }
+
+
+export const GameViewer = connect((state: StoreState, props) => {
+	const home: ( HomeDTO | null ) = state.entity['home'] ? manipulateHomeData(state.entity['home'] as HomeDTO) : null;
+	return {...props, gameCards: home && !isEmpty(home.gameCards) ? home.gameCards : []};
+})(GameViewerClass);

@@ -1,0 +1,34 @@
+
+.ads-dimmer .content {
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.dialog-ads-container {
+    position: relative;
+    max-width: 90%;
+    max-height: 450px;
+}
+
+.dialog-ads-container i {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: #302e2e;
+    font-size: 2em;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.dialog-ads {
+}
+
+
+.dialog-ads img {
+    max-height: 450px;
+    max-width: 100%;
+}
+

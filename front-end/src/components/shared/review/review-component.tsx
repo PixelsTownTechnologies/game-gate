@@ -1,7 +1,7 @@
 import './review-component.css';
 import React from "react";
 import { ReviewDTO } from "../../../models/game";
-import { Button, Divider, Header, Icon, Rating } from "semantic-ui-react";
+import { Button, Divider, Icon, Rating } from "semantic-ui-react";
 import { useLanguage } from "../../../lib/hooks/languageHook";
 import { buildCN, costFormat, isEmpty } from "../../../lib/utils/utils";
 import { FlexBox } from "../../../lib/components/containers";
@@ -73,8 +73,8 @@ export function ReviewScrollCard(props: {
 				</FlexBox>
 				{
 					props.description ?
-						<h4 className={ buildCN('px-non-margin', props.headerClassName
-							? props.headerClassName : 'grey-text') }>  { props.description } </h4>
+						<h4 className={ buildCN('px-non-margin', ( props.headerClassName
+							? props.headerClassName : 'grey-text' )) }>  { props.description } </h4>
 						: null
 				}
 			</FlexBox>
@@ -119,8 +119,8 @@ export function ReviewScrollCard(props: {
 					</div>
 				) : (
 					<div className={ 'review-scroll-cc' }>
-						<h1 className={ props.headerClassName
-							? props.headerClassName : 'grey-text' }> { language.words.reviews.noReviews } </h1>
+						<h1 className={ ( props.headerClassName
+							? props.headerClassName : 'grey-text' ) + ' text-align-c' }> { language.words.reviews.noReviews } </h1>
 					</div>
 				)
 			}

@@ -427,3 +427,54 @@ export const filesService: EntityServiceConfig = {
 		},
 	]
 };
+
+export const pointShopService: EntityServiceConfig = {
+	storeName: 'pointShop',
+	dataType: 'array',
+	baseURL: '',
+	loadToStore: true,
+	actions: [
+		{
+			type: 'FIND',
+			authenticate: true,
+			url: 'admin/fc/point-shop'
+		}, {
+			type: 'FIND_BY_ID',
+			authenticate: true,
+			url: 'admin/point-shop',
+			formData: true
+		}, {
+			type: 'CREATE',
+			authenticate: true,
+			url: 'admin/fc/point-shop',
+			formData: true
+		}, {
+			type: 'UPDATE',
+			authenticate: true,
+			url: 'admin/point-shop',
+			formData: true
+		}, {
+			type: 'DELETE',
+			authenticate: true,
+			url: 'admin/point-shop'
+		}
+	]
+};
+
+export const systemPointShopService: EntityServiceConfig = {
+	storeName: 'pointShopSystem',
+	dataType: 'array',
+	baseURL: '',
+	loadToStore: false,
+	actions: [
+		{
+			type: 'FIND',
+			authenticate: false,
+			url: 'system/point-shop/fetch-all'
+		}, {
+			type: 'FIND_BY_ID',
+			authenticate: false,
+			url: 'system/point-shop/fetch'
+		}
+	]
+};

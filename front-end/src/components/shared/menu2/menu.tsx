@@ -257,11 +257,11 @@ class Menu2 extends BaseComponent<MenuProps, MenuState> {
 	
 	show(props: MenuProps, state: MenuState): JSX.Element | null {
 		return (
-			<FlexBox flexDirection={ 'column' } alignItems={ 'center' } className={ 'px menu' }>
+			<FlexBox dir={'ltr'} flexDirection={ 'column' } alignItems={ 'center' } className={ 'px menu' }>
 				<Loader show={ state.homeLoader }/>
 				<Redirect flag={ !!this.state.searchVal }
 				          url={ URL_ROUTES.SEARCH + `?search=${ this.state.searchVal }` }/>
-				<FlexSpace className={ 'section1' }>
+				<FlexSpace dir={'ltr'}  className={ 'section1' }>
 					<Link to={ URL_ROUTES.HOME }>
 						<Header className={ 'm-app-name' }>
 							GAMERS DZ
@@ -271,7 +271,7 @@ class Menu2 extends BaseComponent<MenuProps, MenuState> {
 						this.setState({searchVal: value});
 					} }/>
 				</FlexSpace>
-				<FlexSpace className={ 'stackable  section2' }>
+				<FlexSpace dir={'ltr'}  className={ 'stackable  section2' }>
 					<FlexSpace className={ 'items-menu' }>
 						{ this.showSection2() }
 					</FlexSpace>

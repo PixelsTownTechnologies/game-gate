@@ -31,7 +31,7 @@ export function buildAdsURL(ads?: AdsDTO) {
 export function AdsBox({ads, className}: { ads?: AdsDTO, className?: string }) {
 	return (
 		<Link className={ className } to={ buildAdsURL(ads) } out={ ads?.type === 'external' }>
-			<img alt={ '' } src={ ads?.cover }/>
+			<img alt={ '' } src={ getImageURL(ads?.cover) }/>
 		</Link>
 	);
 }
@@ -83,6 +83,7 @@ function AdsDialogClass(props: { home: HomeDTO }) {
 	const coverURL = getImageURL(selectedAds?.cover);
 	return (
 		<Dimmer
+			className={'ads-dimmer'}
 			active={ showAds }
 			page
 		>

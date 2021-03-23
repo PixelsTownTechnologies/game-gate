@@ -198,7 +198,6 @@
     align-items: center;
     font-family: var(--globalFont);
     border: 0.12rem solid rgba(159, 159, 159, 0.65);
-    min-width: clamp(120px, 30vh, 200px);
     max-width: clamp(120px, 30vh, 200px);
     padding: 5px;
     margin: 10px;

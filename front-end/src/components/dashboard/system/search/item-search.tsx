@@ -34,6 +34,7 @@ export function SearchOnItem(props: BaseRouteComponentProps
 	const [ numberOfItemInAccessories, setNumberItemInAccessories ] = useState(5);
 	const [ numberOfItemInEmbedGame, setNumberItemInEmbedGame ] = useState(7);
 	const loader = useLoader();
+	// eslint-disable-next-line
 	useEffect(() => {
 		if (searchValue !== defaultSearchValue) {
 			setSearchValue(defaultSearchValue);
@@ -84,20 +85,17 @@ export function SearchOnItem(props: BaseRouteComponentProps
 		}
 		return [];
 	}
-	let totalGamesList = 0;
-	let totalAccessories = 0;
-	let totalEmbedGames = 0;
 	let games = getGames();
-	totalGamesList += games.length;
+	let totalGamesList = games.length;
 	games = games.slice(0, numberOfItemInGame);
 	let gameCards = getGameCards();
 	totalGamesList += gameCards.length;
 	gameCards = gameCards.slice(0, ( numberOfItemInGame - games.length ) > 0 ? ( numberOfItemInGame - games.length ) : 0);
 	let accessories = getAccessories();
-	totalAccessories = accessories.length;
+	let totalAccessories = accessories.length;
 	accessories = accessories.slice(0, numberOfItemInAccessories);
 	let embedGames = getEmbedGames();
-	totalEmbedGames = embedGames.length;
+	let totalEmbedGames = embedGames.length;
 	embedGames = embedGames.slice(0, numberOfItemInEmbedGame);
 	return (
 		<Wrapper

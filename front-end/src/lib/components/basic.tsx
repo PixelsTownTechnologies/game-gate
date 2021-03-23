@@ -192,7 +192,7 @@ interface ImageProps {
 }
 
 export function Image(props: ImageProps) {
-	const [error, setError] = useState(false);
+	const [ error, setError ] = useState(false);
 	return (
 		<div
 			style={ {'--imageWidth': `${ props.width }px`} as any }
@@ -212,7 +212,7 @@ export function Image(props: ImageProps) {
 			<img alt={ '' }
 			     style={ {'padding': props.padding ? props.padding : 0} as any }
 			     src={ props.src && !error ? props.src : NoImage }
-			     onError={() => setError(true)}
+			     onError={ () => setError(true) }
 			/>
 		</div>
 	);
@@ -277,7 +277,7 @@ export function ImageShower(props: { mainImage: any, imageList: any[], width: nu
 			</div>
 			<div style={ {maxWidth: props.width} }>
 				{
-					[ selected, ...props.imageList ].map((img, index) => {
+					[ ( props.mainImage ? props.mainImage : NoImage ), ...props.imageList ].map((img, index) => {
 						return <Image
 							key={ index }
 							onClick={ () => {

@@ -321,6 +321,21 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
 			},
 			title: 'أدارة الاعلانات'
 		},
+		pointShop: {
+			title: 'أدارة سوق النقاط',
+			actions: {
+				add: 'أضافة عرض جديد',
+				edit: 'تعديل العرض',
+			},
+			fields: {
+				name: 'ألاسم',
+				game_card: 'العبة المختارة',
+				point_cost: 'السعر',
+				quantity: 'الكمية',
+				show: 'أظهار',
+				money_reword: 'مكافاة المالية'
+			}
+		}
 	},
 	gameViewer: {
 		fields: {
@@ -390,7 +405,11 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
 		shipLocationMessage: 'يرجى تقديم عنوانك ورقم هاتفك.',
 		itemID: 'الرقم التسلسلي للعنصر',
 		itemName: 'أسم العنصر',
-		viewMore: 'أظهار المزيد'
+		viewMore: 'أظهار المزيد',
+		gameDescription: 'وصف العبة',
+		accessoriesSimilar: 'قم بتفحص الملحقات المتشابهة',
+		embedGameSimilar: 'تحقق من الألعاب المشابهة',
+		gameSimilar: 'تحقق من الألعاب المشابهة'
 	},
 	searchViewer: {
 		searchTitle: 'هل تحتاج مساعده؟',

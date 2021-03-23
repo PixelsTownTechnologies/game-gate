@@ -1,8 +1,8 @@
-import { Button, Divider, Icon, Image, Label } from "semantic-ui-react";
+import { Button, Button as SButton, Divider, Icon, Image, Label } from "semantic-ui-react";
 import React from "react";
 import { GameCardDTO, GameDTO } from "../../../models/game";
 import './games-components.css';
-import { Link, LinkButton } from "../../../lib/components/basic";
+import { Link } from "../../../lib/components/basic";
 import { URL_ROUTES } from "../../../routes";
 import { FlexBox, FlexCenter, FlexSpace, If } from "../../../lib/components/containers";
 import { buildCN, costFormat, isEmpty } from "../../../lib/utils/utils";
@@ -67,7 +67,10 @@ export function GameCardBig(props: { gameCard?: GameCardDTO, game: GameDTO }) {
 }
 
 
-export function ScrollCardView(props: { list?: any[], title?: string, description?: string, showMoreURL?: string }) {
+export function ScrollCardView(props: {
+	list?: any[], title?: string,
+	description?: string, showMoreURL?: string, textClassName?: string, buttonClassName?: string
+}) {
 	const sectionRef = React.useRef<HTMLDivElement>(null);
 	const language = useLanguage();
 	if (isEmpty(props.list) || isEmpty(props.list?.filter(v => !!v))) {
@@ -77,23 +80,21 @@ export function ScrollCardView(props: { list?: any[], title?: string, descriptio
 		<div className={ 'scroll-card-view-box' }>
 			<FlexBox dir={ language.dir } flexDirection={ 'column' }
 			         justifyContent={ 'flex-start' }>
-				<FlexSpace dir={language.dir}>
-					<h1 className={ 'grey-text' }> { props.title ? props.title : '' } </h1>
+				<FlexSpace dir={ language.dir }>
+					<h1 className={ props.textClassName ? props.textClassName : 'grey-text' }> { props.title ? props.title : '' } </h1>
 					{
 						props.showMoreURL ? (
-							<LinkButton buttonSetting={ {
-								text: language.words.viewer.viewMore,
-								basic: true,
-								color: 'grey',
-								className: 'view-more-button'
-							} } url={ props.showMoreURL }/>
+							<Link to={ props.showMoreURL }>
+								<SButton inverted={ !!props.textClassName } className={ 'view-more-button' }
+								         basic> { language.words.viewer.viewMore } </SButton>
+							</Link>
 						) : null
 					}
 				</FlexSpace>
 				<Divider hidden/>
 				{
 					props.description ?
-						<h4 className={ 'grey-text px-non-margin' }>  { props.description } </h4>
+						<h4 className={ props.textClassName ? props.textClassName : 'grey-text px-non-margin' }>  { props.description } </h4>
 						: null
 				}
 			</FlexBox>
@@ -105,7 +106,7 @@ export function ScrollCardView(props: { list?: any[], title?: string, descriptio
 			</div>
 			<FlexCenter className={ 'cv-button-box' }>
 				<div/>
-				<Divider horizontal>
+				<Divider horizontal className={ props.textClassName ? props.textClassName : '' }>
 					<Button.Group basic size='small' className={ 'cv-scroll-button' }>
 						<Button
 							className={ 'px-lib' } color={ 'orange' } icon
