@@ -321,6 +321,15 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
 			title: 'Manage Ads'
 		},
 		pointShop: {
+			shop: {
+				noOffAvNBL: 'No Offers Available Now Back Later',
+				title: 'Points Shop',
+				creditsAvailable: 'Credits Available',
+				balance: 'Balance',
+				credits: 'Credits',
+				descriptionMsg: 'Confirm your order and information You are responsible for everything submitted and for your purchase order',
+				headerMsg: 'Confirm Your Order'
+			},
 			title: 'Manage Point Shop',
 			actions: {
 				add: 'Add Point Card',
@@ -342,6 +351,7 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
 			rulesLabel: 'I assume all responsibility for the information you provide',
 			subDetails: 'More Information?'
 		},
+		alreadyInCard: 'Already In Cart',
 		importantNotes: 'Important Note',
 		addToFavorite: 'Add Favorite',
 		offer: 'Offer',
@@ -354,6 +364,8 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
 		selectOrderData: 'Select Order Data',
 		credits: 'Credits',
 		sold: 'Stock Out',
+		isFavorite: 'Favorite',
+		inCartAlready: 'In Cart',
 		totalPrice: 'Total Cost',
 		details: 'Game Details',
 		videoGame: 'Game Trailer',
@@ -429,6 +441,30 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
 		accessoryReviews: 'Accessory Reviews',
 		userReviews: 'Users Reviews',
 		userReviewsSection: 'Reviews are written by real users and only after a completed order. Besides spam, no reviews are edited or deleted'
+	},
+	cart: {
+		title: 'My Cart',
+		totalCost: 'Total Cost',
+		Games: 'Games List',
+		needShipLocation: 'Enter Ship Location',
+		needAccountID: 'Enter Account ID',
+		checkout: 'Checkout Orders',
+		done: 'Done',
+		cartIsEmpty: 'Your Cart Empty',
+		gameNotAvailable: 'Game Not Available',
+	},
+	favorite: {
+		title: 'Favorite Games',
+		emptyFavorite: 'You don\'t have any item' ,
+	},
+	footer: {
+		fastAccess: 'Fast Access',
+		contacts: 'Contacts',
+		rules: 'Copyright © 2021 GAMERS-DZ. All rights reserved. All product names are trademarks of their respective companies.',
+		homePage: 'Home Page',
+		game:'Games',
+		accessories:'Accessories',
+		playGameForFree: 'Play Games For Free',
 	}
 };
 

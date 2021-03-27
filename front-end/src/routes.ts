@@ -22,6 +22,9 @@ import ManageAds from "./components/dashboard/admin/manage-ads";
 import { SearchOnItem } from "./components/dashboard/system/search/item-search";
 import EmbedGame from "./components/dashboard/system/embed-game-viewer/embed-game-viewer";
 import ManagePointShop from "./components/dashboard/admin/manage-point-shop";
+import UserCart from './components/dashboard/user/cart/cart';
+import PointShopPage from './components/dashboard/system/points-shop/point-shop';
+import FavoritePage from './components/dashboard/user/favorite/favorite';
 
 export const URL_ROUTES = {
 	HOME: '/',
@@ -29,6 +32,9 @@ export const URL_ROUTES = {
 		PROFILE: '/user/profile',
 		ORDER_HISTORY: '/user/order-history',
 		ORDER_HISTORY_VIEW: '/user/order-history/view',
+		POINTS_SHOP: '/user/points-shop',
+		FAVORITE: '/user/favorite',
+		CART: '/user/cart',
 		AUTH: {
 			LOGIN: '/user/sing-in',
 			REGISTER: '/user/sing-up',
@@ -193,6 +199,35 @@ export default [
 				menuSetting: {
 					text: 'menu.profile',
 					icon: 'user'
+				},
+			},
+			{
+				component: PointShopPage,
+				path: URL_ROUTES.USER.POINTS_SHOP,
+				authenticate: true,
+				menuSetting: {
+					text: 'entities.pointShop.shop.title',
+					icon: 'gift'
+				},
+				
+			},
+			{
+				component: UserCart,
+				path: URL_ROUTES.USER.CART,
+				authenticate: true,
+				menuSetting: {
+					text: 'cart.title',
+					icon: 'cart'
+				},
+				
+			},
+			{
+				component: FavoritePage,
+				path: URL_ROUTES.USER.FAVORITE,
+				authenticate: true,
+				menuSetting: {
+					text: 'favorite.title',
+					icon: 'heart'
 				},
 			},
 			{

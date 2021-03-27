@@ -54,8 +54,8 @@ def get_readable_state(status):
 
 
 def readable_id(id: int):
-    result = 'HC'
-    for i in range(6 - len('{}'.format(id))):
+    result = ''
+    for i in range(8 - len('{}'.format(id))):
         result += '0'
     return result + '{}'.format(id)
 
@@ -86,21 +86,6 @@ def send_phone_message(phone_number, zip_code, message):
         return False
 
 
-def send_order_email(order):
-    from app.models import Enum
-    email = Enum.objects.filter(name=ENUMS_NAME['EMAIL_ORDER_RECEIVER']).first().data
-    send_mail(
-        'Order Changed',
-        'Order ID: {0} \nStatus: {1} \nPlatform: {2} \nQuantity: {3} \nEmail: {4} \nPassword: {5} \nBackup Code: {6}'.format(
-            readable_id(order.id), get_readable_state(order.status),
-            order.platform, order.quantity, order.email, order.password,
-            order.backup_code
-        ),
-        EMAIL_HOST_USER,
-        [email, ]
-    )
-
-
 def get_enum_value(enum_name: str):
     from app.models import (Enum)
     value = None
@@ -112,3 +97,16 @@ def get_enum_value(enum_name: str):
     except Exception:
         pass
     return value
+
+
+def send_order_email(order):
+    from app.models import Enum
+    email = Enum.objects.filter(name='Email Order Receiver').first().data
+    send_mail(
+        'New Order Changed',
+        'Hello We are Gamers-DZ.\n There\'s new Order has been created,\n Order ID: {0}'.format(
+            readable_id(order.id)
+        ),
+        EMAIL_HOST_USER,
+        [email, ]
+    )

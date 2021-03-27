@@ -14,3 +14,26 @@
 .p-max-text {
     max-width: 90%;
 }
+
+.link-circular-btn {
+    background: #f4f4f480;
+    width: 55px;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    transition: 600ms;
+}
+
+.link-circular-btn:hover {
+    transform: translateY(-5px);
+    background: #f4f4f4;
+}
+
+.link-circular-btn i{
+    margin-top: 0;
+    font-size: 1.25em;
+    margin-left: 2px;
+    color: #3d3e3f;
+}

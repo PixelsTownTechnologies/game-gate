@@ -56,7 +56,7 @@ class SimpleGameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
         fields = [
-            'id', 'logo', 'bg_card', 'game_cards', 'card_name'
+            'id', 'logo', 'bg_card', 'game_cards', 'card_name', 'type'
         ]
 
 

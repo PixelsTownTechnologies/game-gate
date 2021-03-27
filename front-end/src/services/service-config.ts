@@ -475,6 +475,24 @@ export const systemPointShopService: EntityServiceConfig = {
 			type: 'FIND_BY_ID',
 			authenticate: false,
 			url: 'system/point-shop/fetch'
+		}, {
+			type: 'CREATE',
+			authenticate: true,
+			url: 'system/point-shop/pay/'
+		}
+	]
+};
+
+export const userMultiOrderService: EntityServiceConfig = {
+	storeName: 'userOrders',
+	dataType: 'array',
+	baseURL: '',
+	loadToStore: false,
+	actions: [
+		{
+			type: 'CREATE',
+			url: 'user/create/multi/orders',
+			authenticate: true
 		}
 	]
 };

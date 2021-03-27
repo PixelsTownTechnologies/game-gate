@@ -68,7 +68,7 @@ class WidgetWrapper extends BaseComponent<WidgetWrapperProps, WidgetWrapperState
 	scrollToTop = () => {
 		setTimeout(() => {
 			if (this.element) {
-				//this.element.scrollIntoView({behavior: "smooth"});
+				this.element.scrollIntoView({behavior: "smooth"});
 			}
 		}, 50);
 		
@@ -84,7 +84,6 @@ class WidgetWrapper extends BaseComponent<WidgetWrapperProps, WidgetWrapperState
 	
 	renderLoader = () => {
 		if (this.props.loading) {
-			window.scrollTo(0, 0);
 			if (this.props.widgets && this.props.widgets.loader) {
 				const LoaderComponent = this.props.widgets.loader;
 				return <LoaderComponent show={ this.props.loading }/>;
@@ -111,9 +110,9 @@ class WidgetWrapper extends BaseComponent<WidgetWrapperProps, WidgetWrapperState
 			return (
 				<TitleView
 					dir={ this.state.direction }
-					title={this.props.title}
-					icon={this.props.icon}
-					subTitleChildren={this.props.subTitleChildren}
+					title={ this.props.title }
+					icon={ this.props.icon }
+					subTitleChildren={ this.props.subTitleChildren }
 				/>
 			);
 		}
@@ -155,8 +154,8 @@ class WidgetWrapper extends BaseComponent<WidgetWrapperProps, WidgetWrapperState
 						</div>
 					</FlexBox>
 				</div>
-				{this.props?.widgets?.extra ? this.props?.widgets?.extra : null}
-				{ this.renderFooter() }
+				{ this.props?.widgets?.extra ? this.props?.widgets?.extra : null }
+				{ !this.props.loading ? this.renderFooter() : null }
 			</div>
 		);
 	}

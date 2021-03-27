@@ -239,6 +239,15 @@ export interface LanguageSystemWords extends LanguageBaseWords {
 			}
 		};
 		pointShop: {
+			shop: {
+				noOffAvNBL: string;
+				title: string;
+				creditsAvailable: string;
+				balance: string;
+				credits: string;
+				headerMsg: string;
+				descriptionMsg: string;
+			};
 			title: string;
 			actions: {
 				add: string;
@@ -260,6 +269,7 @@ export interface LanguageSystemWords extends LanguageBaseWords {
 			rulesLabel: string;
 			subDetails: string;
 		};
+		alreadyInCard: string;
 		importantNotes: string;
 		addToFavorite: string;
 		offer: string;
@@ -282,6 +292,8 @@ export interface LanguageSystemWords extends LanguageBaseWords {
 		noBalance: string;
 		failedMsg: string;
 		orderMsgOne: string;
+		isFavorite: string;
+		inCartAlready: string;
 	};
 	homeSettings: {
 		editConfig: string;
@@ -347,5 +359,29 @@ export interface LanguageSystemWords extends LanguageBaseWords {
 		accessoryReviews: string;
 		userReviews: string;
 		userReviewsSection: string;
+	};
+	cart: {
+		title: string;
+		totalCost: string;
+		Games: string;
+		checkout: string;
+		needShipLocation: string;
+		done: string;
+		cartIsEmpty: string;
+		needAccountID: string;
+		gameNotAvailable: string;
+	};
+	favorite: {
+		title: string;
+		emptyFavorite: string;
+	};
+	footer: {
+		fastAccess: string;
+		contacts: string;
+		rules: string;
+		homePage: string;
+		game: string;
+		accessories: string;
+		playGameForFree: string;
 	};
 }

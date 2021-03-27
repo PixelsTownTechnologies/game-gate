@@ -49,12 +49,12 @@
 
 .grey-text {
     color: #404142 !important;
-    font-family: 'Audiowide', cursive !important;
+    font-family: var(--globalFont) !important;
 }
 
 .white-text {
     color: #ffffff !important;
-    font-family: 'Audiowide', cursive !important;
+    font-family: var(--globalFont) !important;
 }
 
 
@@ -132,4 +132,28 @@ label {
 
 .text-align-c {
     text-align: center !important;
+}
+
+
+.counter-c {
+    font-size: 1.4rem !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--globalFont);
+    border: 0.12rem solid rgba(159, 159, 159, 0.65);
+    max-width: clamp(120px, 30vh, 200px);
+    padding: 5px;
+    box-shadow: 0 5px 5px 0 #3d3e3f30;
+    border-radius: 10px;
+    min-width: fit-content !important;
+}
+
+.ui.inverted.red.active.button, .ui.inverted.red.buttons .active.button {
+    background-color: #ff5144 !important;
+}
+
+.px-d-p {
+    margin-left: clamp(30px, 10%, 120px) !important;
+    margin-right: clamp(30px, 10%, 120px) !important;
 }

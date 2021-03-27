@@ -37,7 +37,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [*GENERAL_SERIALIZER_FIELDS, *GENERAL_USER_FIELDS, *CONTACT_INFO_USER_FIELDS,
-                  *PRIVATE_USER_FIELDS, 'password', 'country']
+                  *PRIVATE_USER_FIELDS, 'password', 'country', 'cart', 'favorite', 'cart_data', 'favorite_data']
         extra_kwargs = {
             'password': {'write_only': True, 'required': False},
             'email': {'required': False},
@@ -64,6 +64,8 @@ class UserSerializer(serializers.ModelSerializer):
         instance.zip_code = validated_data.get('zip_code', instance.zip_code)
         instance.address_one = validated_data.get('address_one', instance.address_one)
         instance.address_two = validated_data.get('address_two', instance.address_two)
+        instance.favorite = validated_data.get('favorite', instance.favorite)
+        instance.cart = validated_data.get('cart', instance.cart)
         instance.city = validated_data.get('city', instance.city)
         instance.phone = validated_data.get('phone', instance.phone)
         instance.save()
@@ -77,7 +79,8 @@ class UserAdminSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [*GENERAL_SERIALIZER_FIELDS, *GENERAL_USER_FIELDS,
-                  *CONTACT_INFO_USER_FIELDS, 'username', 'groups', 'balance', 'country', 'total_orders', 'points']
+                  *CONTACT_INFO_USER_FIELDS, 'username', 'groups', 'balance',
+                  'country', 'total_orders', 'points', 'cart', 'favorite', 'cart_data', 'favorite_data']
         extra_kwargs = {
             'email': {'required': False},
         }
@@ -102,6 +105,8 @@ class UserAdminSerializer(serializers.ModelSerializer):
         instance.zip_code = validated_data.get('zip_code', instance.zip_code)
         instance.address_one = validated_data.get('address_one', instance.address_one)
         instance.address_two = validated_data.get('address_two', instance.address_two)
+        instance.favorite = validated_data.get('favorite', instance.favorite)
+        instance.cart = validated_data.get('cart', instance.cart)
         instance.city = validated_data.get('city', instance.city)
         instance.phone = validated_data.get('phone', instance.phone)
         instance.points = validated_data.get('points', instance.points)

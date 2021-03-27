@@ -45,8 +45,8 @@ const onStartCallback = (config: ApplicationConfig) => {
 			await UserFacadeService.checkToken(token);
 		}
 		await new EntityService(homeService).find();
-		const home = ( getStoreState().entity['home'] as HomeDTO );
-		const refreshTimeout = getEnumFromList(home.enums, 'System Refresh Timer')?.data;
+		const home = ( getStoreState().entity?.['home'] as HomeDTO );
+		const refreshTimeout = home?.enums ? getEnumFromList(home?.enums, 'System Refresh Timer')?.data : '';
 		WindowService.setTimeoutValue(( refreshTimeout && !isNaN(Number(refreshTimeout))
 		&& Number(refreshTimeout) > 30 ? Number(refreshTimeout) : 30 ) * 1000);
 		WindowService.addInterval(setInterval(() => {

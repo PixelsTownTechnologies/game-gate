@@ -1,8 +1,8 @@
 import './home.css';
 import { Wrapper } from "../../../shared/wrapper";
 import React, { useEffect, useState } from 'react';
-import { Divider, Embed, Image } from "semantic-ui-react";
-import { FlexBox, FlexCenter, If } from "../../../../lib/components/containers";
+import { Divider as SDivider, Embed, Image } from "semantic-ui-react";
+import { Divider, FlexBox, FlexCenter, If } from "../../../../lib/components/containers";
 import { useWindow } from "../../../../lib/hooks/screen-change";
 import { EntityService } from "../../../../lib/services/entity-service/entity-service";
 import { homeService } from "../../../../services/service-config";
@@ -145,7 +145,9 @@ function ImageSlider(props: { images: any[] }) {
 	return (
 		<div className={ 'image-slider-container' }>
 			<Image
-				src={ !isNull(imageSelectedIndex) && !isUndefined(imageSelectedIndex) && !!props.images[imageSelectedIndex] ? props.images[imageSelectedIndex] : NoImage }/>
+				className={'isc-img-animation'}
+				src={ !isNull(imageSelectedIndex) &&
+				!isUndefined(imageSelectedIndex) && !!props.images[imageSelectedIndex] ? props.images[imageSelectedIndex] : NoImage }/>
 			<div className={ 'image-slider-control' } style={ {'--totalPoints': props.images.length} as any }>
 				{
 					props.images.map((image, index) => {
@@ -179,7 +181,7 @@ function HomeSection1(props: { images?: any[], ads1?: AdsDTO, ads2?: AdsDTO }) {
 							<AdsBox className={ 'home-s1-ads' } ads={ props.ads1 }/>
 						) : null
 					}
-					<Divider hidden/>
+					<SDivider hidden/>
 					{
 						props.ads2 ? (
 							<AdsBox className={ 'home-s1-ads' } ads={ props.ads2 }/>
@@ -200,15 +202,15 @@ function HomeSection2(props: {
 		return null;
 	}
 	return (
-		<div className={ 'h-border-container green-bg' }>
-			<div>
+		<div className={ 'h-border-container' }>
+			<div className={ 'h-border-padding' }>
 				<FlexBox dir={ props.dir } className={ 'home-h1 sec2-header' } flexDirection={ 'column' }
 				         justifyContent={ !props.isMobile ? 'flex-start' : 'center' }
 				         alignItems={ props.isMobile ? 'center' : undefined }>
-					<h1 className={ 'sec2-text white-text' }> { props.title ? props.title : '' } </h1>
+					<h1 className={ 'sec2-text' }> { props.title ? props.title : '' } </h1>
 					<h4 className={ 'sec2-text px-non-margin' }>{ props.description ? props.description : '' }</h4>
 				</FlexBox>
-				<Divider hidden/>
+				<SDivider hidden/>
 				<FlexBox warp justifyContent={ 'center' }
 				         alignItems={ 'center' }>
 					{
@@ -271,7 +273,7 @@ export function HomeWidget() {
 					/>
 				</FlexCenter>
 			</div>
-			<div className={ 'home-viewer-sections' }>
+			<div className={ 'home-viewer-sections white-bg ' }>
 				<If flag={ homeConfig }>
 					<HomeSection2 dir={ language.dir } isMobile={ isMobile } maxSpecialView={ 250 }
 					              title={ ( homeConfig?.specialDeals?.title as any )?.[languageFlag] }
@@ -342,9 +344,8 @@ export function HomeWidget() {
 								) : null
 						}
 					</div>
-					<div className={ 'h-border-container green-bg' }>
+					<div className={ 'h-border-container white-bg' }>
 						<ReviewScrollCard
-							headerClassName={ 'white-text' }
 							title={ language.words.reviews.userReviews }
 							description={ language.words.reviews.userReviewsSection }
 							reviews={ homeData?.reviews.slice(0, 25) }

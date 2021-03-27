@@ -52,6 +52,7 @@ export function OrderItemView({game, quantity, gameCard, accessory, shipLocation
 				}
 			</div>
 			<FlexBox
+				dir={'ltr'}
 				justifyContent={ isMobile ? 'center' : undefined }
 				alignItems={ isMobile ? 'center' : undefined }
 				warp flexDirection={ 'column' } padding={ 20 }
@@ -66,7 +67,7 @@ export function OrderItemView({game, quantity, gameCard, accessory, shipLocation
 						<Header className={ 'state-info' } as={ 'h2' }>{ accessory?.name }</Header>
 					) : null
 				}
-				<FlexBox className={ 'order-state-info-c' } warp flexDirection={ 'column' }
+				<FlexBox dir={'ltr'} className={ 'order-state-info-c' } warp flexDirection={ 'column' }
 				         justifyContent={ 'flex-start' }>
 					<Header className={ 'state-info' } as={ 'h3' }>
 						{ words.viewer.selectedQuantity }: { quantity }
@@ -103,7 +104,7 @@ export function OrderConfirm({pxIf, gameCard, game, quantity, onCancel, onAccept
 	pxIf?: boolean, accessory?: AccessoryDTO, shipLocation?: string, orderId?: number, onAcceptNextSuccess?: () => void,
 	gameCard?: GameCardDTO, game?: GameDTO, quantity?: number, onCancel: () => void, onAccept: () => Promise<boolean | null>
 }) {
-	const {words} = useLanguage();
+	const {words, dir} = useLanguage();
 	const [ error, setError ] = React.useState(false);
 	const [ success, setSuccess ] = React.useState(false);
 	const loader = useLoader();

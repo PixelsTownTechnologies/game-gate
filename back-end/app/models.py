@@ -1,3 +1,4 @@
+import json
 import random
 import uuid
 
@@ -50,6 +51,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_reset_code = models.BooleanField(default=False, blank=True, null=True)
     points = models.IntegerField(default=0, blank=True, null=True)
 
+    cart = models.TextField(default='[]', blank=True, null=True)
+    favorite = models.TextField(default='[]', blank=True, null=True)
+
     objects = UserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -75,6 +79,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         full_name = '%s %s' % (self.first_name if self.first_name is not None else '',
                                self.last_name if self.last_name is not None else '')
         return full_name.strip()
+
+    @property
+    def cart_data(self):
+        return json.loads(self.cart) if self.cart is not None and self.cart is not '' else []
+
+    @property
+    def favorite_data(self):
+        return json.loads(self.favorite) if self.favorite is not None and self.favorite is not '' else []
 
     def __str__(self):
         return self.email if self.email is not None else 'Email Not Set'
@@ -465,9 +477,10 @@ class PointShop(models.Model):
     @property
     def show(self):
         if self.game_card is not None:
-            if self.game_card.is_sold \
+            if (self.game_card is None and (self.money_reword is None or self.money_reword < 0)) \
+                    or self.game_card.is_sold \
                     or (not self.game_card.show) \
-                    or (self.game_card.available_keys < self.quantity) \
+                    or ((self.game_card.available_keys < self.quantity) and self.game_card.game.type == 'K') \
                     or ((self.game_card.game is not None) and (not self.game_card.game.show)):
                 return False
         return True

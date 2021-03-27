@@ -191,21 +191,6 @@
     border-radius: 25px !important;
 }
 
-.counter-c {
-    font-size: 1.4rem !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: var(--globalFont);
-    border: 0.12rem solid rgba(159, 159, 159, 0.65);
-    max-width: clamp(120px, 30vh, 200px);
-    padding: 5px;
-    margin: 10px;
-    box-shadow: 0 5px 10px 0 #3d3e3f40;
-    border-radius: 10px;
-    min-width: fit-content !important;
-}
-
 .details-section {
 }
 

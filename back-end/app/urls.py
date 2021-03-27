@@ -31,6 +31,7 @@ urlpatterns_orders = [
     path('user/order/<pk>', UserOrderRetrieveUpdate.as_view()),  # Fetch All & Create, User
     path('admin/orders', AdminOrderFetch.as_view()),  # Fetch All, Admin
     path('admin/order/<pk>', AdminOrderRetrieveUpdate.as_view()),  # Fetch Update, Admin
+    path('user/create/multi/orders', UserOrderCreateMulti.as_view())
 ]
 
 urlpatterns_invoice = [
@@ -81,6 +82,7 @@ urlpatterns_point_shop = [
 
     path('system/point-shop/fetch/<pk>', PointShopFetch.as_view()),
     path('system/point-shop/fetch-all', PointShopFetchAll.as_view()),
+    path('system/point-shop/pay/', UserOrderCreatePointShop.as_view())
 ]
 
 urlpatterns_ads = [

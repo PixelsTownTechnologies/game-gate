@@ -1,0 +1,46 @@
+.ps-header-title {
+    margin-bottom: -10px !important;
+}
+
+.ps-header-title h2 {
+    margin: 0;
+    font-size: 1.65em;
+}
+
+.ps-header-title h6 {
+    font-size: 0.85em;
+    margin: 0;
+    margin-top: -7px !important;
+}
+
+.white-header-text {
+    color: #fff !important;
+}
+
+.white-header-text i {
+    color: #fff !important;
+}
+
+
+.ui.header.white-header-text {
+    color: #fff !important;
+}
+
+.ps-order-confirm {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 5px !important;
+}
+
+.ps-order-confirm p {
+    font-size: 1.1em !important;
+    text-align: center !important;
+    padding: 5% !important;
+}
+
+.fields-order {
+    width: 100% !important;
+    max-width: 280px !important;
+}

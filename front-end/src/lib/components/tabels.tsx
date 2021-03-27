@@ -205,7 +205,7 @@ export class Table<EntityDTO extends BaseEntity> extends BaseComponent<TableDTO<
 			<th key={ index } className='px-t-table-header'
 			    style={ {width: setting.width, minWidth: setting.width} }>
 				<FlexBox alignItems={ 'center' }
-				         justifyContent={ setting.center ? "center" : 'space-between' }>
+				         justifyContent={ "center"}>
 					<h4 className={ buildCN('px-t-non-margin', pxIf(setting.center, "center-text", '')) }>{ setting.title }</h4>
 					{/* this.renderFilter(data)*/ }
 				</FlexBox>
@@ -384,10 +384,10 @@ export class Table<EntityDTO extends BaseEntity> extends BaseComponent<TableDTO<
 							}
 						}
 						return (
-							<STable.Cell direction={ this.state.direction } key={ `id__${ cellData.id }_${ index2 }` }
+							<STable.Cell key={ `id__${ cellData.id }_${ index2 }` }
 							             style={ {width: setting.width, minWidth: setting.width} }
-							             className={ buildCN(setting.center ? 'center-text' : '') }>
-								<div dir={ this.state.direction }>
+							             className={ buildCN('center-text' ) }>
+								<div dir={'ltr'}>
 									{ displayValue }
 								</div>
 							</STable.Cell>

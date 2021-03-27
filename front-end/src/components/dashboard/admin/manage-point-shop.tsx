@@ -10,7 +10,6 @@ import { TableSetting } from "../../../lib/components/tabels";
 import { DFormField } from "../../../lib/components/form/models";
 import { getDefaultValidMsg, isEmpty } from "../../../lib/utils/utils";
 import { GameCardDTO } from "../../../models/game";
-import React from 'react';
 import { connect } from "react-redux";
 import { PointShopDTO } from "../../../models/point-shop";
 import { StoreState } from "../../../lib/models/application";
@@ -39,7 +38,7 @@ class ManagePointShop extends EntityWrapper<PointShopDTO, ManagePointShopProps, 
 		const word: LanguageSystemWords = this.word() as LanguageSystemWords;
 		return {
 			title: word.entities.pointShop.title,
-			icon: 'money bill alternate outline',
+			icon: 'gift',
 			showDelete: true
 		};
 	}

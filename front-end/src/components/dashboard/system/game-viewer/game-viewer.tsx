@@ -3,7 +3,7 @@ import './game-viewer.css';
 import { BaseRouteComponentProps } from "../../../../lib/components/components";
 import { useLanguage } from "../../../../lib/hooks/languageHook";
 import { Wrapper } from "../../../shared/wrapper";
-import { Divider, FlexBox, FlexCenter, If, Map } from "../../../../lib/components/containers";
+import { Divider, FlexBox, FlexCenter, If, Map, Space } from "../../../../lib/components/containers";
 import { NotFoundWidget } from "../../../errors/not-found-404";
 import { buildCN, clamp, costFormat, isEmpty, isNull, searchOnValue } from "../../../../lib/utils/utils";
 import { ImageCard, OrderConfirm } from "../../../shared/game-viewer-component/game-viewer-component";
@@ -25,11 +25,9 @@ import {
 	Label,
 	Rating
 } from "semantic-ui-react";
-import { useFavorite } from "../../../../hooks/storage";
 import Countries from '../../../../assets/icons/countries.png';
 import { Counter, TextArea, TextField } from "../../../../lib/components/form/fields";
 import MDEditor from '@uiw/react-md-editor';
-import { useEntityStore } from "../../../../lib/hooks/user";
 import { UserBaseDTO } from "../../../../lib/models/user";
 import { isUserAuthenticate } from "../../../../lib/utils/application-helper";
 import { LoginWidget } from "../../user/auth";
@@ -44,13 +42,13 @@ import { HomeDTO } from "../../../../models/home-details";
 import { manipulateHomeData } from "../../../../utils/util";
 import { GameCardBig, ScrollCardView } from "../../../shared/games-components/games-components";
 import { URL_ROUTES } from "../../../../routes";
-import { AccessoryCard } from "../../../shared/accessory/components";
 
 interface GameViewerWidgetProps {
 	game: GameDTO | null;
 	similarGames: GameCardDTO[];
 	gameCardId: number | null;
 	onPay: () => void;
+	user: UserBaseDTO;
 }
 
 export function GameCardWidget({logo, isSelected, onSelect, gameCard}: {
@@ -60,7 +58,8 @@ export function GameCardWidget({logo, isSelected, onSelect, gameCard}: {
 }) {
 	const {words, dir} = useLanguage();
 	return (
-		<div className={ buildCN('g-card', isSelected ? 'active' : null, gameCard.is_sold ? 'sold' : null) }
+		<div dir={ 'ltr' }
+		     className={ buildCN('g-card', isSelected ? 'active' : null, gameCard.is_sold ? 'sold' : null) }
 		     onClick={ onSelect }>
 			<If flag={ gameCard.discount && !gameCard.is_sold }>
 				<Label dir={ dir } className={ 'gc-offer' } color='red' ribbon={ 'right' }>
@@ -83,10 +82,10 @@ export function GameCardWidget({logo, isSelected, onSelect, gameCard}: {
 	);
 }
 
-export function GameViewerWidget({game, gameCardId, onPay, similarGames}: GameViewerWidgetProps) {
-	const {isFavorite, addToFavorite, removeFromFavorite} = useFavorite();
-	const [ isInFavorite, setInFavorite ] = useState<boolean>(isFavorite(game ? game.id : 0));
+export function GameViewerWidget({game, gameCardId, onPay, similarGames, user}: GameViewerWidgetProps) {
 	const urlGame = game?.game_cards?.filter(gc => gc.id === gameCardId)?.[0];
+	const favoriteLoader = useLoader();
+	const cartLoader = useLoader();
 	const [ selectedCard, setSelectedCard ] = useState(urlGame && !urlGame.is_sold ? urlGame : undefined);
 	const [ selectedQuantity, setSelectedQuantity ] = useState(urlGame && !urlGame.is_sold ? urlGame.order_min : 0);
 	const [ orderDataForm, setOrderDataForm ] = useState({id: '', subDetails: '', accepted: false});
@@ -94,7 +93,6 @@ export function GameViewerWidget({game, gameCardId, onPay, similarGames}: GameVi
 	const [ showPaymentConfirm, setShowPaymentConfirm ] = useState(false);
 	const [ showNoBalance, setShowNoBalance ] = useState(false);
 	const [ orderId, setOrderId ] = useState<number | undefined>(undefined);
-	const user = useEntityStore<UserBaseDTO>('user');
 	const {words, dir} = useLanguage();
 	const {width, type} = useWindow();
 	useEffect(() => {
@@ -150,7 +148,24 @@ export function GameViewerWidget({game, gameCardId, onPay, similarGames}: GameVi
 	};
 	const handleAddToCard = () => {
 		if (isUserAuthenticate()) {
-		
+			if (selectedCard) {
+				let cardData = user.cart_data ? user.cart_data : [];
+				if (user.cart_data.filter(cObj => cObj.objectId === selectedCard?.id && cObj.type === 'game').length > 0) {
+					const cObj = cardData.filter(cObj => cObj.objectId === selectedCard?.id && cObj.type === 'game')[0];
+					cObj.quantity = selectedQuantity;
+					cardData = cardData.filter(cObj => cObj.objectId !== selectedCard?.id && cObj.type === 'game');
+				} else {
+					cardData.push({
+						quantity: selectedQuantity,
+						objectId: selectedCard.id,
+						type: 'game'
+					});
+				}
+				cartLoader.activate();
+				UserFacadeService.updateCart(cardData).then(() => {
+					cartLoader.disabled();
+				});
+			}
 		} else {
 			setShowLogin(true);
 		}
@@ -166,7 +181,8 @@ export function GameViewerWidget({game, gameCardId, onPay, similarGames}: GameVi
 		}
 		return {pass: false};
 	}
-	
+	const isInCard = user.cart_data ? user.cart_data.filter(cObj => cObj.objectId === selectedCard?.id && cObj.type === 'game').length > 0 : false;
+	const isInFavorite = user.favorite_data ? user.favorite_data.filter(cObj => cObj === game?.id).length > 0 : false;
 	return (
 		<FlexBox flexDirection={ 'column' } justifyContent={ 'flex-start' }>
 			<FlexBox padding={ clamp(10, width * 0.10, 60) }
@@ -207,17 +223,24 @@ export function GameViewerWidget({game, gameCardId, onPay, similarGames}: GameVi
 						</div>
 						<div>
 							<Button onClick={ () => {
-								if (isFavorite(game ? game.id : 0)) {
-									removeFromFavorite(game.id);
-									setInFavorite(false);
-								} else {
-									addToFavorite(game.id);
-									setInFavorite(true);
+								if (game) {
+									let favoriteList = user.favorite_data ? user.favorite_data : [];
+									if (isInFavorite) {
+										favoriteList = favoriteList.filter(id => id !== game?.id);
+									} else {
+										favoriteList.push(game?.id);
+									}
+									favoriteLoader.activate();
+									UserFacadeService.updateFavorite(favoriteList).then(() => {
+										favoriteLoader.disabled();
+									});
 								}
-							} } circular={ type !== 'Computer' } icon={ type !== 'Computer' } inverted toggle
-							        active={ isInFavorite || isFavorite(game ? game.id : 0) } color='red'>
+							} } circular={ type !== 'Computer' } icon={ type !== 'Computer' }
+							        loading={ favoriteLoader.isLoading } disabled={ favoriteLoader.isLoading } inverted
+							        toggle
+							        active={ isInFavorite } color='red'>
 								<Icon name='heart'/>
-								{ type !== 'Computer' ? null : words.gameViewer.addToFavorite }
+								{ type !== 'Computer' ? null : ( !isInFavorite ? words.gameViewer.addToFavorite : words.gameViewer.isFavorite ) }
 							</Button>
 						</div>
 					</FlexBox>
@@ -227,7 +250,7 @@ export function GameViewerWidget({game, gameCardId, onPay, similarGames}: GameVi
 			         alignItems={ type === 'Mobile' ? 'center' : undefined }
 			         flexDirection={ 'column' }>
 				<Header color={ 'grey' } as={ 'h3' }>{ words.gameViewer.selectCardType }</Header>
-				<FlexBox className={ 'full-width' } justifyContent={ 'center' } warp>
+				<FlexBox dir={ dir } className={ 'full-width' } justifyContent={ 'center' } warp>
 					<div className={ 'game-card-c' }>
 						<Map list={ game.game_cards
 							? game.game_cards.filter(gc => gc.show).sort(
@@ -284,13 +307,15 @@ export function GameViewerWidget({game, gameCardId, onPay, similarGames}: GameVi
 								{ words.gameViewer.buyNow }
 							</Button>
 							<Button
+								loading={ cartLoader.isLoading }
 								onClick={ () => {
 									if (selectedCard) {
 										handleAddToCard();
 									}
 								} }
-								disabled={ !selectedCard } color='facebook'>
-								{ words.gameViewer.addToCart }
+								disabled={ !selectedCard || cartLoader.isLoading } color='facebook'>
+								{ isInCard && !cartLoader.isLoading ? <Icon name={ 'check' }/> : null }
+								<Space/>{ isInCard && !cartLoader.isLoading ? words.gameViewer.inCartAlready : words.gameViewer.addToCart }<Space/>
 							</Button>
 						</div>
 					</div>
@@ -336,6 +361,7 @@ export function GameViewerWidget({game, gameCardId, onPay, similarGames}: GameVi
 											setOrderDataForm({...orderDataForm, id: value});
 										} }
 										value={ orderDataForm.id }
+										length={ 255 }
 									/>
 								</Form.Field>
 								<Form.Field>
@@ -345,6 +371,7 @@ export function GameViewerWidget({game, gameCardId, onPay, similarGames}: GameVi
 											setOrderDataForm({...orderDataForm, subDetails: value});
 										} }
 										value={ orderDataForm.subDetails }
+										length={ 255 }
 									/>
 								</Form.Field>
 								<Form.Field>
@@ -372,7 +399,7 @@ export function GameViewerWidget({game, gameCardId, onPay, similarGames}: GameVi
 								list={
 									similarGames?.map((game, index) => {
 										return (
-											<GameCardBig key={ index } game={ game.game as GameDTO } gameCard={game}/>
+											<GameCardBig key={ index } game={ game.game as GameDTO } gameCard={ game }/>
 										);
 									})
 								}
@@ -434,6 +461,7 @@ export function GameViewerWidget({game, gameCardId, onPay, similarGames}: GameVi
 
 interface GameViewerProps extends BaseRouteComponentProps {
 	gameCards: GameCardDTO[];
+	user: UserBaseDTO;
 }
 
 function GameViewerClass(props: GameViewerProps) {
@@ -486,8 +514,7 @@ function GameViewerClass(props: GameViewerProps) {
 		: [];
 	if (similarGames.length < 12 && ( props.gameCards.length - similarGames.length ) > 0 && game) {
 		const similarGamesIds = similarGames.map(eg => eg.id);
-		console.log(similarGamesIds, props.gameCards.filter(eg => (eg.game as GameDTO).id !== game.id))
-		const otherUnSimilarGames = props.gameCards.filter(eg => (eg.game as GameDTO).id !== game.id).filter(eg => !similarGamesIds.includes(eg.id));
+		const otherUnSimilarGames = props.gameCards.filter(eg => ( eg.game as GameDTO ).id !== game.id).filter(eg => !similarGamesIds.includes(eg.id));
 		similarGames = [ ...similarGames, ...otherUnSimilarGames.slice(0, ( 12 - similarGames.length )) ];
 	}
 	return (
@@ -507,10 +534,11 @@ function GameViewerClass(props: GameViewerProps) {
 			{
 				game ? (
 					<GameViewerWidget
-						similarGames={similarGames}
+						user={ props.user }
+						similarGames={ similarGames }
 						onPay={ () => {
-						fetchEntity();
-					} } game={ game }
+							fetchEntity();
+						} } game={ game }
 						gameCardId={ gameCardId }
 					/>
 				) : null
@@ -522,5 +550,5 @@ function GameViewerClass(props: GameViewerProps) {
 
 export const GameViewer = connect((state: StoreState, props) => {
 	const home: ( HomeDTO | null ) = state.entity['home'] ? manipulateHomeData(state.entity['home'] as HomeDTO) : null;
-	return {...props, gameCards: home && !isEmpty(home.gameCards) ? home.gameCards : []};
+	return {...props, gameCards: home && !isEmpty(home.gameCards) ? home.gameCards : [], user: state.user};
 })(GameViewerClass);

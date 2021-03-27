@@ -3,7 +3,7 @@ import './accessory-viewer.css';
 import { BaseRouteComponentProps } from "../../../../lib/components/components";
 import { useLanguage } from "../../../../lib/hooks/languageHook";
 import { Wrapper } from "../../../shared/wrapper";
-import { FlexBox, If } from "../../../../lib/components/containers";
+import { FlexBox, If, Space } from "../../../../lib/components/containers";
 import { NotFoundWidget } from "../../../errors/not-found-404";
 import { clamp, costFormat, isEmpty, isNull, searchOnValue } from "../../../../lib/utils/utils";
 import { OrderConfirm } from "../../../shared/game-viewer-component/game-viewer-component";
@@ -12,7 +12,7 @@ import { EntityService } from "../../../../lib/services/entity-service/entity-se
 import { systemAccessoryService, userOrderService } from "../../../../services/service-config";
 import { useLoader } from "../../../../lib/hooks/generic";
 import { useWindow } from "../../../../lib/hooks/screen-change";
-import { Button, Dimmer, Divider as SDivider, Embed, Header, Label, Rating } from "semantic-ui-react";
+import { Button, Dimmer, Divider as SDivider, Embed, Header, Icon, Label, Rating } from "semantic-ui-react";
 import MDEditor from '@uiw/react-md-editor';
 import { useEntityStore } from "../../../../lib/hooks/user";
 import { UserBaseDTO } from "../../../../lib/models/user";
@@ -41,6 +41,7 @@ interface AccessoryViewerWidgetProps {
 
 export function AccessoryViewerWidget({accessory, onPay, similarAccessories}: AccessoryViewerWidgetProps) {
 	const [ showLogin, setShowLogin ] = useState(false);
+	const cartLoader = useLoader();
 	const [ selectedQuantity, setSelectedQuantity ] = useState(accessory && !accessory.is_sold ? accessory.order_min : 1);
 	const [ showPaymentConfirm, setShowPaymentConfirm ] = useState(false);
 	const [ showChangeInformation, setShowChangeInformation ] = useState(false);
@@ -90,7 +91,24 @@ export function AccessoryViewerWidget({accessory, onPay, similarAccessories}: Ac
 	};
 	const handleAddToCard = () => {
 		if (isUserAuthenticate()) {
-		
+			if (accessory) {
+				let cardData = user.cart_data ? user.cart_data : [];
+				if (user.cart_data.filter(cObj => cObj.objectId === accessory?.id && cObj.type === 'accessory').length > 0) {
+					const cObj = cardData.filter(cObj => cObj.objectId === accessory?.id && cObj.type === 'accessory')[0];
+					cObj.quantity = selectedQuantity;
+					cardData = cardData.filter(cObj => cObj.objectId !== accessory?.id && cObj.type === 'accessory');
+				} else {
+					cardData.push({
+						quantity: selectedQuantity,
+						objectId: accessory.id,
+						type: 'accessory'
+					});
+				}
+				cartLoader.activate();
+				UserFacadeService.updateCart(cardData).then(() => {
+					cartLoader.disabled();
+				});
+			}
 		} else {
 			setShowLogin(true);
 		}
@@ -106,6 +124,7 @@ export function AccessoryViewerWidget({accessory, onPay, similarAccessories}: Ac
 		}
 		return {pass: false};
 	}
+	const isInCard = user.cart_data ? user.cart_data.filter(cObj => cObj.objectId === accessory?.id && cObj.type === 'accessory').length > 0 : false;
 	return (
 		<FlexBox
 			className={ 'acc-container' }
@@ -183,13 +202,13 @@ export function AccessoryViewerWidget({accessory, onPay, similarAccessories}: Ac
 								{ accessory.is_sold ? words.gameViewer.sold : words.gameViewer.buyNow }
 							</Button>
 							<Button
-								disabled={ accessory.is_sold }
+								loading={ cartLoader.isLoading }
 								onClick={ () => {
-									if (!accessory.is_sold) {
-										handleAddToCard();
-									}
-								} } color='facebook'>
-								{ words.gameViewer.addToCart }
+									handleAddToCard();
+								} }
+								disabled={ !accessory || cartLoader.isLoading } color='facebook'>
+								{ isInCard && !cartLoader.isLoading ? <Icon name={ 'check' }/> : null }
+								<Space/>{ isInCard && !cartLoader.isLoading ? words.gameViewer.inCartAlready : words.gameViewer.addToCart }<Space/>
 							</Button>
 						</div>
 					</div>

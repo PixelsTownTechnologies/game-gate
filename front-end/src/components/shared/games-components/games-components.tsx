@@ -10,6 +10,65 @@ import Logo from '../../../assets/logo/logo-bg-w.jpg';
 import { ImageCard } from "../game-viewer-component/game-viewer-component";
 import { DIR } from "../../../lib/utils/constant";
 import { useLanguage } from "../../../lib/hooks/languageHook";
+import { PointShopDTO } from "../../../models/point-shop";
+import PokeCoins from '../../../assets/images/pokecoins.png';
+import CardBG from '../../../assets/images/Google-Play-Pass.jpg';
+import { LanguageSystemWords } from "../../../models/language";
+import { getImageURL } from "../../../utils/util";
+
+export function PointCard({pointShopObj, onClick, words, dir, userPoint, showDetailsOnly}: {
+	pointShopObj?: PointShopDTO,
+	onClick: () => void, words: LanguageSystemWords,
+	dir: string, userPoint: number,
+	showDetailsOnly?: boolean
+}) {
+	const game = ( pointShopObj?.game_card?.game as GameDTO );
+	const style = {'--headerBGImageURL': `url(${ game ? ( game.bg_card ? getImageURL(game.bg_card) : '' ) : CardBG })`};
+	const logo = game?.logo ? getImageURL(game?.logo) : PokeCoins;
+	const isDisabled = userPoint < ( pointShopObj?.point_cost ? pointShopObj?.point_cost : 0 );
+	return (
+		<div className={ buildCN('vvg vvg-container ps-card-container', isDisabled
+			? 'disabled' : '') } onClick={ () => {
+			if (!isDisabled) {
+				onClick();
+			}
+		} }>
+			<div style={ style as any }
+			     className={ buildCN('vvg-header-container ps-h-name-container', !pointShopObj?.game_card ? 'more-bg-black' : '') }>
+				<div className={ buildCN('vvg-index vvg-logo', pointShopObj?.money_reword ? 'vvg-logo-coins' : '') }>
+					<Image src={ logo }/>
+				</div>
+				<div className={ 'vvg-index ps-h-name' }>
+					<h3 className={ 'text-w px-non-margin' }>{ pointShopObj?.name }</h3>
+					<h5 dir={ dir } className={ 'text-w px-non-margin' }>
+						{
+							pointShopObj?.game_card ? '' : words.entities.pointShop.shop.balance
+						}
+						{ pointShopObj?.game_card
+							? `[${ pointShopObj?.game_card?.name }]` : ` +$${ pointShopObj?.money_reword ? pointShopObj?.money_reword : 0 }` }
+						{
+							pointShopObj?.game_card ? ` x${ pointShopObj.quantity }` : ''
+						}
+					</h5>
+				</div>
+			</div>
+			{
+				!showDetailsOnly ? (
+					<div className={ 'vvg-price-container' }>
+						<div className={ 'price-discount-s' }>
+							<h5 dir={ dir } className={ buildCN('text-b px-non-margin') }>
+								{ costFormat(pointShopObj?.point_cost ? pointShopObj?.point_cost : 0) } { words.entities.pointShop.shop.credits }
+							</h5>
+						</div>
+						<div>
+						</div>
+					</div>
+				) : null
+			}
+		</div>
+	);
+}
+
 
 export function GameCard(props: { gameCard?: GameCardDTO, game: GameDTO }) {
 	const style = props.game.bg_card ? {'--headerBGImageURL': `url(${ props.game.bg_card })`} : {};

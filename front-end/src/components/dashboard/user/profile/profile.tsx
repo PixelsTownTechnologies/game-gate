@@ -6,10 +6,10 @@ import { useForm, useLoader } from "../../../../lib/hooks/generic";
 import { useWindow } from "../../../../lib/hooks/screen-change";
 import { Wrapper } from "../../../shared/wrapper";
 import { Divider, FlexBox, FlexCenter, FlexSpace, If, PaddingBox } from "../../../../lib/components/containers";
-import { Divider as SDivider, Form as SForm, Header, Message } from "semantic-ui-react";
+import { Divider as SDivider, Form as SForm, Header, Icon, Message } from "semantic-ui-react";
 import { UserBaseDTO } from "../../../../lib/models/user";
 import { clamp, getDefaultValidMsg, pxIfSelf } from "../../../../lib/utils/utils";
-import { Button, IconButton, Image, Link, MessageErrors } from "../../../../lib/components/basic";
+import { Button, Image, Link, MessageErrors } from "../../../../lib/components/basic";
 import ProfileIcon from '../../../../assets/icons/profile.png';
 import { EmailInput, TextField } from "../../../../lib/components/form/fields";
 import Form from "../../../../lib/components/form/form";
@@ -187,17 +187,17 @@ const Profile = ({user}: ProfileProps) => {
 					<div className={ 'black-text' }>{ user.email }</div>
 				</FlexCenter>
 				<FlexCenter padding={ 20 }>
-					<Link className={ 'px-slm-5 px-srm-5' } to={ URL_ROUTES.HOME }>
-						<IconButton size={ 'large' } name={ 'clone' } circular color={ 'blue' }/>
+					<Link className={ 'px-slm-5 px-srm-5 link-circular-btn' } to={ URL_ROUTES.USER.ORDER_HISTORY }>
+						<Icon name={ 'clipboard' }/>
 					</Link>
-					<Link className={ 'px-slm-5 px-srm-5' } to={ URL_ROUTES.HOME }>
-						<IconButton size={ 'large' } name={ 'chart bar' } circular color={ 'blue' }/>
+					<Link className={ 'px-slm-5 px-srm-5 link-circular-btn' } to={ URL_ROUTES.USER.POINTS_SHOP }>
+						<Icon name={ 'gift' }/>
 					</Link>
-					<Link className={ 'px-slm-5 px-srm-5' } to={ URL_ROUTES.HOME }>
-						<IconButton size={ 'large' } name={ 'shopping cart' } circular color={ 'blue' }/>
+					<Link className={ 'px-slm-5 px-srm-5 link-circular-btn' } to={ URL_ROUTES.USER.CART }>
+						<Icon name={ 'shopping cart' }/>
 					</Link>
-					<Link className={ 'px-slm-5 px-srm-5' } to={ URL_ROUTES.HOME }>
-						<IconButton size={ 'large' } name={ 'bookmark' } circular color={ 'blue' }/>
+					<Link className={ 'px-slm-5 px-srm-5 link-circular-btn' } to={ URL_ROUTES.USER.FAVORITE }>
+						<Icon name={ 'heart' }/>
 					</Link>
 				</FlexCenter>
 			</PaddingBox>

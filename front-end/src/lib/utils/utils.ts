@@ -305,12 +305,13 @@ export const getEnumFromList = (enumList: EnumDTO[], enumName: string): EnumDTO 
 }
 
 export function searchOnValue(value: string, searchValue: string): boolean {
-	if (!value || !searchValue) {
+	if (!value || !searchValue || value.length < 3) {
 		return false;
 	}
 	let includeValue = false;
-	searchValue.split(' ').forEach(v => {
-		includeValue = includeValue || value.includes(v);
+	const valueList = value.split(' ');
+	searchValue.split(' ').filter(v => v.length > 2).forEach(v => {
+		includeValue = includeValue || valueList.includes(v);
 	});
 	return includeValue;
 }

@@ -193,6 +193,46 @@ class UserFacadeServiceClass extends BaseFacadeServices {
 		}
 	}
 	
+	public async updateCart(cart: any[]): Promise<UserBaseDTO | undefined> {
+		this.setLoader(USER_ACTIONS.UPDATE_USER_DATA, true);
+		try {
+			const response: AxiosResponse<UserBaseDTO>
+				= await UserHTTPService.createAuthRequest().put('user/update-data', {cart: (cart ? JSON.stringify(cart) : '')});
+			if (response.data) {
+				updateUser({
+					...getUser(),
+					...response.data
+				} as UserBaseDTO);
+			}
+			return response.data;
+		} catch (error) {
+			this.throwError(USER_ACTIONS.UPDATE_USER_DATA, error
+			);
+		} finally {
+			this.setLoader(USER_ACTIONS.UPDATE_USER_DATA, false);
+		}
+	}
+	
+	public async updateFavorite(favorite: any): Promise<UserBaseDTO | undefined> {
+		this.setLoader(USER_ACTIONS.UPDATE_USER_DATA, true);
+		try {
+			const response: AxiosResponse<UserBaseDTO>
+				= await UserHTTPService.createAuthRequest().put('user/update-data', {favorite: favorite ? JSON.stringify(favorite) : ''});
+			if (response.data) {
+				updateUser({
+					...getUser(),
+					...response.data
+				} as UserBaseDTO);
+			}
+			return response.data;
+		} catch (error) {
+			this.throwError(USER_ACTIONS.UPDATE_USER_DATA, error
+			);
+		} finally {
+			this.setLoader(USER_ACTIONS.UPDATE_USER_DATA, false);
+		}
+	}
+	
 	public async changePassword(form: { newPassword: string, currentPassword: string }): Promise<any> {
 		this.setLoader(USER_ACTIONS.UPDATE_USER_DATA, true);
 		try {

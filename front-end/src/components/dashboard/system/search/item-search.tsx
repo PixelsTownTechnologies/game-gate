@@ -56,11 +56,12 @@ export function SearchOnItem(props: BaseRouteComponentProps
 				loader.disabled();
 			});
 		}
-	});
+		// eslint-disable-next-line
+	}, [ defaultSearchValue ]);
 	const getGames = (): GameDTO[] => {
 		if (isGameType && homeData?.games) {
 			const searchText = searchValue ? searchValue.toLowerCase() : null;
-			return searchText ? homeData.games.filter(g => ( g.platform ? platformTypeStateToPlatform[g.platform] : false ) ||
+			return searchText ? homeData.games.filter(g => ( g.platform ? searchText.split(' ').includes(platformTypeStateToPlatform[g.platform]) : false ) ||
 				searchOnObject(g, [ 'type', 'details', 'name', 'notes', 'platform' ], searchText)
 			) : homeData.games;
 		}
@@ -68,7 +69,9 @@ export function SearchOnItem(props: BaseRouteComponentProps
 	}
 	const getGameCards = (): GameCardDTO[] => {
 		if (isGameType && homeData?.gameCards) {
-			return searchValue ? homeData.gameCards.filter(g => searchOnObject(g, [ 'name' ], searchValue)) : homeData.gameCards;
+			return searchValue ? homeData.gameCards.filter(g => {
+				return searchOnObject(g, [ 'name' ], searchValue);
+			}) : homeData.gameCards;
 		}
 		return [];
 	}
@@ -112,6 +115,7 @@ export function SearchOnItem(props: BaseRouteComponentProps
 					value={ searchBoxValue ? searchBoxValue : '' }
 					onKeyPress={ (e: any) => {
 						if (e.key === 'Enter') {
+							console.log(searchBoxValue, searchValue)
 							setSearchValue(searchBoxValue);
 						}
 					} }

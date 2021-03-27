@@ -197,7 +197,7 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
 				name: 'ألاسم',
 				sold_flag: 'تم البيع',
 				available: 'متوفر',
-				is_sold: 'تم البيع',
+				is_sold: 'مباع',
 				show: 'أظهار',
 				total_price: 'السعر الكلي',
 				price: 'السعر',
@@ -322,6 +322,15 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
 			title: 'أدارة الاعلانات'
 		},
 		pointShop: {
+			shop: {
+				noOffAvNBL: 'لا توجد عروض متاحة الآن عد لاحقًا',
+				creditsAvailable: 'النقاط المتاحة',
+				title: 'سوق النقاط',
+				credits: 'نقطة',
+				balance: 'رصيد',
+				descriptionMsg: 'قم بتاكيد طلبك ومعلوماتك انت مسؤول عن كل ما يتم تقديمه وعن طلب شراء الخاص بك',
+				headerMsg: 'قم بتأكيد طلبك'
+			},
 			title: 'أدارة سوق النقاط',
 			actions: {
 				add: 'أضافة عرض جديد',
@@ -343,9 +352,12 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
 			rulesLabel: 'انا اتحمل كل المسؤولية عن المعلومات القدمه',
 			subDetails: 'معلومات أضافية؟'
 		},
+		alreadyInCard: 'متوفر في سلتك',
 		importantNotes: 'ملاحظات هامة',
 		addToFavorite: 'أضافة للمفضل',
+		isFavorite: 'مفضل',
 		offer: 'خصم',
+		inCartAlready: 'متوفر في سلتك',
 		selectCardType: 'أختار العرض',
 		selectQuantity: 'أختار الكمية',
 		reviews: 'التقيم',
@@ -354,7 +366,7 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
 		total: 'المجموع الكلي',
 		credits: 'نقاط',
 		selectOrderData: 'أدخال معلومات الطلب',
-		sold: 'تم البيع',
+		sold: 'مباع',
 		orderMsgOne: 'يرجى التأكد من تفاصيل الطلب قبل الاكمال نحن لا نتحمل اي مسؤولية عن المعلومات المقدمة',
 		details: 'تفاصيل',
 		totalPrice: 'السعر الكلي',
@@ -407,9 +419,9 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
 		itemName: 'أسم العنصر',
 		viewMore: 'أظهار المزيد',
 		gameDescription: 'وصف العبة',
-		accessoriesSimilar: 'قم بتفحص الملحقات المتشابهة',
-		embedGameSimilar: 'تحقق من الألعاب المشابهة',
-		gameSimilar: 'تحقق من الألعاب المشابهة'
+		accessoriesSimilar: 'منتجات ذات صلة',
+		embedGameSimilar: 'تحقق من الألعاب ذات صلة',
+		gameSimilar: 'تحقق من الألعاب ذات صلة'
 	},
 	searchViewer: {
 		searchTitle: 'هل تحتاج مساعده؟',
@@ -430,6 +442,30 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
 		accessoryReviews: 'تقييمات',
 		userReviews: 'تقييمات المستخدمين',
 		userReviewsSection: 'تتم كتابة المراجعات من قبل مستخدمين حقيقيين وفقط بعد إكمال الطلب. بالإضافة إلى البريد العشوائي ، لا يتم تحرير أو حذف أي مراجعات'
+	},
+	cart: {
+		title: 'سلة المشتريات',
+		totalCost: 'التكلفة الإجمالية',
+		Games: 'قائمة الألعاب',
+		needShipLocation: 'أدخل عنوان توصيل',
+		checkout: 'أكمال الطلب',
+		needAccountID: 'أدخل رمز الحساب',
+		done: 'تم',
+		cartIsEmpty: 'سلة الشراء الخاصة بك فارغة',
+		gameNotAvailable: 'اللعبة غير متوفرة',
+	},
+	favorite: {
+		title: 'العناصر المفضلة',
+		emptyFavorite: 'ليس لديك اي عنصر مفضل',
+	},
+	footer: {
+		fastAccess: 'وصول سريع',
+		contacts: 'معلومات التواصل',
+		rules: 'حقوق النشر © 2021 GAMERS-DZ. كل الحقوق محفوظة. جميع أسماء المنتجات هي علامات تجارية للشركات المالكة لها.',
+		homePage: 'الصفحة الرئيسية',
+		game:'ألعاب',
+		accessories: 'ملحقات',
+		playGameForFree: 'العب الألعاب مجانًا',
 	}
 };
 
