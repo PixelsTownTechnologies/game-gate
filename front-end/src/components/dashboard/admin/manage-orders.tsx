@@ -147,6 +147,20 @@ class ManageOrders extends EntityWrapper<OrderDTO, ManageOrdersProps, ManageOrde
 				center: true
 			},
 			{
+				fieldName: 'owner.email',
+				title: word.entities.order.ownerEmail,
+				type: 'text',
+				width: 150,
+				center: true
+			},
+			{
+				fieldName: 'owner.phone',
+				title: word.entities.order.ownerPhoneNumber,
+				type: 'text',
+				width: 150,
+				center: true
+			},
+			{
 				fieldName: 'create',
 				title: word.entities.order.orderDate,
 				type: 'date',
@@ -179,20 +193,7 @@ class ManageOrders extends EntityWrapper<OrderDTO, ManageOrdersProps, ManageOrde
 				type: 'rating',
 				width: 100,
 				center: true
-			},
-			{
-				fieldName: 'review_date',
-				title: word.entities.order.reviewDate,
-				type: 'date',
-				width: 120,
-				center: true
-			},
-			{
-				fieldName: 'review_description',
-				title: word.entities.order.review_description,
-				type: 'text',
-				width: 320
-			},
+			}
 		];
 	}
 	

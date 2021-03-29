@@ -192,6 +192,7 @@
 
 .px-lib.px-container {
     padding: clamp(20px, 15%, 40px);
+    min-height: 600px;
 }
 
 .px-lib.fit {

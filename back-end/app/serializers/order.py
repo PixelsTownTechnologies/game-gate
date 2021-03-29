@@ -6,7 +6,7 @@ from app.models import (User, Order, GameKey, GameCard, Game, Accessory)
 class UserOrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'address_one']
+        fields = ['id', 'username', 'address_one', 'phone', 'email']
 
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -16,7 +16,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Order
         fields = [
             'id', 'owner', 'review_date',
-            'review_star', 'review_description'
+            'review_star', 'review_description', 'hide_review'
         ]
 
 
@@ -65,6 +65,6 @@ class OrderInfoSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'owner', 'game_card', 'create', 'account_id', 'accessory',
             'extra_info', 'compete_date', 'review_date', 'order_keys',
-            'review_star', 'review_description', 'quantity', 'cost',
+            'review_star', 'review_description', 'quantity', 'cost', 'hide_review',
             'state', 'error_msg', 'is_deletable', 'is_editable', 'ship_location'
         ]

@@ -208,9 +208,16 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
 				available_keys: 'المفاتيح المتوفرة',
 				order_min: 'الحد الأدنى من الطلبات',
 				order_max: 'الحد الاقصى من الطلبات',
+				dealer_price: 'سعر الموزع',
+				quantity_notification: 'الكمية للاشعار',
+				total_dealer_price: 'سعر الموزع'
 			}
 		},
 		order: {
+			ownerEmail: 'البريد الالكتروني للمالك',
+			ownerPhoneNumber: 'رقم المحمول للمالك',
+			hide_review: 'أخفاء التقيم',
+			reviewTitle: 'أدارة التقيمات',
 			orderHistory: 'سجل الطلبات',
 			account_id: 'رقم الحساب',
 			orderId: 'رقم الطلب',
@@ -261,7 +268,8 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
 		},
 		user: {
 			points: 'النقاط',
-			numberOfOrders: 'عدد الطلبات'
+			numberOfOrders: 'عدد الطلبات',
+			dealerUser: 'حساب موزع'
 		},
 		accessory: {
 			actions: {
@@ -288,6 +296,9 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
 				image2: 'خيار الصورة 2',
 				image3: 'خيار الصورة 3',
 				image4: 'خيار الصورة 4',
+				dealer_price: 'سعر الموزع',
+				quantity_notification: 'الكمية للاشعار',
+				total_dealer_price: 'سعر الموزع'
 			}
 		},
 		embedGames: {
@@ -466,6 +477,7 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
 		game:'ألعاب',
 		accessories: 'ملحقات',
 		playGameForFree: 'العب الألعاب مجانًا',
+		provideBy: 'مبني بواسطة'
 	}
 };
 

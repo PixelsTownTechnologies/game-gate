@@ -31,6 +31,7 @@ import { HomeDTO } from "../../../../models/home-details";
 import { ScrollCardView } from "../../../shared/games-components/games-components";
 import { URL_ROUTES } from "../../../../routes";
 import { AccessoryCard } from "../../../shared/accessory/components";
+import { getDealerPrice } from "../../../../utils/util";
 
 interface AccessoryViewerWidgetProps {
 	accessory: AccessoryDTO | null;
@@ -56,7 +57,7 @@ export function AccessoryViewerWidget({accessory, onPay, similarAccessories}: Ac
 	const handleBuyNow = () => {
 		if (accessory) {
 			if (user && isUserAuthenticate()) {
-				const totalPrice = accessory.total_price * selectedQuantity;
+				const totalPrice = getDealerPrice(accessory.total_price, accessory.total_dealer_price) * selectedQuantity;
 				if (getUser().balance >= totalPrice) {
 					if (!getUser().address_one || getUser().address_one.trim().length < 0) {
 						setShowChangeInformation(true);
@@ -82,7 +83,7 @@ export function AccessoryViewerWidget({accessory, onPay, similarAccessories}: Ac
 			if (data) {
 				await new EntityService(userOrderService).reload().then();
 				setOrderId(data.id);
-				const totalPrice = accessory.total_price * selectedQuantity;
+				const totalPrice = getDealerPrice(accessory.total_price, accessory.total_dealer_price) * selectedQuantity;
 				updateUser({balance: user.balance - totalPrice} as any);
 			}
 			return !!data;
@@ -150,9 +151,9 @@ export function AccessoryViewerWidget({accessory, onPay, similarAccessories}: Ac
 							<Header as={ 'h4' }>{ accessory.total_orders } { words.viewer.orders }</Header>
 						</div>
 						<div dir={ dir } className={ 'acc-price-section' }>
-							<h2>${ accessory.total_price } US</h2>
+							<h2>${ costFormat(getDealerPrice(accessory.total_price, accessory.total_dealer_price)) } US</h2>
 							<If flag={ accessory.discount && accessory.discount > 0 }>
-								<h4 className={ 'acc-discount-price' }>${ costFormat(accessory.price) } US</h4>
+								<h4 className={ 'acc-discount-price' }>${ costFormat(getDealerPrice(accessory.price, accessory.dealer_price)) } US</h4>
 								<Label className={ 'text-w acc-discount' } color='purple' tag>
 									-{ accessory.discount }%
 								</Label>
@@ -217,9 +218,8 @@ export function AccessoryViewerWidget({accessory, onPay, similarAccessories}: Ac
 			{
 				!isEmpty(similarAccessories) ?
 					(
-						<div className={ 'scroll-card-view-section white-bg em-viewer-container green-bg' }>
+						<div className={ 'scroll-card-view-section white-bg em-viewer-container' }>
 							<ScrollCardView
-								textClassName={ 'white-text' }
 								showMoreURL={ URL_ROUTES.SEARCH + '/accessory' }
 								title={ words.viewer.accessoriesSimilar }
 								list={
@@ -255,11 +255,10 @@ export function AccessoryViewerWidget({accessory, onPay, similarAccessories}: Ac
 				</FlexBox>
 			</FlexBox>
 			<FlexBox justifyContent={ 'center' } alignItems={ 'center' }
-			         className={ 'review-details-section green-bg' }>
+			         className={ 'review-details-section white-bg' }>
 				<ReviewScrollCard
 					showAvg={ true }
 					avgReview={ accessory.review_stars }
-					headerClassName={ 'white-text' }
 					title={ words.reviews.accessoryReviews }
 					reviews={ accessory?.accessory_orders?.filter(ord => ord.review_star && ord.review_star > 0) }
 				/>

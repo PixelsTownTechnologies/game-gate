@@ -82,8 +82,11 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    min-height: calc((400px - 40px) / 2) !important;
-    max-height: calc((400px - 40px) / 2) !important;
+    height: 180px !important;
+    min-height: 180px !important;
+    max-height: 180px !important;
+    max-width: 260px !important;
+    min-width: 260px !important;
 }
 
 .home-s1-ads:hover img {
@@ -92,10 +95,21 @@
 
 .home-s1-ads img {
     background: #00000050 !important;
-    width: 100% !important;
-    min-width: 180px !important;
-    max-width: 240px !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 180px !important;
+    min-width: 260px !important;
     transition: 600ms !important;
+}
+
+.home-ads-box{
+    margin: 0 20px !important;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    height: calc((180px * 2) + 30px );
 }
 
 

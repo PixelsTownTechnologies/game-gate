@@ -89,6 +89,13 @@ class ManageUsers extends EntityWrapper<UserBaseDTO, ManageUsersProps, ManageUse
 				center: true
 			},
 			{
+				fieldName: 'dealer',
+				title: word.entities.user.dealerUser,
+				type: 'boolean',
+				width: 120,
+				center: true
+			},
+			{
 				fieldName: 'address_one',
 				title: word.userFields.addressOne,
 				type: 'text',
@@ -163,6 +170,12 @@ class ManageUsers extends EntityWrapper<UserBaseDTO, ManageUsersProps, ManageUse
 					type: 'number',
 					fieldTitle: words.entities.user.points,
 					hideOnAction: [ 'add', 'editPermission' ]
+				},
+				{
+					fieldName: 'dealer',
+					type: 'boolean',
+					fieldTitle: words.entities.user.dealerUser,
+					hideOnAction: [ 'editPermission' ]
 				}
 			]
 			,

@@ -11,6 +11,7 @@ import { Button, Image, Link } from "../../../lib/components/basic";
 import { URL_ROUTES } from "../../../routes";
 import { useLoader } from "../../../lib/hooks/generic";
 import Logo from '../../../assets/logo/logo-bg-w.jpg';
+import { getDealerPrice } from "../../../utils/util";
 
 export function ImageCard(props: { logo: any, title: string, className?: string }) {
 	return (
@@ -75,7 +76,7 @@ export function OrderItemView({game, quantity, gameCard, accessory, shipLocation
 					<Header className={ 'state-info' } as={ 'h3' }>
 						{ words.gameViewer.totalPrice }: <span
 						className={ 'gc-price' }>${ costFormat(
-						( quantity ? quantity : 1 ) * ( gameCard ? gameCard.total_price : ( accessory ? accessory.total_price : 1 ) ))
+						( quantity ? quantity : 1 ) * ( gameCard ? getDealerPrice(gameCard.total_price, gameCard.total_dealer_price) : ( accessory ? getDealerPrice(accessory.total_price, accessory.total_dealer_price) : 1 ) ))
 					}</span>
 					</Header>
 					{
@@ -104,7 +105,7 @@ export function OrderConfirm({pxIf, gameCard, game, quantity, onCancel, onAccept
 	pxIf?: boolean, accessory?: AccessoryDTO, shipLocation?: string, orderId?: number, onAcceptNextSuccess?: () => void,
 	gameCard?: GameCardDTO, game?: GameDTO, quantity?: number, onCancel: () => void, onAccept: () => Promise<boolean | null>
 }) {
-	const {words, dir} = useLanguage();
+	const {words} = useLanguage();
 	const [ error, setError ] = React.useState(false);
 	const [ success, setSuccess ] = React.useState(false);
 	const loader = useLoader();

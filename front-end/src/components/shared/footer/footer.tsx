@@ -5,16 +5,18 @@ import { StoreState } from "../../../lib/models/application";
 import { HomeDTO } from "../../../models/home-details";
 import { useLanguage } from "../../../lib/hooks/languageHook";
 import { getEnumFromList } from "../../../lib/utils/utils";
-import { Button, Icon } from "semantic-ui-react";
+import { Button, Icon, Image } from "semantic-ui-react";
 import { FlexBox, FlexSpace, Space } from "../../../lib/components/containers";
 import { Link } from "../../../lib/components/basic";
 import { URL_ROUTES } from "../../../routes";
 import { useWindow } from "../../../lib/hooks/screen-change";
+import PixelsTownLogo from '../../../assets/logo/pixelstown-logo.png';
 
 
 function Footer({home}: { home: HomeDTO }) {
 	const {words} = useLanguage();
 	const {isMobile} = useWindow();
+	const showAccessory = home?.accessory?.length > 0;
 	const enums = home?.enums ? home.enums : [];
 	const email = getEnumFromList(enums, '[Footer] Email')?.data;
 	const phoneNumber = getEnumFromList(enums, '[Footer] Phone Number')?.data;
@@ -76,9 +78,13 @@ function Footer({home}: { home: HomeDTO }) {
 						<Link to={ URL_ROUTES.SEARCH + '/game' }>
 							<h4> { words.footer.game } </h4>
 						</Link>
-						<Link to={ URL_ROUTES.SEARCH + '/accessory' }>
-							<h4> { words.footer.accessories } </h4>
-						</Link>
+						{
+							showAccessory ? (
+								<Link to={ URL_ROUTES.SEARCH + '/accessory' }>
+									<h4> { words.footer.accessories } </h4>
+								</Link>
+							) : null
+						}
 						<Link to={ URL_ROUTES.SEARCH + '/embed-game' }>
 							<h4> { words.footer.playGameForFree } </h4>
 						</Link>
@@ -124,8 +130,12 @@ function Footer({home}: { home: HomeDTO }) {
 						{ words.footer.rules }
 					</h6>
 				</FlexSpace>
-				<div>
-				
+				<div className={ 'pixels-town-box' }>
+					<h5> { words.footer.provideBy }</h5>
+					<a dir={'ltr'} href={'https://www.pixelstown.com'} className={ 'pixels-town-logo' }>
+						<Image src={ PixelsTownLogo } size={ 'mini' }/>
+						<h6><span>Pixels</span><span>Town</span></h6>
+					</a>
 				</div>
 			</div>
 		</div>

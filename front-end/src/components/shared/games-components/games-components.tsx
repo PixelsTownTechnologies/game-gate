@@ -14,7 +14,7 @@ import { PointShopDTO } from "../../../models/point-shop";
 import PokeCoins from '../../../assets/images/pokecoins.png';
 import CardBG from '../../../assets/images/Google-Play-Pass.jpg';
 import { LanguageSystemWords } from "../../../models/language";
-import { getImageURL } from "../../../utils/util";
+import { getDealerPrice, getImageURL } from "../../../utils/util";
 
 export function PointCard({pointShopObj, onClick, words, dir, userPoint, showDetailsOnly}: {
 	pointShopObj?: PointShopDTO,
@@ -87,10 +87,10 @@ export function GameCard(props: { gameCard?: GameCardDTO, game: GameDTO }) {
 					<div className={ 'vvg-price-container' }>
 						<div className={ 'price-discount-s' }>
 							<h5 className={ buildCN(!!props.gameCard?.discount ? 'line-price' : null, 'text-b px-non-margin') }>
-								${ costFormat(props.gameCard ? props.gameCard.price : 0) }
+								${ costFormat(props.gameCard ? getDealerPrice(props.gameCard.price, props.gameCard.dealer_price) : 0) }
 							</h5>
 							<If flag={ !!props.gameCard?.discount }>
-								<h5 className={ 'text-b px-non-margin' }> ${ costFormat(props.gameCard ? props.gameCard.total_price : 0) } </h5>
+								<h5 className={ 'text-b px-non-margin' }> ${ costFormat(props.gameCard ? getDealerPrice(props.gameCard.total_price, props.gameCard.total_dealer_price) : 0) } </h5>
 							</If>
 						</div>
 						<div>

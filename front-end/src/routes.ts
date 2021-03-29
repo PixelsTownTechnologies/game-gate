@@ -11,6 +11,7 @@ import ManageGames from "./components/dashboard/admin/manage-games";
 import { flushEntities } from "./lib/store/actions/entity";
 import { GameViewer } from "./components/dashboard/system/game-viewer/game-viewer";
 import ManageOrders from "./components/dashboard/admin/manage-orders";
+import ManageReviews from "./components/dashboard/admin/manage-reviews";
 import { HomeWidget } from "./components/dashboard/system/home/home";
 import ManageFiles from "./components/dashboard/admin/manage-files";
 import OrderHistory from "./components/dashboard/user/history/order-history";
@@ -51,6 +52,7 @@ export const URL_ROUTES = {
 			MANAGE_ACCESSORIES: '/admin/manage-accessories',
 			MANAGE_ADS: '/admin/manage-ads',
 			MANAGE_POINT_SHOP: '/admin/manage-point-shop',
+			MANAGE_REVIEWS: '/admin/manage-reviews',
 		},
 	},
 	GAME_VIEWER: '/view/game',
@@ -102,6 +104,16 @@ export default [
 				permission: PERMISSIONS.MANAGE_ORDERS,
 				menuSetting: {
 					text: 'title.manageOrders',
+					//icon: 'list alternate'
+				},
+			},
+			{
+				component: ManageReviews,
+				path: URL_ROUTES.USER.ADMIN.MANAGE_REVIEWS,
+				authenticate: true,
+				permission: PERMISSIONS.MANAGE_ORDERS,
+				menuSetting: {
+					text: 'entities.order.reviewTitle',
 					//icon: 'list alternate'
 				},
 			},

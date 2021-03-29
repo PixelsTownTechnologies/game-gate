@@ -600,8 +600,22 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
                 width: 100
             },
             {
+                fieldName: 'quantity_notification',
+                title: word.entities.gameCard.fields.quantity_notification,
+                center: true,
+                type: 'number',
+                width: 120
+            },
+            {
                 fieldName: 'price',
                 title: word.entities.gameCard.fields.price,
+                center: true,
+                type: 'balance',
+                width: 120
+            },
+            {
+                fieldName: 'dealer_price',
+                title: word.entities.gameCard.fields.dealer_price,
                 center: true,
                 type: 'balance',
                 width: 120
@@ -665,6 +679,22 @@ class ManageGames extends EntityWrapper<GameDTO, ManageGamesProps, ManageGamesSt
                     fieldName: 'discount',
                     type: 'range',
                     fieldTitle: words.entities.gameCard.fields.discount,
+                    defaultValue: 0,
+                    subInputOptions: {max: 100, min: 0}
+                }
+            ],
+            [
+                {
+                    fieldName: 'dealer_price',
+                    type: 'range',
+                    fieldTitle: words.entities.gameCard.fields.dealer_price,
+                    defaultValue: 5,
+                    subInputOptions: {max: 9999999999, min: 0}
+                },
+                {
+                    fieldName: 'quantity_notification',
+                    type: 'range',
+                    fieldTitle: words.entities.gameCard.fields.quantity_notification,
                     defaultValue: 0,
                     subInputOptions: {max: 100, min: 0}
                 }

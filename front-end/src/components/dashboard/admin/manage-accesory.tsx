@@ -89,6 +89,13 @@ class ManageAccessory extends EntityWrapper<AccessoryDTO, ManageAccessoryProps, 
 				width: 120
 			},
 			{
+				fieldName: 'dealer_price',
+				title: word.entities.accessory.fields.dealer_price,
+				center: true,
+				type: 'balance',
+				width: 120
+			},
+			{
 				fieldName: 'discount',
 				title: word.entities.accessory.fields.discount,
 				center: true,
@@ -110,6 +117,13 @@ class ManageAccessory extends EntityWrapper<AccessoryDTO, ManageAccessoryProps, 
 				title: word.entities.accessory.fields.system_quantity,
 				center: true,
 				type: 'float',
+				width: 120
+			},
+			{
+				fieldName: 'quantity_notification',
+				title: word.entities.accessory.fields.quantity_notification,
+				center: true,
+				type: 'number',
 				width: 120
 			},
 			{
@@ -222,7 +236,6 @@ class ManageAccessory extends EntityWrapper<AccessoryDTO, ManageAccessoryProps, 
 					validator: {required: true}
 				}
 			],
-			
 			[
 				{
 					fieldName: 'price',
@@ -235,6 +248,22 @@ class ManageAccessory extends EntityWrapper<AccessoryDTO, ManageAccessoryProps, 
 					fieldName: 'discount',
 					type: 'range',
 					fieldTitle: words.entities.accessory.fields.discount,
+					defaultValue: 0,
+					subInputOptions: {max: 100, min: 0}
+				}
+			],
+			[
+				{
+					fieldName: 'dealer_price',
+					type: 'range',
+					fieldTitle: words.entities.gameCard.fields.dealer_price,
+					defaultValue: 5,
+					subInputOptions: {max: 9999999999, min: 0}
+				},
+				{
+					fieldName: 'quantity_notification',
+					type: 'range',
+					fieldTitle: words.entities.gameCard.fields.quantity_notification,
 					defaultValue: 0,
 					subInputOptions: {max: 100, min: 0}
 				}

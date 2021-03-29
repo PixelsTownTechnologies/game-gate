@@ -41,9 +41,7 @@ function EmbedGameWidget({game, adsList, similarGames}: { game: EmbedGameDTO, ad
 				<FlexBox padding={ 20 } flexDirection={ 'column' }>
 					<FlexBox flexDirection={ 'row' } justifyContent={ isMobile ? 'center' : undefined }
 					         alignItems={ isMobile ? 'center' : undefined }>
-						{
-							!isMobile ? <Image src={ game.logo } width={ 80 }/> : null
-						}
+						<Image src={ game.logo } width={ 80 }/>
 						<FlexBox className={ 'px-slp-10' } flexDirection={ 'column' }
 						         justifyContent={ isMobile ? 'center' : undefined }
 						         alignItems={ isMobile ? 'center' : undefined }>
@@ -83,12 +81,11 @@ function EmbedGameWidget({game, adsList, similarGames}: { game: EmbedGameDTO, ad
 					) : null
 				}
 			</div>
-			<div className={ 'scroll-card-view-section white-bg em-viewer-container green-bg' }>
+			<div className={ 'scroll-card-view-section white-bg em-viewer-container' }>
 				{
 					!isEmpty(similarGames) ?
 						(
 							<ScrollCardView
-								textClassName={'white-text'}
 								showMoreURL={ URL_ROUTES.SEARCH + '/embed-game' }
 								title={ words.viewer.embedGameSimilar }
 								list={

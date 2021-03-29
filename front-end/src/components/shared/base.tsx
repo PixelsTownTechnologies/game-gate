@@ -1,7 +1,14 @@
 import React from "react";
-import AppLogo from '../../assets/logo/logo.png';
+import AppLogo from '../../assets/logo/logo-bg-w.jpg';
+import AppLogo2 from '../../assets/logo/logo.png';
 import { Dimmer, Divider, Image } from "semantic-ui-react";
 import { SemanticSIZES } from "semantic-ui-react/dist/commonjs/generic";
+
+export function Logo2(props: { size?: SemanticSIZES }) {
+    return (
+        <Image src={ AppLogo2 } size={ props.size ? props.size : 'medium' }/>
+    );
+}
 
 export function Logo(props: { size?: SemanticSIZES }) {
     return (

@@ -48,6 +48,7 @@ export interface ReviewDTO extends BaseEntity {
 	review_date: Date;
 	review_star: number;
 	review_description: string;
+	hide_review: boolean;
 }
 
 export interface OrderDTO extends BaseEntity {
@@ -75,6 +76,8 @@ export interface OrderDTO extends BaseEntity {
 	quantity: number;
 	cost: number;
 	
+	hide_review: boolean;
+	
 }
 
 
@@ -99,6 +102,10 @@ export interface AccessoryDTO extends BaseEntity {
 	total_orders: number;
 	review_stars: number;
 	total_reviews: number;
+	
+	dealer_price: number;
+	quantity_notification: number;
+	total_dealer_price: number;
 	
 	accessory_orders: ReviewDTO[];
 	
@@ -141,6 +148,9 @@ export interface GameCardDTO extends BaseEntity {
 	order_max: number;
 	max: number;
 	min: number;
+	dealer_price: number;
+	quantity_notification: number;
+	total_dealer_price: number;
 }
 
 export interface GameDTO extends BaseEntity {

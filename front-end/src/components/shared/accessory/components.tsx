@@ -9,7 +9,7 @@ import { EmbedGameDTO } from "../../../models/embed-game";
 import { FlexBox } from "../../../lib/components/containers";
 import { useLanguage } from "../../../lib/hooks/languageHook";
 import NoImage from '../../../lib/assets/images/noImage.jpg';
-import { getImageURL } from "../../../utils/util";
+import { getDealerPrice, getImageURL } from "../../../utils/util";
 
 export function EmbedGameCard({game}: { game?: EmbedGameDTO }) {
 	if (!game) {
@@ -52,7 +52,7 @@ export function AccessoryCard({accessory}: { accessory?: AccessoryDTO }) {
 			<FlexBox justifyContent={'space-between'} className={'accessory-card-info'}>
 				<h5>{ accessory.name }</h5>
 				<div>
-					<h4>${ costFormat(accessory.price) } US</h4>
+					<h4>${ costFormat(getDealerPrice(accessory.price, accessory.dealer_price)) } US</h4>
 					<h6>{ accessory.total_orders } { words.viewer.orders }</h6>
 				</div>
 			</FlexBox>

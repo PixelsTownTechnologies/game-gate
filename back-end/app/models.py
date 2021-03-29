@@ -50,6 +50,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     code = models.CharField(max_length=12, blank=True, null=True)
     is_reset_code = models.BooleanField(default=False, blank=True, null=True)
     points = models.IntegerField(default=0, blank=True, null=True)
+    dealer = models.BooleanField(default=False, blank=True, null=True)
 
     cart = models.TextField(default='[]', blank=True, null=True)
     favorite = models.TextField(default='[]', blank=True, null=True)
@@ -268,6 +269,13 @@ class GameCard(models.Model):
     points = models.IntegerField(default=0, null=True, blank=True)
     show = models.BooleanField(default=True, null=True, blank=True)
     sold_flag = models.BooleanField(default=False, null=True, blank=True)
+    dealer_price = models.FloatField(default=0.0, null=True, blank=True)
+    quantity_notification = models.IntegerField(default=20, null=True, blank=True)
+
+    @property
+    def total_dealer_price(self):
+        discount = self.discount if self.discount is not None else 0
+        return self.dealer_price - (self.dealer_price * discount / 100)
 
     @property
     def total_price(self):
@@ -316,6 +324,8 @@ class Accessory(models.Model):
     show = models.BooleanField(default=True, null=True, blank=True)
     sold_flag = models.BooleanField(default=False, null=True, blank=True)
     type = models.CharField(max_length=32, null=True, blank=True)
+    quantity_notification = models.IntegerField(default=20, null=True, blank=True)
+    dealer_price = models.FloatField(default=0.0, null=True, blank=True)
 
     details = models.TextField(default='', null=True, blank=True)
     short_description = models.TextField(default='', null=True, blank=True)
@@ -328,6 +338,11 @@ class Accessory(models.Model):
     image2 = models.ImageField(upload_to='accessory/images', blank=True, null=True)
     image3 = models.ImageField(upload_to='accessory/images', blank=True, null=True)
     image4 = models.ImageField(upload_to='accessory/images', blank=True, null=True)
+
+    @property
+    def total_dealer_price(self):
+        discount = self.discount if self.discount is not None else 0
+        return self.dealer_price - (self.dealer_price * discount / 100)
 
     @property
     def total_price(self):
@@ -420,6 +435,8 @@ class Order(models.Model):
     state = models.CharField(max_length=2, default='I', choices=ORDER_STATUS, null=True, blank=True)
     cost = models.FloatField(null=True, blank=True)
     error_msg = models.TextField(max_length=500, null=True, blank=True)
+
+    hide_review = models.BooleanField(default=False, null=True, blank=True)
 
     @property
     def is_deletable(self):

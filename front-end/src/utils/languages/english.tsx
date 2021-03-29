@@ -207,9 +207,16 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
 				available_keys: 'Available Keys',
 				order_min: 'Min Quantity Order',
 				order_max: 'Max Quantity Order',
+				dealer_price: 'Dealer Price',
+				quantity_notification: 'Quantity To Notification',
+				total_dealer_price: 'Total Dealer Price'
 			}
 		},
 		order: {
+			ownerEmail: 'Owner Email',
+			ownerPhoneNumber: 'Owner Phone Number',
+			hide_review: 'Hide Review',
+			reviewTitle: 'Manage Reviews',
 			orderHistory: 'Order History',
 			account_id: 'Account ID',
 			orderId: 'Order ID',
@@ -260,7 +267,8 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
 		},
 		user: {
 			points: 'User Points',
-			numberOfOrders: 'Total Orders'
+			numberOfOrders: 'Total Orders',
+			dealerUser: 'Is Dealer'
 		},
 		accessory: {
 			title: 'Manage Accessories',
@@ -287,6 +295,9 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
 				image2: 'Image Option 2',
 				image3: 'Image Option 3',
 				image4: 'Image Option 4',
+				dealer_price: 'Dealer Price',
+				quantity_notification: 'Quantity To Notification',
+				total_dealer_price: 'Total Dealer Price'
 			}
 		},
 		embedGames: {
@@ -465,6 +476,7 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
 		game:'Games',
 		accessories:'Accessories',
 		playGameForFree: 'Play Games For Free',
+		provideBy: 'Provide By'
 	}
 };
 

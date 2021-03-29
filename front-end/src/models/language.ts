@@ -125,9 +125,13 @@ export interface LanguageSystemWords extends LanguageBaseWords {
 				available_keys: string;
 				order_min: string;
 				order_max: string;
+				quantity_notification: string;
+				total_dealer_price: string;
+				dealer_price: string;
 			}
 		};
 		order: {
+			reviewTitle: string;
 			title: string;
 			orderHistory: string;
 			orderKeys: string;
@@ -147,10 +151,13 @@ export interface LanguageSystemWords extends LanguageBaseWords {
 				C: string;
 				E: string;
 			};
+			hide_review: string;
 			ship_location: string;
 			ownerId: string;
 			orderId: string;
 			ownerUsername: string;
+			ownerEmail: string;
+			ownerPhoneNumber: string;
 			orderDate: string;
 			compete_date: string;
 			account_id: string;
@@ -179,6 +186,7 @@ export interface LanguageSystemWords extends LanguageBaseWords {
 		user: {
 			points: string;
 			numberOfOrders: string;
+			dealerUser: string;
 		};
 		accessory: {
 			title: string;
@@ -205,6 +213,9 @@ export interface LanguageSystemWords extends LanguageBaseWords {
 				image2: string;
 				image3: string;
 				image4: string;
+				quantity_notification: string;
+				total_dealer_price: string;
+				dealer_price: string;
 			};
 		};
 		embedGames: {
@@ -383,5 +394,6 @@ export interface LanguageSystemWords extends LanguageBaseWords {
 		game: string;
 		accessories: string;
 		playGameForFree: string;
+		provideBy: string;
 	};
 }

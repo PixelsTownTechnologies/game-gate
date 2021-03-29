@@ -339,7 +339,58 @@
     max-width: 240px;
 }
 
- div.user-section > div > div.profile-icon > div{
-     min-width: 75px !important;
-     max-width: 75px !important;
- }
+div.user-section > div > div.profile-icon > div {
+    min-width: 75px !important;
+    max-width: 75px !important;
+}
+
+
+.section2 > div.items-menu.px-lib.flex.justify-space-between.align-items-center.flex-warp {
+    display: flex !important;
+    justify-content: center !important;
+    flex: 60% !important;
+}
+
+.section2 > div.right-section {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex: 20% !important;
+}
+
+.section2 > div:nth-child(1) {
+    flex: 20% !important;
+}
+
+@media only screen and (max-width: 1000px) {
+    .section2 > div:nth-child(1) {
+        flex: 8% !important;
+    }
+}
+
+@media only screen and (max-width: 950px) {
+    .section2 > div:nth-child(1) {
+        flex: 0 !important;
+    }
+}
+
+
+@media only screen and (max-width: 860px) {
+
+    .section2 > div.items-menu.px-lib.flex.justify-space-between.align-items-center.flex-warp {
+        display: flex !important;
+        justify-content: flex-start !important;
+        flex: unset !important;
+    }
+
+    .section2 > div.right-section {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        flex: unset !important;
+    }
+}
+
+.section2 > div.items-menu.px-lib.flex.justify-space-between.align-items-center.flex-warp > div > div:nth-child(1){
+    font-size: 1.0em !important;
+}

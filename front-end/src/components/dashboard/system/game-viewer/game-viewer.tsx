@@ -39,7 +39,7 @@ import { ReviewScrollCard } from "../../../shared/review/review-component";
 import { connect } from "react-redux";
 import { StoreState } from "../../../../lib/models/application";
 import { HomeDTO } from "../../../../models/home-details";
-import { manipulateHomeData } from "../../../../utils/util";
+import { getDealerPrice, manipulateHomeData } from "../../../../utils/util";
 import { GameCardBig, ScrollCardView } from "../../../shared/games-components/games-components";
 import { URL_ROUTES } from "../../../../routes";
 
@@ -76,7 +76,7 @@ export function GameCardWidget({logo, isSelected, onSelect, gameCard}: {
 			</div>
 			<div className={ 'g-card-info' }>
 				<h5 className={ 'gc-name' }>{ gameCard.name }</h5>
-				<h5 className={ 'gc-price' }>$ { costFormat(gameCard.total_price) }</h5>
+				<h5 className={ 'gc-price' }>$ { costFormat(getDealerPrice(gameCard.total_price, gameCard.total_dealer_price)) }</h5>
 			</div>
 		</div>
 	);
@@ -112,7 +112,7 @@ export function GameViewerWidget({game, gameCardId, onPay, similarGames, user}: 
 		if (selectedCard && game) {
 			if (user && isUserAuthenticate()) {
 				const quantity = game?.type === gameTypes.Keys ? selectedQuantity : 1;
-				const totalPrice = selectedCard.total_price * quantity;
+				const totalPrice = getDealerPrice(selectedCard.total_price, selectedCard.total_dealer_price) * quantity;
 				if (user.balance >= totalPrice) {
 					setShowPaymentConfirm(true);
 				} else {
@@ -126,7 +126,7 @@ export function GameViewerWidget({game, gameCardId, onPay, similarGames, user}: 
 	const onAcceptOrder = async () => {
 		if (selectedCard && game && user && isUserAuthenticate()) {
 			const quantity = game?.type === gameTypes.Keys ? selectedQuantity : 1;
-			const totalPrice = selectedCard.total_price * quantity;
+			const totalPrice = getDealerPrice(selectedCard.total_price, selectedCard.total_dealer_price) * quantity;
 			const account_id = orderDataForm?.id;
 			const extra_info = orderDataForm?.subDetails;
 			const game_card_id = selectedCard.id;
@@ -279,7 +279,7 @@ export function GameViewerWidget({game, gameCardId, onPay, similarGames, user}: 
 								<h3
 									className={ 'gc-price px-non-margin' }
 								>
-									$ { costFormat(selectedCard ? selectedCard.total_price * selectedQuantity : 0) }
+									$ { costFormat(selectedCard ? getDealerPrice(selectedCard.total_price, selectedCard.total_dealer_price) * selectedQuantity : 0) }
 								</h3>
 								<h5
 									className={ 'gc-credits px-non-margin' }
@@ -322,12 +322,12 @@ export function GameViewerWidget({game, gameCardId, onPay, similarGames, user}: 
 				</FlexBox>
 			</FlexBox>
 			<If flag={ game.type === gameTypes.Keys }>
-				<FlexBox padding={ clamp(10, width * 0.10, 30) } justifyContent={ 'center' }
+				<FlexBox padding={ clamp(15, width * 0.1, 35) } justifyContent={ 'center' }
 				         alignItems={ 'center' }
 				         className={ 'white-bg' }
 				         flexDirection={ 'column' }>
-					<Header color={ 'grey' } as={ 'h3' }>{ words.gameViewer.selectQuantity }</Header>
-					<FlexCenter>
+					<h3 className={'grey-text px-non-margin'} >{ words.gameViewer.selectQuantity }<br/></h3>
+					<FlexCenter padding={5}>
 						<div className={ 'counter-c' }>
 							<Counter
 								min={ selectedCard ? selectedCard.order_min : 1 }
@@ -391,9 +391,8 @@ export function GameViewerWidget({game, gameCardId, onPay, similarGames, user}: 
 			{
 				!isEmpty(similarGames) ?
 					(
-						<div className={ 'scroll-card-view-section white-bg em-viewer-container green-bg' }>
+						<div className={ 'scroll-card-view-section white-bg em-viewer-container white-bg' }>
 							<ScrollCardView
-								textClassName={ 'white-text' }
 								showMoreURL={ URL_ROUTES.SEARCH + '/game' }
 								title={ words.viewer.gameSimilar }
 								list={
@@ -429,11 +428,10 @@ export function GameViewerWidget({game, gameCardId, onPay, similarGames, user}: 
 				<SDivider hidden/>
 			</FlexBox>
 			<FlexBox padding={ clamp(10, width * 0.10, 60) } justifyContent={ 'center' } alignItems={ 'center' }
-			         className={ 'review-details-section green-bg' }>
+			         className={ 'review-details-section white-bg' }>
 				<ReviewScrollCard
 					showAvg
 					avgReview={ game.review_stars }
-					headerClassName={ 'white-text' }
 					title={ words.reviews.gamesReviews }
 					reviews={ game?.game_orders?.filter(ord => ord.review_star && ord.review_star > 0) }
 				/>

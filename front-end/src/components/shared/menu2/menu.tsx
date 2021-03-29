@@ -4,7 +4,7 @@ import './menu.css';
 import { FlexBox, FlexCenter, FlexSpace, If, Space } from "../../../lib/components/containers";
 import WindowService from "../../../lib/services/window.service";
 import { Link, Redirect } from "../../../lib/components/basic";
-import { Loader, Logo } from "../base";
+import { Loader, Logo, Logo2 } from "../base";
 // @ts-ignore
 import Avatar from '../../../assets/icons/avatar.png';
 // @ts-ignore
@@ -257,21 +257,24 @@ class Menu2 extends BaseComponent<MenuProps, MenuState> {
 	
 	show(props: MenuProps, state: MenuState): JSX.Element | null {
 		return (
-			<FlexBox dir={'ltr'} flexDirection={ 'column' } alignItems={ 'center' } className={ 'px menu' }>
+			<FlexBox dir={ 'ltr' } flexDirection={ 'column' } alignItems={ 'center' } className={ 'px menu' }>
 				<Loader show={ state.homeLoader }/>
 				<Redirect flag={ !!this.state.searchVal }
 				          url={ URL_ROUTES.SEARCH + `?search=${ this.state.searchVal }` }/>
-				<FlexSpace dir={'ltr'}  className={ 'section1' }>
+				<FlexSpace dir={ 'ltr' } className={ 'section1' }>
 					<Link to={ URL_ROUTES.HOME }>
 						<Header className={ 'm-app-name' }>
-							GAMERS DZ
+							<Logo2/>
 						</Header>
 					</Link>
 					<MenuSearch onSearch={ (value) => {
 						this.setState({searchVal: value});
 					} }/>
 				</FlexSpace>
-				<FlexSpace dir={'ltr'}  className={ 'stackable  section2' }>
+				<FlexSpace dir={ 'ltr' } className={ 'stackable  section2' }>
+					{
+						this.state.type !== 'Mobile' ? <div/> : null
+					}
 					<FlexSpace className={ 'items-menu' }>
 						{ this.showSection2() }
 					</FlexSpace>

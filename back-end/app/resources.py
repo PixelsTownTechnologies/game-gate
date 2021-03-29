@@ -38,8 +38,9 @@ def get_random_string(length):
 
 
 def create_notification(user, title):
-    from app.models import Notification
-    Notification.objects.create(user=user, title=title).save()
+    pass
+    #from app.models import Notification
+    #Notification.objects.create(user=user, title=title).save()
 
 
 def get_readable_state(status):

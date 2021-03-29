@@ -135,7 +135,7 @@ def home(request):
                                                         many=True).data,
                         'accessory': AccessorySerializer(Accessory.objects.filter(show=True), many=True).data,
                         'reviews': ReviewSerializer(
-                            Order.objects.exclude(review_star__lt=1).exclude(review_star=None).filter(state='C'),
+                            Order.objects.exclude(review_star__lt=1).exclude(review_star=None).filter(state='C', hide_review=False),
                             many=True).data,
                         'embedGames': EmbedGameSerializer(EmbedGame.objects.exclude(src=None), many=True).data,
                         'ads': AdsSerializer(Ads.objects.exclude(cover=None), many=True).data

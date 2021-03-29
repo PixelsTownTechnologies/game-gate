@@ -7,7 +7,7 @@ import { StoreState } from "../../../../lib/models/application";
 import { useLanguage } from "../../../../lib/hooks/languageHook";
 import { useLoader } from "../../../../lib/hooks/generic";
 import { HomeDTO } from "../../../../models/home-details";
-import { manipulateHomeData } from "../../../../utils/util";
+import { getDealerPrice, manipulateHomeData } from "../../../../utils/util";
 import { buildCN, costFormat, isEmpty } from "../../../../lib/utils/utils";
 import { AccessoryDTO, GameCardDTO, GameDTO } from "../../../../models/game";
 import { Divider, FlexBox, FlexCenter, FlexSpace, If, Space } from "../../../../lib/components/containers";
@@ -65,9 +65,9 @@ function OrderCartItem({obj, words, dir, onFormChange, onRemove}: {
 					</Item.Header>
 					<Item.Meta>
 						<div dir={ dir } className={ 'acc-price-section' }>
-							<h4 className={ 'px-non-margin grey-text' }>${ obj.gameCard ? costFormat(obj.gameCard.total_price) : ( obj?.accessory ? costFormat(obj?.accessory.total_price) : 0 ) } US</h4>
+							<h4 className={ 'px-non-margin grey-text' }>${ obj.gameCard ? costFormat(getDealerPrice(obj.gameCard.total_price, obj.gameCard.total_dealer_price)) : ( obj?.accessory ? costFormat(getDealerPrice(obj?.accessory.total_price, obj?.accessory.total_dealer_price)) : 0 ) } US</h4>
 							<If flag={ discount > 0 }>
-								<h4 className={ 'acc-discount-price' }>${ obj.gameCard ? costFormat(obj.gameCard.price) : ( obj?.accessory ? costFormat(obj?.accessory.price) : 0 ) } US</h4>
+								<h4 className={ 'acc-discount-price' }>${ obj.gameCard ? costFormat(getDealerPrice(obj.gameCard.price, obj.gameCard.dealer_price)) : ( obj?.accessory ? costFormat(getDealerPrice(obj?.accessory.price, obj?.accessory.dealer_price)) : 0 ) } US</h4>
 								<Label className={ 'text-w acc-discount' } color='purple' tag>
 									-{ discount }%
 								</Label>
@@ -231,7 +231,7 @@ function UserCart({user, gameCards, accessories}: { user: UserDTO, gameCards: Ga
 		return false;
 	}
 	const total_cost = orders && !isEmpty(notSoldOrders) ? notSoldOrders
-			.map(obj => ( obj.quantity ? obj.quantity : 1 ) * ( obj.gameCard ? obj.gameCard.total_price : ( obj.accessory ? obj.accessory.total_price : 0 ) ))
+			.map(obj => ( obj.quantity ? obj.quantity : 1 ) * ( obj.gameCard ? getDealerPrice(obj.gameCard.total_price, obj.gameCard.total_dealer_price) : ( obj.accessory ? getDealerPrice(obj.accessory.total_price, obj.accessory.total_dealer_price) : 0 ) ))
 			.reduce((total, num) => total + num)
 		:
 		0;
@@ -300,7 +300,7 @@ function UserCart({user, gameCards, accessories}: { user: UserDTO, gameCards: Ga
 									const validOrder = isOrderValid(ord);
 									const isSold = ord?.gameCard ? ord?.gameCard.is_sold : ( ord?.accessory?.is_sold );
 									const totalPrice = ord?.gameCard && ord.type === 'game'
-										? ord?.gameCard?.total_price : ( ord.accessory && ord.type === 'accessory' ? ord.accessory.total_price : 0 );
+										? getDealerPrice(ord?.gameCard?.total_price, ord.gameCard.total_dealer_price) : ( ord.accessory && ord.type === 'accessory' ? getDealerPrice(ord.accessory.total_price, ord.accessory.total_dealer_price) : 0 );
 									return (
 										<FlexSpace dir={ 'ltr' } key={ ord.order } flexDirection={ 'column' }>
 											<h4 className={ buildCN('px-non-margin', validOrder ? 'grey-text' : 'red-text') }>
@@ -312,7 +312,7 @@ function UserCart({user, gameCards, accessories}: { user: UserDTO, gameCards: Ga
 														)
 												}
 											</h4>
-											<h4 className={ 'px-non-margin grey-text' }>${ totalPrice } x { ord.quantity }</h4>
+											<h4 className={ 'px-non-margin grey-text' }>${ costFormat(totalPrice) } x { ord.quantity }</h4>
 										</FlexSpace>
 									);
 								})

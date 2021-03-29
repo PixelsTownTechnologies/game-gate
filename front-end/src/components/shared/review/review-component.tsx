@@ -96,7 +96,7 @@ export function ReviewScrollCard(props: {
 						</Button>
 						<div dir={ DIR.LTR } ref={ sectionRef } className={ 'review-scroll-container' }>
 							{
-								props?.reviews
+								props?.reviews?.filter(r => !r.hide_review)
 									?.sort((r1, r2) =>
 										new Date(r2.review_date).getTime() - new Date(r1.review_date).getTime())
 									?.sort((r1, r2) => r2.review_star - r1.review_star)

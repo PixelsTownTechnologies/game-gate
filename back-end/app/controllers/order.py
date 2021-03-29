@@ -26,7 +26,7 @@ def handle_accessory_order(user: User, quantity, accessory_id, ship_location):
     if accessory.system_quantity < quantity:
         release_order_api_access()
         return Response(status=status.HTTP_400_BAD_REQUEST)
-    total_cost = quantity * accessory.total_price
+    total_cost = quantity * accessory.total_price if not user.dealer else accessory.total_dealer_price
     total_points = quantity * accessory.points
     if user.balance < total_cost:
         release_order_api_access()
@@ -56,7 +56,7 @@ def handle_game_card_order(user: User, game_card_id, quantity, account_id, extra
         return Response(status=status.HTTP_400_BAD_REQUEST)
     game_card: GameCard = queryset[0]
     available_keys = game_card.keys.filter(available=True)
-    total_cost = quantity * game_card.total_price
+    total_cost = quantity * game_card.total_price if not user.dealer else game_card.total_dealer_price
     total_points = quantity * game_card.points
     if user.balance < total_cost or (available_keys.count() < quantity and game_card.game.type == 'K'):
         release_order_api_access()

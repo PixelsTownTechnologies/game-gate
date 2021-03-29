@@ -61,7 +61,7 @@ export function SearchOnItem(props: BaseRouteComponentProps
 	const getGames = (): GameDTO[] => {
 		if (isGameType && homeData?.games) {
 			const searchText = searchValue ? searchValue.toLowerCase() : null;
-			return searchText ? homeData.games.filter(g => ( g.platform ? searchText.split(' ').includes(platformTypeStateToPlatform[g.platform]) : false ) ||
+			return searchText ? homeData.games.filter(g => ( g.platform ? searchText.toLowerCase().split(' ').includes(platformTypeStateToPlatform[g.platform].toLowerCase()) : false ) ||
 				searchOnObject(g, [ 'type', 'details', 'name', 'notes', 'platform' ], searchText)
 			) : homeData.games;
 		}

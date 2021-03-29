@@ -9,8 +9,8 @@ class GameCardSerializer(serializers.ModelSerializer):
         model = GameCard
         fields = [
             'id', 'name', 'show', 'price', 'discount', 'max', 'game', 'total_price',
-            'min', 'points', 'sold_flag', 'available_keys', 'available',
-            'order_min', 'order_max', 'is_sold', 'is_deletable', 'is_editable'
+            'min', 'points', 'sold_flag', 'available_keys', 'available', 'quantity_notification',
+            'order_min', 'order_max', 'is_sold', 'is_deletable', 'is_editable', 'dealer_price', 'total_dealer_price'
         ]
 
 
@@ -37,8 +37,8 @@ class AccessorySerializer(serializers.ModelSerializer):
             'id', 'name', 'price', 'total_reviews', 'type', 'max', 'min', 'review_stars',
             'order_min', 'discount', 'points', 'system_quantity', 'accessory_orders',
             'order_max', 'show', 'sold_flag', 'details', 'video', 'total_orders'
-            , 'logo', 'image1', 'image2', 'is_sold', 'total_price', 'short_description'
-            , 'image3', 'image4', 'is_deletable', 'is_editable'
+            , 'logo', 'image1', 'image2', 'is_sold', 'total_price', 'short_description', 'total_dealer_price'
+            , 'image3', 'image4', 'is_deletable', 'is_editable', 'dealer_price', 'quantity_notification'
         ]
 
 

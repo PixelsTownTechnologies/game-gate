@@ -16,7 +16,7 @@ interface FavoritePageProps {
 }
 
 function FavoritePage(props: FavoritePageProps) {
-	const {words, dir} = useLanguage();
+	const {words} = useLanguage();
 	const gamesToShow: GameDTO[] = ( props?.user?.favorite_data && props.games
 		? props?.user?.favorite_data.map(id => props.games?.filter(g => g.id === id)?.[0]) : [] ).filter(game => !!game);
 	return (

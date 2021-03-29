@@ -2,7 +2,7 @@ import './home.css';
 import { Wrapper } from "../../../shared/wrapper";
 import React, { useEffect, useState } from 'react';
 import { Divider as SDivider, Embed, Image } from "semantic-ui-react";
-import { Divider, FlexBox, FlexCenter, If } from "../../../../lib/components/containers";
+import { FlexBox, FlexCenter, If } from "../../../../lib/components/containers";
 import { useWindow } from "../../../../lib/hooks/screen-change";
 import { EntityService } from "../../../../lib/services/entity-service/entity-service";
 import { homeService } from "../../../../services/service-config";
@@ -175,13 +175,12 @@ function HomeSection1(props: { images?: any[], ads1?: AdsDTO, ads2?: AdsDTO }) {
 		<div className={ 'home-section1' }>
 			<ImageSlider images={ !isEmpty(props.images) && props.images ? props.images : defaultImages }/>
 			<If flag={ width > 970 }>
-				<div>
+				<div className={'home-ads-box'}>
 					{
 						props.ads1 ? (
 							<AdsBox className={ 'home-s1-ads' } ads={ props.ads1 }/>
 						) : null
 					}
-					<SDivider hidden/>
 					{
 						props.ads2 ? (
 							<AdsBox className={ 'home-s1-ads' } ads={ props.ads2 }/>
