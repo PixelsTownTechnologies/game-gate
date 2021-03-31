@@ -157,3 +157,7 @@ label {
     margin-left: clamp(30px, 10%, 120px) !important;
     margin-right: clamp(30px, 10%, 120px) !important;
 }
+
+.sim-margin {
+    margin: 5px !important;
+}

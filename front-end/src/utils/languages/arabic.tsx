@@ -276,7 +276,7 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
 				add: 'أضافة ملحق جديد',
 				edit: 'نعديل الملحق'
 			},
-			title: 'إدارة الملحقات',
+			title: 'إدارة الإكسسوارات',
 			fields: {
 				name: 'ألاسم',
 				shortDescription: 'نص توضيحي',
@@ -408,9 +408,9 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
 		homeImages: 'صور الصفحه الرئيسي',
 		image: 'الصورة',
 		selectedResources: 'المصادر مختارة',
-		accessorySection: 'قسم الملحقات',
+		accessorySection: 'قسم الإكسسوارات',
 		embedGameSection: 'قسم ألعاب المضمنة',
-		selectedAccessory: 'الملحقات المختارة',
+		selectedAccessory: 'الإكسسوارات المختارة',
 		selectedEmbedGames: 'ألعاب تضمين المختارة',
 		homeVideoId: 'رمز فيديو الصفحة الرئيسية'
 	},
@@ -478,6 +478,36 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
 		accessories: 'ملحقات',
 		playGameForFree: 'العب الألعاب مجانًا',
 		provideBy: 'مبني بواسطة'
+	},
+	analysis: {
+		title: 'تقارير النظام',
+		dateFilter: 'مرشح التاريخ',
+		ordersStatus: 'حالة الطلبات',
+		gamesStatus: 'حالة الألعاب و الإكسسوارات',
+		accessoriesStatus: 'حالة المستخدمين',
+		earnsStatus: 'الدخل والمصروفات',
+		totalEarnsFromKeyGames: 'إجمالي الأرباح من الألعاب المفاتيح',
+		totalEarnsFromChargingGames: 'إجمالي الأرباح من شحن الألعاب',
+		totalEarnsFromAccessories: 'إجمالي الأرباح من الإكسسوارات',
+		totalEarns: 'محصلت الدخل',
+		totalOrders: 'إجمالي عدد الطلبات',
+		totalInProgressOrders: 'إجمالي الطلبات قيد التنفيذ',
+		totalCompletedOrders: 'إجمالي الطلبات المكتملة',
+		totalGamesInSystem: 'إجمالي الألعاب في النظام',
+		totalAccessoriesInSystem: 'إجمالي الإكسسوارات في النظام',
+		totalUsers: 'إجمالي المستخدمين',
+		totalBalanceAddToUsers: 'إجمالي الرصيد المضاف للمستخدمين',
+		totalUsersBalance: 'إجمالي رصيد المستخدمين',
+		clearFilters: 'مسح المرشحات',
+		applyFilters: 'تطبيق المرشحات',
+		startDate: 'تاريخ البداية',
+		endDate: 'تاريخ النهاية',
+		games: 'الالعاب',
+		accessories: 'الإكسسوارات',
+		totalUsersPoints: 'مجموع نقاط المستخدمين',
+		totalAccessoriesOrders: 'إجمالي طلبات الإكسسوارات',
+		totalKeyGamesOrders: 'إجمالي طلبات الألعاب المفاتيح',
+		totalChargingGamesOrders: 'إجمالي طلبات شحن الألعاب',
 	}
 };
 

@@ -26,6 +26,7 @@ import ManagePointShop from "./components/dashboard/admin/manage-point-shop";
 import UserCart from './components/dashboard/user/cart/cart';
 import PointShopPage from './components/dashboard/system/points-shop/point-shop';
 import FavoritePage from './components/dashboard/user/favorite/favorite';
+import FundAnalysis from "./components/dashboard/admin/fund_analysis";
 
 export const URL_ROUTES = {
 	HOME: '/',
@@ -53,6 +54,7 @@ export const URL_ROUTES = {
 			MANAGE_ADS: '/admin/manage-ads',
 			MANAGE_POINT_SHOP: '/admin/manage-point-shop',
 			MANAGE_REVIEWS: '/admin/manage-reviews',
+			MANAGE_ANALYSIS: '/admin/analysis',
 		},
 	},
 	GAME_VIEWER: '/view/game',
@@ -87,6 +89,16 @@ export default [
 			text: 'title.dashboard',
 		},
 		subRoutes: [
+			{
+				component: FundAnalysis,
+				path: URL_ROUTES.USER.ADMIN.MANAGE_ANALYSIS,
+				authenticate: true,
+				permission: PERMISSIONS.MANAGE_ANALYSIS,
+				menuSetting: {
+					text: 'analysis.title',
+					//icon: 'users'
+				},
+			},
 			{
 				component: ManageUsers,
 				path: URL_ROUTES.USER.ADMIN.MANAGE_USERS,

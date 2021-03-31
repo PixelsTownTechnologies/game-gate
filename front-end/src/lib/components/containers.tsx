@@ -166,7 +166,7 @@ export function SegmentBox(props: SegmentDTO) {
 	);
 }
 
-export function TitleView(props: { dir?: string, icon?: string, title?: string, subTitleChildren?: any }) {
+export function TitleView(props: { dir?: string, icon?: string, title?: string, subTitleChildren?: any, hideDivider?: boolean }) {
 	return (
 		<FlexBox dir={ props.dir } flexDirection={ 'column' }>
 			<FlexBox warp dir={ props.dir } justifyContent={ 'space-between' } alignItems={ 'center' }>
@@ -183,7 +183,9 @@ export function TitleView(props: { dir?: string, icon?: string, title?: string, 
 					</div>
 				</If>
 			</FlexBox>
-			<Divider className={ 'simple' }/>
+			{
+				props.hideDivider ? null : <Divider className={ 'simple' }/>
+			}
 		</FlexBox>
 	);
 }

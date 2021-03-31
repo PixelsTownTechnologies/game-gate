@@ -218,7 +218,7 @@ export const gameCardService: EntityServiceConfig = {
 	storeName: 'gameCards',
 	dataType: 'array',
 	baseURL: '',
-	loadToStore: false,
+	loadToStore: true,
 	actions: [
 		{
 			type: 'FIND',

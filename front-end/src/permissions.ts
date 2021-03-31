@@ -9,6 +9,7 @@ const PERMISSIONS = {
     MANAGE_ACCESSORIES: '',
     MANAGE_ADS:'',
     MANAGE_POINT_SHOP: '',
+    MANAGE_ANALYSIS: '',
 
     USER_HISTORY: ''
 };

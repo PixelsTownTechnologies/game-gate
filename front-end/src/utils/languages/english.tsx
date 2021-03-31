@@ -466,18 +466,47 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
 	},
 	favorite: {
 		title: 'Favorite Games',
-		emptyFavorite: 'You don\'t have any item' ,
+		emptyFavorite: 'You don\'t have any item',
 	},
 	footer: {
 		fastAccess: 'Fast Access',
 		contacts: 'Contacts',
 		rules: 'Copyright © 2021 GAMERS-DZ. All rights reserved. All product names are trademarks of their respective companies.',
 		homePage: 'Home Page',
-		game:'Games',
-		accessories:'Accessories',
+		game: 'Games',
+		accessories: 'Accessories',
 		playGameForFree: 'Play Games For Free',
 		provideBy: 'Provide By'
+	},
+	analysis: {
+		title: 'System Analysis',
+		dateFilter: 'Date Filter',
+		ordersStatus: 'Orders Status',
+		gamesStatus: 'Games & Accessories Status',
+		accessoriesStatus: 'Users Status',
+		earnsStatus: 'InCome & OutCome Status',
+		totalEarns: 'Total Earns',
+		totalEarnsFromKeyGames: 'Total Earns From Key Games',
+		totalEarnsFromChargingGames: 'Total Earns From Charging Games',
+		totalEarnsFromAccessories: 'Total Earns From Accessories',
+		totalOrders: 'Total Orders',
+		totalInProgressOrders: 'Total In-Progress Orders',
+		totalCompletedOrders: 'Total Completed Orders',
+		totalGamesInSystem: 'Total Games In System',
+		totalAccessoriesInSystem: 'Total Accessories In System',
+		totalUsers: 'Total Users',
+		totalBalanceAddToUsers: 'Total Balance Added To Users',
+		totalUsersBalance: 'Total Users Balance',
+		clearFilters: 'Clear Filters',
+		applyFilters: 'Apply Filters',
+		startDate: 'Start Date',
+		endDate: 'End Date',
+		games: 'Games',
+		accessories: 'Accessories',
+		totalUsersPoints: 'Total Users Points',
+		totalAccessoriesOrders: 'Total Accessories Orders',
+		totalKeyGamesOrders: 'Total Key Games Orders',
+		totalChargingGamesOrders: 'Total Charging Games Orders',
 	}
-};
-
+}
 export default ENGLISH_LANGUAGE;

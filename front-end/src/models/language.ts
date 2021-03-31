@@ -396,4 +396,34 @@ export interface LanguageSystemWords extends LanguageBaseWords {
 		playGameForFree: string;
 		provideBy: string;
 	};
+	analysis: {
+		title: string;
+		dateFilter: string;
+		ordersStatus: string;
+		gamesStatus: string;
+		accessoriesStatus: string;
+		earnsStatus: string;
+		totalEarns: string;
+		totalOrders: string;
+		totalEarnsFromKeyGames: string;
+		totalEarnsFromChargingGames: string;
+		totalEarnsFromAccessories: string;
+		totalInProgressOrders: string;
+		totalCompletedOrders: string;
+		totalGamesInSystem: string;
+		totalAccessoriesInSystem: string;
+		totalUsers: string;
+		totalBalanceAddToUsers: string;
+		totalUsersBalance: string;
+		clearFilters: string;
+		applyFilters: string;
+		startDate: string;
+		endDate: string;
+		games: string;
+		accessories: string;
+		totalUsersPoints: string;
+		totalAccessoriesOrders: string;
+		totalKeyGamesOrders: string;
+		totalChargingGamesOrders: string;
+	};
 }

@@ -4,9 +4,11 @@ import uuid
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
+from django.core.mail import send_mail
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from settings.base import EMAIL_HOST_USER
 from .managers import UserManager
 
 
@@ -272,6 +274,18 @@ class GameCard(models.Model):
     dealer_price = models.FloatField(default=0.0, null=True, blank=True)
     quantity_notification = models.IntegerField(default=20, null=True, blank=True)
 
+    def check_quantity_notification(self):
+        if self.quantity_notification is not None and self.quantity_notification > 0 \
+                and (self.available_keys < self.quantity_notification):
+            email = Enum.objects.filter(name='Email Order Receiver').first().data
+            send_mail(
+                'GameCard Quantity Notification',
+                'GameCard [ID: {0}, Name: {1}], Quantity Reached Limitation {2}'.format(self.id, self.name,
+                                                                                        self.available_keys),
+                EMAIL_HOST_USER,
+                [email, ]
+            )
+
     @property
     def total_dealer_price(self):
         discount = self.discount if self.discount is not None else 0
@@ -338,6 +352,18 @@ class Accessory(models.Model):
     image2 = models.ImageField(upload_to='accessory/images', blank=True, null=True)
     image3 = models.ImageField(upload_to='accessory/images', blank=True, null=True)
     image4 = models.ImageField(upload_to='accessory/images', blank=True, null=True)
+
+    def check_quantity_notification(self):
+        if self.quantity_notification is not None and self.quantity_notification > 0 \
+                and (self.system_quantity < self.quantity_notification):
+            email = Enum.objects.filter(name='Email Order Receiver').first().data
+            send_mail(
+                'Accessory Quantity Notification',
+                'Accessory [ID: {0}, Name: {1}], Quantity Reached Limitation {2}'.format(self.id, self.name,
+                                                                                         self.system_quantity),
+                EMAIL_HOST_USER,
+                [email, ]
+            )
 
     @property
     def total_dealer_price(self):

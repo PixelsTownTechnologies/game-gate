@@ -22,7 +22,7 @@ import UserFacadeService from "../../../../lib/services/facade-service/user-faca
 import TokenService from "../../../../lib/services/token-service";
 import { getUser, registerUser, updateUser } from "../../../../lib/store/actions/user";
 import { ImageShower } from "../../../../lib/components/basic";
-import { Counter } from "../../../../lib/components/form/fields";
+import { Counter, TextField } from "../../../../lib/components/form/fields";
 import { UpdateUserDataDialog } from "../../user/profile/profile";
 import { ReviewScrollCard } from "../../../shared/review/review-component";
 import { connect } from "react-redux";
@@ -126,6 +126,7 @@ export function AccessoryViewerWidget({accessory, onPay, similarAccessories}: Ac
 		return {pass: false};
 	}
 	const isInCard = user.cart_data ? user.cart_data.filter(cObj => cObj.objectId === accessory?.id && cObj.type === 'accessory').length > 0 : false;
+	// @ts-ignore
 	return (
 		<FlexBox
 			className={ 'acc-container' }
