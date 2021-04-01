@@ -39,10 +39,10 @@
 
 
 .image-slider-container {
-    max-width: 730px;
+    max-width: 760px;
     min-width: 650px;
     overflow: hidden;
-    height: 400px;
+    height: 440px;
     border-radius: 6px;
     position: relative;
     background: #eeeeee00;
@@ -70,7 +70,7 @@
         transform: scale(1.0, 1.0);
     }
     50%{
-        transform: scale(1.025, 1.025);
+        transform: scale(1.01, 1.01);
     }
     100%{
         transform: scale(1.0, 1.0);
@@ -82,11 +82,11 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    height: 180px !important;
-    min-height: 180px !important;
-    max-height: 180px !important;
-    max-width: 260px !important;
-    min-width: 260px !important;
+    height: 200px !important;
+    min-height: 200px !important;
+    max-height: 200px !important;
+    max-width: 250px !important;
+    min-width: 250px !important;
 }
 
 .home-s1-ads:hover img {
@@ -97,8 +97,8 @@
     background: #00000050 !important;
     width: auto !important;
     height: auto !important;
-    min-height: 180px !important;
-    min-width: 260px !important;
+    min-height: 200px !important;
+    min-width: 250px !important;
     transition: 600ms !important;
 }
 
@@ -109,7 +109,7 @@
     align-items: center;
     justify-content: space-between;
     flex-direction: column;
-    height: calc((180px * 2) + 30px );
+    height: calc((200px * 2) + 30px );
 }
 
 
@@ -202,7 +202,7 @@
 
 .home-view-section > div{
     width: 100% !important;
-    max-width: 1030px !important;
+    max-width: 1050px !important;
 }
 
 .sec2-text {

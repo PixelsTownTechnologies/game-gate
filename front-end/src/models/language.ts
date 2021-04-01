@@ -425,5 +425,16 @@ export interface LanguageSystemWords extends LanguageBaseWords {
 		totalAccessoriesOrders: string;
 		totalKeyGamesOrders: string;
 		totalChargingGamesOrders: string;
+		totalDealersUsers: string;
+		gamesTableStatus: string;
+		accessoriesTableStatus: string;
+		tableFields: {
+			id: string;
+			name: string;
+			totalEarns: string;
+			totalOrders: string;
+			totalQuantity: string;
+			price: string;
+		}
 	};
 }

@@ -474,7 +474,7 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
 		contacts: 'معلومات التواصل',
 		rules: 'حقوق النشر © 2021 GAMERS-DZ. كل الحقوق محفوظة. جميع أسماء المنتجات هي علامات تجارية للشركات المالكة لها.',
 		homePage: 'الصفحة الرئيسية',
-		game:'ألعاب',
+		game: 'ألعاب',
 		accessories: 'ملحقات',
 		playGameForFree: 'العب الألعاب مجانًا',
 		provideBy: 'مبني بواسطة'
@@ -482,9 +482,9 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
 	analysis: {
 		title: 'تقارير النظام',
 		dateFilter: 'مرشح التاريخ',
-		ordersStatus: 'حالة الطلبات',
-		gamesStatus: 'حالة الألعاب و الإكسسوارات',
-		accessoriesStatus: 'حالة المستخدمين',
+		ordersStatus: 'الطلبات',
+		gamesStatus: 'الألعاب و الإكسسوارات',
+		accessoriesStatus: 'المستخدمين',
 		earnsStatus: 'الدخل والمصروفات',
 		totalEarnsFromKeyGames: 'إجمالي الأرباح من الألعاب المفاتيح',
 		totalEarnsFromChargingGames: 'إجمالي الأرباح من شحن الألعاب',
@@ -508,6 +508,17 @@ const ARABIC_LANGUAGE: LanguageSystemWords = {
 		totalAccessoriesOrders: 'إجمالي طلبات الإكسسوارات',
 		totalKeyGamesOrders: 'إجمالي طلبات الألعاب المفاتيح',
 		totalChargingGamesOrders: 'إجمالي طلبات شحن الألعاب',
+		totalDealersUsers: 'إجمالي التجار',
+		gamesTableStatus: 'جدول الالعاب',
+		accessoriesTableStatus: 'جدول الإكسسوارات',
+		tableFields: {
+			id: 'الرقم التسلسلي',
+			name: 'الاسم',
+			totalEarns: 'أجمالي ألارباح',
+			totalOrders: 'إجمالي طلبات',
+			totalQuantity: 'إجمالي الكميات',
+			price: 'السعر',
+		}
 	}
 };
 

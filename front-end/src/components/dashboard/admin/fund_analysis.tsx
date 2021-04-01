@@ -19,6 +19,7 @@ import { UserDTO } from "../../../models/user";
 import { EntityService } from "../../../lib/services/entity-service/entity-service";
 import { TitleView } from "../../../lib/components/containers";
 import { costFormat } from "../../../lib/utils/utils";
+import { Table, TableSetting } from "../../../lib/components/tabels";
 
 const colors = [
 	'red',
@@ -54,6 +55,13 @@ interface FundAnalysisProps {
 	accessory: AccessoryDTO[];
 }
 
+interface ItemStatusView {
+	totalOrders: number;
+	totalEarns: number;
+	totalQuantity: number;
+	name: string;
+	id: number;
+}
 
 function FundAnalysis({gameCards, invoices, systemOrders, users, accessory}: FundAnalysisProps) {
 	const {words, dir} = useLanguage();
@@ -65,6 +73,43 @@ function FundAnalysis({gameCards, invoices, systemOrders, users, accessory}: Fun
 	const [ startDate, setStartDate ] = useState('');
 	const [ endDate, setEndDate ] = useState('');
 	const [ applyFilters, setApplyFilters ] = useState(false);
+	const tableSettings: TableSetting[] = [
+		{
+			fieldName: 'id',
+			title: words.analysis.tableFields.id,
+			type: 'number',
+			width: 80,
+			center: true
+		},
+		{
+			fieldName: 'name',
+			title: words.analysis.tableFields.name,
+			type: 'text',
+			width: 150,
+			center: true
+		},
+		{
+			fieldName: 'totalOrders',
+			title: words.analysis.tableFields.totalOrders,
+			type: 'formattedNumber',
+			width: 150,
+			center: true
+		},
+		{
+			fieldName: 'totalQuantity',
+			title: words.analysis.tableFields.totalQuantity,
+			type: 'formattedNumber',
+			width: 150,
+			center: true
+		},
+		{
+			fieldName: 'totalEarns',
+			title: words.analysis.tableFields.totalEarns,
+			type: 'balance',
+			width: 150,
+			center: true
+		}
+	];
 	useEffect(() => {
 		gameLoader.activate();
 		usersLoader.activate();
@@ -107,6 +152,8 @@ function FundAnalysis({gameCards, invoices, systemOrders, users, accessory}: Fun
 	let totalAccessoriesOrders = 0;
 	let totalKeyGamesOrders = 0;
 	let totalChargingGamesOrders = 0;
+	const gameCardTableItems = [];
+	const accessoriesTableItems = [];
 	const isDateBetween = (date: any): boolean => {
 		return ( new Date(date).getTime() >= new Date(startDate).getTime() ) && ( new Date(date).getTime() <= new Date(endDate).getTime() );
 	}
@@ -119,8 +166,7 @@ function FundAnalysis({gameCards, invoices, systemOrders, users, accessory}: Fun
 	if (invoices) {
 		const invoicesList = applyFilters ? invoices.filter(i => i.create_at ? isDateBetween(i.create_at) : false) : invoices;
 		totalBalanceAddToUsers = invoicesList.filter(i => i.action === 'A' && !!i.amount).map(i => i.amount).reduce((counter, num) => counter + num, 0);
-		totalEarns = invoicesList.filter(i => i.action === 'P' && !!i.amount).map(i => i.amount).reduce((counter, num) => counter + num, 0);
-	}
+		}
 	if (accessory) {
 		totalAccessoriesInSystem = accessory.length;
 	}
@@ -130,17 +176,63 @@ function FundAnalysis({gameCards, invoices, systemOrders, users, accessory}: Fun
 	if (systemOrders) {
 		const systemOrdersList = applyFilters ? systemOrders.filter(o => o.create ? isDateBetween(o.create) : false) : systemOrders;
 		totalOrders = systemOrdersList.length;
+		totalEarns = systemOrdersList.map(i => i.cost).reduce((counter, num) => counter + num, 0);
+		
 		totalInProgressOrders = systemOrdersList.filter(o => o.state === 'I').length;
 		totalCompletedOrders = systemOrdersList.filter(o => o.state === 'C').length;
-		totalEarnsFromKeyGames = systemOrdersList.filter(o => !!o.game_card).filter(o => !!o.order_keys && o.order_keys.length > 0)
+		totalEarnsFromKeyGames = systemOrdersList.filter(o => !!o.game_card).filter(o => o.game_card.game.type === 'K')
 			.map(o => o.cost).reduce((counter, num) => counter + num, 0);
-		totalEarnsFromChargingGames = systemOrdersList.filter(o => !!o.game_card).filter(o => !o.order_keys || o.order_keys.length < 1)
+		totalEarnsFromChargingGames = systemOrdersList.filter(o => !!o.game_card).filter(o => o.game_card.game.type === 'C')
 			.map(o => o.cost).reduce((counter, num) => counter + num, 0);
 		totalEarnsFromAccessories = systemOrdersList.filter(o => !!o.accessory)
 			.map(o => o.cost).reduce((counter, num) => counter + num, 0);
 		totalAccessoriesOrders = systemOrdersList.filter(o => !!o.accessory).length;
-		totalKeyGamesOrders = systemOrdersList.filter(o => !!o.game_card).filter(o => o.order_keys && o.order_keys.length > 0).length;
-		totalChargingGamesOrders = systemOrdersList.filter(o => !!o.game_card).filter(o => !o.order_keys || o.order_keys.length < 1).length;
+		totalKeyGamesOrders = systemOrdersList.filter(o => !!o.game_card).filter(o => o.game_card.game.type === 'K').length;
+		totalChargingGamesOrders = systemOrdersList.filter(o => !!o.game_card).filter(o => o.game_card.game.type === 'C').length;
+		if (gameCards) {
+			const gameMap = {} as any;
+			systemOrdersList.filter(o => !!o.game_card).forEach((order) => {
+				const gameCard = gameCards?.filter(g => g.id === order.game_card.id)?.[0];
+				if (gameCard) {
+					if (gameMap[gameCard.id]) {
+						gameMap[gameCard.id].totalEarns += order.cost;
+						gameMap[gameCard.id].totalOrders += 1;
+						gameMap[gameCard.id].quantity += order.quantity;
+					} else {
+						gameMap[gameCard.id] = {
+							id: gameCard.id,
+							name: gameCard.name,
+							totalEarns: order.cost,
+							totalOrders: 1,
+							totalQuantity: order.quantity
+						} as ItemStatusView;
+					}
+				}
+			});
+			gameCardTableItems.push(...Object.values(gameMap));
+		}
+		if (accessory) {
+			const accMap = {} as any;
+			systemOrdersList.filter(o => !!o.accessory).forEach((order) => {
+				const acc = accessory?.filter(g => g.id === order.accessory.id)?.[0];
+				if (acc) {
+					if (accMap[acc.id]) {
+						accMap[acc.id].totalEarns += order.cost;
+						accMap[acc.id].totalOrders += 1;
+						accMap[acc.id].quantity += order.quantity;
+					} else {
+						accMap[acc.id] = {
+							id: acc.id,
+							name: acc.name,
+							totalEarns: order.cost,
+							totalOrders: 1,
+							totalQuantity: order.quantity
+						} as ItemStatusView;
+					}
+				}
+			});
+			accessoriesTableItems.push(...Object.values(accMap));
+		}
 	}
 	return (
 		<Wrapper
@@ -176,7 +268,7 @@ function FundAnalysis({gameCards, invoices, systemOrders, users, accessory}: Fun
 								onClick={ () => {
 									setStartDate('');
 									setEndDate('');
-									setTimeout(() =>{
+									setTimeout(() => {
 										setApplyFilters(false);
 									}, 200);
 								} }
@@ -198,7 +290,7 @@ function FundAnalysis({gameCards, invoices, systemOrders, users, accessory}: Fun
 				<div className={ 'analysis-cards-section' }>
 					<ViewBox color={ 'violet' } title={ words.analysis.totalUsers } icon={ 'users' }
 					         value={ totalUsers }/>
-					<ViewBox color={ 'violet' } title={ words.analysis.totalUsers } icon={ 'users' }
+					<ViewBox color={ 'violet' } title={ words.analysis.totalDealersUsers } icon={ 'users' }
 					         value={ totalDealersUsers }/>
 					<ViewBox
 						color={ 'violet' }
@@ -289,6 +381,14 @@ function FundAnalysis({gameCards, invoices, systemOrders, users, accessory}: Fun
 						value={ totalAccessoriesOrders }
 					/>
 				</div>
+				<br/>
+				<TitleView dir={ dir } hideDivider title={ words.analysis.gamesTableStatus }/>
+				<br/>
+				<Table unStackable settings={tableSettings} data={gameCardTableItems.sort((o1: any, o2: any) => o2.totalEarns - o1.totalEarns) as any}/>
+				<br/>
+				<TitleView  dir={ dir } hideDivider title={ words.analysis.accessoriesTableStatus }/>
+				<br/>
+				<Table unStackable settings={tableSettings} data={accessoriesTableItems.sort((o1: any, o2: any) => o2.totalEarns - o1.totalEarns) as any}/>
 			</div>
 		</Wrapper>
 	);

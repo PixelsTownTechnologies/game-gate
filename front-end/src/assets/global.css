@@ -68,8 +68,8 @@ label {
 
 .video-embed {
     width: 95% !important;
-    min-width: 260px !important;
-    height: 480px !important;
+    min-width: 200px !important;
+    height: 550px !important;
 }
 
 @media only screen and (max-width: 1080px) {
@@ -80,14 +80,14 @@ label {
 
 @media only screen and (max-width: 680px) {
     .video-embed {
-        height: 200px !important;
+        height: 250px !important;
     }
 }
 
 
 @media only screen and (max-width: 550px) {
     .video-embed {
-        height: 160px !important;
+        height: 200px !important;
     }
 }
 

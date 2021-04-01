@@ -481,10 +481,10 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
 	analysis: {
 		title: 'System Analysis',
 		dateFilter: 'Date Filter',
-		ordersStatus: 'Orders Status',
-		gamesStatus: 'Games & Accessories Status',
-		accessoriesStatus: 'Users Status',
-		earnsStatus: 'InCome & OutCome Status',
+		ordersStatus: 'Orders',
+		gamesStatus: 'Games & Accessories',
+		accessoriesStatus: 'Users',
+		earnsStatus: 'InCome & OutCome',
 		totalEarns: 'Total Earns',
 		totalEarnsFromKeyGames: 'Total Earns From Key Games',
 		totalEarnsFromChargingGames: 'Total Earns From Charging Games',
@@ -507,6 +507,17 @@ const ENGLISH_LANGUAGE: LanguageSystemWords = {
 		totalAccessoriesOrders: 'Total Accessories Orders',
 		totalKeyGamesOrders: 'Total Key Games Orders',
 		totalChargingGamesOrders: 'Total Charging Games Orders',
+		totalDealersUsers: 'Total Dealers Users',
+		gamesTableStatus: 'GameCards Table Status',
+		accessoriesTableStatus: 'Accessories Table Status',
+		tableFields: {
+			id: 'ID',
+			name: 'Name',
+			totalEarns: 'Total Earns',
+			totalOrders: 'Total Orders',
+			totalQuantity: 'Total Quantities',
+			price: 'Price',
+		}
 	}
 }
 export default ENGLISH_LANGUAGE;
